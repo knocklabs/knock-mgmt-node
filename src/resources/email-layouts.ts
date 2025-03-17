@@ -48,16 +48,17 @@ export class EmailLayouts extends APIResource {
   /**
    * Validates an email layout payload without persisting it.
    *
-   * Note: this endpoint only operates in the “development” environment.
+   * Note: this endpoint only operates in the "development" environment.
    */
   validate(
     emailLayoutKey: string,
-    params: EmailLayoutValidateParams | null | undefined = {},
+    params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { annotate, environment, hide_uncommitted_changes } = params ?? {};
+    const { annotate, environment, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
       query: { annotate, environment, hide_uncommitted_changes },
+      body,
       ...options,
     });
   }
@@ -430,19 +431,65 @@ export namespace EmailLayoutUpsertParams {
 
 export interface EmailLayoutValidateParams {
   /**
-   * Whether to annotate the resource
+   * Body param: A request to update or create an email layout
+   */
+  email_layout: EmailLayoutValidateParams.EmailLayout;
+
+  /**
+   * Query param: Whether to annotate the resource
    */
   annotate?: boolean;
 
   /**
-   * The environment slug to validate the email layout for
+   * Query param: The environment slug to validate the email layout for
    */
   environment?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes
    */
   hide_uncommitted_changes?: boolean;
+}
+
+export namespace EmailLayoutValidateParams {
+  /**
+   * A request to update or create an email layout
+   */
+  export interface EmailLayout {
+    /**
+     * The complete HTML content of the email layout
+     */
+    html_layout: string;
+
+    /**
+     * The friendly name of this email layout
+     */
+    name: string;
+
+    /**
+     * The complete plain text content of the email layout
+     */
+    text_layout: string;
+
+    /**
+     * A list of one or more items to show in the footer of the email layout
+     */
+    footer_links?: Array<EmailLayout.FooterLink>;
+  }
+
+  export namespace EmailLayout {
+    export interface FooterLink {
+      /**
+       * The text to display as the link
+       */
+      text: string;
+
+      /**
+       * The URL to link to
+       */
+      url: string;
+    }
+  }
 }
 
 export declare namespace EmailLayouts {

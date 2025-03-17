@@ -19,6 +19,17 @@ import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import {
+  CommitCommitAllParams,
+  CommitCommitAllResponse,
+  CommitListParams,
+  CommitListResponse,
+  CommitPromoteAllParams,
+  CommitPromoteAllResponse,
+  CommitPromoteOneResponse,
+  CommitRetrieveResponse,
+  Commits,
+} from './resources/commits';
+import {
   EmailLayout,
   EmailLayoutListParams,
   EmailLayoutListResponse,
@@ -29,9 +40,57 @@ import {
   EmailLayoutValidateResponse,
   EmailLayouts,
 } from './resources/email-layouts';
+import {
+  MessageTypeListParams,
+  MessageTypeListResponse,
+  MessageTypeRetrieveParams,
+  MessageTypeRetrieveResponse,
+  MessageTypeUpsertParams,
+  MessageTypeUpsertResponse,
+  MessageTypeValidateParams,
+  MessageTypeValidateResponse,
+  MessageTypes,
+} from './resources/message-types';
+import {
+  PartialListParams,
+  PartialListResponse,
+  PartialRetrieveParams,
+  PartialRetrieveResponse,
+  PartialUpsertParams,
+  PartialUpsertResponse,
+  PartialValidateParams,
+  PartialValidateResponse,
+  Partials,
+} from './resources/partials';
+import {
+  TranslationListParams,
+  TranslationListResponse,
+  TranslationRetrieveParams,
+  TranslationRetrieveResponse,
+  TranslationUpsertParams,
+  TranslationUpsertResponse,
+  TranslationValidateParams,
+  TranslationValidateResponse,
+  Translations,
+} from './resources/translations';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
+import {
+  WorkflowActivateParams,
+  WorkflowActivateResponse,
+  WorkflowListParams,
+  WorkflowListResponse,
+  WorkflowRetrieveParams,
+  WorkflowRetrieveResponse,
+  WorkflowRunParams,
+  WorkflowRunResponse,
+  WorkflowUpsertParams,
+  WorkflowUpsertResponse,
+  WorkflowValidateParams,
+  WorkflowValidateResponse,
+  Workflows,
+} from './resources/workflows/workflows';
 
 const safeJSON = (text: string) => {
   try {
@@ -727,8 +786,18 @@ export class KnockMapi {
   static toFile = Uploads.toFile;
 
   emailLayouts: API.EmailLayouts = new API.EmailLayouts(this);
+  commits: API.Commits = new API.Commits(this);
+  partials: API.Partials = new API.Partials(this);
+  translations: API.Translations = new API.Translations(this);
+  workflows: API.Workflows = new API.Workflows(this);
+  messageTypes: API.MessageTypes = new API.MessageTypes(this);
 }
 KnockMapi.EmailLayouts = EmailLayouts;
+KnockMapi.Commits = Commits;
+KnockMapi.Partials = Partials;
+KnockMapi.Translations = Translations;
+KnockMapi.Workflows = Workflows;
+KnockMapi.MessageTypes = MessageTypes;
 export declare namespace KnockMapi {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -742,5 +811,69 @@ export declare namespace KnockMapi {
     type EmailLayoutListParams as EmailLayoutListParams,
     type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
     type EmailLayoutValidateParams as EmailLayoutValidateParams,
+  };
+
+  export {
+    Commits as Commits,
+    type CommitRetrieveResponse as CommitRetrieveResponse,
+    type CommitListResponse as CommitListResponse,
+    type CommitCommitAllResponse as CommitCommitAllResponse,
+    type CommitPromoteAllResponse as CommitPromoteAllResponse,
+    type CommitPromoteOneResponse as CommitPromoteOneResponse,
+    type CommitListParams as CommitListParams,
+    type CommitCommitAllParams as CommitCommitAllParams,
+    type CommitPromoteAllParams as CommitPromoteAllParams,
+  };
+
+  export {
+    Partials as Partials,
+    type PartialRetrieveResponse as PartialRetrieveResponse,
+    type PartialListResponse as PartialListResponse,
+    type PartialUpsertResponse as PartialUpsertResponse,
+    type PartialValidateResponse as PartialValidateResponse,
+    type PartialRetrieveParams as PartialRetrieveParams,
+    type PartialListParams as PartialListParams,
+    type PartialUpsertParams as PartialUpsertParams,
+    type PartialValidateParams as PartialValidateParams,
+  };
+
+  export {
+    Translations as Translations,
+    type TranslationRetrieveResponse as TranslationRetrieveResponse,
+    type TranslationListResponse as TranslationListResponse,
+    type TranslationUpsertResponse as TranslationUpsertResponse,
+    type TranslationValidateResponse as TranslationValidateResponse,
+    type TranslationRetrieveParams as TranslationRetrieveParams,
+    type TranslationListParams as TranslationListParams,
+    type TranslationUpsertParams as TranslationUpsertParams,
+    type TranslationValidateParams as TranslationValidateParams,
+  };
+
+  export {
+    Workflows as Workflows,
+    type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
+    type WorkflowListResponse as WorkflowListResponse,
+    type WorkflowActivateResponse as WorkflowActivateResponse,
+    type WorkflowRunResponse as WorkflowRunResponse,
+    type WorkflowUpsertResponse as WorkflowUpsertResponse,
+    type WorkflowValidateResponse as WorkflowValidateResponse,
+    type WorkflowRetrieveParams as WorkflowRetrieveParams,
+    type WorkflowListParams as WorkflowListParams,
+    type WorkflowActivateParams as WorkflowActivateParams,
+    type WorkflowRunParams as WorkflowRunParams,
+    type WorkflowUpsertParams as WorkflowUpsertParams,
+    type WorkflowValidateParams as WorkflowValidateParams,
+  };
+
+  export {
+    MessageTypes as MessageTypes,
+    type MessageTypeRetrieveResponse as MessageTypeRetrieveResponse,
+    type MessageTypeListResponse as MessageTypeListResponse,
+    type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
+    type MessageTypeValidateResponse as MessageTypeValidateResponse,
+    type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
+    type MessageTypeListParams as MessageTypeListParams,
+    type MessageTypeUpsertParams as MessageTypeUpsertParams,
+    type MessageTypeValidateParams as MessageTypeValidateParams,
   };
 }

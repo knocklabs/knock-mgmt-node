@@ -7,10 +7,10 @@ const client = new KnockMapi({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource emailLayouts', () => {
+describe('resource messageTypes', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('retrieve', async () => {
-    const responsePromise = client.emailLayouts.retrieve('email_layout_key');
+    const responsePromise = client.messageTypes.retrieve('email');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,9 +24,9 @@ describe('resource emailLayouts', () => {
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.emailLayouts.retrieve(
-        'email_layout_key',
-        { annotate: true, environment: 'environment', hide_uncommitted_changes: true },
+      client.messageTypes.retrieve(
+        'email',
+        { annotate: true, environment: 'development', hide_uncommitted_changes: true },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(KnockMapi.NotFoundError);
@@ -34,7 +34,7 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('list', async () => {
-    const responsePromise = client.emailLayouts.list();
+    const responsePromise = client.messageTypes.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,12 +48,12 @@ describe('resource emailLayouts', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.emailLayouts.list(
+      client.messageTypes.list(
         {
           after: 'after',
           annotate: true,
           before: 'before',
-          environment: 'environment',
+          environment: 'development',
           hide_uncommitted_changes: true,
           limit: 0,
         },
@@ -64,11 +64,11 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
-    const responsePromise = client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
+    const responsePromise = client.messageTypes.upsert('email', {
+      message_type: {
+        description: 'This is a message type',
+        name: 'My Message Type',
+        preview: '<div>Hello, world!</div>',
       },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -82,28 +82,52 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
-    const response = await client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
+    const response = await client.messageTypes.upsert('email', {
+      message_type: {
+        description: 'This is a message type',
+        name: 'My Message Type',
+        preview: '<div>Hello, world!</div>',
+        icon_name: 'icon_name',
+        semver: '1.0.0',
+        sha: 'sha',
+        updated_at: '2019-12-27T18:11:19.117Z',
+        variants: [
+          {
+            fields: [
+              {
+                key: 'text_field',
+                type: 'text',
+                label: 'Text Field',
+                settings: {
+                  default: 'A placeholder',
+                  description: 'A description of the text field',
+                  max_length: 100,
+                  min_length: 10,
+                  required: true,
+                },
+                value: 'Hello, world!',
+              },
+            ],
+            key: 'default',
+            name: 'Default',
+          },
+        ],
       },
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      environment: 'environment',
+      environment: 'development',
       hide_uncommitted_changes: true,
     });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
-    const responsePromise = client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
+    const responsePromise = client.messageTypes.validate('email', {
+      message_type: {
+        description: 'This is a message type',
+        name: 'My Message Type',
+        preview: '<div>Hello, world!</div>',
       },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -117,15 +141,38 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
-    const response = await client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
+    const response = await client.messageTypes.validate('email', {
+      message_type: {
+        description: 'This is a message type',
+        name: 'My Message Type',
+        preview: '<div>Hello, world!</div>',
+        icon_name: 'icon_name',
+        semver: '1.0.0',
+        sha: 'sha',
+        updated_at: '2019-12-27T18:11:19.117Z',
+        variants: [
+          {
+            fields: [
+              {
+                key: 'text_field',
+                type: 'text',
+                label: 'Text Field',
+                settings: {
+                  default: 'A placeholder',
+                  description: 'A description of the text field',
+                  max_length: 100,
+                  min_length: 10,
+                  required: true,
+                },
+                value: 'Hello, world!',
+              },
+            ],
+            key: 'default',
+            name: 'Default',
+          },
+        ],
       },
       annotate: true,
-      environment: 'environment',
       hide_uncommitted_changes: true,
     });
   });
