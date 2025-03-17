@@ -7,10 +7,10 @@ const client = new KnockMapi({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource emailLayouts', () => {
+describe('resource partials', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve', async () => {
-    const responsePromise = client.emailLayouts.retrieve('email_layout_key');
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.partials.retrieve('partial_key', { environment: 'environment' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,20 +21,17 @@ describe('resource emailLayouts', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.emailLayouts.retrieve(
-        'email_layout_key',
-        { annotate: true, environment: 'environment', hide_uncommitted_changes: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMapi.NotFoundError);
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.partials.retrieve('partial_key', {
+      environment: 'environment',
+      annotate: true,
+      hide_uncommitted_changes: true,
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list', async () => {
-    const responsePromise = client.emailLayouts.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.partials.list({ environment: 'environment' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,31 +42,22 @@ describe('resource emailLayouts', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.emailLayouts.list(
-        {
-          after: 'after',
-          annotate: true,
-          before: 'before',
-          environment: 'environment',
-          hide_uncommitted_changes: true,
-          limit: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMapi.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.partials.list({
+      environment: 'environment',
+      after: 'after',
+      annotate: true,
+      before: 'before',
+      hide_uncommitted_changes: true,
+      limit: 0,
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
-    const responsePromise = client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-      },
+    const responsePromise = client.partials.upsert('partial_key', {
+      environment: 'environment',
+      partial: { content: '<p>Hello, world!</p>', name: 'My Partial', type: 'html' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -82,29 +70,28 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
-    const response = await client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
+    const response = await client.partials.upsert('partial_key', {
+      environment: 'environment',
+      partial: {
+        content: '<p>Hello, world!</p>',
+        name: 'My Partial',
+        type: 'html',
+        description: 'description',
+        icon_name: 'icon_name',
+        visual_block_enabled: false,
       },
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      environment: 'environment',
       hide_uncommitted_changes: true,
     });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
-    const responsePromise = client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-      },
+    const responsePromise = client.partials.validate('partial_key', {
+      environment: 'environment',
+      partial: { content: '<p>Hello, world!</p>', name: 'My Partial', type: 'html' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -117,16 +104,16 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
-    const response = await client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
-      },
-      annotate: true,
+    const response = await client.partials.validate('partial_key', {
       environment: 'environment',
-      hide_uncommitted_changes: true,
+      partial: {
+        content: '<p>Hello, world!</p>',
+        name: 'My Partial',
+        type: 'html',
+        description: 'description',
+        icon_name: 'icon_name',
+        visual_block_enabled: false,
+      },
     });
   });
 });

@@ -7,10 +7,10 @@ const client = new KnockMapi({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource emailLayouts', () => {
+describe('resource translations', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('retrieve', async () => {
-    const responsePromise = client.emailLayouts.retrieve('email_layout_key');
+    const responsePromise = client.translations.retrieve('locale_code');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,9 +24,15 @@ describe('resource emailLayouts', () => {
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.emailLayouts.retrieve(
-        'email_layout_key',
-        { annotate: true, environment: 'environment', hide_uncommitted_changes: true },
+      client.translations.retrieve(
+        'locale_code',
+        {
+          annotate: true,
+          environment: 'environment',
+          format: 'json',
+          hide_uncommitted_changes: true,
+          namespace: 'namespace',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(KnockMapi.NotFoundError);
@@ -34,7 +40,7 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('list', async () => {
-    const responsePromise = client.emailLayouts.list();
+    const responsePromise = client.translations.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,14 +54,17 @@ describe('resource emailLayouts', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.emailLayouts.list(
+      client.translations.list(
         {
           after: 'after',
           annotate: true,
           before: 'before',
           environment: 'environment',
+          format: 'json',
           hide_uncommitted_changes: true,
           limit: 0,
+          locale_code: 'locale_code',
+          namespace: 'namespace',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -64,12 +73,9 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
-    const responsePromise = client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-      },
+    const responsePromise = client.translations.upsert('locale_code', {
+      namespace: 'namespace',
+      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -82,29 +88,20 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
-    const response = await client.emailLayouts.upsert('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
-      },
+    const response = await client.translations.upsert('locale_code', {
+      namespace: 'namespace',
+      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
-      commit: true,
-      commit_message: 'commit_message',
       environment: 'environment',
+      format: 'json',
       hide_uncommitted_changes: true,
     });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
-    const responsePromise = client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-      },
+    const responsePromise = client.translations.validate('locale_code', {
+      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -117,13 +114,8 @@ describe('resource emailLayouts', () => {
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
-    const response = await client.emailLayouts.validate('email_layout_key', {
-      email_layout: {
-        html_layout: '<html><body>Hello, world!</body></html>',
-        name: 'Transactional',
-        text_layout: 'Hello, world!',
-        footer_links: [{ text: 'Example', url: 'http://example.com' }],
-      },
+    const response = await client.translations.validate('locale_code', {
+      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
       environment: 'environment',
       hide_uncommitted_changes: true,
