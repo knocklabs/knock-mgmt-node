@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -24,8 +24,8 @@ export class EmailLayouts extends APIResource {
   list(
     query: EmailLayoutListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<EmailLayoutListResponse> {
-    return this._client.get('/v1/email_layouts', { query, ...options });
+  ): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
+    return this._client.getAPIList('/v1/email_layouts', EntriesCursor<EmailLayout>, { query, ...options });
   }
 
   /**
@@ -64,6 +64,8 @@ export class EmailLayouts extends APIResource {
     });
   }
 }
+
+export type EmailLayoutsEntriesCursor = EntriesCursor<EmailLayout>;
 
 /**
  * A versioned email layout used within an environment.
@@ -130,22 +132,6 @@ export namespace EmailLayout {
 }
 
 /**
- * A paginated list of EmailLayout. Contains a list of entries and page
- * information.
- */
-export interface EmailLayoutListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<EmailLayout>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-/**
  * Wraps the EmailLayout response under the `email_layout` key.
  */
 export interface EmailLayoutUpsertResponse {
@@ -182,21 +168,11 @@ export interface EmailLayoutRetrieveParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export interface EmailLayoutListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
+export interface EmailLayoutListParams extends EntriesCursorParams {
   /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
 
   /**
    * The environment slug. (Defaults to `development`.).
@@ -207,11 +183,6 @@ export interface EmailLayoutListParams {
    * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 }
 
 export interface EmailLayoutUpsertParams {
@@ -354,9 +325,9 @@ export namespace EmailLayoutValidateParams {
 export declare namespace EmailLayouts {
   export {
     type EmailLayout as EmailLayout,
-    type EmailLayoutListResponse as EmailLayoutListResponse,
     type EmailLayoutUpsertResponse as EmailLayoutUpsertResponse,
     type EmailLayoutValidateResponse as EmailLayoutValidateResponse,
+    type EmailLayoutsEntriesCursor as EmailLayoutsEntriesCursor,
     type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
     type EmailLayoutListParams as EmailLayoutListParams,
     type EmailLayoutUpsertParams as EmailLayoutUpsertParams,

@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^knock-mapi$': '<rootDir>/src/index.ts',
-    '^knock-mapi/(.*)$': '<rootDir>/src/$1',
+    '^@knocklabs/mgmt$': '<rootDir>/src/index.ts',
+    '^@knocklabs/mgmt/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

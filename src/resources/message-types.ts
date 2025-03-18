@@ -2,8 +2,8 @@
 
 import { APIResource } from '../resource';
 import * as MessageTypesAPI from './message-types';
-import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -25,8 +25,8 @@ export class MessageTypes extends APIResource {
   list(
     query: MessageTypeListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MessageTypeListResponse> {
-    return this._client.get('/v1/message_types', { query, ...options });
+  ): PagePromise<MessageTypesEntriesCursor, MessageType> {
+    return this._client.getAPIList('/v1/message_types', EntriesCursor<MessageType>, { query, ...options });
   }
 
   /**
@@ -66,6 +66,8 @@ export class MessageTypes extends APIResource {
     });
   }
 }
+
+export type MessageTypesEntriesCursor = EntriesCursor<MessageType>;
 
 /**
  * A message type object.
@@ -571,22 +573,6 @@ export namespace MessageTypeVariant {
 }
 
 /**
- * A paginated list of MessageType. Contains a list of entries and page
- * information.
- */
-export interface MessageTypeListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<MessageType>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-/**
  * Wraps the MessageType response under the `message_type` key.
  */
 export interface MessageTypeUpsertResponse {
@@ -623,21 +609,11 @@ export interface MessageTypeRetrieveParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export interface MessageTypeListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
+export interface MessageTypeListParams extends EntriesCursorParams {
   /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
 
   /**
    * The environment slug. (Defaults to `development`.).
@@ -648,11 +624,6 @@ export interface MessageTypeListParams {
    * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 }
 
 export interface MessageTypeUpsertParams {
@@ -786,9 +757,9 @@ export declare namespace MessageTypes {
     type MessageType as MessageType,
     type MessageTypeTextField as MessageTypeTextField,
     type MessageTypeVariant as MessageTypeVariant,
-    type MessageTypeListResponse as MessageTypeListResponse,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
+    type MessageTypesEntriesCursor as MessageTypesEntriesCursor,
     type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
     type MessageTypeListParams as MessageTypeListParams,
     type MessageTypeUpsertParams as MessageTypeUpsertParams,

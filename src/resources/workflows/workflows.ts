@@ -3,11 +3,11 @@
 import { APIResource } from '../../resource';
 import * as WorkflowsAPI from './workflows';
 import * as ChannelsAPI from '../channels';
-import * as Shared from '../shared';
 import * as TemplatesAPI from '../templates';
 import * as StepsAPI from './steps';
 import { StepPreviewTemplateParams, StepPreviewTemplateResponse, Steps } from './steps';
 import { APIPromise } from '../../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../../pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -29,8 +29,8 @@ export class Workflows extends APIResource {
    * Returns a paginated list of workflows available in a given environment. The
    * workflows are returned in alpha sorted order by its key.
    */
-  list(query: WorkflowListParams, options?: RequestOptions): APIPromise<WorkflowListResponse> {
-    return this._client.get('/v1/workflows', { query, ...options });
+  list(query: WorkflowListParams, options?: RequestOptions): PagePromise<WorkflowsEntriesCursor, Workflow> {
+    return this._client.getAPIList('/v1/workflows', EntriesCursor<Workflow>, { query, ...options });
   }
 
   /**
@@ -107,6 +107,8 @@ export class Workflows extends APIResource {
     });
   }
 }
+
+export type WorkflowsEntriesCursor = EntriesCursor<Workflow>;
 
 /**
  * A condition to be evaluated.
@@ -799,21 +801,6 @@ export namespace WorkflowTriggerWorkflowStep {
 }
 
 /**
- * A paginated list of Workflow. Contains a list of entries and page information.
- */
-export interface WorkflowListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Workflow>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-/**
  * Wraps the Workflow response under the `workflow` key.
  */
 export interface WorkflowActivateResponse {
@@ -870,16 +857,11 @@ export interface WorkflowRetrieveParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export interface WorkflowListParams {
+export interface WorkflowListParams extends EntriesCursorParams {
   /**
    * The environment slug. (Defaults to `development`.).
    */
   environment: string;
-
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
 
   /**
    * Whether to annotate the resource.
@@ -887,19 +869,9 @@ export interface WorkflowListParams {
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
    * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 }
 
 export interface WorkflowActivateParams {
@@ -1162,11 +1134,11 @@ export declare namespace Workflows {
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
-    type WorkflowListResponse as WorkflowListResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
     type WorkflowRunResponse as WorkflowRunResponse,
     type WorkflowUpsertResponse as WorkflowUpsertResponse,
     type WorkflowValidateResponse as WorkflowValidateResponse,
+    type WorkflowsEntriesCursor as WorkflowsEntriesCursor,
     type WorkflowRetrieveParams as WorkflowRetrieveParams,
     type WorkflowListParams as WorkflowListParams,
     type WorkflowActivateParams as WorkflowActivateParams,

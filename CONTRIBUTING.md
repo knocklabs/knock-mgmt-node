@@ -55,12 +55,12 @@ $ cd knock-mapi-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link knock-mapi
+$ yarn link @knocklabs/mgmt
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global knock-mapi
+$ pnpm link -—global @knocklabs/mgmt
 ```
 
 ## Running tests

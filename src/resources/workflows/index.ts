@@ -16,7 +16,6 @@ export {
   type WorkflowStep,
   type WorkflowThrottleStep,
   type WorkflowTriggerWorkflowStep,
-  type WorkflowListResponse,
   type WorkflowActivateResponse,
   type WorkflowRunResponse,
   type WorkflowUpsertResponse,
@@ -27,4 +26,5 @@ export {
   type WorkflowRunParams,
   type WorkflowUpsertParams,
   type WorkflowValidateParams,
+  type WorkflowsEntriesCursor,
 } from './workflows';

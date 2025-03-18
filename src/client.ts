@@ -12,6 +12,8 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './error';
+import * as Pagination from './pagination';
+import { AbstractPage, type EntriesCursorParams, EntriesCursorResponse } from './pagination';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import { APIPromise } from './api-promise';
@@ -23,15 +25,15 @@ import { Auth, AuthVerifyResponse } from './resources/auth';
 import {
   ChannelGroup,
   ChannelGroupListParams,
-  ChannelGroupListResponse,
   ChannelGroupRule,
   ChannelGroups,
+  ChannelGroupsEntriesCursor,
 } from './resources/channel-groups';
 import {
   Channel,
   ChannelListParams,
-  ChannelListResponse,
   Channels,
+  ChannelsEntriesCursor,
   ChatChannelSettings,
   EmailChannelSettings,
   InAppFeedChannelSettings,
@@ -43,33 +45,32 @@ import {
   CommitCommitAllParams,
   CommitCommitAllResponse,
   CommitListParams,
-  CommitListResponse,
   CommitPromoteAllParams,
   CommitPromoteAllResponse,
   CommitPromoteOneResponse,
   Commits,
+  CommitsEntriesCursor,
 } from './resources/commits';
 import {
   EmailLayout,
   EmailLayoutListParams,
-  EmailLayoutListResponse,
   EmailLayoutRetrieveParams,
   EmailLayoutUpsertParams,
   EmailLayoutUpsertResponse,
   EmailLayoutValidateParams,
   EmailLayoutValidateResponse,
   EmailLayouts,
+  EmailLayoutsEntriesCursor,
 } from './resources/email-layouts';
 import {
   Environment,
   EnvironmentListParams,
-  EnvironmentListResponse,
   Environments,
+  EnvironmentsEntriesCursor,
 } from './resources/environments';
 import {
   MessageType,
   MessageTypeListParams,
-  MessageTypeListResponse,
   MessageTypeRetrieveParams,
   MessageTypeTextField,
   MessageTypeUpsertParams,
@@ -78,17 +79,18 @@ import {
   MessageTypeValidateResponse,
   MessageTypeVariant,
   MessageTypes,
+  MessageTypesEntriesCursor,
 } from './resources/message-types';
 import {
   Partial,
   PartialListParams,
-  PartialListResponse,
   PartialRetrieveParams,
   PartialUpsertParams,
   PartialUpsertResponse,
   PartialValidateParams,
   PartialValidateResponse,
   Partials,
+  PartialsEntriesCursor,
 } from './resources/partials';
 import {
   ChatTemplate,
@@ -103,7 +105,6 @@ import {
 import {
   Translation,
   TranslationListParams,
-  TranslationListResponse,
   TranslationRetrieveParams,
   TranslationRetrieveResponse,
   TranslationUpsertParams,
@@ -111,8 +112,9 @@ import {
   TranslationValidateParams,
   TranslationValidateResponse,
   Translations,
+  TranslationsEntriesCursor,
 } from './resources/translations';
-import { Variable, VariableListParams, VariableListResponse, Variables } from './resources/variables';
+import { Variable, VariableListParams, Variables, VariablesEntriesCursor } from './resources/variables';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
@@ -130,7 +132,6 @@ import {
   WorkflowDelayStep,
   WorkflowFetchStep,
   WorkflowListParams,
-  WorkflowListResponse,
   WorkflowRetrieveParams,
   WorkflowRunParams,
   WorkflowRunResponse,
@@ -142,6 +143,7 @@ import {
   WorkflowValidateParams,
   WorkflowValidateResponse,
   Workflows,
+  WorkflowsEntriesCursor,
 } from './resources/workflows/workflows';
 
 const safeJSON = (text: string) => {
@@ -605,6 +607,25 @@ export class KnockMapi {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as KnockMapi, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -867,6 +888,12 @@ KnockMapi.Variables = Variables;
 export declare namespace KnockMapi {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import EntriesCursor = Pagination.EntriesCursor;
+  export {
+    type EntriesCursorParams as EntriesCursorParams,
+    type EntriesCursorResponse as EntriesCursorResponse,
+  };
+
   export {
     Templates as Templates,
     type ChatTemplate as ChatTemplate,
@@ -881,9 +908,9 @@ export declare namespace KnockMapi {
   export {
     EmailLayouts as EmailLayouts,
     type EmailLayout as EmailLayout,
-    type EmailLayoutListResponse as EmailLayoutListResponse,
     type EmailLayoutUpsertResponse as EmailLayoutUpsertResponse,
     type EmailLayoutValidateResponse as EmailLayoutValidateResponse,
+    type EmailLayoutsEntriesCursor as EmailLayoutsEntriesCursor,
     type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
     type EmailLayoutListParams as EmailLayoutListParams,
     type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
@@ -893,10 +920,10 @@ export declare namespace KnockMapi {
   export {
     Commits as Commits,
     type Commit as Commit,
-    type CommitListResponse as CommitListResponse,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
     type CommitPromoteOneResponse as CommitPromoteOneResponse,
+    type CommitsEntriesCursor as CommitsEntriesCursor,
     type CommitListParams as CommitListParams,
     type CommitCommitAllParams as CommitCommitAllParams,
     type CommitPromoteAllParams as CommitPromoteAllParams,
@@ -905,9 +932,9 @@ export declare namespace KnockMapi {
   export {
     Partials as Partials,
     type Partial as Partial,
-    type PartialListResponse as PartialListResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
+    type PartialsEntriesCursor as PartialsEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
     type PartialUpsertParams as PartialUpsertParams,
@@ -918,9 +945,9 @@ export declare namespace KnockMapi {
     Translations as Translations,
     type Translation as Translation,
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
-    type TranslationListResponse as TranslationListResponse,
     type TranslationUpsertResponse as TranslationUpsertResponse,
     type TranslationValidateResponse as TranslationValidateResponse,
+    type TranslationsEntriesCursor as TranslationsEntriesCursor,
     type TranslationRetrieveParams as TranslationRetrieveParams,
     type TranslationListParams as TranslationListParams,
     type TranslationUpsertParams as TranslationUpsertParams,
@@ -942,11 +969,11 @@ export declare namespace KnockMapi {
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
-    type WorkflowListResponse as WorkflowListResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
     type WorkflowRunResponse as WorkflowRunResponse,
     type WorkflowUpsertResponse as WorkflowUpsertResponse,
     type WorkflowValidateResponse as WorkflowValidateResponse,
+    type WorkflowsEntriesCursor as WorkflowsEntriesCursor,
     type WorkflowRetrieveParams as WorkflowRetrieveParams,
     type WorkflowListParams as WorkflowListParams,
     type WorkflowActivateParams as WorkflowActivateParams,
@@ -960,9 +987,9 @@ export declare namespace KnockMapi {
     type MessageType as MessageType,
     type MessageTypeTextField as MessageTypeTextField,
     type MessageTypeVariant as MessageTypeVariant,
-    type MessageTypeListResponse as MessageTypeListResponse,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
+    type MessageTypesEntriesCursor as MessageTypesEntriesCursor,
     type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
     type MessageTypeListParams as MessageTypeListParams,
     type MessageTypeUpsertParams as MessageTypeUpsertParams,
@@ -981,7 +1008,7 @@ export declare namespace KnockMapi {
     ChannelGroups as ChannelGroups,
     type ChannelGroup as ChannelGroup,
     type ChannelGroupRule as ChannelGroupRule,
-    type ChannelGroupListResponse as ChannelGroupListResponse,
+    type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
     type ChannelGroupListParams as ChannelGroupListParams,
   };
 
@@ -993,21 +1020,21 @@ export declare namespace KnockMapi {
     type InAppFeedChannelSettings as InAppFeedChannelSettings,
     type PushChannelSettings as PushChannelSettings,
     type SMSChannelSettings as SMSChannelSettings,
-    type ChannelListResponse as ChannelListResponse,
+    type ChannelsEntriesCursor as ChannelsEntriesCursor,
     type ChannelListParams as ChannelListParams,
   };
 
   export {
     Environments as Environments,
     type Environment as Environment,
-    type EnvironmentListResponse as EnvironmentListResponse,
+    type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
     type EnvironmentListParams as EnvironmentListParams,
   };
 
   export {
     Variables as Variables,
     type Variable as Variable,
-    type VariableListResponse as VariableListResponse,
+    type VariablesEntriesCursor as VariablesEntriesCursor,
     type VariableListParams as VariableListParams,
   };
 

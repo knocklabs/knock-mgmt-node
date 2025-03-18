@@ -1,5 +1,5 @@
 {
-  "name": "knock-mapi",
+  "name": "@knocklabs/mgmt",
   "version": "0.0.1-alpha.0",
   "description": "The official TypeScript library for the Knock Mapi API",
   "author": "Knock Mapi <dev-feedback@knock-mapi.com>",
@@ -50,8 +50,8 @@
     "synckit": "0.8.8"
   },
   "imports": {
-    "knock-mapi": ".",
-    "knock-mapi/*": "./src/*"
+    "@knocklabs/mgmt": ".",
+    "@knocklabs/mgmt/*": "./src/*"
   },
   "exports": {
     ".": {

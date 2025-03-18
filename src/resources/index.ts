@@ -7,8 +7,8 @@ export {
   ChannelGroups,
   type ChannelGroup,
   type ChannelGroupRule,
-  type ChannelGroupListResponse,
   type ChannelGroupListParams,
+  type ChannelGroupsEntriesCursor,
 } from './channel-groups';
 export {
   Channels,
@@ -18,60 +18,60 @@ export {
   type InAppFeedChannelSettings,
   type PushChannelSettings,
   type SMSChannelSettings,
-  type ChannelListResponse,
   type ChannelListParams,
+  type ChannelsEntriesCursor,
 } from './channels';
 export {
   Commits,
   type Commit,
-  type CommitListResponse,
   type CommitCommitAllResponse,
   type CommitPromoteAllResponse,
   type CommitPromoteOneResponse,
   type CommitListParams,
   type CommitCommitAllParams,
   type CommitPromoteAllParams,
+  type CommitsEntriesCursor,
 } from './commits';
 export {
   EmailLayouts,
   type EmailLayout,
-  type EmailLayoutListResponse,
   type EmailLayoutUpsertResponse,
   type EmailLayoutValidateResponse,
   type EmailLayoutRetrieveParams,
   type EmailLayoutListParams,
   type EmailLayoutUpsertParams,
   type EmailLayoutValidateParams,
+  type EmailLayoutsEntriesCursor,
 } from './email-layouts';
 export {
   Environments,
   type Environment,
-  type EnvironmentListResponse,
   type EnvironmentListParams,
+  type EnvironmentsEntriesCursor,
 } from './environments';
 export {
   MessageTypes,
   type MessageType,
   type MessageTypeTextField,
   type MessageTypeVariant,
-  type MessageTypeListResponse,
   type MessageTypeUpsertResponse,
   type MessageTypeValidateResponse,
   type MessageTypeRetrieveParams,
   type MessageTypeListParams,
   type MessageTypeUpsertParams,
   type MessageTypeValidateParams,
+  type MessageTypesEntriesCursor,
 } from './message-types';
 export {
   Partials,
   type Partial,
-  type PartialListResponse,
   type PartialUpsertResponse,
   type PartialValidateResponse,
   type PartialRetrieveParams,
   type PartialListParams,
   type PartialUpsertParams,
   type PartialValidateParams,
+  type PartialsEntriesCursor,
 } from './partials';
 export {
   Templates,
@@ -87,15 +87,15 @@ export {
   Translations,
   type Translation,
   type TranslationRetrieveResponse,
-  type TranslationListResponse,
   type TranslationUpsertResponse,
   type TranslationValidateResponse,
   type TranslationRetrieveParams,
   type TranslationListParams,
   type TranslationUpsertParams,
   type TranslationValidateParams,
+  type TranslationsEntriesCursor,
 } from './translations';
-export { Variables, type Variable, type VariableListResponse, type VariableListParams } from './variables';
+export { Variables, type Variable, type VariableListParams, type VariablesEntriesCursor } from './variables';
 export {
   Workflows,
   type Condition,
@@ -111,7 +111,6 @@ export {
   type WorkflowStep,
   type WorkflowThrottleStep,
   type WorkflowTriggerWorkflowStep,
-  type WorkflowListResponse,
   type WorkflowActivateResponse,
   type WorkflowRunResponse,
   type WorkflowUpsertResponse,
@@ -122,4 +121,5 @@ export {
   type WorkflowRunParams,
   type WorkflowUpsertParams,
   type WorkflowValidateParams,
+  type WorkflowsEntriesCursor,
 } from './workflows/workflows';

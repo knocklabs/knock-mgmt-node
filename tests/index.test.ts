@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'knock-mapi/api-promise';
+import { APIPromise } from '@knocklabs/mgmt/api-promise';
 
 import util from 'node:util';
-import KnockMapi from 'knock-mapi';
-import { APIUserAbortError } from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
+import { APIUserAbortError } from '@knocklabs/mgmt';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

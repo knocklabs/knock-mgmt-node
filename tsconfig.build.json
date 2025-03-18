@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "knock-mapi/*": ["dist/src/*"],
-      "knock-mapi": ["dist/src/index.ts"],
+      "@knocklabs/mgmt/*": ["dist/src/*"],
+      "@knocklabs/mgmt": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^knock-mapi(/.*)?',
+              regex: '^@knocklabs/mgmt(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

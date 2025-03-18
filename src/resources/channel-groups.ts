@@ -2,8 +2,7 @@
 
 import { APIResource } from '../resource';
 import * as ChannelsAPI from './channels';
-import * as Shared from './shared';
-import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class ChannelGroups extends APIResource {
@@ -14,10 +13,12 @@ export class ChannelGroups extends APIResource {
   list(
     query: ChannelGroupListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ChannelGroupListResponse> {
-    return this._client.get('/v1/channel_groups', { query, ...options });
+  ): PagePromise<ChannelGroupsEntriesCursor, ChannelGroup> {
+    return this._client.getAPIList('/v1/channel_groups', EntriesCursor<ChannelGroup>, { query, ...options });
   }
 }
+
+export type ChannelGroupsEntriesCursor = EntriesCursor<ChannelGroup>;
 
 /**
  * A group of channels with rules for when they are applicable.
@@ -126,44 +127,13 @@ export interface ChannelGroupRule {
   variable?: string | null;
 }
 
-/**
- * A paginated list of ChannelGroup. Contains a list of entries and page
- * information.
- */
-export interface ChannelGroupListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<ChannelGroup>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-export interface ChannelGroupListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
-}
+export interface ChannelGroupListParams extends EntriesCursorParams {}
 
 export declare namespace ChannelGroups {
   export {
     type ChannelGroup as ChannelGroup,
     type ChannelGroupRule as ChannelGroupRule,
-    type ChannelGroupListResponse as ChannelGroupListResponse,
+    type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
     type ChannelGroupListParams as ChannelGroupListParams,
   };
 }
