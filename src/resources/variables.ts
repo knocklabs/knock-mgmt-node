@@ -1,18 +1,19 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
-import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Variables extends APIResource {
   /**
    * Returns a paginated list of variables for a given environment.
    */
-  list(query: VariableListParams, options?: RequestOptions): APIPromise<VariableListResponse> {
-    return this._client.get('/v1/variables', { query, ...options });
+  list(query: VariableListParams, options?: RequestOptions): PagePromise<VariablesEntriesCursor, Variable> {
+    return this._client.getAPIList('/v1/variables', EntriesCursor<Variable>, { query, ...options });
   }
 }
+
+export type VariablesEntriesCursor = EntriesCursor<Variable>;
 
 /**
  * An environment variable object.
@@ -49,47 +50,17 @@ export interface Variable {
   description?: string | null;
 }
 
-/**
- * A paginated list of Variable. Contains a list of entries and page information.
- */
-export interface VariableListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Variable>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-export interface VariableListParams {
+export interface VariableListParams extends EntriesCursorParams {
   /**
    * The environment slug. (Defaults to `development`.).
    */
   environment: string;
-
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 }
 
 export declare namespace Variables {
   export {
     type Variable as Variable,
-    type VariableListResponse as VariableListResponse,
+    type VariablesEntriesCursor as VariablesEntriesCursor,
     type VariableListParams as VariableListParams,
   };
 }

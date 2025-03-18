@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "knock-mapi/*": ["src/*"],
-      "knock-mapi": ["src/index.ts"]
+      "@knocklabs/mgmt/*": ["src/*"],
+      "@knocklabs/mgmt": ["src/index.ts"]
     },
     "noEmit": true,
 

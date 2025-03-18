@@ -1,6 +1,6 @@
 # Knock Mapi TypeScript API Library
 
-[![NPM version](https://img.shields.io/npm/v/knock-mapi.svg)](https://npmjs.org/package/knock-mapi) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/knock-mapi)
+[![NPM version](https://img.shields.io/npm/v/@knocklabs/mgmt.svg)](https://npmjs.org/package/@knocklabs/mgmt) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@knocklabs/mgmt)
 
 This library provides convenient access to the Knock Mapi REST API from server-side TypeScript or JavaScript.
 
@@ -15,7 +15,7 @@ npm install git+ssh://git@github.com:stainless-sdks/knock-mapi-typescript.git
 ```
 
 > [!NOTE]
-> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install knock-mapi`
+> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install @knocklabs/mgmt`
 
 ## Usage
 
@@ -23,16 +23,17 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 
 const client = new KnockMapi({
   bearerToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
 async function main() {
-  const emailLayout = await client.emailLayouts.list();
+  const page = await client.workflows.list({ environment: 'development' });
+  const workflow = page.entries[0];
 
-  console.log(emailLayout.entries);
+  console.log(workflow.valid);
 }
 
 main();
@@ -44,14 +45,15 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 
 const client = new KnockMapi({
   bearerToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
 async function main() {
-  const emailLayout: KnockMapi.EmailLayoutListResponse = await client.emailLayouts.list();
+  const params: KnockMapi.WorkflowListParams = { environment: 'development' };
+  const [workflow]: [KnockMapi.Workflow] = await client.workflows.list(params);
 }
 
 main();
@@ -68,7 +70,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const emailLayout = await client.emailLayouts.list().catch(async (err) => {
+  const page = await client.workflows.list({ environment: 'development' }).catch(async (err) => {
     if (err instanceof KnockMapi.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -111,7 +113,7 @@ const client = new KnockMapi({
 });
 
 // Or, configure per-request:
-await client.emailLayouts.list({
+await client.workflows.list({ environment: 'development' }, {
   maxRetries: 5,
 });
 ```
@@ -128,7 +130,7 @@ const client = new KnockMapi({
 });
 
 // Override per-request:
-await client.emailLayouts.list({
+await client.workflows.list({ environment: 'development' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -136,6 +138,37 @@ await client.emailLayouts.list({
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the KnockMapi API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllWorkflows(params) {
+  const allWorkflows = [];
+  // Automatically fetches more pages as needed.
+  for await (const workflow of client.workflows.list({ environment: 'development' })) {
+    allWorkflows.push(workflow);
+  }
+  return allWorkflows;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.workflows.list({ environment: 'development' });
+for (const workflow of page.entries) {
+  console.log(workflow);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
@@ -151,13 +184,17 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new KnockMapi();
 
-const response = await client.emailLayouts.list().asResponse();
+const response = await client.workflows.list({ environment: 'development' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: emailLayout, response: raw } = await client.emailLayouts.list().withResponse();
+const { data: page, response: raw } = await client.workflows
+  .list({ environment: 'development' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(emailLayout.entries);
+for await (const workflow of page) {
+  console.log(workflow.valid);
+}
 ```
 
 ### Logging
@@ -174,7 +211,7 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 
 const client = new KnockMapi({
   logLevel: 'debug', // Show all log messages
@@ -202,7 +239,7 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 import pino from 'pino';
 
 const logger = pino();
@@ -272,7 +309,7 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 import fetch from 'my-fetch';
 
 const client = new KnockMapi({ fetch });
@@ -283,7 +320,7 @@ const client = new KnockMapi({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 
 const client = new KnockMapi({
   fetchOptions: {
@@ -300,7 +337,7 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
@@ -314,7 +351,7 @@ const client = new KnockMapi({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import KnockMapi from 'knock-mapi';
+import KnockMapi from '@knocklabs/mgmt';
 
 const client = new KnockMapi({
   fetchOptions: {
@@ -326,7 +363,7 @@ const client = new KnockMapi({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import KnockMapi from 'npm:knock-mapi';
+import KnockMapi from 'npm:@knocklabs/mgmt';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
 const client = new KnockMapi({

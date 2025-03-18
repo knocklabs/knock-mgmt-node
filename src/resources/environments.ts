@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -21,10 +21,12 @@ export class Environments extends APIResource {
   list(
     query: EnvironmentListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<EnvironmentListResponse> {
-    return this._client.get('/v1/environments', { query, ...options });
+  ): PagePromise<EnvironmentsEntriesCursor, Environment> {
+    return this._client.getAPIList('/v1/environments', EntriesCursor<Environment>, { query, ...options });
   }
 }
+
+export type EnvironmentsEntriesCursor = EntriesCursor<Environment>;
 
 /**
  * An environment object.
@@ -81,43 +83,12 @@ export interface Environment {
   last_commit_at?: string | null;
 }
 
-/**
- * A paginated list of Environment. Contains a list of entries and page
- * information.
- */
-export interface EnvironmentListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Environment>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-export interface EnvironmentListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
-}
+export interface EnvironmentListParams extends EntriesCursorParams {}
 
 export declare namespace Environments {
   export {
     type Environment as Environment,
-    type EnvironmentListResponse as EnvironmentListResponse,
+    type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
     type EnvironmentListParams as EnvironmentListParams,
   };
 }

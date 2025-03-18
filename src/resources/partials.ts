@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -17,8 +17,8 @@ export class Partials extends APIResource {
   /**
    * List all partials for a given environment.
    */
-  list(query: PartialListParams, options?: RequestOptions): APIPromise<PartialListResponse> {
-    return this._client.get('/v1/partials', { query, ...options });
+  list(query: PartialListParams, options?: RequestOptions): PagePromise<PartialsEntriesCursor, Partial> {
+    return this._client.getAPIList('/v1/partials', EntriesCursor<Partial>, { query, ...options });
   }
 
   /**
@@ -57,6 +57,8 @@ export class Partials extends APIResource {
     });
   }
 }
+
+export type PartialsEntriesCursor = EntriesCursor<Partial>;
 
 /**
  * A partial is a reusable piece of content that can be used in a template.
@@ -122,21 +124,6 @@ export interface Partial {
 }
 
 /**
- * A paginated list of Partial. Contains a list of entries and page information.
- */
-export interface PartialListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Partial>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-/**
  * Wraps the Partial response under the `partial` key.
  */
 export interface PartialUpsertResponse {
@@ -173,16 +160,11 @@ export interface PartialRetrieveParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export interface PartialListParams {
+export interface PartialListParams extends EntriesCursorParams {
   /**
    * A slug of the environment from which to query partials.
    */
   environment: string;
-
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
 
   /**
    * Whether to annotate the resource.
@@ -190,19 +172,9 @@ export interface PartialListParams {
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
    * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 }
 
 export interface PartialUpsertParams {
@@ -331,9 +303,9 @@ export namespace PartialValidateParams {
 export declare namespace Partials {
   export {
     type Partial as Partial,
-    type PartialListResponse as PartialListResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
+    type PartialsEntriesCursor as PartialsEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
     type PartialUpsertParams as PartialUpsertParams,

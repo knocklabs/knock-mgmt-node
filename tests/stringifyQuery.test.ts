@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { KnockMapi } from 'knock-mapi';
+import { KnockMapi } from '@knocklabs/mgmt';
 
 const { stringifyQuery } = KnockMapi.prototype as any;
 

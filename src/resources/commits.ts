@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -21,8 +21,8 @@ export class Commits extends APIResource {
   list(
     query: CommitListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CommitListResponse> {
-    return this._client.get('/v1/commits', { query, ...options });
+  ): PagePromise<CommitsEntriesCursor, Commit> {
+    return this._client.getAPIList('/v1/commits', EntriesCursor<Commit>, { query, ...options });
   }
 
   /**
@@ -52,6 +52,8 @@ export class Commits extends APIResource {
     return this._client.put(path`/v1/commits/${id}/promote`, options);
   }
 }
+
+export type CommitsEntriesCursor = EntriesCursor<Commit>;
 
 /**
  * A commit is a change to a resource within an environment, made by an author.
@@ -126,21 +128,6 @@ export namespace Commit {
 }
 
 /**
- * A paginated list of Commit. Contains a list of entries and page information.
- */
-export interface CommitListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Commit>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-/**
  * The result of the commit operation.
  */
 export interface CommitCommitAllResponse {
@@ -164,26 +151,11 @@ export interface CommitPromoteOneResponse {
   commit: Commit;
 }
 
-export interface CommitListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
+export interface CommitListParams extends EntriesCursorParams {
   /**
    * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
 
   /**
    * Whether to show only promoted or unpromoted changes between the given
@@ -221,10 +193,10 @@ export interface CommitPromoteAllParams {
 export declare namespace Commits {
   export {
     type Commit as Commit,
-    type CommitListResponse as CommitListResponse,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
     type CommitPromoteOneResponse as CommitPromoteOneResponse,
+    type CommitsEntriesCursor as CommitsEntriesCursor,
     type CommitListParams as CommitListParams,
     type CommitCommitAllParams as CommitCommitAllParams,
     type CommitPromoteAllParams as CommitPromoteAllParams,

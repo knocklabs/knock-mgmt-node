@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
-import * as Shared from './shared';
-import { APIPromise } from '../api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Channels extends APIResource {
@@ -13,10 +12,12 @@ export class Channels extends APIResource {
   list(
     query: ChannelListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ChannelListResponse> {
-    return this._client.get('/v1/channels', { query, ...options });
+  ): PagePromise<ChannelsEntriesCursor, Channel> {
+    return this._client.getAPIList('/v1/channels', EntriesCursor<Channel>, { query, ...options });
   }
 }
+
+export type ChannelsEntriesCursor = EntriesCursor<Channel>;
 
 /**
  * A configured channel, which is a way to route messages to a provider.
@@ -175,37 +176,7 @@ export interface SMSChannelSettings {
   link_tracking?: boolean;
 }
 
-/**
- * A paginated list of Channel. Contains a list of entries and page information.
- */
-export interface ChannelListResponse {
-  /**
-   * A list of entries.
-   */
-  entries: Array<Channel>;
-
-  /**
-   * The information about a paginated result.
-   */
-  page_info: Shared.PageInfo;
-}
-
-export interface ChannelListParams {
-  /**
-   * The cursor to fetch entries after.
-   */
-  after?: string;
-
-  /**
-   * The cursor to fetch entries before.
-   */
-  before?: string;
-
-  /**
-   * The number of entries to fetch per-page.
-   */
-  limit?: number;
-}
+export interface ChannelListParams extends EntriesCursorParams {}
 
 export declare namespace Channels {
   export {
@@ -215,7 +186,7 @@ export declare namespace Channels {
     type InAppFeedChannelSettings as InAppFeedChannelSettings,
     type PushChannelSettings as PushChannelSettings,
     type SMSChannelSettings as SMSChannelSettings,
-    type ChannelListResponse as ChannelListResponse,
+    type ChannelsEntriesCursor as ChannelsEntriesCursor,
     type ChannelListParams as ChannelListParams,
   };
 }

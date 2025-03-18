@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'knock-mapi/internal/uploads';
-import { toFile } from 'knock-mapi/uploads';
+import { multipartFormRequestOptions, createForm } from '@knocklabs/mgmt/internal/uploads';
+import { toFile } from '@knocklabs/mgmt/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
