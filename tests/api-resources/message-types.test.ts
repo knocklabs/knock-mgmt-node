@@ -97,7 +97,7 @@ describe('resource messageTypes', () => {
               {
                 key: 'text_field',
                 type: 'text',
-                label: 'Text Field',
+                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',
@@ -156,7 +156,7 @@ describe('resource messageTypes', () => {
               {
                 key: 'text_field',
                 type: 'text',
-                label: 'Text Field',
+                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',

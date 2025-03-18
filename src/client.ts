@@ -73,6 +73,7 @@ import {
   TranslationValidateResponse,
   Translations,
 } from './resources/translations';
+import { Whoami, WhoamiVerifyResponse } from './resources/whoami';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
@@ -136,7 +137,7 @@ const parseLogLevel = (
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['KNOCK_MAPI_BEARER_TOKEN'].
+   * Defaults to process.env['KNOCK_SERVICE_TOKEN'].
    */
   bearerToken?: string | undefined;
 
@@ -230,7 +231,7 @@ export class KnockMapi {
   /**
    * API Client for interfacing with the Knock Mapi API.
    *
-   * @param {string | undefined} [opts.bearerToken=process.env['KNOCK_MAPI_BEARER_TOKEN'] ?? undefined]
+   * @param {string | undefined} [opts.bearerToken=process.env['KNOCK_SERVICE_TOKEN'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['KNOCK_MAPI_BASE_URL'] ?? https://control.knock.app] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -241,12 +242,12 @@ export class KnockMapi {
    */
   constructor({
     baseURL = readEnv('KNOCK_MAPI_BASE_URL'),
-    bearerToken = readEnv('KNOCK_MAPI_BEARER_TOKEN'),
+    bearerToken = readEnv('KNOCK_SERVICE_TOKEN'),
     ...opts
   }: ClientOptions = {}) {
     if (bearerToken === undefined) {
       throw new Errors.KnockMapiError(
-        "The KNOCK_MAPI_BEARER_TOKEN environment variable is missing or empty; either provide it, or instantiate the KnockMapi client with an bearerToken option, like new KnockMapi({ bearerToken: 'My Bearer Token' }).",
+        "The KNOCK_SERVICE_TOKEN environment variable is missing or empty; either provide it, or instantiate the KnockMapi client with an bearerToken option, like new KnockMapi({ bearerToken: 'My Bearer Token' }).",
       );
     }
 
@@ -791,6 +792,7 @@ export class KnockMapi {
   translations: API.Translations = new API.Translations(this);
   workflows: API.Workflows = new API.Workflows(this);
   messageTypes: API.MessageTypes = new API.MessageTypes(this);
+  whoami: API.Whoami = new API.Whoami(this);
 }
 KnockMapi.EmailLayouts = EmailLayouts;
 KnockMapi.Commits = Commits;
@@ -798,6 +800,7 @@ KnockMapi.Partials = Partials;
 KnockMapi.Translations = Translations;
 KnockMapi.Workflows = Workflows;
 KnockMapi.MessageTypes = MessageTypes;
+KnockMapi.Whoami = Whoami;
 export declare namespace KnockMapi {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -876,4 +879,6 @@ export declare namespace KnockMapi {
     type MessageTypeUpsertParams as MessageTypeUpsertParams,
     type MessageTypeValidateParams as MessageTypeValidateParams,
   };
+
+  export { Whoami as Whoami, type WhoamiVerifyResponse as WhoamiVerifyResponse };
 }

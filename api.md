@@ -109,3 +109,13 @@ Methods:
 - <code title="get /v1/message_types">client.messageTypes.<a href="./src/resources/message-types.ts">list</a>({ ...params }) -> MessageTypeListResponse</code>
 - <code title="put /v1/message_types/{message_type_key}">client.messageTypes.<a href="./src/resources/message-types.ts">upsert</a>(messageTypeKey, { ...params }) -> MessageTypeUpsertResponse</code>
 - <code title="put /v1/message_types/{message_type_key}/validate">client.messageTypes.<a href="./src/resources/message-types.ts">validate</a>(messageTypeKey, { ...params }) -> MessageTypeValidateResponse</code>
+
+# Whoami
+
+Types:
+
+- <code><a href="./src/resources/whoami.ts">WhoamiVerifyResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/whoami">client.whoami.<a href="./src/resources/whoami.ts">verify</a>() -> WhoamiVerifyResponse</code>

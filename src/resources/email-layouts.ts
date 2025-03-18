@@ -162,73 +162,7 @@ export interface EmailLayoutUpsertResponse {
   /**
    * A versioned email layout used within an environment
    */
-  email_layout: EmailLayoutUpsertResponse.EmailLayout;
-}
-
-export namespace EmailLayoutUpsertResponse {
-  /**
-   * A versioned email layout used within an environment
-   */
-  export interface EmailLayout {
-    /**
-     * The creation date of the email layout
-     */
-    created_at: string;
-
-    /**
-     * The complete HTML content of the email layout
-     */
-    html_layout: string;
-
-    /**
-     * The unique key for this email layout
-     */
-    key: string;
-
-    /**
-     * The friendly name of this email layout
-     */
-    name: string;
-
-    /**
-     * The SHA of the email layout
-     */
-    sha: string;
-
-    /**
-     * The complete plain text content of the email layout
-     */
-    text_layout: string;
-
-    /**
-     * The environment of the email layout
-     */
-    environment?: string;
-
-    /**
-     * A list of one or more items to show in the footer of the email layout
-     */
-    footer_links?: Array<EmailLayout.FooterLink>;
-
-    /**
-     * The last update date of the email layout
-     */
-    updated_at?: string;
-  }
-
-  export namespace EmailLayout {
-    export interface FooterLink {
-      /**
-       * The text to display as the link
-       */
-      text: string;
-
-      /**
-       * The URL to link to
-       */
-      url: string;
-    }
-  }
+  email_layout: EmailLayout;
 }
 
 /**
@@ -238,73 +172,7 @@ export interface EmailLayoutValidateResponse {
   /**
    * A versioned email layout used within an environment
    */
-  email_layout: EmailLayoutValidateResponse.EmailLayout;
-}
-
-export namespace EmailLayoutValidateResponse {
-  /**
-   * A versioned email layout used within an environment
-   */
-  export interface EmailLayout {
-    /**
-     * The creation date of the email layout
-     */
-    created_at: string;
-
-    /**
-     * The complete HTML content of the email layout
-     */
-    html_layout: string;
-
-    /**
-     * The unique key for this email layout
-     */
-    key: string;
-
-    /**
-     * The friendly name of this email layout
-     */
-    name: string;
-
-    /**
-     * The SHA of the email layout
-     */
-    sha: string;
-
-    /**
-     * The complete plain text content of the email layout
-     */
-    text_layout: string;
-
-    /**
-     * The environment of the email layout
-     */
-    environment?: string;
-
-    /**
-     * A list of one or more items to show in the footer of the email layout
-     */
-    footer_links?: Array<EmailLayout.FooterLink>;
-
-    /**
-     * The last update date of the email layout
-     */
-    updated_at?: string;
-  }
-
-  export namespace EmailLayout {
-    export interface FooterLink {
-      /**
-       * The text to display as the link
-       */
-      text: string;
-
-      /**
-       * The URL to link to
-       */
-      url: string;
-    }
-  }
+  email_layout: EmailLayout;
 }
 
 export interface EmailLayoutRetrieveParams {
