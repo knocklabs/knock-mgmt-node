@@ -1,4 +1,4 @@
-import { KnockError } from '../../error';
+import { KnockMgmtError } from '../../error';
 
 /**
  * Percent-encode everything that isn't safe to have in a path without encoding safe chars.
@@ -51,7 +51,9 @@ export const createPathTagFunction = (pathEncoder = encodeURIPath) =>
         return acc + spaces + arrows;
       }, '');
 
-      throw new KnockError(`Path parameters result in path with invalid segments:\n${path}\n${underline}`);
+      throw new KnockMgmtError(
+        `Path parameters result in path with invalid segments:\n${path}\n${underline}`,
+      );
     }
 
     return path;
