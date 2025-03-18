@@ -1,3 +1,21 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">PageInfo</a></code>
+
+# Templates
+
+Types:
+
+- <code><a href="./src/resources/templates.ts">ChatTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">EmailTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">InAppFeedTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">PushTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">RequestTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">SMSTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">WebhookTemplate</a></code>
+
 # EmailLayouts
 
 Types:
@@ -18,7 +36,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/commits.ts">CommitRetrieveResponse</a></code>
+- <code><a href="./src/resources/commits.ts">Commit</a></code>
 - <code><a href="./src/resources/commits.ts">CommitListResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitCommitAllResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitPromoteAllResponse</a></code>
@@ -26,7 +44,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/commits/{id}">client.commits.<a href="./src/resources/commits.ts">retrieve</a>(id) -> CommitRetrieveResponse</code>
+- <code title="get /v1/commits/{id}">client.commits.<a href="./src/resources/commits.ts">retrieve</a>(id) -> Commit</code>
 - <code title="get /v1/commits">client.commits.<a href="./src/resources/commits.ts">list</a>({ ...params }) -> CommitListResponse</code>
 - <code title="put /v1/commits">client.commits.<a href="./src/resources/commits.ts">commitAll</a>({ ...params }) -> CommitCommitAllResponse</code>
 - <code title="put /v1/commits/promote">client.commits.<a href="./src/resources/commits.ts">promoteAll</a>({ ...params }) -> CommitPromoteAllResponse</code>
@@ -36,14 +54,14 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/partials.ts">PartialRetrieveResponse</a></code>
+- <code><a href="./src/resources/partials.ts">Partial</a></code>
 - <code><a href="./src/resources/partials.ts">PartialListResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialUpsertResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialValidateResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> PartialRetrieveResponse</code>
+- <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> Partial</code>
 - <code title="get /v1/partials">client.partials.<a href="./src/resources/partials.ts">list</a>({ ...params }) -> PartialListResponse</code>
 - <code title="put /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">upsert</a>(partialKey, { ...params }) -> PartialUpsertResponse</code>
 - <code title="put /v1/partials/{partial_key}/validate">client.partials.<a href="./src/resources/partials.ts">validate</a>(partialKey, { ...params }) -> PartialValidateResponse</code>
@@ -52,6 +70,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/translations.ts">Translation</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationRetrieveResponse</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationListResponse</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationUpsertResponse</a></code>
@@ -68,7 +87,19 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRetrieveResponse</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">Condition</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">ConditionGroup</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">Duration</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">SendWindow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowBatchStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowBranchStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowChannelStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowDelayStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerWorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowListResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowActivateResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRunResponse</a></code>
@@ -77,7 +108,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> WorkflowRetrieveResponse</code>
+- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> Workflow</code>
 - <code title="get /v1/workflows">client.workflows.<a href="./src/resources/workflows/workflows.ts">list</a>({ ...params }) -> WorkflowListResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/activate">client.workflows.<a href="./src/resources/workflows/workflows.ts">activate</a>(workflowKey, { ...params }) -> WorkflowActivateResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/run">client.workflows.<a href="./src/resources/workflows/workflows.ts">run</a>(workflowKey, { ...params }) -> WorkflowRunResponse</code>
@@ -98,24 +129,87 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/message-types.ts">MessageTypeRetrieveResponse</a></code>
+- <code><a href="./src/resources/message-types.ts">MessageType</a></code>
+- <code><a href="./src/resources/message-types.ts">MessageTypeTextField</a></code>
+- <code><a href="./src/resources/message-types.ts">MessageTypeVariant</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeListResponse</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeUpsertResponse</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeValidateResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/message_types/{message_type_key}">client.messageTypes.<a href="./src/resources/message-types.ts">retrieve</a>(messageTypeKey, { ...params }) -> MessageTypeRetrieveResponse</code>
+- <code title="get /v1/message_types/{message_type_key}">client.messageTypes.<a href="./src/resources/message-types.ts">retrieve</a>(messageTypeKey, { ...params }) -> MessageType</code>
 - <code title="get /v1/message_types">client.messageTypes.<a href="./src/resources/message-types.ts">list</a>({ ...params }) -> MessageTypeListResponse</code>
 - <code title="put /v1/message_types/{message_type_key}">client.messageTypes.<a href="./src/resources/message-types.ts">upsert</a>(messageTypeKey, { ...params }) -> MessageTypeUpsertResponse</code>
 - <code title="put /v1/message_types/{message_type_key}/validate">client.messageTypes.<a href="./src/resources/message-types.ts">validate</a>(messageTypeKey, { ...params }) -> MessageTypeValidateResponse</code>
 
-# Whoami
+# Auth
 
 Types:
 
-- <code><a href="./src/resources/whoami.ts">WhoamiVerifyResponse</a></code>
+- <code><a href="./src/resources/auth.ts">AuthVerifyResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/whoami">client.whoami.<a href="./src/resources/whoami.ts">verify</a>() -> WhoamiVerifyResponse</code>
+- <code title="get /v1/whoami">client.auth.<a href="./src/resources/auth.ts">verify</a>() -> AuthVerifyResponse</code>
+
+# APIKeys
+
+Types:
+
+- <code><a href="./src/resources/api-keys.ts">APIKeyExchangeResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/api_keys/exchange">client.apiKeys.<a href="./src/resources/api-keys.ts">exchange</a>({ ...params }) -> APIKeyExchangeResponse</code>
+
+# ChannelGroups
+
+Types:
+
+- <code><a href="./src/resources/channel-groups.ts">ChannelGroup</a></code>
+- <code><a href="./src/resources/channel-groups.ts">ChannelGroupRule</a></code>
+- <code><a href="./src/resources/channel-groups.ts">ChannelGroupListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/channel_groups">client.channelGroups.<a href="./src/resources/channel-groups.ts">list</a>({ ...params }) -> ChannelGroupListResponse</code>
+
+# Channels
+
+Types:
+
+- <code><a href="./src/resources/channels.ts">Channel</a></code>
+- <code><a href="./src/resources/channels.ts">ChatChannelSettings</a></code>
+- <code><a href="./src/resources/channels.ts">EmailChannelSettings</a></code>
+- <code><a href="./src/resources/channels.ts">InAppFeedChannelSettings</a></code>
+- <code><a href="./src/resources/channels.ts">PushChannelSettings</a></code>
+- <code><a href="./src/resources/channels.ts">SMSChannelSettings</a></code>
+- <code><a href="./src/resources/channels.ts">ChannelListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/channels">client.channels.<a href="./src/resources/channels.ts">list</a>({ ...params }) -> ChannelListResponse</code>
+
+# Environments
+
+Types:
+
+- <code><a href="./src/resources/environments.ts">Environment</a></code>
+- <code><a href="./src/resources/environments.ts">EnvironmentListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments.ts">retrieve</a>(environmentSlug) -> Environment</code>
+- <code title="get /v1/environments">client.environments.<a href="./src/resources/environments.ts">list</a>({ ...params }) -> EnvironmentListResponse</code>
+
+# Variables
+
+Types:
+
+- <code><a href="./src/resources/variables.ts">Variable</a></code>
+- <code><a href="./src/resources/variables.ts">VariableListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/variables">client.variables.<a href="./src/resources/variables.ts">list</a>({ ...params }) -> VariableListResponse</code>

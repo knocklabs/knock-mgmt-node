@@ -4,11 +4,11 @@ import { APIResource } from '../resource';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class Whoami extends APIResource {
+export class Auth extends APIResource {
   /**
    * Return information about the current service token.
    */
-  verify(options?: RequestOptions): APIPromise<WhoamiVerifyResponse> {
+  verify(options?: RequestOptions): APIPromise<AuthVerifyResponse> {
     return this._client.get('/v1/whoami', options);
   }
 }
@@ -16,7 +16,7 @@ export class Whoami extends APIResource {
 /**
  * Information about the current service token.
  */
-export interface WhoamiVerifyResponse {
+export interface AuthVerifyResponse {
   account_name: string;
 
   account_slug: string;
@@ -24,6 +24,6 @@ export interface WhoamiVerifyResponse {
   service_token_name: string;
 }
 
-export declare namespace Whoami {
-  export { type WhoamiVerifyResponse as WhoamiVerifyResponse };
+export declare namespace Auth {
+  export { type AuthVerifyResponse as AuthVerifyResponse };
 }

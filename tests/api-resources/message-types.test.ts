@@ -89,8 +89,6 @@ describe('resource messageTypes', () => {
         preview: '<div>Hello, world!</div>',
         icon_name: 'icon_name',
         semver: '1.0.0',
-        sha: 'sha',
-        updated_at: '2019-12-27T18:11:19.117Z',
         variants: [
           {
             fields: [
@@ -148,8 +146,6 @@ describe('resource messageTypes', () => {
         preview: '<div>Hello, world!</div>',
         icon_name: 'icon_name',
         semver: '1.0.0',
-        sha: 'sha',
-        updated_at: '2019-12-27T18:11:19.117Z',
         variants: [
           {
             fields: [

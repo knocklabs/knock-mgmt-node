@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as MessageTypesAPI from './message-types';
+import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -13,7 +15,7 @@ export class MessageTypes extends APIResource {
     messageTypeKey: string,
     query: MessageTypeRetrieveParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MessageTypeRetrieveResponse> {
+  ): APIPromise<MessageType> {
     return this._client.get(path`/v1/message_types/${messageTypeKey}`, { query, ...options });
   }
 
@@ -68,7 +70,7 @@ export class MessageTypes extends APIResource {
 /**
  * A message type object
  */
-export interface MessageTypeRetrieveResponse {
+export interface MessageType {
   /**
    * When the message type was created
    */
@@ -124,7 +126,7 @@ export interface MessageTypeRetrieveResponse {
   /**
    * The variants of the message type
    */
-  variants: Array<MessageTypeRetrieveResponse.Variant>;
+  variants: Array<MessageTypeVariant>;
 
   /**
    * When the message type was archived
@@ -148,530 +150,422 @@ export interface MessageTypeRetrieveResponse {
   icon_name?: string;
 }
 
-export namespace MessageTypeRetrieveResponse {
+/**
+ * A text field used in a message type
+ */
+export interface MessageTypeTextField {
   /**
-   * A variant of a message type
+   * The unique key of the field
    */
-  export interface Variant {
+  key: string;
+
+  /**
+   * The type of the field
+   */
+  type: 'text';
+
+  /**
+   * The label of the field
+   */
+  label?: string | null;
+
+  /**
+   * Settings for the text field
+   */
+  settings?: MessageTypeTextField.Settings;
+
+  /**
+   * The value of the text field
+   */
+  value?: string | null;
+}
+
+export namespace MessageTypeTextField {
+  /**
+   * Settings for the text field
+   */
+  export interface Settings {
     /**
-     * The field types available for the variant
+     * The default value of the text field
      */
-    fields: Array<
-      | Variant.BooleanField
-      | Variant.ButtonField
-      | Variant.MarkdownField
-      | Variant.MultiSelectField
-      | Variant.SelectField
-      | Variant.TextField
-      | Variant.TextareaField
-    >;
+    default?: string | null;
+
+    description?: string;
+
+    max_length?: number;
+
+    min_length?: number;
 
     /**
-     * The unique key string for the variant. Must be at minimum 3 characters and at
-     * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
+     * Whether the field is required
+     */
+    required?: boolean;
+  }
+}
+
+/**
+ * A variant of a message type
+ */
+export interface MessageTypeVariant {
+  /**
+   * The field types available for the variant
+   */
+  fields: Array<
+    | MessageTypeVariant.MessageTypeBooleanField
+    | MessageTypeVariant.MessageTypeButtonField
+    | MessageTypeVariant.MessageTypeMarkdownField
+    | MessageTypeVariant.MessageTypeMultiSelectField
+    | MessageTypeVariant.MessageTypeSelectField
+    | MessageTypeTextField
+    | MessageTypeVariant.MessageTypeTextareaField
+  >;
+
+  /**
+   * The unique key string for the variant. Must be at minimum 3 characters and at
+   * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
+   */
+  key: string;
+
+  /**
+   * A name for the variant. Must be at maximum 255 characters in length.
+   */
+  name: string;
+}
+
+export namespace MessageTypeVariant {
+  /**
+   * A boolean field used in a message type
+   */
+  export interface MessageTypeBooleanField {
+    /**
+     * The unique key of the field
      */
     key: string;
 
     /**
-     * A name for the variant. Must be at maximum 255 characters in length.
+     * The type of the field
      */
-    name: string;
+    type: 'boolean';
+
+    /**
+     * The value of the boolean field
+     */
+    value: boolean;
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * Settings for the boolean field
+     */
+    settings?: MessageTypeBooleanField.Settings;
   }
 
-  export namespace Variant {
+  export namespace MessageTypeBooleanField {
     /**
-     * A boolean field used in a message type
+     * Settings for the boolean field
      */
-    export interface BooleanField {
+    export interface Settings {
       /**
-       * The unique key of the field
+       * The default value of the boolean field
        */
-      key: string;
+      default?: boolean;
+
+      description?: string;
 
       /**
-       * The type of the field
+       * Whether the field is required
        */
-      type: 'boolean';
-
-      /**
-       * The value of the boolean field
-       */
-      value: boolean;
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * Settings for the boolean field
-       */
-      settings?: BooleanField.Settings;
+      required?: boolean;
     }
+  }
 
-    export namespace BooleanField {
-      /**
-       * Settings for the boolean field
-       */
-      export interface Settings {
-        /**
-         * The default value of the boolean field
-         */
-        default?: boolean;
-
-        description?: string;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-    }
+  /**
+   * A button field used in a message type
+   */
+  export interface MessageTypeButtonField {
+    /**
+     * A text field used in a message type
+     */
+    action: MessageTypesAPI.MessageTypeTextField;
 
     /**
-     * A button field used in a message type
+     * The unique key of the field
      */
-    export interface ButtonField {
-      /**
-       * A text field used in a message type
-       */
-      action: ButtonField.Action;
-
-      /**
-       * The unique key of the field
-       */
-      key: string;
-
-      /**
-       * A text field used in a message type
-       */
-      text: ButtonField.Text;
-
-      /**
-       * The type of the field
-       */
-      type: 'button';
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * Settings for the button field
-       */
-      settings?: ButtonField.Settings;
-    }
-
-    export namespace ButtonField {
-      /**
-       * A text field used in a message type
-       */
-      export interface Action {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: Action.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace Action {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface Text {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: Text.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace Text {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * Settings for the button field
-       */
-      export interface Settings {
-        description?: string;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-    }
-
-    /**
-     * A markdown field used in a message type
-     */
-    export interface MarkdownField {
-      /**
-       * The unique key of the field
-       */
-      key: string;
-
-      /**
-       * The type of the field
-       */
-      type: 'markdown';
-
-      /**
-       * The value of the markdown field
-       */
-      value: string;
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * Settings for the markdown field
-       */
-      settings?: MarkdownField.Settings;
-    }
-
-    export namespace MarkdownField {
-      /**
-       * Settings for the markdown field
-       */
-      export interface Settings {
-        /**
-         * The default value of the markdown field
-         */
-        default?: string;
-
-        description?: string;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-    }
-
-    /**
-     * A multi-select field used in a message type
-     */
-    export interface MultiSelectField {
-      /**
-       * The unique key of the field
-       */
-      key: string;
-
-      /**
-       * Settings for the multi_select field
-       */
-      settings: MultiSelectField.Settings;
-
-      /**
-       * The type of the field
-       */
-      type: 'multi_select';
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * The selected values
-       */
-      value?: Array<string> | null;
-    }
-
-    export namespace MultiSelectField {
-      /**
-       * Settings for the multi_select field
-       */
-      export interface Settings {
-        /**
-         * The default values for the multi-select field
-         */
-        default?: Array<string> | null;
-
-        description?: string;
-
-        /**
-         * The available options for the multi-select field
-         */
-        options?: Array<Settings.Option>;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-
-      export namespace Settings {
-        export interface Option {
-          /**
-           * The value for the option
-           */
-          value: string;
-
-          /**
-           * The display label for the option
-           */
-          label?: string;
-        }
-      }
-    }
-
-    /**
-     * A select field used in a message type
-     */
-    export interface SelectField {
-      /**
-       * The unique key of the field
-       */
-      key: string;
-
-      /**
-       * Settings for the select field
-       */
-      settings: SelectField.Settings;
-
-      /**
-       * The type of the field
-       */
-      type: 'select';
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * The selected value
-       */
-      value?: string | null;
-    }
-
-    export namespace SelectField {
-      /**
-       * Settings for the select field
-       */
-      export interface Settings {
-        /**
-         * The default value for the select field
-         */
-        default?: string | null;
-
-        description?: string;
-
-        /**
-         * The available options for the select field
-         */
-        options?: Array<Settings.Option>;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-
-      export namespace Settings {
-        export interface Option {
-          /**
-           * The value for the option
-           */
-          value: string;
-
-          /**
-           * The display label for the option
-           */
-          label?: string;
-        }
-      }
-    }
+    key: string;
 
     /**
      * A text field used in a message type
      */
-    export interface TextField {
-      /**
-       * The unique key of the field
-       */
-      key: string;
-
-      /**
-       * The type of the field
-       */
-      type: 'text';
-
-      /**
-       * The label of the field
-       */
-      label?: string | null;
-
-      /**
-       * Settings for the text field
-       */
-      settings?: TextField.Settings;
-
-      /**
-       * The value of the text field
-       */
-      value?: string | null;
-    }
-
-    export namespace TextField {
-      /**
-       * Settings for the text field
-       */
-      export interface Settings {
-        /**
-         * The default value of the text field
-         */
-        default?: string | null;
-
-        description?: string;
-
-        max_length?: number;
-
-        min_length?: number;
-
-        /**
-         * Whether the field is required
-         */
-        required?: boolean;
-      }
-    }
+    text: MessageTypesAPI.MessageTypeTextField;
 
     /**
-     * A textarea field used in a message type
+     * The type of the field
      */
-    export interface TextareaField {
-      /**
-       * The unique key of the field
-       */
-      key: string;
+    type: 'button';
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * Settings for the button field
+     */
+    settings?: MessageTypeButtonField.Settings;
+  }
+
+  export namespace MessageTypeButtonField {
+    /**
+     * Settings for the button field
+     */
+    export interface Settings {
+      description?: string;
 
       /**
-       * The type of the field
+       * Whether the field is required
        */
-      type: 'textarea';
+      required?: boolean;
+    }
+  }
+
+  /**
+   * A markdown field used in a message type
+   */
+  export interface MessageTypeMarkdownField {
+    /**
+     * The unique key of the field
+     */
+    key: string;
+
+    /**
+     * The type of the field
+     */
+    type: 'markdown';
+
+    /**
+     * The value of the markdown field
+     */
+    value: string;
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * Settings for the markdown field
+     */
+    settings?: MessageTypeMarkdownField.Settings;
+  }
+
+  export namespace MessageTypeMarkdownField {
+    /**
+     * Settings for the markdown field
+     */
+    export interface Settings {
+      /**
+       * The default value of the markdown field
+       */
+      default?: string;
+
+      description?: string;
 
       /**
-       * The label of the field
+       * Whether the field is required
        */
-      label?: string | null;
+      required?: boolean;
+    }
+  }
+
+  /**
+   * A multi-select field used in a message type
+   */
+  export interface MessageTypeMultiSelectField {
+    /**
+     * The unique key of the field
+     */
+    key: string;
+
+    /**
+     * Settings for the multi_select field
+     */
+    settings: MessageTypeMultiSelectField.Settings;
+
+    /**
+     * The type of the field
+     */
+    type: 'multi_select';
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * The selected values
+     */
+    value?: Array<string> | null;
+  }
+
+  export namespace MessageTypeMultiSelectField {
+    /**
+     * Settings for the multi_select field
+     */
+    export interface Settings {
+      /**
+       * The default values for the multi-select field
+       */
+      default?: Array<string> | null;
+
+      description?: string;
 
       /**
-       * Settings for the textarea field
+       * The available options for the multi-select field
        */
-      settings?: TextareaField.Settings;
+      options?: Array<Settings.Option>;
 
       /**
-       * The value of the textarea field
+       * Whether the field is required
        */
-      value?: string | null;
+      required?: boolean;
     }
 
-    export namespace TextareaField {
-      /**
-       * Settings for the textarea field
-       */
-      export interface Settings {
+    export namespace Settings {
+      export interface Option {
         /**
-         * The default value of the textarea field
+         * The value for the option
          */
-        default?: string | null;
-
-        description?: string;
-
-        max_length?: number;
-
-        min_length?: number;
+        value: string;
 
         /**
-         * Whether the field is required
+         * The display label for the option
          */
-        required?: boolean;
+        label?: string;
       }
+    }
+  }
+
+  /**
+   * A select field used in a message type
+   */
+  export interface MessageTypeSelectField {
+    /**
+     * The unique key of the field
+     */
+    key: string;
+
+    /**
+     * Settings for the select field
+     */
+    settings: MessageTypeSelectField.Settings;
+
+    /**
+     * The type of the field
+     */
+    type: 'select';
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * The selected value
+     */
+    value?: string | null;
+  }
+
+  export namespace MessageTypeSelectField {
+    /**
+     * Settings for the select field
+     */
+    export interface Settings {
+      /**
+       * The default value for the select field
+       */
+      default?: string | null;
+
+      description?: string;
+
+      /**
+       * The available options for the select field
+       */
+      options?: Array<Settings.Option>;
+
+      /**
+       * Whether the field is required
+       */
+      required?: boolean;
+    }
+
+    export namespace Settings {
+      export interface Option {
+        /**
+         * The value for the option
+         */
+        value: string;
+
+        /**
+         * The display label for the option
+         */
+        label?: string;
+      }
+    }
+  }
+
+  /**
+   * A textarea field used in a message type
+   */
+  export interface MessageTypeTextareaField {
+    /**
+     * The unique key of the field
+     */
+    key: string;
+
+    /**
+     * The type of the field
+     */
+    type: 'textarea';
+
+    /**
+     * The label of the field
+     */
+    label?: string | null;
+
+    /**
+     * Settings for the textarea field
+     */
+    settings?: MessageTypeTextareaField.Settings;
+
+    /**
+     * The value of the textarea field
+     */
+    value?: string | null;
+  }
+
+  export namespace MessageTypeTextareaField {
+    /**
+     * Settings for the textarea field
+     */
+    export interface Settings {
+      /**
+       * The default value of the textarea field
+       */
+      default?: string | null;
+
+      description?: string;
+
+      max_length?: number;
+
+      min_length?: number;
+
+      /**
+       * Whether the field is required
+       */
+      required?: boolean;
     }
   }
 }
@@ -681,638 +575,12 @@ export namespace MessageTypeRetrieveResponse {
  * information.
  */
 export interface MessageTypeListResponse {
-  entries: Array<MessageTypeListResponse.Entry>;
+  entries: Array<MessageType>;
 
   /**
    * The information about a paginated result
    */
-  page_info: MessageTypeListResponse.PageInfo;
-}
-
-export namespace MessageTypeListResponse {
-  /**
-   * A message type object
-   */
-  export interface Entry {
-    /**
-     * When the message type was created
-     */
-    created_at: string;
-
-    /**
-     * The environment of the message type
-     */
-    environment: string;
-
-    /**
-     * The unique key string for the message type object. Must be at minimum 3
-     * characters and at maximum 255 characters in length. Must be in the format of
-     * ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the message type. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The owner of the message type
-     */
-    owner: 'system' | 'user';
-
-    /**
-     * An HTML/liquid template for the message type preview
-     */
-    preview: string;
-
-    /**
-     * The semantic version of the message type
-     */
-    semver: string;
-
-    /**
-     * The SHA hash of the message type
-     */
-    sha: string;
-
-    /**
-     * When the message type was last updated
-     */
-    updated_at: string;
-
-    /**
-     * Whether the message type is valid
-     */
-    valid: boolean;
-
-    /**
-     * The variants of the message type
-     */
-    variants: Array<Entry.Variant>;
-
-    /**
-     * When the message type was archived
-     */
-    archived_at?: string;
-
-    /**
-     * When the message type was deleted
-     */
-    deleted_at?: string | null;
-
-    /**
-     * An arbitrary string attached to a message type object. Useful for adding notes
-     * about the message type for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string | null;
-
-    /**
-     * The icon name of the message type
-     */
-    icon_name?: string;
-  }
-
-  export namespace Entry {
-    /**
-     * A variant of a message type
-     */
-    export interface Variant {
-      /**
-       * The field types available for the variant
-       */
-      fields: Array<
-        | Variant.BooleanField
-        | Variant.ButtonField
-        | Variant.MarkdownField
-        | Variant.MultiSelectField
-        | Variant.SelectField
-        | Variant.TextField
-        | Variant.TextareaField
-      >;
-
-      /**
-       * The unique key string for the variant. Must be at minimum 3 characters and at
-       * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-       */
-      key: string;
-
-      /**
-       * A name for the variant. Must be at maximum 255 characters in length.
-       */
-      name: string;
-    }
-
-    export namespace Variant {
-      /**
-       * A boolean field used in a message type
-       */
-      export interface BooleanField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'boolean';
-
-        /**
-         * The value of the boolean field
-         */
-        value: boolean;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the boolean field
-         */
-        settings?: BooleanField.Settings;
-      }
-
-      export namespace BooleanField {
-        /**
-         * Settings for the boolean field
-         */
-        export interface Settings {
-          /**
-           * The default value of the boolean field
-           */
-          default?: boolean;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A button field used in a message type
-       */
-      export interface ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        action: ButtonField.Action;
-
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * A text field used in a message type
-         */
-        text: ButtonField.Text;
-
-        /**
-         * The type of the field
-         */
-        type: 'button';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the button field
-         */
-        settings?: ButtonField.Settings;
-      }
-
-      export namespace ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        export interface Action {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Action.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Action {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * A text field used in a message type
-         */
-        export interface Text {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Text.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Text {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * Settings for the button field
-         */
-        export interface Settings {
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A markdown field used in a message type
-       */
-      export interface MarkdownField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'markdown';
-
-        /**
-         * The value of the markdown field
-         */
-        value: string;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the markdown field
-         */
-        settings?: MarkdownField.Settings;
-      }
-
-      export namespace MarkdownField {
-        /**
-         * Settings for the markdown field
-         */
-        export interface Settings {
-          /**
-           * The default value of the markdown field
-           */
-          default?: string;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A multi-select field used in a message type
-       */
-      export interface MultiSelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the multi_select field
-         */
-        settings: MultiSelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'multi_select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected values
-         */
-        value?: Array<string> | null;
-      }
-
-      export namespace MultiSelectField {
-        /**
-         * Settings for the multi_select field
-         */
-        export interface Settings {
-          /**
-           * The default values for the multi-select field
-           */
-          default?: Array<string> | null;
-
-          description?: string;
-
-          /**
-           * The available options for the multi-select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A select field used in a message type
-       */
-      export interface SelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the select field
-         */
-        settings: SelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected value
-         */
-        value?: string | null;
-      }
-
-      export namespace SelectField {
-        /**
-         * Settings for the select field
-         */
-        export interface Settings {
-          /**
-           * The default value for the select field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          /**
-           * The available options for the select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface TextField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: TextField.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextField {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A textarea field used in a message type
-       */
-      export interface TextareaField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'textarea';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the textarea field
-         */
-        settings?: TextareaField.Settings;
-
-        /**
-         * The value of the textarea field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextareaField {
-        /**
-         * Settings for the textarea field
-         */
-        export interface Settings {
-          /**
-           * The default value of the textarea field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-    }
-  }
-
-  /**
-   * The information about a paginated result
-   */
-  export interface PageInfo {
-    __typename: string;
-
-    page_size: number;
-
-    after?: string | null;
-
-    before?: string | null;
-  }
+  page_info: Shared.PageInfo;
 }
 
 /**
@@ -1322,620 +590,7 @@ export interface MessageTypeUpsertResponse {
   /**
    * A message type object
    */
-  message_type: MessageTypeUpsertResponse.MessageType;
-}
-
-export namespace MessageTypeUpsertResponse {
-  /**
-   * A message type object
-   */
-  export interface MessageType {
-    /**
-     * When the message type was created
-     */
-    created_at: string;
-
-    /**
-     * The environment of the message type
-     */
-    environment: string;
-
-    /**
-     * The unique key string for the message type object. Must be at minimum 3
-     * characters and at maximum 255 characters in length. Must be in the format of
-     * ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the message type. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The owner of the message type
-     */
-    owner: 'system' | 'user';
-
-    /**
-     * An HTML/liquid template for the message type preview
-     */
-    preview: string;
-
-    /**
-     * The semantic version of the message type
-     */
-    semver: string;
-
-    /**
-     * The SHA hash of the message type
-     */
-    sha: string;
-
-    /**
-     * When the message type was last updated
-     */
-    updated_at: string;
-
-    /**
-     * Whether the message type is valid
-     */
-    valid: boolean;
-
-    /**
-     * The variants of the message type
-     */
-    variants: Array<MessageType.Variant>;
-
-    /**
-     * When the message type was archived
-     */
-    archived_at?: string;
-
-    /**
-     * When the message type was deleted
-     */
-    deleted_at?: string | null;
-
-    /**
-     * An arbitrary string attached to a message type object. Useful for adding notes
-     * about the message type for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string | null;
-
-    /**
-     * The icon name of the message type
-     */
-    icon_name?: string;
-  }
-
-  export namespace MessageType {
-    /**
-     * A variant of a message type
-     */
-    export interface Variant {
-      /**
-       * The field types available for the variant
-       */
-      fields: Array<
-        | Variant.BooleanField
-        | Variant.ButtonField
-        | Variant.MarkdownField
-        | Variant.MultiSelectField
-        | Variant.SelectField
-        | Variant.TextField
-        | Variant.TextareaField
-      >;
-
-      /**
-       * The unique key string for the variant. Must be at minimum 3 characters and at
-       * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-       */
-      key: string;
-
-      /**
-       * A name for the variant. Must be at maximum 255 characters in length.
-       */
-      name: string;
-    }
-
-    export namespace Variant {
-      /**
-       * A boolean field used in a message type
-       */
-      export interface BooleanField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'boolean';
-
-        /**
-         * The value of the boolean field
-         */
-        value: boolean;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the boolean field
-         */
-        settings?: BooleanField.Settings;
-      }
-
-      export namespace BooleanField {
-        /**
-         * Settings for the boolean field
-         */
-        export interface Settings {
-          /**
-           * The default value of the boolean field
-           */
-          default?: boolean;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A button field used in a message type
-       */
-      export interface ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        action: ButtonField.Action;
-
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * A text field used in a message type
-         */
-        text: ButtonField.Text;
-
-        /**
-         * The type of the field
-         */
-        type: 'button';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the button field
-         */
-        settings?: ButtonField.Settings;
-      }
-
-      export namespace ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        export interface Action {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Action.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Action {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * A text field used in a message type
-         */
-        export interface Text {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Text.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Text {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * Settings for the button field
-         */
-        export interface Settings {
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A markdown field used in a message type
-       */
-      export interface MarkdownField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'markdown';
-
-        /**
-         * The value of the markdown field
-         */
-        value: string;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the markdown field
-         */
-        settings?: MarkdownField.Settings;
-      }
-
-      export namespace MarkdownField {
-        /**
-         * Settings for the markdown field
-         */
-        export interface Settings {
-          /**
-           * The default value of the markdown field
-           */
-          default?: string;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A multi-select field used in a message type
-       */
-      export interface MultiSelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the multi_select field
-         */
-        settings: MultiSelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'multi_select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected values
-         */
-        value?: Array<string> | null;
-      }
-
-      export namespace MultiSelectField {
-        /**
-         * Settings for the multi_select field
-         */
-        export interface Settings {
-          /**
-           * The default values for the multi-select field
-           */
-          default?: Array<string> | null;
-
-          description?: string;
-
-          /**
-           * The available options for the multi-select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A select field used in a message type
-       */
-      export interface SelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the select field
-         */
-        settings: SelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected value
-         */
-        value?: string | null;
-      }
-
-      export namespace SelectField {
-        /**
-         * Settings for the select field
-         */
-        export interface Settings {
-          /**
-           * The default value for the select field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          /**
-           * The available options for the select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface TextField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: TextField.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextField {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A textarea field used in a message type
-       */
-      export interface TextareaField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'textarea';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the textarea field
-         */
-        settings?: TextareaField.Settings;
-
-        /**
-         * The value of the textarea field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextareaField {
-        /**
-         * Settings for the textarea field
-         */
-        export interface Settings {
-          /**
-           * The default value of the textarea field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-    }
-  }
+  message_type: MessageType;
 }
 
 /**
@@ -1945,620 +600,7 @@ export interface MessageTypeValidateResponse {
   /**
    * A message type object
    */
-  message_type: MessageTypeValidateResponse.MessageType;
-}
-
-export namespace MessageTypeValidateResponse {
-  /**
-   * A message type object
-   */
-  export interface MessageType {
-    /**
-     * When the message type was created
-     */
-    created_at: string;
-
-    /**
-     * The environment of the message type
-     */
-    environment: string;
-
-    /**
-     * The unique key string for the message type object. Must be at minimum 3
-     * characters and at maximum 255 characters in length. Must be in the format of
-     * ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the message type. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The owner of the message type
-     */
-    owner: 'system' | 'user';
-
-    /**
-     * An HTML/liquid template for the message type preview
-     */
-    preview: string;
-
-    /**
-     * The semantic version of the message type
-     */
-    semver: string;
-
-    /**
-     * The SHA hash of the message type
-     */
-    sha: string;
-
-    /**
-     * When the message type was last updated
-     */
-    updated_at: string;
-
-    /**
-     * Whether the message type is valid
-     */
-    valid: boolean;
-
-    /**
-     * The variants of the message type
-     */
-    variants: Array<MessageType.Variant>;
-
-    /**
-     * When the message type was archived
-     */
-    archived_at?: string;
-
-    /**
-     * When the message type was deleted
-     */
-    deleted_at?: string | null;
-
-    /**
-     * An arbitrary string attached to a message type object. Useful for adding notes
-     * about the message type for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string | null;
-
-    /**
-     * The icon name of the message type
-     */
-    icon_name?: string;
-  }
-
-  export namespace MessageType {
-    /**
-     * A variant of a message type
-     */
-    export interface Variant {
-      /**
-       * The field types available for the variant
-       */
-      fields: Array<
-        | Variant.BooleanField
-        | Variant.ButtonField
-        | Variant.MarkdownField
-        | Variant.MultiSelectField
-        | Variant.SelectField
-        | Variant.TextField
-        | Variant.TextareaField
-      >;
-
-      /**
-       * The unique key string for the variant. Must be at minimum 3 characters and at
-       * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-       */
-      key: string;
-
-      /**
-       * A name for the variant. Must be at maximum 255 characters in length.
-       */
-      name: string;
-    }
-
-    export namespace Variant {
-      /**
-       * A boolean field used in a message type
-       */
-      export interface BooleanField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'boolean';
-
-        /**
-         * The value of the boolean field
-         */
-        value: boolean;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the boolean field
-         */
-        settings?: BooleanField.Settings;
-      }
-
-      export namespace BooleanField {
-        /**
-         * Settings for the boolean field
-         */
-        export interface Settings {
-          /**
-           * The default value of the boolean field
-           */
-          default?: boolean;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A button field used in a message type
-       */
-      export interface ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        action: ButtonField.Action;
-
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * A text field used in a message type
-         */
-        text: ButtonField.Text;
-
-        /**
-         * The type of the field
-         */
-        type: 'button';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the button field
-         */
-        settings?: ButtonField.Settings;
-      }
-
-      export namespace ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        export interface Action {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Action.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Action {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * A text field used in a message type
-         */
-        export interface Text {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Text.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Text {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * Settings for the button field
-         */
-        export interface Settings {
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A markdown field used in a message type
-       */
-      export interface MarkdownField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'markdown';
-
-        /**
-         * The value of the markdown field
-         */
-        value: string;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the markdown field
-         */
-        settings?: MarkdownField.Settings;
-      }
-
-      export namespace MarkdownField {
-        /**
-         * Settings for the markdown field
-         */
-        export interface Settings {
-          /**
-           * The default value of the markdown field
-           */
-          default?: string;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A multi-select field used in a message type
-       */
-      export interface MultiSelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the multi_select field
-         */
-        settings: MultiSelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'multi_select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected values
-         */
-        value?: Array<string> | null;
-      }
-
-      export namespace MultiSelectField {
-        /**
-         * Settings for the multi_select field
-         */
-        export interface Settings {
-          /**
-           * The default values for the multi-select field
-           */
-          default?: Array<string> | null;
-
-          description?: string;
-
-          /**
-           * The available options for the multi-select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A select field used in a message type
-       */
-      export interface SelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the select field
-         */
-        settings: SelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected value
-         */
-        value?: string | null;
-      }
-
-      export namespace SelectField {
-        /**
-         * Settings for the select field
-         */
-        export interface Settings {
-          /**
-           * The default value for the select field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          /**
-           * The available options for the select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface TextField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: TextField.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextField {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A textarea field used in a message type
-       */
-      export interface TextareaField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'textarea';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the textarea field
-         */
-        settings?: TextareaField.Settings;
-
-        /**
-         * The value of the textarea field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextareaField {
-        /**
-         * Settings for the textarea field
-         */
-        export interface Settings {
-          /**
-           * The default value of the textarea field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-    }
-  }
+  message_type: MessageType;
 }
 
 export interface MessageTypeRetrieveParams {
@@ -2674,547 +716,9 @@ export namespace MessageTypeUpsertParams {
     semver?: string;
 
     /**
-     * The SHA hash of the message type
-     */
-    sha?: string;
-
-    /**
-     * When the message type was last updated
-     */
-    updated_at?: string;
-
-    /**
      * The variants of the message type
      */
-    variants?: Array<MessageType.Variant>;
-  }
-
-  export namespace MessageType {
-    /**
-     * A variant of a message type
-     */
-    export interface Variant {
-      /**
-       * The field types available for the variant
-       */
-      fields: Array<
-        | Variant.BooleanField
-        | Variant.ButtonField
-        | Variant.MarkdownField
-        | Variant.MultiSelectField
-        | Variant.SelectField
-        | Variant.TextField
-        | Variant.TextareaField
-      >;
-
-      /**
-       * The unique key string for the variant. Must be at minimum 3 characters and at
-       * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-       */
-      key: string;
-
-      /**
-       * A name for the variant. Must be at maximum 255 characters in length.
-       */
-      name: string;
-    }
-
-    export namespace Variant {
-      /**
-       * A boolean field used in a message type
-       */
-      export interface BooleanField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'boolean';
-
-        /**
-         * The value of the boolean field
-         */
-        value: boolean;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the boolean field
-         */
-        settings?: BooleanField.Settings;
-      }
-
-      export namespace BooleanField {
-        /**
-         * Settings for the boolean field
-         */
-        export interface Settings {
-          /**
-           * The default value of the boolean field
-           */
-          default?: boolean;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A button field used in a message type
-       */
-      export interface ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        action: ButtonField.Action;
-
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * A text field used in a message type
-         */
-        text: ButtonField.Text;
-
-        /**
-         * The type of the field
-         */
-        type: 'button';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the button field
-         */
-        settings?: ButtonField.Settings;
-      }
-
-      export namespace ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        export interface Action {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Action.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Action {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * A text field used in a message type
-         */
-        export interface Text {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Text.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Text {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * Settings for the button field
-         */
-        export interface Settings {
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A markdown field used in a message type
-       */
-      export interface MarkdownField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'markdown';
-
-        /**
-         * The value of the markdown field
-         */
-        value: string;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the markdown field
-         */
-        settings?: MarkdownField.Settings;
-      }
-
-      export namespace MarkdownField {
-        /**
-         * Settings for the markdown field
-         */
-        export interface Settings {
-          /**
-           * The default value of the markdown field
-           */
-          default?: string;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A multi-select field used in a message type
-       */
-      export interface MultiSelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the multi_select field
-         */
-        settings: MultiSelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'multi_select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected values
-         */
-        value?: Array<string> | null;
-      }
-
-      export namespace MultiSelectField {
-        /**
-         * Settings for the multi_select field
-         */
-        export interface Settings {
-          /**
-           * The default values for the multi-select field
-           */
-          default?: Array<string> | null;
-
-          description?: string;
-
-          /**
-           * The available options for the multi-select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A select field used in a message type
-       */
-      export interface SelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the select field
-         */
-        settings: SelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected value
-         */
-        value?: string | null;
-      }
-
-      export namespace SelectField {
-        /**
-         * Settings for the select field
-         */
-        export interface Settings {
-          /**
-           * The default value for the select field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          /**
-           * The available options for the select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface TextField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: TextField.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextField {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A textarea field used in a message type
-       */
-      export interface TextareaField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'textarea';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the textarea field
-         */
-        settings?: TextareaField.Settings;
-
-        /**
-         * The value of the textarea field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextareaField {
-        /**
-         * Settings for the textarea field
-         */
-        export interface Settings {
-          /**
-           * The default value of the textarea field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-    }
+    variants?: Array<MessageTypesAPI.MessageTypeVariant>;
   }
 }
 
@@ -3267,553 +771,17 @@ export namespace MessageTypeValidateParams {
     semver?: string;
 
     /**
-     * The SHA hash of the message type
-     */
-    sha?: string;
-
-    /**
-     * When the message type was last updated
-     */
-    updated_at?: string;
-
-    /**
      * The variants of the message type
      */
-    variants?: Array<MessageType.Variant>;
-  }
-
-  export namespace MessageType {
-    /**
-     * A variant of a message type
-     */
-    export interface Variant {
-      /**
-       * The field types available for the variant
-       */
-      fields: Array<
-        | Variant.BooleanField
-        | Variant.ButtonField
-        | Variant.MarkdownField
-        | Variant.MultiSelectField
-        | Variant.SelectField
-        | Variant.TextField
-        | Variant.TextareaField
-      >;
-
-      /**
-       * The unique key string for the variant. Must be at minimum 3 characters and at
-       * maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-       */
-      key: string;
-
-      /**
-       * A name for the variant. Must be at maximum 255 characters in length.
-       */
-      name: string;
-    }
-
-    export namespace Variant {
-      /**
-       * A boolean field used in a message type
-       */
-      export interface BooleanField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'boolean';
-
-        /**
-         * The value of the boolean field
-         */
-        value: boolean;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the boolean field
-         */
-        settings?: BooleanField.Settings;
-      }
-
-      export namespace BooleanField {
-        /**
-         * Settings for the boolean field
-         */
-        export interface Settings {
-          /**
-           * The default value of the boolean field
-           */
-          default?: boolean;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A button field used in a message type
-       */
-      export interface ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        action: ButtonField.Action;
-
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * A text field used in a message type
-         */
-        text: ButtonField.Text;
-
-        /**
-         * The type of the field
-         */
-        type: 'button';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the button field
-         */
-        settings?: ButtonField.Settings;
-      }
-
-      export namespace ButtonField {
-        /**
-         * A text field used in a message type
-         */
-        export interface Action {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Action.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Action {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * A text field used in a message type
-         */
-        export interface Text {
-          /**
-           * The unique key of the field
-           */
-          key: string;
-
-          /**
-           * The type of the field
-           */
-          type: 'text';
-
-          /**
-           * The label of the field
-           */
-          label?: string | null;
-
-          /**
-           * Settings for the text field
-           */
-          settings?: Text.Settings;
-
-          /**
-           * The value of the text field
-           */
-          value?: string | null;
-        }
-
-        export namespace Text {
-          /**
-           * Settings for the text field
-           */
-          export interface Settings {
-            /**
-             * The default value of the text field
-             */
-            default?: string | null;
-
-            description?: string;
-
-            max_length?: number;
-
-            min_length?: number;
-
-            /**
-             * Whether the field is required
-             */
-            required?: boolean;
-          }
-        }
-
-        /**
-         * Settings for the button field
-         */
-        export interface Settings {
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A markdown field used in a message type
-       */
-      export interface MarkdownField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'markdown';
-
-        /**
-         * The value of the markdown field
-         */
-        value: string;
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the markdown field
-         */
-        settings?: MarkdownField.Settings;
-      }
-
-      export namespace MarkdownField {
-        /**
-         * Settings for the markdown field
-         */
-        export interface Settings {
-          /**
-           * The default value of the markdown field
-           */
-          default?: string;
-
-          description?: string;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A multi-select field used in a message type
-       */
-      export interface MultiSelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the multi_select field
-         */
-        settings: MultiSelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'multi_select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected values
-         */
-        value?: Array<string> | null;
-      }
-
-      export namespace MultiSelectField {
-        /**
-         * Settings for the multi_select field
-         */
-        export interface Settings {
-          /**
-           * The default values for the multi-select field
-           */
-          default?: Array<string> | null;
-
-          description?: string;
-
-          /**
-           * The available options for the multi-select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A select field used in a message type
-       */
-      export interface SelectField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * Settings for the select field
-         */
-        settings: SelectField.Settings;
-
-        /**
-         * The type of the field
-         */
-        type: 'select';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * The selected value
-         */
-        value?: string | null;
-      }
-
-      export namespace SelectField {
-        /**
-         * Settings for the select field
-         */
-        export interface Settings {
-          /**
-           * The default value for the select field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          /**
-           * The available options for the select field
-           */
-          options?: Array<Settings.Option>;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-
-        export namespace Settings {
-          export interface Option {
-            /**
-             * The value for the option
-             */
-            value: string;
-
-            /**
-             * The display label for the option
-             */
-            label?: string;
-          }
-        }
-      }
-
-      /**
-       * A text field used in a message type
-       */
-      export interface TextField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'text';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the text field
-         */
-        settings?: TextField.Settings;
-
-        /**
-         * The value of the text field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextField {
-        /**
-         * Settings for the text field
-         */
-        export interface Settings {
-          /**
-           * The default value of the text field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-
-      /**
-       * A textarea field used in a message type
-       */
-      export interface TextareaField {
-        /**
-         * The unique key of the field
-         */
-        key: string;
-
-        /**
-         * The type of the field
-         */
-        type: 'textarea';
-
-        /**
-         * The label of the field
-         */
-        label?: string | null;
-
-        /**
-         * Settings for the textarea field
-         */
-        settings?: TextareaField.Settings;
-
-        /**
-         * The value of the textarea field
-         */
-        value?: string | null;
-      }
-
-      export namespace TextareaField {
-        /**
-         * Settings for the textarea field
-         */
-        export interface Settings {
-          /**
-           * The default value of the textarea field
-           */
-          default?: string | null;
-
-          description?: string;
-
-          max_length?: number;
-
-          min_length?: number;
-
-          /**
-           * Whether the field is required
-           */
-          required?: boolean;
-        }
-      }
-    }
+    variants?: Array<MessageTypesAPI.MessageTypeVariant>;
   }
 }
 
 export declare namespace MessageTypes {
   export {
-    type MessageTypeRetrieveResponse as MessageTypeRetrieveResponse,
+    type MessageType as MessageType,
+    type MessageTypeTextField as MessageTypeTextField,
+    type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeListResponse as MessageTypeListResponse,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,

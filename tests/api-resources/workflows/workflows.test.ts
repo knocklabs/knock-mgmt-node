@@ -170,7 +170,7 @@ describe('resource workflows', () => {
         },
         description: 'description',
         settings: { is_commercial: false, override_preferences: false },
-        trigger_data_json_schema: {},
+        trigger_data_json_schema: { foo: 'bar' },
         trigger_frequency: 'every_trigger',
       },
       commit: true,
@@ -245,7 +245,7 @@ describe('resource workflows', () => {
         },
         description: 'description',
         settings: { is_commercial: false, override_preferences: false },
-        trigger_data_json_schema: {},
+        trigger_data_json_schema: { foo: 'bar' },
         trigger_frequency: 'every_trigger',
       },
     });
