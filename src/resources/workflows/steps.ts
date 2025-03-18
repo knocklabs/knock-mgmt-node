@@ -57,7 +57,7 @@ export interface StepPreviewTemplateParams {
   workflow_key: string;
 
   /**
-   * Query param: The environment slug. (Defaults to `development`.)
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
@@ -86,7 +86,7 @@ export interface StepPreviewTemplateParams {
 
 export namespace StepPreviewTemplateParams {
   /**
-   * An object reference
+   * An object reference.
    */
   export interface UnionMember1 {
     id: string;
@@ -95,7 +95,7 @@ export namespace StepPreviewTemplateParams {
   }
 
   /**
-   * An object reference
+   * An object reference.
    */
   export interface UnionMember1 {
     id: string;

@@ -68,7 +68,7 @@ export interface Partial {
   content: string;
 
   /**
-   * The date and time the partial was created.
+   * The timestamp of when the resource was created.
    */
   inserted_at: string;
 
@@ -89,7 +89,7 @@ export interface Partial {
   type: 'html' | 'text' | 'json' | 'markdown';
 
   /**
-   * The date and time the partial was last updated.
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
@@ -125,16 +125,19 @@ export interface Partial {
  * A paginated list of Partial. Contains a list of entries and page information.
  */
 export interface PartialListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Partial>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 /**
- * Wraps the Partial response under the partial key.
+ * Wraps the Partial response under the `partial` key.
  */
 export interface PartialUpsertResponse {
   /**
@@ -144,7 +147,7 @@ export interface PartialUpsertResponse {
 }
 
 /**
- * Wraps the Partial response under the partial key.
+ * Wraps the Partial response under the `partial` key.
  */
 export interface PartialValidateResponse {
   /**
@@ -160,12 +163,12 @@ export interface PartialRetrieveParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -177,27 +180,27 @@ export interface PartialListParams {
   environment: string;
 
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }
@@ -214,22 +217,23 @@ export interface PartialUpsertParams {
   partial: PartialUpsertParams.Partial;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: Whether to commit the resource at the same time as modifying it
+   * Query param: Whether to commit the resource at the same time as modifying it.
    */
   commit?: boolean;
 
   /**
-   * Query param: The message to commit the resource with
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
    */
   commit_message?: string;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }

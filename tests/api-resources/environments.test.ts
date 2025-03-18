@@ -10,7 +10,7 @@ const client = new KnockMapi({
 describe('resource environments', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('retrieve', async () => {
-    const responsePromise = client.environments.retrieve('environment_slug');
+    const responsePromise = client.environments.retrieve('development');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

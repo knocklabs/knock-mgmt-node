@@ -24,50 +24,50 @@ export class ChannelGroups extends APIResource {
  */
 export interface ChannelGroup {
   /**
-   * Rules for determining which channels should be used
+   * Rules for determining which channels should be used.
    */
   channel_rules: Array<ChannelGroupRule>;
 
   /**
-   * The type of channels contained in this group
+   * The type of channels contained in this group.
    */
   channel_type: 'email' | 'in_app' | 'in_app_feed' | 'in_app_guide' | 'sms' | 'push' | 'chat' | 'http';
 
   /**
-   * Timestamp when the channel group was created
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
   /**
-   * Unique identifier for the channel group within a project
+   * Unique identifier for the channel group within a project.
    */
   key: string;
 
   /**
-   * The human-readable name of the channel group
+   * The human-readable name of the channel group.
    */
   name: string;
 
   /**
    * Determines how the channel rules are applied ('any' means any rule can match,
-   * 'all' means all rules must match)
+   * 'all' means all rules must match).
    */
   operator: 'any' | 'all';
 
   /**
-   * Whether this channel group was created by the system or a user
+   * Whether this channel group was created by the system or a user.
    */
   source: 'system' | 'user';
 
   /**
-   * Timestamp when the channel group was last updated
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 }
 
 /**
  * A rule that determines if a channel should be executed as part of a channel
- * group
+ * group.
  */
 export interface ChannelGroupRule {
   /**
@@ -76,33 +76,33 @@ export interface ChannelGroupRule {
   channel: ChannelsAPI.Channel;
 
   /**
-   * Timestamp when the rule was created
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
   /**
-   * The order index of this rule within the channel group
+   * The order index of this rule within the channel group.
    */
   index: number;
 
   /**
    * The type of rule (if = conditional, unless = negative conditional, always =
-   * always apply)
+   * always apply).
    */
   rule_type: 'if' | 'unless' | 'always';
 
   /**
-   * Timestamp when the rule was last updated
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
   /**
-   * For conditional rules, the argument to compare against
+   * For conditional rules, the argument to compare against.
    */
   argument?: string | null;
 
   /**
-   * For conditional rules, the operator to apply
+   * For conditional rules, the operator to apply.
    */
   operator?:
     | 'equal_to'
@@ -121,7 +121,7 @@ export interface ChannelGroupRule {
     | null;
 
   /**
-   * For conditional rules, the variable to evaluate
+   * For conditional rules, the variable to evaluate.
    */
   variable?: string | null;
 }
@@ -131,27 +131,30 @@ export interface ChannelGroupRule {
  * information.
  */
 export interface ChannelGroupListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<ChannelGroup>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 export interface ChannelGroupListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }

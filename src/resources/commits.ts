@@ -8,7 +8,7 @@ import { path } from '../internal/utils/path';
 
 export class Commits extends APIResource {
   /**
-   * Retrieve a single commit by its id.
+   * Retrieve a single commit by its ID.
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Commit> {
     return this._client.get(path`/v1/commits/${id}`, options);
@@ -18,7 +18,10 @@ export class Commits extends APIResource {
    * Returns a paginated list of commits in a given environment. The commits are
    * ordered from most recent first.
    */
-  list(query: CommitListParams, options?: RequestOptions): APIPromise<CommitListResponse> {
+  list(
+    query: CommitListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CommitListResponse> {
     return this._client.get('/v1/commits', { query, ...options });
   }
 
@@ -70,7 +73,7 @@ export interface Commit {
   commit_message: string;
 
   /**
-   * The created at date of the commit.
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
@@ -85,7 +88,7 @@ export interface Commit {
   resource: Commit.Resource;
 
   /**
-   * The updated at date of the commit.
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 }
@@ -126,10 +129,13 @@ export namespace Commit {
  * A paginated list of Commit. Contains a list of entries and page information.
  */
 export interface CommitListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Commit>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
@@ -149,7 +155,7 @@ export interface CommitPromoteAllResponse {
 }
 
 /**
- * Wraps the Commit response under the commit key.
+ * Wraps the Commit response under the `commit` key.
  */
 export interface CommitPromoteOneResponse {
   /**
@@ -160,22 +166,22 @@ export interface CommitPromoteOneResponse {
 
 export interface CommitListParams {
   /**
-   * A slug of the environment from which to query commits.
-   */
-  environment: string;
-
-  /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The number of entries to fetch
+   * The environment slug. (Defaults to `development`.).
+   */
+  environment?: string;
+
+  /**
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 
@@ -205,7 +211,7 @@ export interface CommitPromoteAllParams {
    *
    * For example, if you have three environments “development”, “staging”, and
    * “production” (in that order), setting this param to “production” will promote
-   * all new changes from the staging environment.
+   * all commits not currently in production from staging.
    *
    * Note: This must be a non-development environment.
    */
