@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Knock } from './client';
+import type { KnockMgmt } from './client';
 
 export class APIResource {
-  protected _client: Knock;
+  protected _client: KnockMgmt;
 
-  constructor(client: Knock) {
+  constructor(client: KnockMgmt) {
     this._client = client;
   }
 }
