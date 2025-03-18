@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -9,11 +10,7 @@ export class Partials extends APIResource {
   /**
    * Get a partial by its key.
    */
-  retrieve(
-    partialKey: string,
-    query: PartialRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<PartialRetrieveResponse> {
+  retrieve(partialKey: string, query: PartialRetrieveParams, options?: RequestOptions): APIPromise<Partial> {
     return this._client.get(path`/v1/partials/${partialKey}`, { query, ...options });
   }
 
@@ -64,7 +61,7 @@ export class Partials extends APIResource {
 /**
  * A partial is a reusable piece of content that can be used in a template.
  */
-export interface PartialRetrieveResponse {
+export interface Partial {
   /**
    * The partial content.
    */
@@ -128,90 +125,12 @@ export interface PartialRetrieveResponse {
  * A paginated list of Partial. Contains a list of entries and page information.
  */
 export interface PartialListResponse {
-  entries: Array<PartialListResponse.Entry>;
+  entries: Array<Partial>;
 
   /**
    * The information about a paginated result
    */
-  page_info: PartialListResponse.PageInfo;
-}
-
-export namespace PartialListResponse {
-  /**
-   * A partial is a reusable piece of content that can be used in a template.
-   */
-  export interface Entry {
-    /**
-     * The partial content.
-     */
-    content: string;
-
-    /**
-     * The date and time the partial was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The unique key string for the partial object. Must be at minimum 3 characters
-     * and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the partial. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The partial type. One of 'html', 'json', 'markdown', 'text'.
-     */
-    type: 'html' | 'text' | 'json' | 'markdown';
-
-    /**
-     * The date and time the partial was last updated.
-     */
-    updated_at: string;
-
-    /**
-     * Whether the partial and its content are in a valid state.
-     */
-    valid: boolean;
-
-    /**
-     * An arbitrary string attached to a partial object. Useful for adding notes about
-     * the partial for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * The slug of the environment in which the partial exists.
-     */
-    environment?: string;
-
-    /**
-     * The name of the icon to be used in the visual editor.
-     */
-    icon_name?: string;
-
-    /**
-     * Indicates whether the partial can be used in the visual editor. Only applies to
-     * HTML partials.
-     */
-    visual_block_enabled?: boolean;
-  }
-
-  /**
-   * The information about a paginated result
-   */
-  export interface PageInfo {
-    __typename: string;
-
-    page_size: number;
-
-    after?: string | null;
-
-    before?: string | null;
-  }
+  page_info: Shared.PageInfo;
 }
 
 /**
@@ -221,72 +140,7 @@ export interface PartialUpsertResponse {
   /**
    * A partial is a reusable piece of content that can be used in a template.
    */
-  partial: PartialUpsertResponse.Partial;
-}
-
-export namespace PartialUpsertResponse {
-  /**
-   * A partial is a reusable piece of content that can be used in a template.
-   */
-  export interface Partial {
-    /**
-     * The partial content.
-     */
-    content: string;
-
-    /**
-     * The date and time the partial was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The unique key string for the partial object. Must be at minimum 3 characters
-     * and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the partial. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The partial type. One of 'html', 'json', 'markdown', 'text'.
-     */
-    type: 'html' | 'text' | 'json' | 'markdown';
-
-    /**
-     * The date and time the partial was last updated.
-     */
-    updated_at: string;
-
-    /**
-     * Whether the partial and its content are in a valid state.
-     */
-    valid: boolean;
-
-    /**
-     * An arbitrary string attached to a partial object. Useful for adding notes about
-     * the partial for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * The slug of the environment in which the partial exists.
-     */
-    environment?: string;
-
-    /**
-     * The name of the icon to be used in the visual editor.
-     */
-    icon_name?: string;
-
-    /**
-     * Indicates whether the partial can be used in the visual editor. Only applies to
-     * HTML partials.
-     */
-    visual_block_enabled?: boolean;
-  }
+  partial: Partial;
 }
 
 /**
@@ -296,72 +150,7 @@ export interface PartialValidateResponse {
   /**
    * A partial is a reusable piece of content that can be used in a template.
    */
-  partial: PartialValidateResponse.Partial;
-}
-
-export namespace PartialValidateResponse {
-  /**
-   * A partial is a reusable piece of content that can be used in a template.
-   */
-  export interface Partial {
-    /**
-     * The partial content.
-     */
-    content: string;
-
-    /**
-     * The date and time the partial was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The unique key string for the partial object. Must be at minimum 3 characters
-     * and at maximum 255 characters in length. Must be in the format of ^[a-z0-9_-]+$.
-     */
-    key: string;
-
-    /**
-     * A name for the partial. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The partial type. One of 'html', 'json', 'markdown', 'text'.
-     */
-    type: 'html' | 'text' | 'json' | 'markdown';
-
-    /**
-     * The date and time the partial was last updated.
-     */
-    updated_at: string;
-
-    /**
-     * Whether the partial and its content are in a valid state.
-     */
-    valid: boolean;
-
-    /**
-     * An arbitrary string attached to a partial object. Useful for adding notes about
-     * the partial for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * The slug of the environment in which the partial exists.
-     */
-    environment?: string;
-
-    /**
-     * The name of the icon to be used in the visual editor.
-     */
-    icon_name?: string;
-
-    /**
-     * Indicates whether the partial can be used in the visual editor. Only applies to
-     * HTML partials.
-     */
-    visual_block_enabled?: boolean;
-  }
+  partial: Partial;
 }
 
 export interface PartialRetrieveParams {
@@ -537,7 +326,7 @@ export namespace PartialValidateParams {
 
 export declare namespace Partials {
   export {
-    type PartialRetrieveResponse as PartialRetrieveResponse,
+    type Partial as Partial,
     type PartialListResponse as PartialListResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -69,52 +70,50 @@ export class Translations extends APIResource {
 }
 
 /**
+ * A translation object.
+ */
+export interface Translation {
+  /**
+   * A JSON-encoded string containing the key-value pairs of translation references
+   * and translation strings.
+   */
+  content: string;
+
+  /**
+   * Indicates whether content is a JSON encoded object string or a string in the PO
+   * format.
+   */
+  format: 'json' | 'po';
+
+  /**
+   * The date and time the translation was created.
+   */
+  inserted_at: string;
+
+  /**
+   * The locale code for the translation object.
+   */
+  locale_code: string;
+
+  /**
+   * An optional namespace for the translation to help categorize your translations.
+   */
+  namespace: string;
+
+  /**
+   * The date and time the translation was last updated.
+   */
+  updated_at: string;
+}
+
+/**
  * Wraps the Translation response under the translation key.
  */
 export interface TranslationRetrieveResponse {
   /**
    * A translation object.
    */
-  translation: TranslationRetrieveResponse.Translation;
-}
-
-export namespace TranslationRetrieveResponse {
-  /**
-   * A translation object.
-   */
-  export interface Translation {
-    /**
-     * A JSON-encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-
-    /**
-     * The date and time the translation was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The locale code for the translation object.
-     */
-    locale_code: string;
-
-    /**
-     * An optional namespace for the translation to help categorize your translations.
-     */
-    namespace: string;
-
-    /**
-     * The date and time the translation was last updated.
-     */
-    updated_at: string;
-  }
+  translation: Translation;
 }
 
 /**
@@ -122,64 +121,12 @@ export namespace TranslationRetrieveResponse {
  * information.
  */
 export interface TranslationListResponse {
-  entries: Array<TranslationListResponse.Entry>;
+  entries: Array<Translation>;
 
   /**
    * The information about a paginated result
    */
-  page_info: TranslationListResponse.PageInfo;
-}
-
-export namespace TranslationListResponse {
-  /**
-   * A translation object.
-   */
-  export interface Entry {
-    /**
-     * A JSON-encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-
-    /**
-     * The date and time the translation was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The locale code for the translation object.
-     */
-    locale_code: string;
-
-    /**
-     * An optional namespace for the translation to help categorize your translations.
-     */
-    namespace: string;
-
-    /**
-     * The date and time the translation was last updated.
-     */
-    updated_at: string;
-  }
-
-  /**
-   * The information about a paginated result
-   */
-  export interface PageInfo {
-    __typename: string;
-
-    page_size: number;
-
-    after?: string | null;
-
-    before?: string | null;
-  }
+  page_info: Shared.PageInfo;
 }
 
 /**
@@ -189,46 +136,7 @@ export interface TranslationUpsertResponse {
   /**
    * A translation object.
    */
-  translation: TranslationUpsertResponse.Translation;
-}
-
-export namespace TranslationUpsertResponse {
-  /**
-   * A translation object.
-   */
-  export interface Translation {
-    /**
-     * A JSON-encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-
-    /**
-     * The date and time the translation was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The locale code for the translation object.
-     */
-    locale_code: string;
-
-    /**
-     * An optional namespace for the translation to help categorize your translations.
-     */
-    namespace: string;
-
-    /**
-     * The date and time the translation was last updated.
-     */
-    updated_at: string;
-  }
+  translation: Translation;
 }
 
 /**
@@ -238,46 +146,7 @@ export interface TranslationValidateResponse {
   /**
    * A translation object.
    */
-  translation: TranslationValidateResponse.Translation;
-}
-
-export namespace TranslationValidateResponse {
-  /**
-   * A translation object.
-   */
-  export interface Translation {
-    /**
-     * A JSON-encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-
-    /**
-     * The date and time the translation was created.
-     */
-    inserted_at: string;
-
-    /**
-     * The locale code for the translation object.
-     */
-    locale_code: string;
-
-    /**
-     * An optional namespace for the translation to help categorize your translations.
-     */
-    namespace: string;
-
-    /**
-     * The date and time the translation was last updated.
-     */
-    updated_at: string;
-  }
+  translation: Translation;
 }
 
 export interface TranslationRetrieveParams {
@@ -455,6 +324,7 @@ export namespace TranslationValidateParams {
 
 export declare namespace Translations {
   export {
+    type Translation as Translation,
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
     type TranslationListResponse as TranslationListResponse,
     type TranslationUpsertResponse as TranslationUpsertResponse,

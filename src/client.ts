@@ -18,7 +18,28 @@ import { APIPromise } from './api-promise';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
+import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
+import { Auth, AuthVerifyResponse } from './resources/auth';
 import {
+  ChannelGroup,
+  ChannelGroupListParams,
+  ChannelGroupListResponse,
+  ChannelGroupRule,
+  ChannelGroups,
+} from './resources/channel-groups';
+import {
+  Channel,
+  ChannelListParams,
+  ChannelListResponse,
+  Channels,
+  ChatChannelSettings,
+  EmailChannelSettings,
+  InAppFeedChannelSettings,
+  PushChannelSettings,
+  SMSChannelSettings,
+} from './resources/channels';
+import {
+  Commit,
   CommitCommitAllParams,
   CommitCommitAllResponse,
   CommitListParams,
@@ -26,7 +47,6 @@ import {
   CommitPromoteAllParams,
   CommitPromoteAllResponse,
   CommitPromoteOneResponse,
-  CommitRetrieveResponse,
   Commits,
 } from './resources/commits';
 import {
@@ -41,21 +61,29 @@ import {
   EmailLayouts,
 } from './resources/email-layouts';
 import {
+  Environment,
+  EnvironmentListParams,
+  EnvironmentListResponse,
+  Environments,
+} from './resources/environments';
+import {
+  MessageType,
   MessageTypeListParams,
   MessageTypeListResponse,
   MessageTypeRetrieveParams,
-  MessageTypeRetrieveResponse,
+  MessageTypeTextField,
   MessageTypeUpsertParams,
   MessageTypeUpsertResponse,
   MessageTypeValidateParams,
   MessageTypeValidateResponse,
+  MessageTypeVariant,
   MessageTypes,
 } from './resources/message-types';
 import {
+  Partial,
   PartialListParams,
   PartialListResponse,
   PartialRetrieveParams,
-  PartialRetrieveResponse,
   PartialUpsertParams,
   PartialUpsertResponse,
   PartialValidateParams,
@@ -63,6 +91,17 @@ import {
   Partials,
 } from './resources/partials';
 import {
+  ChatTemplate,
+  EmailTemplate,
+  InAppFeedTemplate,
+  PushTemplate,
+  RequestTemplate,
+  SMSTemplate,
+  Templates,
+  WebhookTemplate,
+} from './resources/templates';
+import {
+  Translation,
   TranslationListParams,
   TranslationListResponse,
   TranslationRetrieveParams,
@@ -73,19 +112,31 @@ import {
   TranslationValidateResponse,
   Translations,
 } from './resources/translations';
-import { Whoami, WhoamiVerifyResponse } from './resources/whoami';
+import { Variable, VariableListParams, VariableListResponse, Variables } from './resources/variables';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 import {
+  Condition,
+  ConditionGroup,
+  Duration,
+  SendWindow,
+  Workflow,
   WorkflowActivateParams,
   WorkflowActivateResponse,
+  WorkflowBatchStep,
+  WorkflowBranchStep,
+  WorkflowChannelStep,
+  WorkflowDelayStep,
+  WorkflowFetchStep,
   WorkflowListParams,
   WorkflowListResponse,
   WorkflowRetrieveParams,
-  WorkflowRetrieveResponse,
   WorkflowRunParams,
   WorkflowRunResponse,
+  WorkflowStep,
+  WorkflowThrottleStep,
+  WorkflowTriggerWorkflowStep,
   WorkflowUpsertParams,
   WorkflowUpsertResponse,
   WorkflowValidateParams,
@@ -786,23 +837,46 @@ export class KnockMapi {
 
   static toFile = Uploads.toFile;
 
+  templates: API.Templates = new API.Templates(this);
   emailLayouts: API.EmailLayouts = new API.EmailLayouts(this);
   commits: API.Commits = new API.Commits(this);
   partials: API.Partials = new API.Partials(this);
   translations: API.Translations = new API.Translations(this);
   workflows: API.Workflows = new API.Workflows(this);
   messageTypes: API.MessageTypes = new API.MessageTypes(this);
-  whoami: API.Whoami = new API.Whoami(this);
+  auth: API.Auth = new API.Auth(this);
+  apiKeys: API.APIKeys = new API.APIKeys(this);
+  channelGroups: API.ChannelGroups = new API.ChannelGroups(this);
+  channels: API.Channels = new API.Channels(this);
+  environments: API.Environments = new API.Environments(this);
+  variables: API.Variables = new API.Variables(this);
 }
+KnockMapi.Templates = Templates;
 KnockMapi.EmailLayouts = EmailLayouts;
 KnockMapi.Commits = Commits;
 KnockMapi.Partials = Partials;
 KnockMapi.Translations = Translations;
 KnockMapi.Workflows = Workflows;
 KnockMapi.MessageTypes = MessageTypes;
-KnockMapi.Whoami = Whoami;
+KnockMapi.Auth = Auth;
+KnockMapi.APIKeys = APIKeys;
+KnockMapi.ChannelGroups = ChannelGroups;
+KnockMapi.Channels = Channels;
+KnockMapi.Environments = Environments;
+KnockMapi.Variables = Variables;
 export declare namespace KnockMapi {
   export type RequestOptions = Opts.RequestOptions;
+
+  export {
+    Templates as Templates,
+    type ChatTemplate as ChatTemplate,
+    type EmailTemplate as EmailTemplate,
+    type InAppFeedTemplate as InAppFeedTemplate,
+    type PushTemplate as PushTemplate,
+    type RequestTemplate as RequestTemplate,
+    type SMSTemplate as SMSTemplate,
+    type WebhookTemplate as WebhookTemplate,
+  };
 
   export {
     EmailLayouts as EmailLayouts,
@@ -818,7 +892,7 @@ export declare namespace KnockMapi {
 
   export {
     Commits as Commits,
-    type CommitRetrieveResponse as CommitRetrieveResponse,
+    type Commit as Commit,
     type CommitListResponse as CommitListResponse,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
@@ -830,7 +904,7 @@ export declare namespace KnockMapi {
 
   export {
     Partials as Partials,
-    type PartialRetrieveResponse as PartialRetrieveResponse,
+    type Partial as Partial,
     type PartialListResponse as PartialListResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
@@ -842,6 +916,7 @@ export declare namespace KnockMapi {
 
   export {
     Translations as Translations,
+    type Translation as Translation,
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
     type TranslationListResponse as TranslationListResponse,
     type TranslationUpsertResponse as TranslationUpsertResponse,
@@ -854,7 +929,19 @@ export declare namespace KnockMapi {
 
   export {
     Workflows as Workflows,
-    type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
+    type Condition as Condition,
+    type ConditionGroup as ConditionGroup,
+    type Duration as Duration,
+    type SendWindow as SendWindow,
+    type Workflow as Workflow,
+    type WorkflowBatchStep as WorkflowBatchStep,
+    type WorkflowBranchStep as WorkflowBranchStep,
+    type WorkflowChannelStep as WorkflowChannelStep,
+    type WorkflowDelayStep as WorkflowDelayStep,
+    type WorkflowFetchStep as WorkflowFetchStep,
+    type WorkflowStep as WorkflowStep,
+    type WorkflowThrottleStep as WorkflowThrottleStep,
+    type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
     type WorkflowListResponse as WorkflowListResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
     type WorkflowRunResponse as WorkflowRunResponse,
@@ -870,7 +957,9 @@ export declare namespace KnockMapi {
 
   export {
     MessageTypes as MessageTypes,
-    type MessageTypeRetrieveResponse as MessageTypeRetrieveResponse,
+    type MessageType as MessageType,
+    type MessageTypeTextField as MessageTypeTextField,
+    type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeListResponse as MessageTypeListResponse,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
@@ -880,5 +969,47 @@ export declare namespace KnockMapi {
     type MessageTypeValidateParams as MessageTypeValidateParams,
   };
 
-  export { Whoami as Whoami, type WhoamiVerifyResponse as WhoamiVerifyResponse };
+  export { Auth as Auth, type AuthVerifyResponse as AuthVerifyResponse };
+
+  export {
+    APIKeys as APIKeys,
+    type APIKeyExchangeResponse as APIKeyExchangeResponse,
+    type APIKeyExchangeParams as APIKeyExchangeParams,
+  };
+
+  export {
+    ChannelGroups as ChannelGroups,
+    type ChannelGroup as ChannelGroup,
+    type ChannelGroupRule as ChannelGroupRule,
+    type ChannelGroupListResponse as ChannelGroupListResponse,
+    type ChannelGroupListParams as ChannelGroupListParams,
+  };
+
+  export {
+    Channels as Channels,
+    type Channel as Channel,
+    type ChatChannelSettings as ChatChannelSettings,
+    type EmailChannelSettings as EmailChannelSettings,
+    type InAppFeedChannelSettings as InAppFeedChannelSettings,
+    type PushChannelSettings as PushChannelSettings,
+    type SMSChannelSettings as SMSChannelSettings,
+    type ChannelListResponse as ChannelListResponse,
+    type ChannelListParams as ChannelListParams,
+  };
+
+  export {
+    Environments as Environments,
+    type Environment as Environment,
+    type EnvironmentListResponse as EnvironmentListResponse,
+    type EnvironmentListParams as EnvironmentListParams,
+  };
+
+  export {
+    Variables as Variables,
+    type Variable as Variable,
+    type VariableListResponse as VariableListResponse,
+    type VariableListParams as VariableListParams,
+  };
+
+  export type PageInfo = API.PageInfo;
 }

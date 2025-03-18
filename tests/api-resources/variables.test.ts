@@ -7,10 +7,10 @@ const client = new KnockMapi({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource whoami', () => {
+describe('resource variables', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('verify', async () => {
-    const responsePromise = client.whoami.verify();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.variables.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,5 +18,15 @@ describe('resource whoami', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  test.skip('list: required and optional params', async () => {
+    const response = await client.variables.list({
+      environment: 'development',
+      after: 'after',
+      before: 'before',
+      limit: 0,
+    });
   });
 });

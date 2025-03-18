@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -9,7 +10,7 @@ export class Commits extends APIResource {
   /**
    * Retrieve a single commit by its id.
    */
-  retrieve(id: string, options?: RequestOptions): APIPromise<CommitRetrieveResponse> {
+  retrieve(id: string, options?: RequestOptions): APIPromise<Commit> {
     return this._client.get(path`/v1/commits/${id}`, options);
   }
 
@@ -52,7 +53,7 @@ export class Commits extends APIResource {
 /**
  * A commit is a change to a resource within an environment, made by an author.
  */
-export interface CommitRetrieveResponse {
+export interface Commit {
   /**
    * The unique identifier for the commit.
    */
@@ -61,7 +62,7 @@ export interface CommitRetrieveResponse {
   /**
    * The author of the commit.
    */
-  commit_author: CommitRetrieveResponse.CommitAuthor;
+  commit_author: Commit.CommitAuthor;
 
   /**
    * The optional message about the commit.
@@ -81,7 +82,7 @@ export interface CommitRetrieveResponse {
   /**
    * The resource object associated with the commit.
    */
-  resource: CommitRetrieveResponse.Resource;
+  resource: Commit.Resource;
 
   /**
    * The updated at date of the commit.
@@ -89,7 +90,7 @@ export interface CommitRetrieveResponse {
   updated_at: string;
 }
 
-export namespace CommitRetrieveResponse {
+export namespace Commit {
   /**
    * The author of the commit.
    */
@@ -102,7 +103,7 @@ export namespace CommitRetrieveResponse {
     /**
      * The name of the commit author.
      */
-    name: string;
+    name?: string | null;
   }
 
   /**
@@ -125,99 +126,12 @@ export namespace CommitRetrieveResponse {
  * A paginated list of Commit. Contains a list of entries and page information.
  */
 export interface CommitListResponse {
-  entries: Array<CommitListResponse.Entry>;
+  entries: Array<Commit>;
 
   /**
    * The information about a paginated result
    */
-  page_info: CommitListResponse.PageInfo;
-}
-
-export namespace CommitListResponse {
-  /**
-   * A commit is a change to a resource within an environment, made by an author.
-   */
-  export interface Entry {
-    /**
-     * The unique identifier for the commit.
-     */
-    id: string;
-
-    /**
-     * The author of the commit.
-     */
-    commit_author: Entry.CommitAuthor;
-
-    /**
-     * The optional message about the commit.
-     */
-    commit_message: string;
-
-    /**
-     * The created at date of the commit.
-     */
-    created_at: string;
-
-    /**
-     * The environment of the commit.
-     */
-    environment: string;
-
-    /**
-     * The resource object associated with the commit.
-     */
-    resource: Entry.Resource;
-
-    /**
-     * The updated at date of the commit.
-     */
-    updated_at: string;
-  }
-
-  export namespace Entry {
-    /**
-     * The author of the commit.
-     */
-    export interface CommitAuthor {
-      /**
-       * The email address of the commit author.
-       */
-      email: string;
-
-      /**
-       * The name of the commit author.
-       */
-      name: string;
-    }
-
-    /**
-     * The resource object associated with the commit.
-     */
-    export interface Resource {
-      /**
-       * The unique identifier for the resource.
-       */
-      identifier: string;
-
-      /**
-       * The type of the resource object.
-       */
-      type: 'email_layout' | 'workflow' | 'translation' | 'partial' | 'message_type';
-    }
-  }
-
-  /**
-   * The information about a paginated result
-   */
-  export interface PageInfo {
-    __typename: string;
-
-    page_size: number;
-
-    after?: string | null;
-
-    before?: string | null;
-  }
+  page_info: Shared.PageInfo;
 }
 
 /**
@@ -241,81 +155,7 @@ export interface CommitPromoteOneResponse {
   /**
    * A commit is a change to a resource within an environment, made by an author.
    */
-  commit: CommitPromoteOneResponse.Commit;
-}
-
-export namespace CommitPromoteOneResponse {
-  /**
-   * A commit is a change to a resource within an environment, made by an author.
-   */
-  export interface Commit {
-    /**
-     * The unique identifier for the commit.
-     */
-    id: string;
-
-    /**
-     * The author of the commit.
-     */
-    commit_author: Commit.CommitAuthor;
-
-    /**
-     * The optional message about the commit.
-     */
-    commit_message: string;
-
-    /**
-     * The created at date of the commit.
-     */
-    created_at: string;
-
-    /**
-     * The environment of the commit.
-     */
-    environment: string;
-
-    /**
-     * The resource object associated with the commit.
-     */
-    resource: Commit.Resource;
-
-    /**
-     * The updated at date of the commit.
-     */
-    updated_at: string;
-  }
-
-  export namespace Commit {
-    /**
-     * The author of the commit.
-     */
-    export interface CommitAuthor {
-      /**
-       * The email address of the commit author.
-       */
-      email: string;
-
-      /**
-       * The name of the commit author.
-       */
-      name: string;
-    }
-
-    /**
-     * The resource object associated with the commit.
-     */
-    export interface Resource {
-      /**
-       * The unique identifier for the resource.
-       */
-      identifier: string;
-
-      /**
-       * The type of the resource object.
-       */
-      type: 'email_layout' | 'workflow' | 'translation' | 'partial' | 'message_type';
-    }
-  }
+  commit: Commit;
 }
 
 export interface CommitListParams {
@@ -374,7 +214,7 @@ export interface CommitPromoteAllParams {
 
 export declare namespace Commits {
   export {
-    type CommitRetrieveResponse as CommitRetrieveResponse,
+    type Commit as Commit,
     type CommitListResponse as CommitListResponse,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,

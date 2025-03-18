@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import * as Shared from './shared';
 import { APIPromise } from '../api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -137,22 +138,7 @@ export interface EmailLayoutListResponse {
   /**
    * The information about a paginated result
    */
-  page_info: EmailLayoutListResponse.PageInfo;
-}
-
-export namespace EmailLayoutListResponse {
-  /**
-   * The information about a paginated result
-   */
-  export interface PageInfo {
-    __typename: string;
-
-    page_size: number;
-
-    after?: string | null;
-
-    before?: string | null;
-  }
+  page_info: Shared.PageInfo;
 }
 
 /**
