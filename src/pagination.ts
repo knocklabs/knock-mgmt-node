@@ -1,23 +1,23 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { KnockError } from './error';
+import { KnockMgmtError } from './error';
 import { FinalRequestOptions } from './internal/request-options';
 import { defaultParseResponse } from './internal/parse';
 import { APIPromise } from './api-promise';
-import { type Knock } from './client';
+import { type KnockMgmt } from './client';
 import { type APIResponseProps } from './internal/parse';
 import { maybeObj } from './internal/utils/values';
 
 export type PageRequestOptions = Pick<FinalRequestOptions, 'query' | 'headers' | 'body' | 'path' | 'method'>;
 
 export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
-  #client: Knock;
+  #client: KnockMgmt;
   protected options: FinalRequestOptions;
 
   protected response: Response;
   protected body: unknown;
 
-  constructor(client: Knock, response: Response, body: unknown, options: FinalRequestOptions) {
+  constructor(client: KnockMgmt, response: Response, body: unknown, options: FinalRequestOptions) {
     this.#client = client;
     this.options = options;
     this.response = response;
@@ -37,7 +37,7 @@ export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
   async getNextPage(): Promise<this> {
     const nextOptions = this.nextPageRequestOptions();
     if (!nextOptions) {
-      throw new KnockError(
+      throw new KnockMgmtError(
         'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.',
       );
     }
@@ -80,7 +80,7 @@ export class PagePromise<
   implements AsyncIterable<Item>
 {
   constructor(
-    client: Knock,
+    client: KnockMgmt,
     request: Promise<APIResponseProps>,
     Page: new (...args: ConstructorParameters<typeof AbstractPage>) => PageClass,
   ) {
@@ -133,7 +133,7 @@ export class EntriesCursor<Item> extends AbstractPage<Item> implements EntriesCu
   page_info: EntriesCursorResponse.PageInfo;
 
   constructor(
-    client: Knock,
+    client: KnockMgmt,
     response: Response,
     body: EntriesCursorResponse<Item>,
     options: FinalRequestOptions,

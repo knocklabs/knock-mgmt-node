@@ -165,7 +165,7 @@ export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
 const parseLogLevel = (
   maybeLevel: string | undefined,
   sourceName: string,
-  client: Knock,
+  client: KnockMgmt,
 ): LogLevel | undefined => {
   if (!maybeLevel) {
     return undefined;
@@ -197,7 +197,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['KNOCK_BASE_URL'].
+   * Defaults to process.env['KNOCK_MGMT_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -249,7 +249,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['KNOCK_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['KNOCK_MGMT_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -264,9 +264,9 @@ export interface ClientOptions {
 type FinalizedRequestInit = RequestInit & { headers: Headers };
 
 /**
- * API Client for interfacing with the Knock API.
+ * API Client for interfacing with the Knock Mgmt API.
  */
-export class Knock {
+export class KnockMgmt {
   serviceToken: string;
 
   baseURL: string;
@@ -282,10 +282,10 @@ export class Knock {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Knock API.
+   * API Client for interfacing with the Knock Mgmt API.
    *
    * @param {string | undefined} [opts.serviceToken=process.env['KNOCK_SERVICE_TOKEN'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['KNOCK_BASE_URL'] ?? https://control.knock.app] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['KNOCK_MGMT_BASE_URL'] ?? https://control.knock.app] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -294,13 +294,13 @@ export class Knock {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('KNOCK_BASE_URL'),
+    baseURL = readEnv('KNOCK_MGMT_BASE_URL'),
     serviceToken = readEnv('KNOCK_SERVICE_TOKEN'),
     ...opts
   }: ClientOptions = {}) {
     if (serviceToken === undefined) {
-      throw new Errors.KnockError(
-        "The KNOCK_SERVICE_TOKEN environment variable is missing or empty; either provide it, or instantiate the Knock client with an serviceToken option, like new Knock({ serviceToken: 'My Service Token' }).",
+      throw new Errors.KnockMgmtError(
+        "The KNOCK_SERVICE_TOKEN environment variable is missing or empty; either provide it, or instantiate the KnockMgmt client with an serviceToken option, like new KnockMgmt({ serviceToken: 'My Service Token' }).",
       );
     }
 
@@ -311,14 +311,14 @@ export class Knock {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Knock.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? KnockMgmt.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('KNOCK_LOG'), "process.env['KNOCK_LOG']", this) ??
+      parseLogLevel(readEnv('KNOCK_MGMT_LOG'), "process.env['KNOCK_MGMT_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -355,7 +355,7 @@ export class Knock {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.KnockError(
+        throw new Errors.KnockMgmtError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -623,7 +623,7 @@ export class Knock {
     options: FinalRequestOptions,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as Knock, request, Page);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as KnockMgmt, request, Page);
   }
 
   async fetchWithTimeout(
@@ -839,10 +839,10 @@ export class Knock {
     }
   }
 
-  static Knock = this;
+  static KnockMgmt = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static KnockError = Errors.KnockError;
+  static KnockMgmtError = Errors.KnockMgmtError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -872,20 +872,20 @@ export class Knock {
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
 }
-Knock.Templates = Templates;
-Knock.EmailLayouts = EmailLayouts;
-Knock.Commits = Commits;
-Knock.Partials = Partials;
-Knock.Translations = Translations;
-Knock.Workflows = Workflows;
-Knock.MessageTypes = MessageTypes;
-Knock.Auth = Auth;
-Knock.APIKeys = APIKeys;
-Knock.ChannelGroups = ChannelGroups;
-Knock.Channels = Channels;
-Knock.Environments = Environments;
-Knock.Variables = Variables;
-export declare namespace Knock {
+KnockMgmt.Templates = Templates;
+KnockMgmt.EmailLayouts = EmailLayouts;
+KnockMgmt.Commits = Commits;
+KnockMgmt.Partials = Partials;
+KnockMgmt.Translations = Translations;
+KnockMgmt.Workflows = Workflows;
+KnockMgmt.MessageTypes = MessageTypes;
+KnockMgmt.Auth = Auth;
+KnockMgmt.APIKeys = APIKeys;
+KnockMgmt.ChannelGroups = ChannelGroups;
+KnockMgmt.Channels = Channels;
+KnockMgmt.Environments = Environments;
+KnockMgmt.Variables = Variables;
+export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
 
   export import EntriesCursor = Pagination.EntriesCursor;
