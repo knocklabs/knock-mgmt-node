@@ -3,7 +3,7 @@
 import { APIPromise } from '@knocklabs/mgmt/api-promise';
 
 import util from 'node:util';
-import KnockMapi from '@knocklabs/mgmt';
+import Knock from '@knocklabs/mgmt';
 import { APIUserAbortError } from '@knocklabs/mgmt';
 const defaultFetch = fetch;
 
@@ -20,10 +20,10 @@ describe('instantiate client', () => {
   });
 
   describe('defaultHeaders', () => {
-    const client = new KnockMapi({
+    const client = new Knock({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
-      bearerToken: 'My Bearer Token',
+      serviceToken: 'My Service Token',
     });
 
     test('they are used in the request', () => {
@@ -54,14 +54,14 @@ describe('instantiate client', () => {
 
     beforeEach(() => {
       process.env = { ...env };
-      process.env['KNOCK_MAPI_LOG'] = undefined;
+      process.env['KNOCK_LOG'] = undefined;
     });
 
     afterEach(() => {
       process.env = env;
     });
 
-    const forceAPIResponseForClient = async (client: KnockMapi) => {
+    const forceAPIResponseForClient = async (client: Knock) => {
       await new APIPromise(
         client,
         Promise.resolve({
@@ -87,14 +87,14 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new KnockMapi({ logger: logger, logLevel: 'debug', bearerToken: 'My Bearer Token' });
+      const client = new Knock({ logger: logger, logLevel: 'debug', serviceToken: 'My Service Token' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).toHaveBeenCalled();
     });
 
     test('default logLevel is warn', async () => {
-      const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+      const client = new Knock({ serviceToken: 'My Service Token' });
       expect(client.logLevel).toBe('warn');
     });
 
@@ -107,7 +107,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new KnockMapi({ logger: logger, logLevel: 'info', bearerToken: 'My Bearer Token' });
+      const client = new Knock({ logger: logger, logLevel: 'info', serviceToken: 'My Service Token' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -122,8 +122,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['KNOCK_MAPI_LOG'] = 'debug';
-      const client = new KnockMapi({ logger: logger, bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_LOG'] = 'debug';
+      const client = new Knock({ logger: logger, serviceToken: 'My Service Token' });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -139,11 +139,11 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['KNOCK_MAPI_LOG'] = 'not a log level';
-      const client = new KnockMapi({ logger: logger, bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_LOG'] = 'not a log level';
+      const client = new Knock({ logger: logger, serviceToken: 'My Service Token' });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
-        'process.env[\'KNOCK_MAPI_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
+        'process.env[\'KNOCK_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
       );
     });
 
@@ -156,8 +156,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['KNOCK_MAPI_LOG'] = 'debug';
-      const client = new KnockMapi({ logger: logger, logLevel: 'off', bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_LOG'] = 'debug';
+      const client = new Knock({ logger: logger, logLevel: 'off', serviceToken: 'My Service Token' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -172,8 +172,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['KNOCK_MAPI_LOG'] = 'not a log level';
-      const client = new KnockMapi({ logger: logger, logLevel: 'debug', bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_LOG'] = 'not a log level';
+      const client = new Knock({ logger: logger, logLevel: 'debug', serviceToken: 'My Service Token' });
       expect(client.logLevel).toBe('debug');
       expect(warnMock).not.toHaveBeenCalled();
     });
@@ -181,37 +181,37 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new KnockMapi({
+      const client = new Knock({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
-        bearerToken: 'My Bearer Token',
+        serviceToken: 'My Service Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
     });
 
     test('multiple default query params', () => {
-      const client = new KnockMapi({
+      const client = new Knock({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
-        bearerToken: 'My Bearer Token',
+        serviceToken: 'My Service Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
     });
 
     test('overriding with `undefined`', () => {
-      const client = new KnockMapi({
+      const client = new Knock({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
-        bearerToken: 'My Bearer Token',
+        serviceToken: 'My Service Token',
       });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
     });
   });
 
   test('custom fetch', async () => {
-    const client = new KnockMapi({
+    const client = new Knock({
       baseURL: 'http://localhost:5000/',
-      bearerToken: 'My Bearer Token',
+      serviceToken: 'My Service Token',
       fetch: (url) => {
         return Promise.resolve(
           new Response(JSON.stringify({ url, custom: true }), {
@@ -227,17 +227,17 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new KnockMapi({
+    const client = new Knock({
       baseURL: 'http://localhost:5000/',
-      bearerToken: 'My Bearer Token',
+      serviceToken: 'My Service Token',
       fetch: defaultFetch,
     });
   });
 
   test('custom signal', async () => {
-    const client = new KnockMapi({
+    const client = new Knock({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-      bearerToken: 'My Bearer Token',
+      serviceToken: 'My Service Token',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
           setTimeout(
@@ -267,9 +267,9 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMapi({
+    const client = new Knock({
       baseURL: 'http://localhost:5000/',
-      bearerToken: 'My Bearer Token',
+      serviceToken: 'My Service Token',
       fetch: testFetch,
     });
 
@@ -279,75 +279,75 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new KnockMapi({
+      const client = new Knock({
         baseURL: 'http://localhost:5000/custom/path/',
-        bearerToken: 'My Bearer Token',
+        serviceToken: 'My Service Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new KnockMapi({
+      const client = new Knock({
         baseURL: 'http://localhost:5000/custom/path',
-        bearerToken: 'My Bearer Token',
+        serviceToken: 'My Service Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     afterEach(() => {
-      process.env['KNOCK_MAPI_BASE_URL'] = undefined;
+      process.env['KNOCK_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
-      const client = new KnockMapi({ baseURL: 'https://example.com', bearerToken: 'My Bearer Token' });
+      const client = new Knock({ baseURL: 'https://example.com', serviceToken: 'My Service Token' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
-      process.env['KNOCK_MAPI_BASE_URL'] = 'https://example.com/from_env';
-      const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_BASE_URL'] = 'https://example.com/from_env';
+      const client = new Knock({ serviceToken: 'My Service Token' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
-      process.env['KNOCK_MAPI_BASE_URL'] = ''; // empty
-      const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_BASE_URL'] = ''; // empty
+      const client = new Knock({ serviceToken: 'My Service Token' });
       expect(client.baseURL).toEqual('https://control.knock.app');
     });
 
     test('blank env variable', () => {
-      process.env['KNOCK_MAPI_BASE_URL'] = '  '; // blank
-      const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+      process.env['KNOCK_BASE_URL'] = '  '; // blank
+      const client = new Knock({ serviceToken: 'My Service Token' });
       expect(client.baseURL).toEqual('https://control.knock.app');
     });
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new KnockMapi({ maxRetries: 4, bearerToken: 'My Bearer Token' });
+    const client = new Knock({ maxRetries: 4, serviceToken: 'My Service Token' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new KnockMapi({ bearerToken: 'My Bearer Token' });
+    const client2 = new Knock({ serviceToken: 'My Service Token' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['KNOCK_SERVICE_TOKEN'] = 'My Bearer Token';
-    const client = new KnockMapi();
-    expect(client.bearerToken).toBe('My Bearer Token');
+    process.env['KNOCK_SERVICE_TOKEN'] = 'My Service Token';
+    const client = new Knock();
+    expect(client.serviceToken).toBe('My Service Token');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['KNOCK_SERVICE_TOKEN'] = 'another My Bearer Token';
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
-    expect(client.bearerToken).toBe('My Bearer Token');
+    process.env['KNOCK_SERVICE_TOKEN'] = 'another My Service Token';
+    const client = new Knock({ serviceToken: 'My Service Token' });
+    expect(client.serviceToken).toBe('My Service Token');
   });
 });
 
 describe('request building', () => {
-  const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+  const client = new Knock({ serviceToken: 'My Service Token' });
 
   describe('custom headers', () => {
     test('handles undefined', () => {
@@ -366,7 +366,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new KnockMapi({ bearerToken: 'My Bearer Token' });
+  const client = new Knock({ serviceToken: 'My Service Token' });
 
   class Serializable {
     toJSON() {
@@ -451,7 +451,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', timeout: 10, fetch: testFetch });
+    const client = new Knock({ serviceToken: 'My Service Token', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -481,7 +481,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', fetch: testFetch, maxRetries: 4 });
+    const client = new Knock({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -505,7 +505,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', fetch: testFetch, maxRetries: 4 });
+    const client = new Knock({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -534,8 +534,8 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new KnockMapi({
-      bearerToken: 'My Bearer Token',
+    const client = new Knock({
+      serviceToken: 'My Service Token',
       fetch: testFetch,
       maxRetries: 4,
       defaultHeaders: { 'X-Stainless-Retry-Count': null },
@@ -567,7 +567,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', fetch: testFetch, maxRetries: 4 });
+    const client = new Knock({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -597,7 +597,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', fetch: testFetch });
+    const client = new Knock({ serviceToken: 'My Service Token', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -627,7 +627,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMapi({ bearerToken: 'My Bearer Token', fetch: testFetch });
+    const client = new Knock({ serviceToken: 'My Service Token', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);

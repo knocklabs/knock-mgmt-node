@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import KnockMapi from '@knocklabs/mgmt';
+import Knock from '@knocklabs/mgmt';
 
-const client = new KnockMapi({
-  bearerToken: 'My Bearer Token',
+const client = new Knock({
+  serviceToken: 'My Service Token',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
@@ -29,7 +29,7 @@ describe('resource messageTypes', () => {
         { annotate: true, environment: 'development', hide_uncommitted_changes: true },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(KnockMapi.NotFoundError);
+    ).rejects.toThrow(Knock.NotFoundError);
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
@@ -59,7 +59,7 @@ describe('resource messageTypes', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(KnockMapi.NotFoundError);
+    ).rejects.toThrow(Knock.NotFoundError);
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
