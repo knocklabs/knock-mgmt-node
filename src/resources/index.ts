@@ -55,6 +55,7 @@ export {
   type TranslationUpsertParams,
   type TranslationValidateParams,
 } from './translations';
+export { Whoami, type WhoamiVerifyResponse } from './whoami';
 export {
   Workflows,
   type WorkflowRetrieveResponse,

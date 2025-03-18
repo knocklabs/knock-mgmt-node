@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import KnockMapi from 'knock-mapi';
 
 const client = new KnockMapi({
-  bearerToken: process.env['KNOCK_MAPI_BEARER_TOKEN'], // This is the default and can be omitted
+  bearerToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -47,7 +47,7 @@ This library includes TypeScript definitions for all request params and response
 import KnockMapi from 'knock-mapi';
 
 const client = new KnockMapi({
-  bearerToken: process.env['KNOCK_MAPI_BEARER_TOKEN'], // This is the default and can be omitted
+  bearerToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
 async function main() {

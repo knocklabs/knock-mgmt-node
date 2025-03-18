@@ -54,7 +54,7 @@ export class Commits extends APIResource {
  */
 export interface CommitRetrieveResponse {
   /**
-   * The resource object associated with the commit.
+   * The unique identifier for the commit.
    */
   id: string;
 
@@ -139,7 +139,7 @@ export namespace CommitListResponse {
    */
   export interface Entry {
     /**
-     * The resource object associated with the commit.
+     * The unique identifier for the commit.
      */
     id: string;
 
@@ -250,7 +250,7 @@ export namespace CommitPromoteOneResponse {
    */
   export interface Commit {
     /**
-     * The resource object associated with the commit.
+     * The unique identifier for the commit.
      */
     id: string;
 
