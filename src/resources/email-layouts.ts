@@ -31,7 +31,7 @@ export class EmailLayouts extends APIResource {
   /**
    * Updates an email layout, or creates a new one if it does not yet exist.
    *
-   * Note: this endpoint only operates in the “development” environment.
+   * Note: this endpoint only operates in the "development" environment.
    */
   upsert(
     emailLayoutKey: string,
@@ -66,51 +66,51 @@ export class EmailLayouts extends APIResource {
 }
 
 /**
- * A versioned email layout used within an environment
+ * A versioned email layout used within an environment.
  */
 export interface EmailLayout {
   /**
-   * The creation date of the email layout
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
   /**
-   * The complete HTML content of the email layout
+   * The complete HTML content of the email layout.
    */
   html_layout: string;
 
   /**
-   * The unique key for this email layout
+   * The unique key for this email layout.
    */
   key: string;
 
   /**
-   * The friendly name of this email layout
+   * The friendly name of this email layout.
    */
   name: string;
 
   /**
-   * The SHA of the email layout
+   * The SHA of the email layout.
    */
   sha: string;
 
   /**
-   * The complete plain text content of the email layout
+   * The complete plain text content of the email layout.
    */
   text_layout: string;
 
   /**
-   * The environment of the email layout
+   * The environment of the email layout.
    */
   environment?: string;
 
   /**
-   * A list of one or more items to show in the footer of the email layout
+   * A list of one or more items to show in the footer of the email layout.
    */
   footer_links?: Array<EmailLayout.FooterLink>;
 
   /**
-   * The last update date of the email layout
+   * The timestamp of when the resource was last updated.
    */
   updated_at?: string;
 }
@@ -118,152 +118,157 @@ export interface EmailLayout {
 export namespace EmailLayout {
   export interface FooterLink {
     /**
-     * The text to display as the link
+     * The text to display as the link.
      */
     text: string;
 
     /**
-     * The URL to link to
+     * The URL to link to.
      */
     url: string;
   }
 }
 
 /**
- * A paginated list of email layouts
+ * A paginated list of EmailLayout. Contains a list of entries and page
+ * information.
  */
 export interface EmailLayoutListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<EmailLayout>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 /**
- * Wraps the EmailLayout response under the email_layout key.
+ * Wraps the EmailLayout response under the `email_layout` key.
  */
 export interface EmailLayoutUpsertResponse {
   /**
-   * A versioned email layout used within an environment
+   * A versioned email layout used within an environment.
    */
   email_layout: EmailLayout;
 }
 
 /**
- * Wraps the EmailLayout response under the email_layout key.
+ * Wraps the EmailLayout response under the `email_layout` key.
  */
 export interface EmailLayoutValidateResponse {
   /**
-   * A versioned email layout used within an environment
+   * A versioned email layout used within an environment.
    */
   email_layout: EmailLayout;
 }
 
 export interface EmailLayoutRetrieveParams {
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The environment slug to show the email layout for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface EmailLayoutListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The environment slug to list email layouts for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }
 
 export interface EmailLayoutUpsertParams {
   /**
-   * Body param: A request to update or create an email layout
+   * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutUpsertParams.EmailLayout;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: Whether to commit the resource at the same time as modifying it
+   * Query param: Whether to commit the resource at the same time as modifying it.
    */
   commit?: boolean;
 
   /**
-   * Query param: The message to commit the resource with
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
    */
   commit_message?: string;
 
   /**
-   * Query param: The environment slug to upsert the email layout for
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutUpsertParams {
   /**
-   * A request to update or create an email layout
+   * A request to update or create an email layout.
    */
   export interface EmailLayout {
     /**
-     * The complete HTML content of the email layout
+     * The complete HTML content of the email layout.
      */
     html_layout: string;
 
     /**
-     * The friendly name of this email layout
+     * The friendly name of this email layout.
      */
     name: string;
 
     /**
-     * The complete plain text content of the email layout
+     * The complete plain text content of the email layout.
      */
     text_layout: string;
 
     /**
-     * A list of one or more items to show in the footer of the email layout
+     * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
   }
@@ -271,12 +276,12 @@ export namespace EmailLayoutUpsertParams {
   export namespace EmailLayout {
     export interface FooterLink {
       /**
-       * The text to display as the link
+       * The text to display as the link.
        */
       text: string;
 
       /**
-       * The URL to link to
+       * The URL to link to.
        */
       url: string;
     }
@@ -285,48 +290,48 @@ export namespace EmailLayoutUpsertParams {
 
 export interface EmailLayoutValidateParams {
   /**
-   * Body param: A request to update or create an email layout
+   * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutValidateParams.EmailLayout;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: The environment slug to validate the email layout for
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutValidateParams {
   /**
-   * A request to update or create an email layout
+   * A request to update or create an email layout.
    */
   export interface EmailLayout {
     /**
-     * The complete HTML content of the email layout
+     * The complete HTML content of the email layout.
      */
     html_layout: string;
 
     /**
-     * The friendly name of this email layout
+     * The friendly name of this email layout.
      */
     name: string;
 
     /**
-     * The complete plain text content of the email layout
+     * The complete plain text content of the email layout.
      */
     text_layout: string;
 
     /**
-     * A list of one or more items to show in the footer of the email layout
+     * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
   }
@@ -334,12 +339,12 @@ export namespace EmailLayoutValidateParams {
   export namespace EmailLayout {
     export interface FooterLink {
       /**
-       * The text to display as the link
+       * The text to display as the link.
        */
       text: string;
 
       /**
-       * The URL to link to
+       * The URL to link to.
        */
       url: string;
     }

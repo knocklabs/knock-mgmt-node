@@ -109,7 +109,7 @@ export class Workflows extends APIResource {
 }
 
 /**
- * A condition to be evaluated
+ * A condition to be evaluated.
  */
 export interface Condition {
   /**
@@ -148,7 +148,7 @@ export interface Condition {
 }
 
 /**
- * A group of conditions to be evaluated
+ * A group of conditions to be evaluated.
  */
 export type ConditionGroup = ConditionGroup.ConditionGroupAllMatch | ConditionGroup.ConditionGroupAnyMatch;
 
@@ -157,6 +157,9 @@ export namespace ConditionGroup {
    * A group of conditions that must all be met.
    */
   export interface ConditionGroupAllMatch {
+    /**
+     * A list of conditions.
+     */
     all: Array<WorkflowsAPI.Condition>;
   }
 
@@ -164,6 +167,9 @@ export namespace ConditionGroup {
    * A group of conditions that any must be met. Can contain nested alls.
    */
   export interface ConditionGroupAnyMatch {
+    /**
+     * An array of conditions or nested condition groups to evaluate.
+     */
     any: Array<WorkflowsAPI.Condition | ConditionGroupAnyMatch.ConditionGroupAllMatch>;
   }
 
@@ -172,6 +178,9 @@ export namespace ConditionGroup {
      * A group of conditions that must all be met.
      */
     export interface ConditionGroupAllMatch {
+      /**
+       * A list of conditions.
+       */
       all: Array<WorkflowsAPI.Condition>;
     }
   }
@@ -181,8 +190,14 @@ export namespace ConditionGroup {
  * A duration of time, represented as a unit and a value.
  */
 export interface Duration {
+  /**
+   * The unit of time.
+   */
   unit: 'minutes' | 'hours' | 'days' | 'weeks' | 'months';
 
+  /**
+   * The value of the duration.
+   */
   value: number;
 }
 
@@ -190,12 +205,24 @@ export interface Duration {
  * A send window time for a notification. Describes a single day.
  */
 export interface SendWindow {
+  /**
+   * The day of the week.
+   */
   day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
+  /**
+   * The type of send window.
+   */
   type: 'send' | 'do_not_send';
 
+  /**
+   * The start time of the send window.
+   */
   from?: string | null;
 
+  /**
+   * The end time of the send window.
+   */
   until?: string | null;
 }
 
@@ -204,17 +231,17 @@ export interface SendWindow {
  */
 export interface Workflow {
   /**
-   * Whether the workflow is active in the current environment. (read-only)
+   * Whether the workflow is active in the current environment. (read-only).
    */
   active: boolean;
 
   /**
-   * A timestamp of when the workflow was created. (read-only)
+   * The timestamp of when the resource was created. (read-only).
    */
   created_at: string;
 
   /**
-   * The slug of the environment in which the workflow exists. (read-only)
+   * The slug of the environment in which the workflow exists. (read-only).
    */
   environment: string;
 
@@ -230,7 +257,7 @@ export interface Workflow {
   name: string;
 
   /**
-   * The SHA hash of the workflow data. (read-only)
+   * The SHA hash of the workflow data. (read-only).
    */
   sha: string;
 
@@ -241,12 +268,12 @@ export interface Workflow {
   steps: Array<WorkflowStep>;
 
   /**
-   * A timestamp of when the workflow was last updated. (read-only)
+   * The timestamp of when the resource was last updated. (read-only).
    */
   updated_at: string;
 
   /**
-   * Whether the workflow and its steps are in a valid state. (read-only)
+   * Whether the workflow and its steps are in a valid state. (read-only).
    */
   valid: boolean;
 
@@ -256,12 +283,12 @@ export interface Workflow {
   categories?: Array<string>;
 
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions?: ConditionGroup | null;
 
   /**
-   * A timestamp of when the workflow was deleted. (read-only)
+   * The timestamp of when the resource was deleted. (read-only).
    */
   deleted_at?: string;
 
@@ -278,14 +305,14 @@ export interface Workflow {
 
   /**
    * A JSON schema for the expected structure of the workflow trigger's data payload.
-   * Used to validate trigger requests. (optional)
+   * Used to validate trigger requests. (optional).
    */
   trigger_data_json_schema?: Record<string, unknown>;
 
   /**
    * The frequency at which the workflow should be triggered. One of:
-   * "once_per_recipient", "once_per_recipient_per_tenant", "every_trigger". Defaults
-   * to "every_trigger".
+   * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
+   * to `every_trigger`.
    */
   trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
 }
@@ -310,7 +337,7 @@ export namespace Workflow {
 }
 
 /**
- * A workflow batch step
+ * A workflow batch step.
  */
 export interface WorkflowBatchStep {
   /**
@@ -346,8 +373,8 @@ export namespace WorkflowBatchStep {
    */
   export interface Settings {
     /**
-     * The execution mode of the batch step. One of: “accumulate” or “flush_leading”.
-     * When set to “flush_leading”, the first item in the batch will be executed
+     * The execution mode of the batch step. One of: `accumulate` or `flush_leading`.
+     * When set to `flush_leading`, the first item in the batch will be executed
      * immediately, and the rest will be batched.
      */
     batch_execution_mode?: 'accumulate' | 'flush_leading' | null;
@@ -370,7 +397,7 @@ export namespace WorkflowBatchStep {
 
     /**
      * The order describing whether to return the first or last ten batch items in the
-     * activities variable. One of: “asc” or “desc”.
+     * activities variable. One of: `asc` or `desc`.
      */
     batch_order?: 'asc' | 'desc' | null;
 
@@ -391,7 +418,7 @@ export namespace WorkflowBatchStep {
     batch_window_extension_limit?: WorkflowsAPI.Duration | null;
 
     /**
-     * The type of the batch window used. One of: “fixed” or “sliding”.
+     * The type of the batch window used. One of: `fixed` or `sliding`.
      */
     batch_window_type?: 'fixed' | 'sliding' | null;
   }
@@ -406,22 +433,38 @@ export interface WorkflowBranchStep {
    */
   branches: Array<WorkflowBranchStep.Branch>;
 
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
   description: string;
 
+  /**
+   * A name for the workflow step.
+   */
   name: string;
 
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
   ref: string;
 
+  /**
+   * The type of step.
+   */
   type: 'branch';
 }
 
 export namespace WorkflowBranchStep {
   export interface Branch {
     /**
-     * A group of conditions to be evaluated
+     * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
 
+    /**
+     * The name of the branch.
+     */
     name?: string;
 
     /**
@@ -495,7 +538,7 @@ export interface WorkflowChannelStep {
     | null;
 
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions?: ConditionGroup | null;
 
@@ -517,7 +560,7 @@ export interface WorkflowChannelStep {
  */
 export interface WorkflowDelayStep {
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions: ConditionGroup | null;
 
@@ -569,7 +612,7 @@ export namespace WorkflowDelayStep {
 }
 
 /**
- * A workflow fetch step
+ * A workflow fetch step.
  */
 export interface WorkflowFetchStep {
   /**
@@ -593,7 +636,7 @@ export interface WorkflowFetchStep {
   type: 'fetch';
 
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions?: ConditionGroup | null;
 
@@ -619,7 +662,7 @@ export type WorkflowStep =
   | WorkflowTriggerWorkflowStep;
 
 /**
- * A workflow throttle step
+ * A workflow throttle step.
  */
 export interface WorkflowThrottleStep {
   /**
@@ -643,7 +686,7 @@ export interface WorkflowThrottleStep {
   type: 'throttle';
 
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions?: ConditionGroup | null;
 
@@ -708,7 +751,7 @@ export interface WorkflowTriggerWorkflowStep {
   type: 'trigger_workflow';
 
   /**
-   * A group of conditions to be evaluated
+   * A group of conditions to be evaluated.
    */
   conditions?: ConditionGroup | null;
 
@@ -759,16 +802,19 @@ export namespace WorkflowTriggerWorkflowStep {
  * A paginated list of Workflow. Contains a list of entries and page information.
  */
 export interface WorkflowListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Workflow>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 /**
- * Wraps the Workflow response under the workflow key.
+ * Wraps the Workflow response under the `workflow` key.
  */
 export interface WorkflowActivateResponse {
   /**
@@ -788,7 +834,7 @@ export interface WorkflowRunResponse {
 }
 
 /**
- * Wraps the Workflow response under the workflow key.
+ * Wraps the Workflow response under the `workflow` key.
  */
 export interface WorkflowUpsertResponse {
   /**
@@ -798,7 +844,7 @@ export interface WorkflowUpsertResponse {
 }
 
 /**
- * Wraps the Workflow response under the workflow key.
+ * Wraps the Workflow response under the `workflow` key.
  */
 export interface WorkflowValidateResponse {
   /**
@@ -809,61 +855,61 @@ export interface WorkflowValidateResponse {
 
 export interface WorkflowRetrieveParams {
   /**
-   * A slug of the environment from which to query workflows.
+   * The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface WorkflowListParams {
   /**
-   * A slug of the environment from which to query workflows.
+   * The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }
 
 export interface WorkflowActivateParams {
   /**
-   * Query param: The environment slug. (Defaults to `development`.)
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
   /**
-   * Body param: Whether to activate or deactivate the workflow. Set to “true” by
+   * Body param: Whether to activate or deactivate the workflow. Set to `true` by
    * default, which will activate the workflow.
    */
   status: boolean;
@@ -871,7 +917,7 @@ export interface WorkflowActivateParams {
 
 export interface WorkflowRunParams {
   /**
-   * Query param: The environment slug. (Defaults to `development`.)
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
@@ -904,7 +950,7 @@ export interface WorkflowRunParams {
 
 export namespace WorkflowRunParams {
   /**
-   * An object reference
+   * An object reference.
    */
   export interface UnionMember1 {
     id: string;
@@ -913,7 +959,7 @@ export namespace WorkflowRunParams {
   }
 
   /**
-   * An object reference
+   * An object reference.
    */
   export interface UnionMember1 {
     id: string;
@@ -934,12 +980,13 @@ export interface WorkflowUpsertParams {
   workflow: WorkflowUpsertParams.Workflow;
 
   /**
-   * Query param: Whether to commit the resource at the same time as modifying it
+   * Query param: Whether to commit the resource at the same time as modifying it.
    */
   commit?: boolean;
 
   /**
-   * Query param: The message to commit the resource with
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
    */
   commit_message?: string;
 }
@@ -966,7 +1013,7 @@ export namespace WorkflowUpsertParams {
     categories?: Array<string>;
 
     /**
-     * A group of conditions to be evaluated
+     * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
 
@@ -983,14 +1030,14 @@ export namespace WorkflowUpsertParams {
 
     /**
      * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. (optional)
+     * Used to validate trigger requests. (optional).
      */
     trigger_data_json_schema?: Record<string, unknown>;
 
     /**
      * The frequency at which the workflow should be triggered. One of:
-     * "once_per_recipient", "once_per_recipient_per_tenant", "every_trigger". Defaults
-     * to "every_trigger".
+     * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
+     * to `every_trigger`.
      */
     trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
   }
@@ -1017,7 +1064,7 @@ export namespace WorkflowUpsertParams {
 
 export interface WorkflowValidateParams {
   /**
-   * Query param: A slug of the environment in which to validate the workflow.
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
@@ -1049,7 +1096,7 @@ export namespace WorkflowValidateParams {
     categories?: Array<string>;
 
     /**
-     * A group of conditions to be evaluated
+     * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
 
@@ -1066,14 +1113,14 @@ export namespace WorkflowValidateParams {
 
     /**
      * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. (optional)
+     * Used to validate trigger requests. (optional).
      */
     trigger_data_json_schema?: Record<string, unknown>;
 
     /**
      * The frequency at which the workflow should be triggered. One of:
-     * "once_per_recipient", "once_per_recipient_per_tenant", "every_trigger". Defaults
-     * to "every_trigger".
+     * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
+     * to `every_trigger`.
      */
     trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
   }

@@ -21,8 +21,8 @@ describe('resource commits', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.commits.list({ environment: 'environment' });
+  test.skip('list', async () => {
+    const responsePromise = client.commits.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,14 +33,14 @@ describe('resource commits', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list: required and optional params', async () => {
-    const response = await client.commits.list({
-      environment: 'environment',
-      after: 'after',
-      before: 'before',
-      limit: 0,
-      promoted: true,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.commits.list(
+        { after: 'after', before: 'before', environment: 'development', limit: 0, promoted: true },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMapi.NotFoundError);
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url

@@ -33,7 +33,7 @@ export class Translations extends APIResource {
    * Updates a translation of a given locale code + namespace, or creates a new one
    * if it does not yet exist.
    *
-   * Note: this endpoint only operates on translations in the “development”
+   * Note: this endpoint only operates on translations in the "development"
    * environment.
    */
   upsert(
@@ -52,7 +52,7 @@ export class Translations extends APIResource {
   /**
    * Validates a translation payload without persisting it.
    *
-   * Note: this endpoint only operates on translations in the “development”
+   * Note: this endpoint only operates on translations in the "development"
    * environment.
    */
   validate(
@@ -74,7 +74,7 @@ export class Translations extends APIResource {
  */
 export interface Translation {
   /**
-   * A JSON-encoded string containing the key-value pairs of translation references
+   * A JSON encoded string containing the key-value pairs of translation references
    * and translation strings.
    */
   content: string;
@@ -86,7 +86,7 @@ export interface Translation {
   format: 'json' | 'po';
 
   /**
-   * The date and time the translation was created.
+   * The timestamp of when the resource was created.
    */
   inserted_at: string;
 
@@ -101,13 +101,13 @@ export interface Translation {
   namespace: string;
 
   /**
-   * The date and time the translation was last updated.
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 }
 
 /**
- * Wraps the Translation response under the translation key.
+ * Wraps the Translation response under the `translation` key.
  */
 export interface TranslationRetrieveResponse {
   /**
@@ -121,16 +121,19 @@ export interface TranslationRetrieveResponse {
  * information.
  */
 export interface TranslationListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Translation>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 /**
- * Wraps the Translation response under the translation key.
+ * Wraps the Translation response under the `translation` key.
  */
 export interface TranslationUpsertResponse {
   /**
@@ -140,7 +143,7 @@ export interface TranslationUpsertResponse {
 }
 
 /**
- * Wraps the Translation response under the translation key.
+ * Wraps the Translation response under the `translation` key.
  */
 export interface TranslationValidateResponse {
   /**
@@ -151,12 +154,12 @@ export interface TranslationValidateResponse {
 
 export interface TranslationRetrieveParams {
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The environment slug to list translations for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
@@ -167,7 +170,7 @@ export interface TranslationRetrieveParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
@@ -179,22 +182,22 @@ export interface TranslationRetrieveParams {
 
 export interface TranslationListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The environment slug to list translations for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
@@ -205,12 +208,12 @@ export interface TranslationListParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 
@@ -238,12 +241,12 @@ export interface TranslationUpsertParams {
   translation: TranslationUpsertParams.Translation;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: The environment slug to list translations for
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
@@ -254,7 +257,7 @@ export interface TranslationUpsertParams {
   format?: 'json' | 'po';
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -266,7 +269,7 @@ export namespace TranslationUpsertParams {
    */
   export interface Translation {
     /**
-     * A JSON-encoded string containing the key-value pairs of translation references
+     * A JSON encoded string containing the key-value pairs of translation references
      * and translation strings.
      */
     content: string;
@@ -287,17 +290,17 @@ export interface TranslationValidateParams {
   translation: TranslationValidateParams.Translation;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: The environment slug to list translations for
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -309,7 +312,7 @@ export namespace TranslationValidateParams {
    */
   export interface Translation {
     /**
-     * A JSON-encoded string containing the key-value pairs of translation references
+     * A JSON encoded string containing the key-value pairs of translation references
      * and translation strings.
      */
     content: string;

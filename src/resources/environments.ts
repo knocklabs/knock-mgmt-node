@@ -27,11 +27,11 @@ export class Environments extends APIResource {
 }
 
 /**
- * An environment object
+ * An environment object.
  */
 export interface Environment {
   /**
-   * The date and time the environment was created
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
@@ -46,7 +46,7 @@ export interface Environment {
   order: number;
 
   /**
-   * The owner of the environment
+   * The owner of the environment.
    */
   owner: 'system' | 'user';
 
@@ -56,27 +56,27 @@ export interface Environment {
   slug: string;
 
   /**
-   * The last time the environment was updated
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
   /**
-   * The date and time the environment was deleted
+   * The timestamp of when the resource was deleted.
    */
   deleted_at?: string | null;
 
   /**
-   * Whether PII data is hidden from the environment
+   * Whether PII data is hidden from the environment.
    */
   hide_pii_data?: boolean;
 
   /**
-   * The color of the environment label to display in the dashboard
+   * The color of the environment label to display in the dashboard.
    */
   label_color?: string | null;
 
   /**
-   * The last time the environment was committed to
+   * The last time the environment was committed to.
    */
   last_commit_at?: string | null;
 }
@@ -86,27 +86,30 @@ export interface Environment {
  * information.
  */
 export interface EnvironmentListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Environment>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 export interface EnvironmentListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }

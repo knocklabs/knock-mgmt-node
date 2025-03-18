@@ -28,7 +28,7 @@ describe('resource translations', () => {
         'locale_code',
         {
           annotate: true,
-          environment: 'environment',
+          environment: 'development',
           format: 'json',
           hide_uncommitted_changes: true,
           namespace: 'namespace',
@@ -59,7 +59,7 @@ describe('resource translations', () => {
           after: 'after',
           annotate: true,
           before: 'before',
-          environment: 'environment',
+          environment: 'development',
           format: 'json',
           hide_uncommitted_changes: true,
           limit: 0,
@@ -92,7 +92,7 @@ describe('resource translations', () => {
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
-      environment: 'environment',
+      environment: 'development',
       format: 'json',
       hide_uncommitted_changes: true,
     });
@@ -117,7 +117,7 @@ describe('resource translations', () => {
     const response = await client.translations.validate('locale_code', {
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
-      environment: 'environment',
+      environment: 'development',
       hide_uncommitted_changes: true,
     });
   });

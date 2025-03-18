@@ -23,58 +23,58 @@ export class Channels extends APIResource {
  */
 export interface Channel {
   /**
-   * Timestamp when the channel was created
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
   /**
-   * Unique identifier for the channel within a project (immutable once created)
+   * Unique identifier for the channel within a project (immutable once created).
    */
   key: string;
 
   /**
-   * The human-readable name of the channel
+   * The human-readable name of the channel.
    */
   name: string;
 
   /**
-   * The ID of the provider that this channel uses to deliver messages
+   * The ID of the provider that this channel uses to deliver messages.
    */
   provider: string;
 
   /**
-   * The type of channel, determining what kind of messages it can send
+   * The type of channel, determining what kind of messages it can send.
    */
   type: 'email' | 'in_app' | 'in_app_feed' | 'in_app_guide' | 'sms' | 'push' | 'chat' | 'http';
 
   /**
-   * Timestamp when the channel was last updated
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
   /**
-   * Controls whether the channel is visible as system-level or user-level
+   * Controls whether the channel is visible as system-level or user-level.
    */
   visibility: 'system' | 'user';
 
   /**
-   * Timestamp when the channel was archived (soft deleted), null if active
+   * The timestamp of when the resource was deleted.
    */
   archived_at?: string | null;
 
   /**
-   * Optional URL to a custom icon for the channel
+   * Optional URL to a custom icon for the channel.
    */
   custom_icon_url?: string | null;
 
   /**
-   * Optional description of the channel's purpose or usage
+   * Optional description of the channel's purpose or usage.
    */
   description?: string | null;
 }
 
 /**
- * Chat channel settings
+ * Chat channel settings.
  */
 export interface ChatChannelSettings {
   /**
@@ -90,7 +90,7 @@ export interface ChatChannelSettings {
 }
 
 /**
- * Email channel settings
+ * Email channel settings.
  */
 export interface EmailChannelSettings {
   /**
@@ -111,7 +111,7 @@ export interface EmailChannelSettings {
   from_email?: string | null;
 
   /**
-   * The name from which this channel will send. Supports liquid
+   * The name from which this channel will send. Supports liquid.
    */
   from_name?: string | null;
 
@@ -145,7 +145,7 @@ export interface EmailChannelSettings {
 }
 
 /**
- * In-app feed channel settings
+ * In-app feed channel settings.
  */
 export interface InAppFeedChannelSettings {
   /**
@@ -155,7 +155,7 @@ export interface InAppFeedChannelSettings {
 }
 
 /**
- * Push channel settings
+ * Push channel settings.
  */
 export interface PushChannelSettings {
   /**
@@ -166,7 +166,7 @@ export interface PushChannelSettings {
 }
 
 /**
- * SMS channel settings
+ * SMS channel settings.
  */
 export interface SMSChannelSettings {
   /**
@@ -179,27 +179,30 @@ export interface SMSChannelSettings {
  * A paginated list of Channel. Contains a list of entries and page information.
  */
 export interface ChannelListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Channel>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 export interface ChannelListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }

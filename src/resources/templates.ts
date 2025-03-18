@@ -96,6 +96,9 @@ export namespace EmailTemplate {
      */
     id: string;
 
+    /**
+     * A list of buttons in the button set.
+     */
     buttons: Array<EmailButtonSetBlock.Button>;
 
     /**
@@ -119,33 +122,75 @@ export namespace EmailTemplate {
      * A button in a button set block.
      */
     export interface Button {
+      /**
+       * The action of the button.
+       */
       action: string;
 
+      /**
+       * The label of the button.
+       */
       label: string;
 
+      /**
+       * The variant of the button.
+       */
       variant: string;
 
+      /**
+       * The size attributes of the button.
+       */
       size_attrs?: Button.SizeAttrs;
 
+      /**
+       * The style attributes of the button.
+       */
       style_attrs?: Button.StyleAttrs;
     }
 
     export namespace Button {
+      /**
+       * The size attributes of the button.
+       */
       export interface SizeAttrs {
+        /**
+         * Whether the button is full width.
+         */
         is_fullwidth?: boolean;
 
+        /**
+         * The size of the button.
+         */
         size?: 'sm' | 'md' | 'lg';
       }
 
+      /**
+       * The style attributes of the button.
+       */
       export interface StyleAttrs {
+        /**
+         * The background color of the button.
+         */
         background_color?: string;
 
+        /**
+         * The border color of the button.
+         */
         border_color?: string;
 
+        /**
+         * The border radius of the button.
+         */
         border_radius?: number;
 
+        /**
+         * The border width of the button.
+         */
         border_width?: number;
 
+        /**
+         * The text color of the button.
+         */
         text_color?: string;
       }
     }
@@ -154,16 +199,34 @@ export namespace EmailTemplate {
      * The layout attributes of the block.
      */
     export interface LayoutAttrs {
+      /**
+       * The column_gap layout attribute of the block.
+       */
       column_gap: number;
 
+      /**
+       * The horizontal alignment of the block.
+       */
       horizontal_align: 'left' | 'center' | 'right';
 
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
       padding_bottom: number;
 
+      /**
+       * The padding_left layout attribute of the block.
+       */
       padding_left: number;
 
+      /**
+       * The padding_right layout attribute of the block.
+       */
       padding_right: number;
 
+      /**
+       * The padding_top layout attribute of the block.
+       */
       padding_top: number;
     }
   }
@@ -198,12 +261,24 @@ export namespace EmailTemplate {
      * The layout attributes of the block.
      */
     export interface LayoutAttrs {
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
       padding_bottom: number;
 
+      /**
+       * The padding_left layout attribute of the block.
+       */
       padding_left: number;
 
+      /**
+       * The padding_right layout attribute of the block.
+       */
       padding_right: number;
 
+      /**
+       * The padding_top layout attribute of the block.
+       */
       padding_top: number;
     }
   }
@@ -273,12 +348,24 @@ export namespace EmailTemplate {
      * The layout attributes of the block.
      */
     export interface LayoutAttrs {
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
       padding_bottom: number;
 
+      /**
+       * The padding_left layout attribute of the block.
+       */
       padding_left: number;
 
+      /**
+       * The padding_right layout attribute of the block.
+       */
       padding_right: number;
 
+      /**
+       * The padding_top layout attribute of the block.
+       */
       padding_top: number;
     }
   }
@@ -329,12 +416,24 @@ export namespace EmailTemplate {
      * The layout attributes of the block.
      */
     export interface LayoutAttrs {
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
       padding_bottom: number;
 
+      /**
+       * The padding_left layout attribute of the block.
+       */
       padding_left: number;
 
+      /**
+       * The padding_right layout attribute of the block.
+       */
       padding_right: number;
 
+      /**
+       * The padding_top layout attribute of the block.
+       */
       padding_top: number;
     }
   }

@@ -10,7 +10,7 @@ const client = new KnockMapi({
 describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.workflows.retrieve('workflow_key', { environment: 'environment' });
+    const responsePromise = client.workflows.retrieve('workflow_key', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,7 +23,7 @@ describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.workflows.retrieve('workflow_key', {
-      environment: 'environment',
+      environment: 'development',
       annotate: true,
       hide_uncommitted_changes: true,
     });
@@ -181,7 +181,7 @@ describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
     const responsePromise = client.workflows.validate('workflow_key', {
-      environment: 'environment',
+      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -206,7 +206,7 @@ describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
     const response = await client.workflows.validate('workflow_key', {
-      environment: 'environment',
+      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [

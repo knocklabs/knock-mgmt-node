@@ -26,7 +26,7 @@ describe('resource emailLayouts', () => {
     await expect(
       client.emailLayouts.retrieve(
         'email_layout_key',
-        { annotate: true, environment: 'environment', hide_uncommitted_changes: true },
+        { annotate: true, environment: 'development', hide_uncommitted_changes: true },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(KnockMapi.NotFoundError);
@@ -53,7 +53,7 @@ describe('resource emailLayouts', () => {
           after: 'after',
           annotate: true,
           before: 'before',
-          environment: 'environment',
+          environment: 'development',
           hide_uncommitted_changes: true,
           limit: 0,
         },
@@ -92,7 +92,7 @@ describe('resource emailLayouts', () => {
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      environment: 'environment',
+      environment: 'development',
       hide_uncommitted_changes: true,
     });
   });
@@ -125,7 +125,7 @@ describe('resource emailLayouts', () => {
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
       },
       annotate: true,
-      environment: 'environment',
+      environment: 'development',
       hide_uncommitted_changes: true,
     });
   });

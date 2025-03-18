@@ -10,8 +10,11 @@ export class APIKeys extends APIResource {
    * service token for a secret API key that can be used to make requests to the
    * public API.
    */
-  exchange(params: APIKeyExchangeParams, options?: RequestOptions): APIPromise<APIKeyExchangeResponse> {
-    const { environment } = params;
+  exchange(
+    params: APIKeyExchangeParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<APIKeyExchangeResponse> {
+    const { environment } = params ?? {};
     return this._client.post('/v1/api_keys/exchange', { query: { environment }, ...options });
   }
 }
@@ -20,11 +23,17 @@ export class APIKeys extends APIResource {
  * Returns an API key that can be used to make requests to the public API.
  */
 export interface APIKeyExchangeResponse {
+  /**
+   * The secret API key exchanged from the service token.
+   */
   api_key: string;
 }
 
 export interface APIKeyExchangeParams {
-  environment: string;
+  /**
+   * The environment slug. (Defaults to `development`.).
+   */
+  environment?: string;
 }
 
 export declare namespace APIKeys {

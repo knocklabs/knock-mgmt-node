@@ -19,7 +19,7 @@ export class Variables extends APIResource {
  */
 export interface Variable {
   /**
-   * The date and time the variable was created.
+   * The timestamp of when the resource was created.
    */
   inserted_at: string;
 
@@ -34,7 +34,7 @@ export interface Variable {
   type: 'public' | 'secret';
 
   /**
-   * The date and time the variable was last updated.
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
@@ -53,32 +53,35 @@ export interface Variable {
  * A paginated list of Variable. Contains a list of entries and page information.
  */
 export interface VariableListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<Variable>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 export interface VariableListParams {
   /**
-   * The environment slug to list variables for
+   * The environment slug. (Defaults to `development`.).
    */
   environment: string;
 
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }

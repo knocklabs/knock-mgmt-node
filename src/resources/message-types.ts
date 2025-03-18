@@ -68,16 +68,16 @@ export class MessageTypes extends APIResource {
 }
 
 /**
- * A message type object
+ * A message type object.
  */
 export interface MessageType {
   /**
-   * When the message type was created
+   * The timestamp of when the resource was created.
    */
   created_at: string;
 
   /**
-   * The environment of the message type
+   * The environment of the message type.
    */
   environment: string;
 
@@ -94,47 +94,47 @@ export interface MessageType {
   name: string;
 
   /**
-   * The owner of the message type
+   * The owner of the message type.
    */
   owner: 'system' | 'user';
 
   /**
-   * An HTML/liquid template for the message type preview
+   * An HTML/liquid template for the message type preview.
    */
   preview: string;
 
   /**
-   * The semantic version of the message type
+   * The semantic version of the message type.
    */
   semver: string;
 
   /**
-   * The SHA hash of the message type
+   * The SHA hash of the message type.
    */
   sha: string;
 
   /**
-   * When the message type was last updated
+   * The timestamp of when the resource was last updated.
    */
   updated_at: string;
 
   /**
-   * Whether the message type is valid
+   * Whether the message type is valid.
    */
   valid: boolean;
 
   /**
-   * The variants of the message type
+   * The variants of the message type.
    */
   variants: Array<MessageTypeVariant>;
 
   /**
-   * When the message type was archived
+   * The timestamp of when the resource was deleted.
    */
   archived_at?: string;
 
   /**
-   * When the message type was deleted
+   * The timestamp of when the resource was deleted.
    */
   deleted_at?: string | null;
 
@@ -145,48 +145,48 @@ export interface MessageType {
   description?: string | null;
 
   /**
-   * The icon name of the message type
+   * The icon name of the message type.
    */
   icon_name?: string;
 }
 
 /**
- * A text field used in a message type
+ * A text field used in a message type.
  */
 export interface MessageTypeTextField {
   /**
-   * The unique key of the field
+   * The unique key of the field.
    */
   key: string;
 
   /**
-   * The type of the field
+   * The type of the field.
    */
   type: 'text';
 
   /**
-   * The label of the field
+   * The label of the field.
    */
   label?: string | null;
 
   /**
-   * Settings for the text field
+   * Settings for the text field.
    */
   settings?: MessageTypeTextField.Settings;
 
   /**
-   * The value of the text field
+   * The value of the text field.
    */
   value?: string | null;
 }
 
 export namespace MessageTypeTextField {
   /**
-   * Settings for the text field
+   * Settings for the text field.
    */
   export interface Settings {
     /**
-     * The default value of the text field
+     * The default value of the text field.
      */
     default?: string | null;
 
@@ -197,18 +197,18 @@ export namespace MessageTypeTextField {
     min_length?: number;
 
     /**
-     * Whether the field is required
+     * Whether the field is required.
      */
     required?: boolean;
   }
 }
 
 /**
- * A variant of a message type
+ * A variant of a message type.
  */
 export interface MessageTypeVariant {
   /**
-   * The field types available for the variant
+   * The field types available for the variant.
    */
   fields: Array<
     | MessageTypeVariant.MessageTypeBooleanField
@@ -234,201 +234,201 @@ export interface MessageTypeVariant {
 
 export namespace MessageTypeVariant {
   /**
-   * A boolean field used in a message type
+   * A boolean field used in a message type.
    */
   export interface MessageTypeBooleanField {
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'boolean';
 
     /**
-     * The value of the boolean field
+     * The value of the boolean field.
      */
     value: boolean;
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * Settings for the boolean field
+     * Settings for the boolean field.
      */
     settings?: MessageTypeBooleanField.Settings;
   }
 
   export namespace MessageTypeBooleanField {
     /**
-     * Settings for the boolean field
+     * Settings for the boolean field.
      */
     export interface Settings {
       /**
-       * The default value of the boolean field
+       * The default value of the boolean field.
        */
       default?: boolean;
 
       description?: string;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
   }
 
   /**
-   * A button field used in a message type
+   * A button field used in a message type.
    */
   export interface MessageTypeButtonField {
     /**
-     * A text field used in a message type
+     * A text field used in a message type.
      */
     action: MessageTypesAPI.MessageTypeTextField;
 
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * A text field used in a message type
+     * A text field used in a message type.
      */
     text: MessageTypesAPI.MessageTypeTextField;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'button';
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * Settings for the button field
+     * Settings for the button field.
      */
     settings?: MessageTypeButtonField.Settings;
   }
 
   export namespace MessageTypeButtonField {
     /**
-     * Settings for the button field
+     * Settings for the button field.
      */
     export interface Settings {
       description?: string;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
   }
 
   /**
-   * A markdown field used in a message type
+   * A markdown field used in a message type.
    */
   export interface MessageTypeMarkdownField {
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'markdown';
 
     /**
-     * The value of the markdown field
+     * The value of the markdown field.
      */
     value: string;
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * Settings for the markdown field
+     * Settings for the markdown field.
      */
     settings?: MessageTypeMarkdownField.Settings;
   }
 
   export namespace MessageTypeMarkdownField {
     /**
-     * Settings for the markdown field
+     * Settings for the markdown field.
      */
     export interface Settings {
       /**
-       * The default value of the markdown field
+       * The default value of the markdown field.
        */
       default?: string;
 
       description?: string;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
   }
 
   /**
-   * A multi-select field used in a message type
+   * A multi-select field used in a message type.
    */
   export interface MessageTypeMultiSelectField {
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * Settings for the multi_select field
+     * Settings for the multi_select field.
      */
     settings: MessageTypeMultiSelectField.Settings;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'multi_select';
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * The selected values
+     * The selected values.
      */
     value?: Array<string> | null;
   }
 
   export namespace MessageTypeMultiSelectField {
     /**
-     * Settings for the multi_select field
+     * Settings for the multi_select field.
      */
     export interface Settings {
       /**
-       * The default values for the multi-select field
+       * The default values for the multi-select field.
        */
       default?: Array<string> | null;
 
       description?: string;
 
       /**
-       * The available options for the multi-select field
+       * The available options for the multi-select field.
        */
       options?: Array<Settings.Option>;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
@@ -436,12 +436,12 @@ export namespace MessageTypeVariant {
     export namespace Settings {
       export interface Option {
         /**
-         * The value for the option
+         * The value for the option.
          */
         value: string;
 
         /**
-         * The display label for the option
+         * The display label for the option.
          */
         label?: string;
       }
@@ -449,54 +449,54 @@ export namespace MessageTypeVariant {
   }
 
   /**
-   * A select field used in a message type
+   * A select field used in a message type.
    */
   export interface MessageTypeSelectField {
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * Settings for the select field
+     * Settings for the select field.
      */
     settings: MessageTypeSelectField.Settings;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'select';
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * The selected value
+     * The selected value.
      */
     value?: string | null;
   }
 
   export namespace MessageTypeSelectField {
     /**
-     * Settings for the select field
+     * Settings for the select field.
      */
     export interface Settings {
       /**
-       * The default value for the select field
+       * The default value for the select field.
        */
       default?: string | null;
 
       description?: string;
 
       /**
-       * The available options for the select field
+       * The available options for the select field.
        */
       options?: Array<Settings.Option>;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
@@ -504,12 +504,12 @@ export namespace MessageTypeVariant {
     export namespace Settings {
       export interface Option {
         /**
-         * The value for the option
+         * The value for the option.
          */
         value: string;
 
         /**
-         * The display label for the option
+         * The display label for the option.
          */
         label?: string;
       }
@@ -517,42 +517,42 @@ export namespace MessageTypeVariant {
   }
 
   /**
-   * A textarea field used in a message type
+   * A textarea field used in a message type.
    */
   export interface MessageTypeTextareaField {
     /**
-     * The unique key of the field
+     * The unique key of the field.
      */
     key: string;
 
     /**
-     * The type of the field
+     * The type of the field.
      */
     type: 'textarea';
 
     /**
-     * The label of the field
+     * The label of the field.
      */
     label?: string | null;
 
     /**
-     * Settings for the textarea field
+     * Settings for the textarea field.
      */
     settings?: MessageTypeTextareaField.Settings;
 
     /**
-     * The value of the textarea field
+     * The value of the textarea field.
      */
     value?: string | null;
   }
 
   export namespace MessageTypeTextareaField {
     /**
-     * Settings for the textarea field
+     * Settings for the textarea field.
      */
     export interface Settings {
       /**
-       * The default value of the textarea field
+       * The default value of the textarea field.
        */
       default?: string | null;
 
@@ -563,7 +563,7 @@ export namespace MessageTypeVariant {
       min_length?: number;
 
       /**
-       * Whether the field is required
+       * Whether the field is required.
        */
       required?: boolean;
     }
@@ -575,118 +575,122 @@ export namespace MessageTypeVariant {
  * information.
  */
 export interface MessageTypeListResponse {
+  /**
+   * A list of entries.
+   */
   entries: Array<MessageType>;
 
   /**
-   * The information about a paginated result
+   * The information about a paginated result.
    */
   page_info: Shared.PageInfo;
 }
 
 /**
- * Wraps the MessageType response under the message_type key.
+ * Wraps the MessageType response under the `message_type` key.
  */
 export interface MessageTypeUpsertResponse {
   /**
-   * A message type object
+   * A message type object.
    */
   message_type: MessageType;
 }
 
 /**
- * Wraps the MessageType response under the message_type key.
+ * Wraps the MessageType response under the `message_type` key.
  */
 export interface MessageTypeValidateResponse {
   /**
-   * A message type object
+   * A message type object.
    */
   message_type: MessageType;
 }
 
 export interface MessageTypeRetrieveParams {
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The environment slug to retrieve the message type for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface MessageTypeListParams {
   /**
-   * The cursor to fetch entries after
+   * The cursor to fetch entries after.
    */
   after?: string;
 
   /**
-   * Whether to annotate the resource
+   * Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * The cursor to fetch entries before
+   * The cursor to fetch entries before.
    */
   before?: string;
 
   /**
-   * The environment slug to list message types for
+   * The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Whether to hide uncommitted changes
+   * Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 
   /**
-   * The number of entries to fetch
+   * The number of entries to fetch per-page.
    */
   limit?: number;
 }
 
 export interface MessageTypeUpsertParams {
   /**
-   * Body param: A request to create a message type
+   * Body param: A request to create a message type.
    */
   message_type: MessageTypeUpsertParams.MessageType;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: Whether to commit the resource at the same time as modifying it
+   * Query param: Whether to commit the resource at the same time as modifying it.
    */
   commit?: boolean;
 
   /**
-   * Query param: The message to commit the resource with
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
    */
   commit_message?: string;
 
   /**
-   * Query param: The environment slug to upsert the message type for
+   * Query param: The environment slug. (Defaults to `development`.).
    */
   environment?: string;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export namespace MessageTypeUpsertParams {
   /**
-   * A request to create a message type
+   * A request to create a message type.
    */
   export interface MessageType {
     /**
@@ -701,22 +705,22 @@ export namespace MessageTypeUpsertParams {
     name: string;
 
     /**
-     * An HTML/liquid template for the message type preview
+     * An HTML/liquid template for the message type preview.
      */
     preview: string;
 
     /**
-     * The icon name of the message type
+     * The icon name of the message type.
      */
     icon_name?: string;
 
     /**
-     * The semantic version of the message type
+     * The semantic version of the message type.
      */
     semver?: string;
 
     /**
-     * The variants of the message type
+     * The variants of the message type.
      */
     variants?: Array<MessageTypesAPI.MessageTypeVariant>;
   }
@@ -724,24 +728,24 @@ export namespace MessageTypeUpsertParams {
 
 export interface MessageTypeValidateParams {
   /**
-   * Body param: A request to create a message type
+   * Body param: A request to create a message type.
    */
   message_type: MessageTypeValidateParams.MessageType;
 
   /**
-   * Query param: Whether to annotate the resource
+   * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
 
   /**
-   * Query param: Whether to hide uncommitted changes
+   * Query param: Whether to hide uncommitted changes.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export namespace MessageTypeValidateParams {
   /**
-   * A request to create a message type
+   * A request to create a message type.
    */
   export interface MessageType {
     /**
@@ -756,22 +760,22 @@ export namespace MessageTypeValidateParams {
     name: string;
 
     /**
-     * An HTML/liquid template for the message type preview
+     * An HTML/liquid template for the message type preview.
      */
     preview: string;
 
     /**
-     * The icon name of the message type
+     * The icon name of the message type.
      */
     icon_name?: string;
 
     /**
-     * The semantic version of the message type
+     * The semantic version of the message type.
      */
     semver?: string;
 
     /**
-     * The variants of the message type
+     * The variants of the message type.
      */
     variants?: Array<MessageTypesAPI.MessageTypeVariant>;
   }
