@@ -1,13 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
+import { APIResource } from '../../core/resource';
 import * as WorkflowsAPI from './workflows';
 import * as ChannelsAPI from '../channels';
 import * as TemplatesAPI from '../templates';
 import * as StepsAPI from './steps';
 import { StepPreviewTemplateParams, StepPreviewTemplateResponse, Steps } from './steps';
-import { APIPromise } from '../../api-promise';
-import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../../pagination';
+import { APIPromise } from '../../core/api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
