@@ -1,4 +1,4 @@
-import { KnockMgmtError } from '../../error';
+import { KnockMgmtError } from '../../core/error';
 
 /**
  * Percent-encode everything that isn't safe to have in a path without encoding safe chars.
