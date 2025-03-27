@@ -1,5 +1,5 @@
 import { multipartFormRequestOptions, createForm } from '@knocklabs/mgmt/internal/uploads';
-import { toFile } from '@knocklabs/mgmt/uploads';
+import { toFile } from '@knocklabs/mgmt/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

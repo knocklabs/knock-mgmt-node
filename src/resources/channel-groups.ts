@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
+import { APIResource } from '../core/resource';
 import * as ChannelsAPI from './channels';
-import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class ChannelGroups extends APIResource {
