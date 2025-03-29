@@ -94,8 +94,8 @@ describe('resource messageTypes', () => {
             fields: [
               {
                 key: 'text_field',
+                label: 'My text field',
                 type: 'text',
-                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',
@@ -103,7 +103,6 @@ describe('resource messageTypes', () => {
                   min_length: 10,
                   required: true,
                 },
-                value: 'Hello, world!',
               },
             ],
             key: 'default',
@@ -151,8 +150,8 @@ describe('resource messageTypes', () => {
             fields: [
               {
                 key: 'text_field',
+                label: 'My text field',
                 type: 'text',
-                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',
@@ -160,7 +159,6 @@ describe('resource messageTypes', () => {
                   min_length: 10,
                   required: true,
                 },
-                value: 'Hello, world!',
               },
             ],
             key: 'default',
