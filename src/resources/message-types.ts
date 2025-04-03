@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
+import { APIResource } from '../core/resource';
 import * as MessageTypesAPI from './message-types';
-import { APIPromise } from '../api-promise';
-import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../pagination';
+import { APIPromise } from '../core/api-promise';
+import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -162,24 +162,19 @@ export interface MessageTypeTextField {
   key: string;
 
   /**
+   * The label of the field.
+   */
+  label: string | null;
+
+  /**
    * The type of the field.
    */
   type: 'text';
 
   /**
-   * The label of the field.
-   */
-  label?: string | null;
-
-  /**
    * Settings for the text field.
    */
   settings?: MessageTypeTextField.Settings;
-
-  /**
-   * The value of the text field.
-   */
-  value?: string | null;
 }
 
 export namespace MessageTypeTextField {
@@ -215,11 +210,13 @@ export interface MessageTypeVariant {
   fields: Array<
     | MessageTypeVariant.MessageTypeBooleanField
     | MessageTypeVariant.MessageTypeButtonField
+    | MessageTypeVariant.MessageTypeImageField
     | MessageTypeVariant.MessageTypeMarkdownField
     | MessageTypeVariant.MessageTypeMultiSelectField
     | MessageTypeVariant.MessageTypeSelectField
     | MessageTypeTextField
     | MessageTypeVariant.MessageTypeTextareaField
+    | MessageTypeVariant.MessageTypeURLField
   >;
 
   /**
@@ -245,19 +242,14 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * The type of the field.
      */
     type: 'boolean';
-
-    /**
-     * The value of the boolean field.
-     */
-    value: boolean;
-
-    /**
-     * The label of the field.
-     */
-    label?: string | null;
 
     /**
      * Settings for the boolean field.
@@ -299,6 +291,11 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * A text field used in a message type.
      */
     text: MessageTypesAPI.MessageTypeTextField;
@@ -307,11 +304,6 @@ export namespace MessageTypeVariant {
      * The type of the field.
      */
     type: 'button';
-
-    /**
-     * The label of the field.
-     */
-    label?: string | null;
 
     /**
      * Settings for the button field.
@@ -334,6 +326,104 @@ export namespace MessageTypeVariant {
   }
 
   /**
+   * An image field used in a message type.
+   */
+  export interface MessageTypeImageField {
+    /**
+     * A text field used in a message type.
+     */
+    action: MessageTypesAPI.MessageTypeTextField;
+
+    /**
+     * A text field used in a message type.
+     */
+    alt: MessageTypesAPI.MessageTypeTextField;
+
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'image';
+
+    /**
+     * A URL field used in a message type.
+     */
+    url: MessageTypeImageField.URL;
+
+    /**
+     * Settings for the image field.
+     */
+    settings?: MessageTypeImageField.Settings;
+  }
+
+  export namespace MessageTypeImageField {
+    /**
+     * A URL field used in a message type.
+     */
+    export interface URL {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'url';
+
+      /**
+       * Settings for the url field.
+       */
+      settings?: URL.Settings;
+    }
+
+    export namespace URL {
+      /**
+       * Settings for the url field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the URL field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * Settings for the image field.
+     */
+    export interface Settings {
+      description?: string;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+    }
+  }
+
+  /**
    * A markdown field used in a message type.
    */
   export interface MessageTypeMarkdownField {
@@ -343,19 +433,14 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * The type of the field.
      */
     type: 'markdown';
-
-    /**
-     * The value of the markdown field.
-     */
-    value: string;
-
-    /**
-     * The label of the field.
-     */
-    label?: string | null;
 
     /**
      * Settings for the markdown field.
@@ -392,6 +477,11 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * Settings for the multi_select field.
      */
     settings: MessageTypeMultiSelectField.Settings;
@@ -400,16 +490,6 @@ export namespace MessageTypeVariant {
      * The type of the field.
      */
     type: 'multi_select';
-
-    /**
-     * The label of the field.
-     */
-    label?: string | null;
-
-    /**
-     * The selected values.
-     */
-    value?: Array<string> | null;
   }
 
   export namespace MessageTypeMultiSelectField {
@@ -460,6 +540,11 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * Settings for the select field.
      */
     settings: MessageTypeSelectField.Settings;
@@ -468,16 +553,6 @@ export namespace MessageTypeVariant {
      * The type of the field.
      */
     type: 'select';
-
-    /**
-     * The label of the field.
-     */
-    label?: string | null;
-
-    /**
-     * The selected value.
-     */
-    value?: string | null;
   }
 
   export namespace MessageTypeSelectField {
@@ -528,24 +603,19 @@ export namespace MessageTypeVariant {
     key: string;
 
     /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
      * The type of the field.
      */
     type: 'textarea';
 
     /**
-     * The label of the field.
-     */
-    label?: string | null;
-
-    /**
      * Settings for the textarea field.
      */
     settings?: MessageTypeTextareaField.Settings;
-
-    /**
-     * The value of the textarea field.
-     */
-    value?: string | null;
   }
 
   export namespace MessageTypeTextareaField {
@@ -563,6 +633,50 @@ export namespace MessageTypeVariant {
       max_length?: number;
 
       min_length?: number;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+    }
+  }
+
+  /**
+   * A URL field used in a message type.
+   */
+  export interface MessageTypeURLField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'url';
+
+    /**
+     * Settings for the url field.
+     */
+    settings?: MessageTypeURLField.Settings;
+  }
+
+  export namespace MessageTypeURLField {
+    /**
+     * Settings for the url field.
+     */
+    export interface Settings {
+      /**
+       * The default value of the URL field.
+       */
+      default?: string | null;
+
+      description?: string;
 
       /**
        * Whether the field is required.

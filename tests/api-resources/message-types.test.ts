@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Knock from '@knocklabs/mgmt';
+import KnockMgmt from '@knocklabs/mgmt';
 
-const client = new Knock({
+const client = new KnockMgmt({
   serviceToken: 'My Service Token',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -29,7 +29,7 @@ describe('resource messageTypes', () => {
         { annotate: true, environment: 'development', hide_uncommitted_changes: true },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Knock.NotFoundError);
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
@@ -59,7 +59,7 @@ describe('resource messageTypes', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Knock.NotFoundError);
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
@@ -94,8 +94,8 @@ describe('resource messageTypes', () => {
             fields: [
               {
                 key: 'text_field',
+                label: 'My text field',
                 type: 'text',
-                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',
@@ -103,7 +103,6 @@ describe('resource messageTypes', () => {
                   min_length: 10,
                   required: true,
                 },
-                value: 'Hello, world!',
               },
             ],
             key: 'default',
@@ -151,8 +150,8 @@ describe('resource messageTypes', () => {
             fields: [
               {
                 key: 'text_field',
+                label: 'My text field',
                 type: 'text',
-                label: 'Label',
                 settings: {
                   default: 'A placeholder',
                   description: 'A description of the text field',
@@ -160,7 +159,6 @@ describe('resource messageTypes', () => {
                   min_length: 10,
                   required: true,
                 },
-                value: 'Hello, world!',
               },
             ],
             key: 'default',

@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.0-rc.1 (2025-04-03)
+
+Full Changelog: [v0.1.0-rc.0...v0.1.0-rc.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.0...v0.1.0-rc.1)
+
+### Features
+
+* **api:** api update ([#11](https://github.com/knocklabs/knock-mgmt-node/issues/11)) ([d38b2bf](https://github.com/knocklabs/knock-mgmt-node/commit/d38b2bfe5693f9c9168aff784f17676390acedf4))
+* **api:** update via SDK Studio ([#5](https://github.com/knocklabs/knock-mgmt-node/issues/5)) ([d10b22f](https://github.com/knocklabs/knock-mgmt-node/commit/d10b22f00eabc416fc0b73e1bd6962d021287da1))
+
+
+### Bug Fixes
+
+* **client:** send `X-Stainless-Timeout` in seconds ([#12](https://github.com/knocklabs/knock-mgmt-node/issues/12)) ([c8ef7b3](https://github.com/knocklabs/knock-mgmt-node/commit/c8ef7b35d636deb4f030c17c7b520dc0da90a55f))
+
+
+### Chores
+
+* **client:** move misc public files to new `core/` directory, deprecate old paths ([#10](https://github.com/knocklabs/knock-mgmt-node/issues/10)) ([256733e](https://github.com/knocklabs/knock-mgmt-node/commit/256733e75320659cfec94abc0fde4773552f3db2))
+* **exports:** cleaner resource index imports ([#8](https://github.com/knocklabs/knock-mgmt-node/issues/8)) ([436ca01](https://github.com/knocklabs/knock-mgmt-node/commit/436ca015d2dbf518c3a9580ddd0738d15ea53d99))
+* **exports:** stop using path fallbacks ([#9](https://github.com/knocklabs/knock-mgmt-node/issues/9)) ([aa8d864](https://github.com/knocklabs/knock-mgmt-node/commit/aa8d864f7b599c4db61e645c09628dfdf970478c))
+* **internal:** add aliases for Record and Array ([#13](https://github.com/knocklabs/knock-mgmt-node/issues/13)) ([18783d2](https://github.com/knocklabs/knock-mgmt-node/commit/18783d2ebeb078e1f8a8bbc4688ff90f07b85a8a))
+* **internal:** minor client file refactoring ([#7](https://github.com/knocklabs/knock-mgmt-node/issues/7)) ([2310b01](https://github.com/knocklabs/knock-mgmt-node/commit/2310b01619160883af8457bbad15a494a9dbe908))
+
 ## 0.1.0-rc.0 (2025-03-18)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-rc.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.0.1-alpha.0...v0.1.0-rc.0)
