@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-rc.2 (2025-04-05)
+
+Full Changelog: [v0.1.0-rc.1...v0.1.0-rc.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.1...v0.1.0-rc.2)
+
+### Features
+
+* **api:** api update ([#15](https://github.com/knocklabs/knock-mgmt-node/issues/15)) ([0e479f2](https://github.com/knocklabs/knock-mgmt-node/commit/0e479f230e536365057e5694335209f6f3bba9bb))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#17](https://github.com/knocklabs/knock-mgmt-node/issues/17)) ([cddd238](https://github.com/knocklabs/knock-mgmt-node/commit/cddd23869dfdb4711b6aa629301788bd93335624))
+* **mcp:** remove unused tools.ts ([#18](https://github.com/knocklabs/knock-mgmt-node/issues/18)) ([3f25e02](https://github.com/knocklabs/knock-mgmt-node/commit/3f25e0291ff1ffc9ce04c829639755f81301a7ee))
+
 ## 0.1.0-rc.1 (2025-04-03)
 
 Full Changelog: [v0.1.0-rc.0...v0.1.0-rc.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.0...v0.1.0-rc.1)

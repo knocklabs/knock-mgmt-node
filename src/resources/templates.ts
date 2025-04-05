@@ -59,6 +59,7 @@ export interface EmailTemplate {
     | EmailTemplate.EmailButtonSetBlock
     | EmailTemplate.EmailDividerBlock
     | EmailTemplate.EmailHTMLBlock
+    | EmailTemplate.EmailImageBlock
     | EmailTemplate.EmailMarkdownBlock
     | EmailTemplate.EmailPartialBlock
   >;
@@ -306,6 +307,93 @@ export namespace EmailTemplate {
      * The version of the block.
      */
     version: number;
+  }
+
+  /**
+   * An image block in an email template.
+   */
+  export interface EmailImageBlock {
+    /**
+     * The ID of the block.
+     */
+    id: string;
+
+    /**
+     * The type of the block.
+     */
+    type: string;
+
+    /**
+     * The URL of the image to display.
+     */
+    url: string;
+
+    /**
+     * The version of the block.
+     */
+    version: number;
+
+    /**
+     * Optional action URL for the image.
+     */
+    action?: string | null;
+
+    /**
+     * Alt text for the image.
+     */
+    alt?: string | null;
+
+    /**
+     * The layout attributes of the block.
+     */
+    layout_attrs?: EmailImageBlock.LayoutAttrs;
+
+    /**
+     * The style attributes of the image.
+     */
+    style_attrs?: EmailImageBlock.StyleAttrs;
+  }
+
+  export namespace EmailImageBlock {
+    /**
+     * The layout attributes of the block.
+     */
+    export interface LayoutAttrs {
+      /**
+       * The horizontal alignment of the block.
+       */
+      horizontal_align: 'left' | 'center' | 'right';
+
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
+      padding_bottom: number;
+
+      /**
+       * The padding_left layout attribute of the block.
+       */
+      padding_left: number;
+
+      /**
+       * The padding_right layout attribute of the block.
+       */
+      padding_right: number;
+
+      /**
+       * The padding_top layout attribute of the block.
+       */
+      padding_top: number;
+    }
+
+    /**
+     * The style attributes of the image.
+     */
+    export interface StyleAttrs {
+      /**
+       * The width of the image.
+       */
+      width?: string;
+    }
   }
 
   /**
