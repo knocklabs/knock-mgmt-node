@@ -13,7 +13,7 @@ export class MessageTypes extends APIResource {
    */
   retrieve(
     messageTypeKey: string,
-    query: MessageTypeRetrieveParams | null | undefined = {},
+    query: MessageTypeRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<MessageType> {
     return this._client.get(path`/v1/message_types/${messageTypeKey}`, { query, ...options });
@@ -23,7 +23,7 @@ export class MessageTypes extends APIResource {
    * Returns a paginated list of message types available in a given environment.
    */
   list(
-    query: MessageTypeListParams | null | undefined = {},
+    query: MessageTypeListParams,
     options?: RequestOptions,
   ): PagePromise<MessageTypesEntriesCursor, MessageType> {
     return this._client.getAPIList('/v1/message_types', EntriesCursor<MessageType>, { query, ...options });
@@ -39,9 +39,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { annotate, commit, commit_message, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { annotate, commit, commit_message, environment, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -58,9 +58,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeValidateParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeValidateResponse> {
-    const { annotate, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, {
-      query: { annotate, hide_uncommitted_changes },
+      query: { environment, annotate, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -708,14 +708,14 @@ export interface MessageTypeValidateResponse {
 
 export interface MessageTypeRetrieveParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Whether to hide uncommitted changes.
@@ -725,14 +725,14 @@ export interface MessageTypeRetrieveParams {
 
 export interface MessageTypeListParams extends EntriesCursorParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Whether to hide uncommitted changes.
@@ -741,6 +741,11 @@ export interface MessageTypeListParams extends EntriesCursorParams {
 }
 
 export interface MessageTypeUpsertParams {
+  /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
   /**
    * Body param: A request to create a message type.
    */
@@ -761,11 +766,6 @@ export interface MessageTypeUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Query param: Whether to hide uncommitted changes.
@@ -812,6 +812,11 @@ export namespace MessageTypeUpsertParams {
 }
 
 export interface MessageTypeValidateParams {
+  /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
   /**
    * Body param: A request to create a message type.
    */

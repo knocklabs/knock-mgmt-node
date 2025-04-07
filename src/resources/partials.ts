@@ -145,7 +145,7 @@ export interface PartialValidateResponse {
 
 export interface PartialRetrieveParams {
   /**
-   * A slug of the environment from which to query the partial.
+   * The environment slug.
    */
   environment: string;
 
@@ -162,7 +162,7 @@ export interface PartialRetrieveParams {
 
 export interface PartialListParams extends EntriesCursorParams {
   /**
-   * A slug of the environment from which to query partials.
+   * The environment slug.
    */
   environment: string;
 
@@ -179,7 +179,7 @@ export interface PartialListParams extends EntriesCursorParams {
 
 export interface PartialUpsertParams {
   /**
-   * Query param: A slug of the environment in which to upsert the partial.
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -251,7 +251,7 @@ export namespace PartialUpsertParams {
 
 export interface PartialValidateParams {
   /**
-   * Query param: A slug of the environment in which to validate the partial.
+   * Query param: The environment slug.
    */
   environment: string;
 

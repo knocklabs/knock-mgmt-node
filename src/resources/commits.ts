@@ -18,22 +18,16 @@ export class Commits extends APIResource {
    * Returns a paginated list of commits in a given environment. The commits are
    * ordered from most recent first.
    */
-  list(
-    query: CommitListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<CommitsEntriesCursor, Commit> {
+  list(query: CommitListParams, options?: RequestOptions): PagePromise<CommitsEntriesCursor, Commit> {
     return this._client.getAPIList('/v1/commits', EntriesCursor<Commit>, { query, ...options });
   }
 
   /**
    * Commit all changes across all resources in the development environment.
    */
-  commitAll(
-    params: CommitCommitAllParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CommitCommitAllResponse> {
-    const { commit_message, environment } = params ?? {};
-    return this._client.put('/v1/commits', { query: { commit_message, environment }, ...options });
+  commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
+    const { environment, commit_message } = params;
+    return this._client.put('/v1/commits', { query: { environment, commit_message }, ...options });
   }
 
   /**
@@ -153,9 +147,9 @@ export interface CommitPromoteOneResponse {
 
 export interface CommitListParams extends EntriesCursorParams {
   /**
-   * The environment slug. (Defaults to `development`.).
+   * The environment slug.
    */
-  environment?: string;
+  environment: string;
 
   /**
    * Whether to show only promoted or unpromoted changes between the given
@@ -166,14 +160,14 @@ export interface CommitListParams extends EntriesCursorParams {
 
 export interface CommitCommitAllParams {
   /**
+   * A slug of the environment in which to commit all changes.
+   */
+  environment: string;
+
+  /**
    * An optional message to include in a commit.
    */
   commit_message?: string;
-
-  /**
-   * A slug of the environment in which to commit all changes.
-   */
-  environment?: string;
 }
 
 export interface CommitPromoteAllParams {
