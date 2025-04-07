@@ -52,7 +52,7 @@ export interface Variable {
 
 export interface VariableListParams extends EntriesCursorParams {
   /**
-   * The environment slug. (Defaults to `development`.).
+   * The environment slug.
    */
   environment: string;
 }
