@@ -12,7 +12,7 @@ export class Translations extends APIResource {
    */
   retrieve(
     localeCode: string,
-    query: TranslationRetrieveParams | null | undefined = {},
+    query: TranslationRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<TranslationRetrieveResponse> {
     return this._client.get(path`/v1/translations/${localeCode}`, { query, ...options });
@@ -23,7 +23,7 @@ export class Translations extends APIResource {
    * translations are returned in alpha-sorted order by locale code.
    */
   list(
-    query: TranslationListParams | null | undefined = {},
+    query: TranslationListParams,
     options?: RequestOptions,
   ): PagePromise<TranslationsEntriesCursor, Translation> {
     return this._client.getAPIList('/v1/translations', EntriesCursor<Translation>, { query, ...options });
@@ -41,9 +41,9 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { namespace, annotate, environment, format, hide_uncommitted_changes, ...body } = params;
+    const { environment, namespace, annotate, format, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { namespace, annotate, environment, format, hide_uncommitted_changes },
+      query: { environment, namespace, annotate, format, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -60,9 +60,9 @@ export class Translations extends APIResource {
     params: TranslationValidateParams,
     options?: RequestOptions,
   ): APIPromise<TranslationValidateResponse> {
-    const { annotate, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { annotate, environment, hide_uncommitted_changes },
+      query: { environment, annotate, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -140,14 +140,14 @@ export interface TranslationValidateResponse {
 
 export interface TranslationRetrieveParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -168,14 +168,14 @@ export interface TranslationRetrieveParams {
 
 export interface TranslationListParams extends EntriesCursorParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -201,6 +201,11 @@ export interface TranslationListParams extends EntriesCursorParams {
 
 export interface TranslationUpsertParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Query param: An optional namespace that identifies the translation.
    */
   namespace: string;
@@ -215,11 +220,6 @@ export interface TranslationUpsertParams {
    * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Query param: Optionally specify the returned content format. Supports 'json' and
@@ -255,6 +255,11 @@ export namespace TranslationUpsertParams {
 
 export interface TranslationValidateParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Body param: A translation object with a content attribute used to update or
    * create a translation.
    */
@@ -264,11 +269,6 @@ export interface TranslationValidateParams {
    * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Query param: Whether to hide uncommitted changes.

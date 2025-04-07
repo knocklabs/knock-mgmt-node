@@ -12,7 +12,7 @@ export class EmailLayouts extends APIResource {
    */
   retrieve(
     emailLayoutKey: string,
-    query: EmailLayoutRetrieveParams | null | undefined = {},
+    query: EmailLayoutRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayout> {
     return this._client.get(path`/v1/email_layouts/${emailLayoutKey}`, { query, ...options });
@@ -22,7 +22,7 @@ export class EmailLayouts extends APIResource {
    * Returns a paginated list of email layouts available in a given environment.
    */
   list(
-    query: EmailLayoutListParams | null | undefined = {},
+    query: EmailLayoutListParams,
     options?: RequestOptions,
   ): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
     return this._client.getAPIList('/v1/email_layouts', EntriesCursor<EmailLayout>, { query, ...options });
@@ -38,9 +38,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { annotate, commit, commit_message, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { annotate, commit, commit_message, environment, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -56,9 +56,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { annotate, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { annotate, environment, hide_uncommitted_changes },
+      query: { environment, annotate, hide_uncommitted_changes },
       body,
       ...options,
     });
@@ -153,14 +153,14 @@ export interface EmailLayoutValidateResponse {
 
 export interface EmailLayoutRetrieveParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Whether to hide uncommitted changes.
@@ -170,14 +170,14 @@ export interface EmailLayoutRetrieveParams {
 
 export interface EmailLayoutListParams extends EntriesCursorParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Whether to hide uncommitted changes.
@@ -186,6 +186,11 @@ export interface EmailLayoutListParams extends EntriesCursorParams {
 }
 
 export interface EmailLayoutUpsertParams {
+  /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
   /**
    * Body param: A request to update or create an email layout.
    */
@@ -206,11 +211,6 @@ export interface EmailLayoutUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Query param: Whether to hide uncommitted changes.
@@ -261,6 +261,11 @@ export namespace EmailLayoutUpsertParams {
 
 export interface EmailLayoutValidateParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutValidateParams.EmailLayout;
@@ -269,11 +274,6 @@ export interface EmailLayoutValidateParams {
    * Query param: Whether to annotate the resource.
    */
   annotate?: boolean;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
 
   /**
    * Query param: Whether to hide uncommitted changes.
