@@ -106,7 +106,6 @@ describe('resource messageTypes', () => {
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      hide_uncommitted_changes: true,
     });
   });
 
@@ -160,8 +159,6 @@ describe('resource messageTypes', () => {
           },
         ],
       },
-      annotate: true,
-      hide_uncommitted_changes: true,
     });
   });
 });
