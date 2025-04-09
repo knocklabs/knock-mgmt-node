@@ -20,7 +20,7 @@ export class Translations extends APIResource {
 
   /**
    * Returns a paginated list of translations available in a given environment. The
-   * translations are returned in alpha-sorted order by locale code.
+   * translations are returned in alphabetical order by locale code.
    */
   list(
     query: TranslationListParams,
@@ -41,9 +41,9 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { environment, namespace, annotate, format, hide_uncommitted_changes, ...body } = params;
+    const { environment, namespace, annotate, commit, commit_message, format, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, format, hide_uncommitted_changes },
+      query: { environment, namespace, annotate, commit, commit_message, format },
       body,
       ...options,
     });
@@ -60,9 +60,9 @@ export class Translations extends APIResource {
     params: TranslationValidateParams,
     options?: RequestOptions,
   ): APIPromise<TranslationValidateResponse> {
-    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
+    const { environment, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { environment, annotate, hide_uncommitted_changes },
+      query: { environment },
       body,
       ...options,
     });
@@ -88,7 +88,7 @@ export interface Translation {
   format: 'json' | 'po';
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the translation was created.
    */
   inserted_at: string;
 
@@ -103,7 +103,7 @@ export interface Translation {
   namespace: string;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the translation was last updated.
    */
   updated_at: string;
 }
@@ -145,7 +145,7 @@ export interface TranslationRetrieveParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -156,7 +156,8 @@ export interface TranslationRetrieveParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 
@@ -173,7 +174,7 @@ export interface TranslationListParams extends EntriesCursorParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -184,7 +185,8 @@ export interface TranslationListParams extends EntriesCursorParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 
@@ -217,20 +219,26 @@ export interface TranslationUpsertParams {
   translation: TranslationUpsertParams.Translation;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: Whether to commit the resource at the same time as modifying it.
+   */
+  commit?: boolean;
+
+  /**
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
+   */
+  commit_message?: string;
 
   /**
    * Query param: Optionally specify the returned content format. Supports 'json' and
    * 'po'. Defaults to 'json'.
    */
   format?: 'json' | 'po';
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace TranslationUpsertParams {
@@ -264,16 +272,6 @@ export interface TranslationValidateParams {
    * create a translation.
    */
   translation: TranslationValidateParams.Translation;
-
-  /**
-   * Query param: Whether to annotate the resource.
-   */
-  annotate?: boolean;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace TranslationValidateParams {

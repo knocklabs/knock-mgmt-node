@@ -38,9 +38,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { environment, annotate, commit, commit_message, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { environment, annotate, commit, commit_message, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message },
       body,
       ...options,
     });
@@ -56,9 +56,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
+    const { environment, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { environment, annotate, hide_uncommitted_changes },
+      query: { environment },
       body,
       ...options,
     });
@@ -72,7 +72,7 @@ export type EmailLayoutsEntriesCursor = EntriesCursor<EmailLayout>;
  */
 export interface EmailLayout {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the email layout was created.
    */
   created_at: string;
 
@@ -87,7 +87,7 @@ export interface EmailLayout {
   key: string;
 
   /**
-   * The friendly name of this email layout.
+   * The human-readable name of this email layout.
    */
   name: string;
 
@@ -97,7 +97,7 @@ export interface EmailLayout {
   sha: string;
 
   /**
-   * The complete plain text content of the email layout.
+   * The complete plaintext content of the email layout.
    */
   text_layout: string;
 
@@ -112,7 +112,7 @@ export interface EmailLayout {
   footer_links?: Array<EmailLayout.FooterLink>;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the email layout was last updated.
    */
   updated_at?: string;
 }
@@ -158,12 +158,13 @@ export interface EmailLayoutRetrieveParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -175,12 +176,13 @@ export interface EmailLayoutListParams extends EntriesCursorParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -197,7 +199,7 @@ export interface EmailLayoutUpsertParams {
   email_layout: EmailLayoutUpsertParams.EmailLayout;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -211,11 +213,6 @@ export interface EmailLayoutUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutUpsertParams {
@@ -269,16 +266,6 @@ export interface EmailLayoutValidateParams {
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutValidateParams.EmailLayout;
-
-  /**
-   * Query param: Whether to annotate the resource.
-   */
-  annotate?: boolean;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutValidateParams {

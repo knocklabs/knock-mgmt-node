@@ -81,8 +81,9 @@ describe('resource translations', () => {
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
+      commit: true,
+      commit_message: 'commit_message',
       format: 'json',
-      hide_uncommitted_changes: true,
     });
   });
 
@@ -106,8 +107,6 @@ describe('resource translations', () => {
     const response = await client.translations.validate('locale_code', {
       environment: 'development',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
-      annotate: true,
-      hide_uncommitted_changes: true,
     });
   });
 });

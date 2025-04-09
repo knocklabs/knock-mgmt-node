@@ -69,7 +69,7 @@ export interface Commit {
   commit_message: string;
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the commit was created.
    */
   created_at: string;
 
@@ -84,7 +84,7 @@ export interface Commit {
   resource: Commit.Resource;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the commit was last updated.
    */
   updated_at: string;
 }
@@ -122,16 +122,22 @@ export namespace Commit {
 }
 
 /**
- * The result of the commit operation.
+ * The response from committing all changes.
  */
 export interface CommitCommitAllResponse {
+  /**
+   * The result of the commit operation.
+   */
   result: string;
 }
 
 /**
- * The result of the commit operation.
+ * The response from promoting all changes.
  */
 export interface CommitPromoteAllResponse {
+  /**
+   * The result of the promote operation.
+   */
   result: string;
 }
 
@@ -152,15 +158,15 @@ export interface CommitListParams extends EntriesCursorParams {
   environment: string;
 
   /**
-   * Whether to show only promoted or unpromoted changes between the given
-   * environment and the subsequent environment.
+   * Whether to show commits in the given environment that have not been promoted to
+   * the subsequent environment (false) or commits which have been promoted (true).
    */
   promoted?: boolean;
 }
 
 export interface CommitCommitAllParams {
   /**
-   * A slug of the environment in which to commit all changes.
+   * The environment slug.
    */
   environment: string;
 

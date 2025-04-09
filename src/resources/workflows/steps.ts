@@ -57,7 +57,7 @@ export interface StepPreviewTemplateParams {
   workflow_key: string;
 
   /**
-   * Query param: The environment slug. (Defaults to `development`.).
+   * Query param: The environment slug.
    */
   environment: string;
 

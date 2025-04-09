@@ -24,7 +24,7 @@ export type ChannelsEntriesCursor = EntriesCursor<Channel>;
  */
 export interface Channel {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the channel was created.
    */
   created_at: string;
 
@@ -39,7 +39,9 @@ export interface Channel {
   name: string;
 
   /**
-   * The ID of the provider that this channel uses to deliver messages.
+   * The ID of the provider that this channel uses to deliver messages. Learn more
+   * about the providers available
+   * [in our documentation](https://docs.knock.app/integrations/overview).
    */
   provider: string;
 
@@ -49,22 +51,18 @@ export interface Channel {
   type: 'email' | 'in_app' | 'in_app_feed' | 'in_app_guide' | 'sms' | 'push' | 'chat' | 'http';
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the channel was last updated.
    */
   updated_at: string;
 
   /**
-   * Controls whether the channel is visible as system-level or user-level.
-   */
-  visibility: 'system' | 'user';
-
-  /**
-   * The timestamp of when the resource was deleted.
+   * The timestamp of when the channel was deleted.
    */
   archived_at?: string | null;
 
   /**
-   * Optional URL to a custom icon for the channel.
+   * Optional URL to a custom icon for the channel. Only used for display purposes in
+   * the dashboard.
    */
   custom_icon_url?: string | null;
 
@@ -75,7 +73,8 @@ export interface Channel {
 }
 
 /**
- * Chat channel settings.
+ * Chat channel settings. Only used as configuration as part of a workflow channel
+ * step.
  */
 export interface ChatChannelSettings {
   /**
@@ -91,25 +90,24 @@ export interface ChatChannelSettings {
 }
 
 /**
- * Email channel settings.
+ * Email channel settings. Only used as configuration as part of a workflow channel
+ * step.
  */
 export interface EmailChannelSettings {
   /**
-   * The BCC address on email notifications. Supports liquid. Defaults to
-   * `from_address`.
+   * The BCC address on email notifications. Supports liquid.
    */
   bcc_address?: string | null;
 
   /**
-   * The CC address on email notifications. Supports liquid. Defaults to
-   * `from_address`.
+   * The CC address on email notifications. Supports liquid.
    */
   cc_address?: string | null;
 
   /**
    * The email address from which this channel will send. Supports liquid.
    */
-  from_email?: string | null;
+  from_address?: string | null;
 
   /**
    * The name from which this channel will send. Supports liquid.
@@ -133,8 +131,7 @@ export interface EmailChannelSettings {
   open_tracking?: boolean;
 
   /**
-   * The Reply-to address on email notifications. Supports liquid. Defaults to
-   * `from_address`.
+   * The Reply-to address on email notifications. Supports liquid.
    */
   reply_to_address?: string | null;
 
@@ -146,7 +143,8 @@ export interface EmailChannelSettings {
 }
 
 /**
- * In-app feed channel settings.
+ * In-app feed channel settings. Only used as configuration as part of a workflow
+ * channel step.
  */
 export interface InAppFeedChannelSettings {
   /**
@@ -156,7 +154,8 @@ export interface InAppFeedChannelSettings {
 }
 
 /**
- * Push channel settings.
+ * Push channel settings. Only used as configuration as part of a workflow channel
+ * step.
  */
 export interface PushChannelSettings {
   /**
@@ -167,7 +166,8 @@ export interface PushChannelSettings {
 }
 
 /**
- * SMS channel settings.
+ * SMS channel settings. Only used as configuration as part of a workflow channel
+ * step.
  */
 export interface SMSChannelSettings {
   /**

@@ -85,7 +85,6 @@ describe('resource emailLayouts', () => {
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      hide_uncommitted_changes: true,
     });
   });
 
@@ -118,8 +117,6 @@ describe('resource emailLayouts', () => {
         text_layout: 'Hello, world!',
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
       },
-      annotate: true,
-      hide_uncommitted_changes: true,
     });
   });
 });
