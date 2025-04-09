@@ -39,9 +39,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, annotate, commit, commit_message, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, annotate, commit, commit_message, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message },
       body,
       ...options,
     });
@@ -58,9 +58,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeValidateParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeValidateResponse> {
-    const { environment, annotate, hide_uncommitted_changes, ...body } = params;
+    const { environment, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, {
-      query: { environment, annotate, hide_uncommitted_changes },
+      query: { environment },
       body,
       ...options,
     });
@@ -70,11 +70,12 @@ export class MessageTypes extends APIResource {
 export type MessageTypesEntriesCursor = EntriesCursor<MessageType>;
 
 /**
- * A message type object.
+ * A message type is a schema for a message that maps to a UI component or element
+ * within your application.
  */
 export interface MessageType {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the message type was created.
    */
   created_at: string;
 
@@ -116,7 +117,7 @@ export interface MessageType {
   sha: string;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the message type was last updated.
    */
   updated_at: string;
 
@@ -131,12 +132,12 @@ export interface MessageType {
   variants: Array<MessageTypeVariant>;
 
   /**
-   * The timestamp of when the resource was deleted.
+   * The timestamp of when the message type was deleted.
    */
-  archived_at?: string;
+  archived_at?: string | null;
 
   /**
-   * The timestamp of when the resource was deleted.
+   * The timestamp of when the message type was deleted.
    */
   deleted_at?: string | null;
 
@@ -691,7 +692,8 @@ export namespace MessageTypeVariant {
  */
 export interface MessageTypeUpsertResponse {
   /**
-   * A message type object.
+   * A message type is a schema for a message that maps to a UI component or element
+   * within your application.
    */
   message_type: MessageType;
 }
@@ -701,7 +703,8 @@ export interface MessageTypeUpsertResponse {
  */
 export interface MessageTypeValidateResponse {
   /**
-   * A message type object.
+   * A message type is a schema for a message that maps to a UI component or element
+   * within your application.
    */
   message_type: MessageType;
 }
@@ -713,12 +716,13 @@ export interface MessageTypeRetrieveParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -730,12 +734,13 @@ export interface MessageTypeListParams extends EntriesCursorParams {
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
@@ -752,7 +757,7 @@ export interface MessageTypeUpsertParams {
   message_type: MessageTypeUpsertParams.MessageType;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -766,11 +771,6 @@ export interface MessageTypeUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace MessageTypeUpsertParams {
@@ -821,16 +821,6 @@ export interface MessageTypeValidateParams {
    * Body param: A request to create a message type.
    */
   message_type: MessageTypeValidateParams.MessageType;
-
-  /**
-   * Query param: Whether to annotate the resource.
-   */
-  annotate?: boolean;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace MessageTypeValidateParams {

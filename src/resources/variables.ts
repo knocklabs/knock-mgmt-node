@@ -20,7 +20,7 @@ export type VariablesEntriesCursor = EntriesCursor<Variable>;
  */
 export interface Variable {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the variable was created.
    */
   inserted_at: string;
 
@@ -35,7 +35,7 @@ export interface Variable {
   type: 'public' | 'secret';
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the variable was last updated.
    */
   updated_at: string;
 
