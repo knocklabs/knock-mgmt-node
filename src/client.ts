@@ -296,8 +296,8 @@ export class KnockMgmt {
     return;
   }
 
-  protected authHeaders(opts: FinalRequestOptions): Headers | undefined {
-    return new Headers({ Authorization: `Bearer ${this.serviceToken}` });
+  protected authHeaders(opts: FinalRequestOptions): NullableHeaders | undefined {
+    return buildHeaders([{ Authorization: `Bearer ${this.serviceToken}` }]);
   }
 
   /**

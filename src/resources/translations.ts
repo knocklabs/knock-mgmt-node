@@ -12,7 +12,7 @@ export class Translations extends APIResource {
    */
   retrieve(
     localeCode: string,
-    query: TranslationRetrieveParams | null | undefined = {},
+    query: TranslationRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<TranslationRetrieveResponse> {
     return this._client.get(path`/v1/translations/${localeCode}`, { query, ...options });
@@ -20,10 +20,10 @@ export class Translations extends APIResource {
 
   /**
    * Returns a paginated list of translations available in a given environment. The
-   * translations are returned in alpha-sorted order by locale code.
+   * translations are returned in alphabetical order by locale code.
    */
   list(
-    query: TranslationListParams | null | undefined = {},
+    query: TranslationListParams,
     options?: RequestOptions,
   ): PagePromise<TranslationsEntriesCursor, Translation> {
     return this._client.getAPIList('/v1/translations', EntriesCursor<Translation>, { query, ...options });
@@ -41,9 +41,9 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { namespace, annotate, environment, format, hide_uncommitted_changes, ...body } = params;
+    const { environment, namespace, annotate, commit, commit_message, format, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { namespace, annotate, environment, format, hide_uncommitted_changes },
+      query: { environment, namespace, annotate, commit, commit_message, format },
       body,
       ...options,
     });
@@ -60,9 +60,9 @@ export class Translations extends APIResource {
     params: TranslationValidateParams,
     options?: RequestOptions,
   ): APIPromise<TranslationValidateResponse> {
-    const { annotate, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { annotate, environment, hide_uncommitted_changes },
+      query: { environment },
       body,
       ...options,
     });
@@ -88,7 +88,7 @@ export interface Translation {
   format: 'json' | 'po';
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the translation was created.
    */
   inserted_at: string;
 
@@ -103,7 +103,7 @@ export interface Translation {
   namespace: string;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the translation was last updated.
    */
   updated_at: string;
 }
@@ -140,14 +140,14 @@ export interface TranslationValidateResponse {
 
 export interface TranslationRetrieveParams {
   /**
-   * Whether to annotate the resource.
+   * The environment slug.
    */
-  annotate?: boolean;
+  environment: string;
 
   /**
-   * The environment slug. (Defaults to `development`.).
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
-  environment?: string;
+  annotate?: boolean;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -156,7 +156,8 @@ export interface TranslationRetrieveParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 
@@ -168,14 +169,14 @@ export interface TranslationRetrieveParams {
 
 export interface TranslationListParams extends EntriesCursorParams {
   /**
-   * Whether to annotate the resource.
+   * The environment slug.
    */
-  annotate?: boolean;
+  environment: string;
 
   /**
-   * The environment slug. (Defaults to `development`.).
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
-  environment?: string;
+  annotate?: boolean;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -184,7 +185,8 @@ export interface TranslationListParams extends EntriesCursorParams {
   format?: 'json' | 'po';
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 
@@ -201,6 +203,11 @@ export interface TranslationListParams extends EntriesCursorParams {
 
 export interface TranslationUpsertParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Query param: An optional namespace that identifies the translation.
    */
   namespace: string;
@@ -212,25 +219,26 @@ export interface TranslationUpsertParams {
   translation: TranslationUpsertParams.Translation;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Query param: The environment slug. (Defaults to `development`.).
+   * Query param: Whether to commit the resource at the same time as modifying it.
    */
-  environment?: string;
+  commit?: boolean;
+
+  /**
+   * Query param: The message to commit the resource with, only used if `commit` is
+   * `true`.
+   */
+  commit_message?: string;
 
   /**
    * Query param: Optionally specify the returned content format. Supports 'json' and
    * 'po'. Defaults to 'json'.
    */
   format?: 'json' | 'po';
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace TranslationUpsertParams {
@@ -255,25 +263,15 @@ export namespace TranslationUpsertParams {
 
 export interface TranslationValidateParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Body param: A translation object with a content attribute used to update or
    * create a translation.
    */
   translation: TranslationValidateParams.Translation;
-
-  /**
-   * Query param: Whether to annotate the resource.
-   */
-  annotate?: boolean;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace TranslationValidateParams {

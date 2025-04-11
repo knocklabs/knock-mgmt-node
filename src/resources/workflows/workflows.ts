@@ -15,7 +15,7 @@ export class Workflows extends APIResource {
   steps: StepsAPI.Steps = new StepsAPI.Steps(this._client);
 
   /**
-   * Retrieve a workflow by its key and namespace, in a given environment.
+   * Retrieve a workflow by its key in a given environment.
    */
   retrieve(
     workflowKey: string,
@@ -27,14 +27,15 @@ export class Workflows extends APIResource {
 
   /**
    * Returns a paginated list of workflows available in a given environment. The
-   * workflows are returned in alpha sorted order by its key.
+   * workflows are returned alphabetically by `key`.
    */
   list(query: WorkflowListParams, options?: RequestOptions): PagePromise<WorkflowsEntriesCursor, Workflow> {
     return this._client.getAPIList('/v1/workflows', EntriesCursor<Workflow>, { query, ...options });
   }
 
   /**
-   * Activates (or deactivates) a workflow in a given environment.
+   * Activates (or deactivates) a workflow in a given environment. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows#workflow-status).
    *
    * Note: This immediately enables or disables a workflow in a given environment
    * without needing to go through environment promotion.
@@ -80,9 +81,9 @@ export class Workflows extends APIResource {
     params: WorkflowUpsertParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowUpsertResponse> {
-    const { environment, commit, commit_message, ...body } = params;
+    const { environment, annotate, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}`, {
-      query: { environment, commit, commit_message },
+      query: { environment, annotate, commit, commit_message },
       body,
       ...options,
     });
@@ -162,7 +163,7 @@ export namespace ConditionGroup {
     /**
      * A list of conditions.
      */
-    all: Array<WorkflowsAPI.Condition>;
+    all?: Array<WorkflowsAPI.Condition>;
   }
 
   /**
@@ -172,7 +173,7 @@ export namespace ConditionGroup {
     /**
      * An array of conditions or nested condition groups to evaluate.
      */
-    any: Array<WorkflowsAPI.Condition | ConditionGroupAnyMatch.ConditionGroupAllMatch>;
+    any?: Array<WorkflowsAPI.Condition | ConditionGroupAnyMatch.ConditionGroupAllMatch>;
   }
 
   export namespace ConditionGroupAnyMatch {
@@ -183,7 +184,7 @@ export namespace ConditionGroup {
       /**
        * A list of conditions.
        */
-      all: Array<WorkflowsAPI.Condition>;
+      all?: Array<WorkflowsAPI.Condition>;
     }
   }
 }
@@ -233,12 +234,14 @@ export interface SendWindow {
  */
 export interface Workflow {
   /**
-   * Whether the workflow is active in the current environment. (read-only).
+   * Whether the workflow is
+   * [active](https://docs.knock.app/concepts/workflows#workflow-status) in the
+   * current environment. (read-only).
    */
   active: boolean;
 
   /**
-   * The timestamp of when the resource was created. (read-only).
+   * The timestamp of when the workflow was created. (read-only).
    */
   created_at: string;
 
@@ -264,13 +267,12 @@ export interface Workflow {
   sha: string;
 
   /**
-   * A list of workflow step objects in the workflow, which may contain any of:
-   * channel step, delay step, batch step, fetch step.
+   * A list of workflow step objects in the workflow.
    */
   steps: Array<WorkflowStep>;
 
   /**
-   * The timestamp of when the resource was last updated. (read-only).
+   * The timestamp of when the workflow was last updated. (read-only).
    */
   updated_at: string;
 
@@ -280,7 +282,9 @@ export interface Workflow {
   valid: boolean;
 
   /**
-   * A list of categories that the workflow belongs to.
+   * A list of
+   * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
+   * the workflow belongs to.
    */
   categories?: Array<string>;
 
@@ -290,7 +294,7 @@ export interface Workflow {
   conditions?: ConditionGroup | null;
 
   /**
-   * The timestamp of when the resource was deleted. (read-only).
+   * The timestamp of when the workflow was deleted. (read-only).
    */
   deleted_at?: string;
 
@@ -307,14 +311,16 @@ export interface Workflow {
 
   /**
    * A JSON schema for the expected structure of the workflow trigger's data payload.
-   * Used to validate trigger requests. (optional).
+   * Used to validate trigger requests. Read more in the
+   * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
    */
   trigger_data_json_schema?: Record<string, unknown>;
 
   /**
    * The frequency at which the workflow should be triggered. One of:
    * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
-   * to `every_trigger`.
+   * to `every_trigger`. Read more in
+   * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
    */
   trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
 }
@@ -339,7 +345,8 @@ export namespace Workflow {
 }
 
 /**
- * A workflow batch step.
+ * A batch function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/batch-function).
  */
 export interface WorkflowBatchStep {
   /**
@@ -377,7 +384,9 @@ export namespace WorkflowBatchStep {
     /**
      * The execution mode of the batch step. One of: `accumulate` or `flush_leading`.
      * When set to `flush_leading`, the first item in the batch will be executed
-     * immediately, and the rest will be batched.
+     * immediately, and the rest will be batched. See
+     * [these docs](https://docs.knock.app/designing-workflows/batch-function#immediately-flushing-the-first-item-in-a-batch)
+     * for more information.
      */
     batch_execution_mode?: 'accumulate' | 'flush_leading' | null;
 
@@ -427,7 +436,8 @@ export namespace WorkflowBatchStep {
 }
 
 /**
- * A branch step within a workflow.
+ * A branch function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/branch-function).
  */
 export interface WorkflowBranchStep {
   /**
@@ -458,6 +468,9 @@ export interface WorkflowBranchStep {
 }
 
 export namespace WorkflowBranchStep {
+  /**
+   * A branch in a branch step.
+   */
   export interface Branch {
     /**
      * A group of conditions to be evaluated.
@@ -482,7 +495,8 @@ export namespace WorkflowBranchStep {
 }
 
 /**
- * A channel step within a workflow.
+ * A channel step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
  */
 export interface WorkflowChannelStep {
   /**
@@ -496,10 +510,9 @@ export interface WorkflowChannelStep {
   ref: string;
 
   /**
-   * The message template set up with the channel step. The shape of the template
-   * depends on the type of the channel you'll be sending to. See below for
-   * definitions of each channel type template: email, in-app, SMS, push, chat, and
-   * webhook.
+   * The message template for the channel step. The shape of the template depends on
+   * the type of the channel you'll be sending to. See below for definitions of each
+   * channel type template: email, in-app, SMS, push, chat, and webhook.
    */
   template:
     | TemplatesAPI.EmailTemplate
@@ -558,7 +571,8 @@ export interface WorkflowChannelStep {
 }
 
 /**
- * A delay step within a workflow.
+ * A delay function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/delay-function).
  */
 export interface WorkflowDelayStep {
   /**
@@ -614,7 +628,8 @@ export namespace WorkflowDelayStep {
 }
 
 /**
- * A workflow fetch step.
+ * A fetch function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/fetch-function).
  */
 export interface WorkflowFetchStep {
   /**
@@ -628,7 +643,7 @@ export interface WorkflowFetchStep {
   ref: string;
 
   /**
-   * A request template.
+   * A request template for a fetch function step.
    */
   settings: TemplatesAPI.RequestTemplate;
 
@@ -650,7 +665,7 @@ export interface WorkflowFetchStep {
 }
 
 /**
- * A step within a workflow. All workflow steps, regardless of its type, share a
+ * A step within a workflow. Each workflow step, regardless of its type, share a
  * common set of core attributes (`type`, `ref`, `name`, `description`,
  * `conditions`).
  */
@@ -664,7 +679,8 @@ export type WorkflowStep =
   | WorkflowTriggerWorkflowStep;
 
 /**
- * A workflow throttle step.
+ * A throttle function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/throttle-function).
  */
 export interface WorkflowThrottleStep {
   /**
@@ -721,15 +737,17 @@ export namespace WorkflowThrottleStep {
     throttle_window?: WorkflowsAPI.Duration | null;
 
     /**
-     * The data path to resolve the throttle window. The resolved value must be an
-     * ISO-8601 timestamp.
+     * The data path to resolve a dynamic throttle window. The resolved value must be
+     * an ISO-8601 timestamp. See more in the
+     * [docs](https://docs.knock.app/designing-workflows/throttle-function#set-a-dynamic-throttle-window).
      */
     throttle_window_field_path?: string | null;
   }
 }
 
 /**
- * A workflow trigger workflow step.
+ * A workflow trigger function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/trigger-workflow-function).
  */
 export interface WorkflowTriggerWorkflowStep {
   /**
@@ -842,41 +860,43 @@ export interface WorkflowValidateResponse {
 
 export interface WorkflowRetrieveParams {
   /**
-   * The environment slug. (Defaults to `development`.).
+   * The environment slug.
    */
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface WorkflowListParams extends EntriesCursorParams {
   /**
-   * The environment slug. (Defaults to `development`.).
+   * The environment slug.
    */
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface WorkflowActivateParams {
   /**
-   * Query param: The environment slug. (Defaults to `development`.).
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -889,7 +909,7 @@ export interface WorkflowActivateParams {
 
 export interface WorkflowRunParams {
   /**
-   * Query param: The environment slug. (Defaults to `development`.).
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -942,7 +962,7 @@ export namespace WorkflowRunParams {
 
 export interface WorkflowUpsertParams {
   /**
-   * Query param: A slug of the environment in which to upsert the workflow.
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -950,6 +970,11 @@ export interface WorkflowUpsertParams {
    * Body param: A workflow request for upserting a workflow.
    */
   workflow: WorkflowUpsertParams.Workflow;
+
+  /**
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
+   */
+  annotate?: boolean;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -974,13 +999,14 @@ export namespace WorkflowUpsertParams {
     name: string;
 
     /**
-     * A list of workflow step objects in the workflow, which may contain any of:
-     * channel step, delay step, batch step, fetch step.
+     * A list of workflow step objects in the workflow.
      */
     steps: Array<WorkflowsAPI.WorkflowStep>;
 
     /**
-     * A list of categories that the workflow belongs to.
+     * A list of
+     * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
+     * the workflow belongs to.
      */
     categories?: Array<string>;
 
@@ -1002,14 +1028,16 @@ export namespace WorkflowUpsertParams {
 
     /**
      * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. (optional).
+     * Used to validate trigger requests. Read more in the
+     * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
     trigger_data_json_schema?: Record<string, unknown>;
 
     /**
      * The frequency at which the workflow should be triggered. One of:
      * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
-     * to `every_trigger`.
+     * to `every_trigger`. Read more in
+     * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
      */
     trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
   }
@@ -1036,7 +1064,7 @@ export namespace WorkflowUpsertParams {
 
 export interface WorkflowValidateParams {
   /**
-   * Query param: The environment slug. (Defaults to `development`.).
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -1057,13 +1085,14 @@ export namespace WorkflowValidateParams {
     name: string;
 
     /**
-     * A list of workflow step objects in the workflow, which may contain any of:
-     * channel step, delay step, batch step, fetch step.
+     * A list of workflow step objects in the workflow.
      */
     steps: Array<WorkflowsAPI.WorkflowStep>;
 
     /**
-     * A list of categories that the workflow belongs to.
+     * A list of
+     * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
+     * the workflow belongs to.
      */
     categories?: Array<string>;
 
@@ -1085,14 +1114,16 @@ export namespace WorkflowValidateParams {
 
     /**
      * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. (optional).
+     * Used to validate trigger requests. Read more in the
+     * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
     trigger_data_json_schema?: Record<string, unknown>;
 
     /**
      * The frequency at which the workflow should be triggered. One of:
      * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
-     * to `every_trigger`.
+     * to `every_trigger`. Read more in
+     * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
      */
     trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
   }

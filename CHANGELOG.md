@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0-rc.2 (2025-04-11)
+
+Full Changelog: [v0.1.0-rc.1...v0.1.0-rc.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.1...v0.1.0-rc.2)
+
+### Features
+
+* **api:** api update ([#15](https://github.com/knocklabs/knock-mgmt-node/issues/15)) ([0e479f2](https://github.com/knocklabs/knock-mgmt-node/commit/0e479f230e536365057e5694335209f6f3bba9bb))
+* **api:** api update ([#19](https://github.com/knocklabs/knock-mgmt-node/issues/19)) ([b2544d8](https://github.com/knocklabs/knock-mgmt-node/commit/b2544d8b3f3802d1dd915bd34bf3d22e139a1579))
+* **api:** api update ([#21](https://github.com/knocklabs/knock-mgmt-node/issues/21)) ([c31ebf0](https://github.com/knocklabs/knock-mgmt-node/commit/c31ebf0831bfe3f738a03d6275d95a74b9039335))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#17](https://github.com/knocklabs/knock-mgmt-node/issues/17)) ([cddd238](https://github.com/knocklabs/knock-mgmt-node/commit/cddd23869dfdb4711b6aa629301788bd93335624))
+* **client:** send all configured auth headers ([#20](https://github.com/knocklabs/knock-mgmt-node/issues/20)) ([9f9f76a](https://github.com/knocklabs/knock-mgmt-node/commit/9f9f76a3877fda208abaf78ea3b54711ea20f567))
+* **internal:** fix file uploads in node 18 jest ([3a6efc7](https://github.com/knocklabs/knock-mgmt-node/commit/3a6efc77e9c4facaa250d8e3e1afd70c5f3b206e))
+* **mcp:** remove unused tools.ts ([#18](https://github.com/knocklabs/knock-mgmt-node/issues/18)) ([3f25e02](https://github.com/knocklabs/knock-mgmt-node/commit/3f25e0291ff1ffc9ce04c829639755f81301a7ee))
+
+
+### Chores
+
+* **internal:** improve node 18 shims ([5681aa0](https://github.com/knocklabs/knock-mgmt-node/commit/5681aa0c7a7ca3a79df65f019cf922d1b8e92398))
+* **internal:** reduce CI branch coverage ([2b402bd](https://github.com/knocklabs/knock-mgmt-node/commit/2b402bd2be03525a7f7f12df15a4c1448b22cb9f))
+* **internal:** upload builds and expand CI branch coverage ([7ed51bd](https://github.com/knocklabs/knock-mgmt-node/commit/7ed51bdeda54b8eea516f261c2533ded55d8a133))
+
 ## 0.1.0-rc.1 (2025-04-03)
 
 Full Changelog: [v0.1.0-rc.0...v0.1.0-rc.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.0...v0.1.0-rc.1)

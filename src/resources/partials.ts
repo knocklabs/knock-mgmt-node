@@ -31,9 +31,9 @@ export class Partials extends APIResource {
     params: PartialUpsertParams,
     options?: RequestOptions,
   ): APIPromise<PartialUpsertResponse> {
-    const { environment, annotate, commit, commit_message, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}`, {
-      query: { environment, annotate, commit, commit_message, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message },
       body,
       ...options,
     });
@@ -70,7 +70,7 @@ export interface Partial {
   content: string;
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the partial was created.
    */
   inserted_at: string;
 
@@ -91,7 +91,7 @@ export interface Partial {
   type: 'html' | 'text' | 'json' | 'markdown';
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the partial was last updated.
    */
   updated_at: string;
 
@@ -145,41 +145,43 @@ export interface PartialValidateResponse {
 
 export interface PartialRetrieveParams {
   /**
-   * A slug of the environment from which to query the partial.
+   * The environment slug.
    */
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface PartialListParams extends EntriesCursorParams {
   /**
-   * A slug of the environment from which to query partials.
+   * The environment slug.
    */
   environment: string;
 
   /**
-   * Whether to annotate the resource.
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface PartialUpsertParams {
   /**
-   * Query param: A slug of the environment in which to upsert the partial.
+   * Query param: The environment slug.
    */
   environment: string;
 
@@ -189,7 +191,7 @@ export interface PartialUpsertParams {
   partial: PartialUpsertParams.Partial;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -203,11 +205,6 @@ export interface PartialUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace PartialUpsertParams {
@@ -251,7 +248,7 @@ export namespace PartialUpsertParams {
 
 export interface PartialValidateParams {
   /**
-   * Query param: A slug of the environment in which to validate the partial.
+   * Query param: The environment slug.
    */
   environment: string;
 
