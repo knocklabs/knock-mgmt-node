@@ -106,7 +106,7 @@ describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.workflows.upsert('workflow_key', {
-      environment: 'environment',
+      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -131,7 +131,7 @@ describe('resource workflows', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
     const response = await client.workflows.upsert('workflow_key', {
-      environment: 'environment',
+      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -147,14 +147,14 @@ describe('resource workflows', () => {
             channel_group_key: 'email',
             channel_key: 'in-app-feed',
             channel_overrides: {
-              bcc_address: 'bcc@example.com',
-              cc_address: 'cc@example.com',
-              from_email: 'hello@example.com',
+              bcc_address: null,
+              cc_address: null,
+              from_address: 'hello@example.com',
               from_name: 'John Doe',
-              json_overrides: '{"subject": "Hello, world!"}',
+              json_overrides: '{"some_override": true}',
               link_tracking: true,
               open_tracking: true,
-              reply_to_address: 'reply@example.com',
+              reply_to_address: null,
               to_address: 'hello@example.com',
             },
             conditions: {
@@ -173,6 +173,7 @@ describe('resource workflows', () => {
         trigger_data_json_schema: { foo: 'bar' },
         trigger_frequency: 'every_trigger',
       },
+      annotate: true,
       commit: true,
       commit_message: 'commit_message',
     });
@@ -222,14 +223,14 @@ describe('resource workflows', () => {
             channel_group_key: 'email',
             channel_key: 'in-app-feed',
             channel_overrides: {
-              bcc_address: 'bcc@example.com',
-              cc_address: 'cc@example.com',
-              from_email: 'hello@example.com',
+              bcc_address: null,
+              cc_address: null,
+              from_address: 'hello@example.com',
               from_name: 'John Doe',
-              json_overrides: '{"subject": "Hello, world!"}',
+              json_overrides: '{"some_override": true}',
               link_tracking: true,
               open_tracking: true,
-              reply_to_address: 'reply@example.com',
+              reply_to_address: null,
               to_address: 'hello@example.com',
             },
             conditions: {

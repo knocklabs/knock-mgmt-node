@@ -8,7 +8,7 @@ import { path } from '../internal/utils/path';
 
 export class Environments extends APIResource {
   /**
-   * Returns a single environment by its slug.
+   * Returns a single environment by the `environment_slug`.
    */
   retrieve(environmentSlug: string, options?: RequestOptions): APIPromise<Environment> {
     return this._client.get(path`/v1/environments/${environmentSlug}`, options);
@@ -33,17 +33,18 @@ export type EnvironmentsEntriesCursor = EntriesCursor<Environment>;
  */
 export interface Environment {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the environment was created.
    */
   created_at: string;
 
   /**
-   * A friendly name for the environment. Cannot exceed 255 characters.
+   * A human-readable name for the environment. Cannot exceed 255 characters.
    */
   name: string;
 
   /**
-   * The order of the environment. 0 is the first environment, 1 is the second, etc.
+   * The order of the environment. The lowest number is the first environment, the
+   * highest number is the last environment. The order will not always be sequential.
    */
   order: number;
 
@@ -58,17 +59,18 @@ export interface Environment {
   slug: string;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the environment was last updated.
    */
   updated_at: string;
 
   /**
-   * The timestamp of when the resource was deleted.
+   * The timestamp of when the environment was deleted.
    */
   deleted_at?: string | null;
 
   /**
-   * Whether PII data is hidden from the environment.
+   * Whether PII data is hidden from the environment. Read more in the
+   * [data obfuscation docs](https://docs.knock.app/manage-your-account/data-obfuscation).
    */
   hide_pii_data?: boolean;
 
@@ -78,7 +80,7 @@ export interface Environment {
   label_color?: string | null;
 
   /**
-   * The last time the environment was committed to.
+   * The timestamp of the most-recent commit in the environment.
    */
   last_commit_at?: string | null;
 }

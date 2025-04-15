@@ -20,7 +20,8 @@ export interface ChatTemplate {
   json_body?: string | null;
 
   /**
-   * The summary of the chat template.
+   * The summary of the chat template. Used by some chat apps in their push
+   * notifications.
    */
   summary?: string;
 }
@@ -41,7 +42,8 @@ export interface EmailTemplate {
   html_body?: string;
 
   /**
-   * The settings for the email template. Can be omitted.
+   * The [settings](https://docs.knock.app/integrations/email/settings) for the email
+   * template.
    */
   settings?: EmailTemplate.Settings | null;
 
@@ -59,6 +61,7 @@ export interface EmailTemplate {
     | EmailTemplate.EmailButtonSetBlock
     | EmailTemplate.EmailDividerBlock
     | EmailTemplate.EmailHTMLBlock
+    | EmailTemplate.EmailImageBlock
     | EmailTemplate.EmailMarkdownBlock
     | EmailTemplate.EmailPartialBlock
   >;
@@ -66,7 +69,8 @@ export interface EmailTemplate {
 
 export namespace EmailTemplate {
   /**
-   * The settings for the email template. Can be omitted.
+   * The [settings](https://docs.knock.app/integrations/email/settings) for the email
+   * template.
    */
   export interface Settings {
     /**
@@ -309,6 +313,93 @@ export namespace EmailTemplate {
   }
 
   /**
+   * An image block in an email template.
+   */
+  export interface EmailImageBlock {
+    /**
+     * The ID of the block.
+     */
+    id: string;
+
+    /**
+     * The type of the block.
+     */
+    type: string;
+
+    /**
+     * The URL of the image to display.
+     */
+    url: string;
+
+    /**
+     * The version of the block.
+     */
+    version: number;
+
+    /**
+     * Optional action URL for the image.
+     */
+    action?: string | null;
+
+    /**
+     * Alt text for the image.
+     */
+    alt?: string | null;
+
+    /**
+     * The layout attributes of the block.
+     */
+    layout_attrs?: EmailImageBlock.LayoutAttrs;
+
+    /**
+     * The style attributes of the image.
+     */
+    style_attrs?: EmailImageBlock.StyleAttrs;
+  }
+
+  export namespace EmailImageBlock {
+    /**
+     * The layout attributes of the block.
+     */
+    export interface LayoutAttrs {
+      /**
+       * The horizontal alignment of the block.
+       */
+      horizontal_align: 'left' | 'center' | 'right';
+
+      /**
+       * The padding_bottom layout attribute of the block.
+       */
+      padding_bottom: number;
+
+      /**
+       * The padding_left layout attribute of the block.
+       */
+      padding_left: number;
+
+      /**
+       * The padding_right layout attribute of the block.
+       */
+      padding_right: number;
+
+      /**
+       * The padding_top layout attribute of the block.
+       */
+      padding_top: number;
+    }
+
+    /**
+     * The style attributes of the image.
+     */
+    export interface StyleAttrs {
+      /**
+       * The width of the image.
+       */
+      width?: string;
+    }
+  }
+
+  /**
    * A markdown block in an email template.
    */
   export interface EmailMarkdownBlock {
@@ -449,7 +540,7 @@ export interface InAppFeedTemplate {
   markdown_body: string;
 
   /**
-   * The action buttons of the in-app feed.
+   * The action buttons of the in-app feed message.
    */
   action_buttons?: Array<InAppFeedTemplate.ActionButton>;
 
@@ -466,7 +557,7 @@ export namespace InAppFeedTemplate {
    */
   export interface ActionButton {
     /**
-     * The action of the action button.
+     * The URI for this action.
      */
     action: string;
 
@@ -492,14 +583,16 @@ export interface PushTemplate {
   title: string;
 
   /**
-   * The settings for the push template. Can be omitted.
+   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
+   * for the push template. Can be omitted.
    */
   settings?: PushTemplate.Settings | null;
 }
 
 export namespace PushTemplate {
   /**
-   * The settings for the push template. Can be omitted.
+   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
+   * for the push template. Can be omitted.
    */
   export interface Settings {
     /**
@@ -509,14 +602,14 @@ export namespace PushTemplate {
     delivery_type?: 'silent' | 'content';
 
     /**
-     * A JSON object overrides the payload sent to the push provider.
+     * A JSON object that overrides the payload sent to the push provider.
      */
     payload_overrides?: string;
   }
 }
 
 /**
- * A request template.
+ * A request template for a fetch function step.
  */
 export interface RequestTemplate {
   /**
@@ -530,7 +623,7 @@ export interface RequestTemplate {
   url: string;
 
   /**
-   * A body of the request. Only used for POST or PUT requests.
+   * The body of the request. Only used for POST or PUT requests.
    */
   body?: string | null;
 
@@ -583,18 +676,20 @@ export interface SMSTemplate {
   text_body: string;
 
   /**
-   * The settings for the SMS template.
+   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
+   * for the SMS template.
    */
   settings?: SMSTemplate.Settings | null;
 }
 
 export namespace SMSTemplate {
   /**
-   * The settings for the SMS template.
+   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
+   * for the SMS template.
    */
   export interface Settings {
     /**
-     * A JSON object overrides the payload sent to the SMS provider.
+     * A JSON object that overrides the payload sent to the SMS provider.
      */
     payload_overrides?: string | null;
 
@@ -623,7 +718,7 @@ export interface WebhookTemplate {
   url: string;
 
   /**
-   * A body of the request. Only used for POST or PUT requests.
+   * The body of the request. Only used for POST or PUT requests.
    */
   body?: string | null;
 
