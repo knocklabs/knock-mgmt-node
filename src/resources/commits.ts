@@ -18,22 +18,16 @@ export class Commits extends APIResource {
    * Returns a paginated list of commits in a given environment. The commits are
    * ordered from most recent first.
    */
-  list(
-    query: CommitListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<CommitsEntriesCursor, Commit> {
+  list(query: CommitListParams, options?: RequestOptions): PagePromise<CommitsEntriesCursor, Commit> {
     return this._client.getAPIList('/v1/commits', EntriesCursor<Commit>, { query, ...options });
   }
 
   /**
    * Commit all changes across all resources in the development environment.
    */
-  commitAll(
-    params: CommitCommitAllParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CommitCommitAllResponse> {
-    const { commit_message, environment } = params ?? {};
-    return this._client.put('/v1/commits', { query: { commit_message, environment }, ...options });
+  commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
+    const { environment, commit_message } = params;
+    return this._client.put('/v1/commits', { query: { environment, commit_message }, ...options });
   }
 
   /**
@@ -75,7 +69,7 @@ export interface Commit {
   commit_message: string;
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the commit was created.
    */
   created_at: string;
 
@@ -90,7 +84,7 @@ export interface Commit {
   resource: Commit.Resource;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the commit was last updated.
    */
   updated_at: string;
 }
@@ -128,16 +122,22 @@ export namespace Commit {
 }
 
 /**
- * The result of the commit operation.
+ * The response from committing all changes.
  */
 export interface CommitCommitAllResponse {
+  /**
+   * The result of the commit operation.
+   */
   result: string;
 }
 
 /**
- * The result of the commit operation.
+ * The response from promoting all changes.
  */
 export interface CommitPromoteAllResponse {
+  /**
+   * The result of the promote operation.
+   */
   result: string;
 }
 
@@ -153,27 +153,27 @@ export interface CommitPromoteOneResponse {
 
 export interface CommitListParams extends EntriesCursorParams {
   /**
-   * The environment slug. (Defaults to `development`.).
+   * The environment slug.
    */
-  environment?: string;
+  environment: string;
 
   /**
-   * Whether to show only promoted or unpromoted changes between the given
-   * environment and the subsequent environment.
+   * Whether to show commits in the given environment that have not been promoted to
+   * the subsequent environment (false) or commits which have been promoted (true).
    */
   promoted?: boolean;
 }
 
 export interface CommitCommitAllParams {
   /**
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
    * An optional message to include in a commit.
    */
   commit_message?: string;
-
-  /**
-   * A slug of the environment in which to commit all changes.
-   */
-  environment?: string;
 }
 
 export interface CommitPromoteAllParams {

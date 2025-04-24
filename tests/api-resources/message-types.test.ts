@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource messageTypes', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve', async () => {
-    const responsePromise = client.messageTypes.retrieve('email');
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.messageTypes.retrieve('email', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,20 +21,17 @@ describe('resource messageTypes', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.messageTypes.retrieve(
-        'email',
-        { annotate: true, environment: 'development', hide_uncommitted_changes: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.messageTypes.retrieve('email', {
+      environment: 'development',
+      annotate: true,
+      hide_uncommitted_changes: true,
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list', async () => {
-    const responsePromise = client.messageTypes.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.messageTypes.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,26 +42,21 @@ describe('resource messageTypes', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.messageTypes.list(
-        {
-          after: 'after',
-          annotate: true,
-          before: 'before',
-          environment: 'development',
-          hide_uncommitted_changes: true,
-          limit: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.messageTypes.list({
+      environment: 'development',
+      after: 'after',
+      annotate: true,
+      before: 'before',
+      hide_uncommitted_changes: true,
+      limit: 0,
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.messageTypes.upsert('email', {
+      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -83,6 +75,7 @@ describe('resource messageTypes', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
     const response = await client.messageTypes.upsert('email', {
+      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -113,14 +106,13 @@ describe('resource messageTypes', () => {
       annotate: true,
       commit: true,
       commit_message: 'commit_message',
-      environment: 'development',
-      hide_uncommitted_changes: true,
     });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
     const responsePromise = client.messageTypes.validate('email', {
+      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -139,6 +131,7 @@ describe('resource messageTypes', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
     const response = await client.messageTypes.validate('email', {
+      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -166,8 +159,6 @@ describe('resource messageTypes', () => {
           },
         ],
       },
-      annotate: true,
-      hide_uncommitted_changes: true,
     });
   });
 });

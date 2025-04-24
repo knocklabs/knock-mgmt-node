@@ -12,7 +12,7 @@ export class EmailLayouts extends APIResource {
    */
   retrieve(
     emailLayoutKey: string,
-    query: EmailLayoutRetrieveParams | null | undefined = {},
+    query: EmailLayoutRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayout> {
     return this._client.get(path`/v1/email_layouts/${emailLayoutKey}`, { query, ...options });
@@ -22,7 +22,7 @@ export class EmailLayouts extends APIResource {
    * Returns a paginated list of email layouts available in a given environment.
    */
   list(
-    query: EmailLayoutListParams | null | undefined = {},
+    query: EmailLayoutListParams,
     options?: RequestOptions,
   ): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
     return this._client.getAPIList('/v1/email_layouts', EntriesCursor<EmailLayout>, { query, ...options });
@@ -38,9 +38,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { annotate, commit, commit_message, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, annotate, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { annotate, commit, commit_message, environment, hide_uncommitted_changes },
+      query: { environment, annotate, commit, commit_message },
       body,
       ...options,
     });
@@ -56,9 +56,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { annotate, environment, hide_uncommitted_changes, ...body } = params;
+    const { environment, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { annotate, environment, hide_uncommitted_changes },
+      query: { environment },
       body,
       ...options,
     });
@@ -72,7 +72,7 @@ export type EmailLayoutsEntriesCursor = EntriesCursor<EmailLayout>;
  */
 export interface EmailLayout {
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the email layout was created.
    */
   created_at: string;
 
@@ -87,7 +87,7 @@ export interface EmailLayout {
   key: string;
 
   /**
-   * The friendly name of this email layout.
+   * The human-readable name of this email layout.
    */
   name: string;
 
@@ -97,7 +97,7 @@ export interface EmailLayout {
   sha: string;
 
   /**
-   * The complete plain text content of the email layout.
+   * The complete plaintext content of the email layout.
    */
   text_layout: string;
 
@@ -112,7 +112,7 @@ export interface EmailLayout {
   footer_links?: Array<EmailLayout.FooterLink>;
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the email layout was last updated.
    */
   updated_at?: string;
 }
@@ -153,46 +153,53 @@ export interface EmailLayoutValidateResponse {
 
 export interface EmailLayoutRetrieveParams {
   /**
-   * Whether to annotate the resource.
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
-
-  /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface EmailLayoutListParams extends EntriesCursorParams {
   /**
-   * Whether to annotate the resource.
+   * The environment slug.
+   */
+  environment: string;
+
+  /**
+   * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
-
-  /**
-   * Whether to hide uncommitted changes.
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
 }
 
 export interface EmailLayoutUpsertParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutUpsertParams.EmailLayout;
 
   /**
-   * Query param: Whether to annotate the resource.
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
@@ -206,16 +213,6 @@ export interface EmailLayoutUpsertParams {
    * `true`.
    */
   commit_message?: string;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutUpsertParams {
@@ -261,24 +258,14 @@ export namespace EmailLayoutUpsertParams {
 
 export interface EmailLayoutValidateParams {
   /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutValidateParams.EmailLayout;
-
-  /**
-   * Query param: Whether to annotate the resource.
-   */
-  annotate?: boolean;
-
-  /**
-   * Query param: The environment slug. (Defaults to `development`.).
-   */
-  environment?: string;
-
-  /**
-   * Query param: Whether to hide uncommitted changes.
-   */
-  hide_uncommitted_changes?: boolean;
 }
 
 export namespace EmailLayoutValidateParams {

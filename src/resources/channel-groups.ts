@@ -35,7 +35,7 @@ export interface ChannelGroup {
   channel_type: 'email' | 'in_app' | 'in_app_feed' | 'in_app_guide' | 'sms' | 'push' | 'chat' | 'http';
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the channel group was created.
    */
   created_at: string;
 
@@ -56,12 +56,13 @@ export interface ChannelGroup {
   operator: 'any' | 'all';
 
   /**
-   * Whether this channel group was created by the system or a user.
+   * Whether this channel group was created by the system or a user. Only user
+   * created channel groups can be modified.
    */
   source: 'system' | 'user';
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the channel group was last updated.
    */
   updated_at: string;
 }
@@ -77,7 +78,7 @@ export interface ChannelGroupRule {
   channel: ChannelsAPI.Channel;
 
   /**
-   * The timestamp of when the resource was created.
+   * The timestamp of when the rule was created.
    */
   created_at: string;
 
@@ -93,12 +94,12 @@ export interface ChannelGroupRule {
   rule_type: 'if' | 'unless' | 'always';
 
   /**
-   * The timestamp of when the resource was last updated.
+   * The timestamp of when the rule was last updated.
    */
   updated_at: string;
 
   /**
-   * For conditional rules, the argument to compare against.
+   * For conditional rules, the value to compare against.
    */
   argument?: string | null;
 

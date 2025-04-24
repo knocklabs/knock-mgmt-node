@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource translations', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve', async () => {
-    const responsePromise = client.translations.retrieve('locale_code');
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.translations.retrieve('locale_code', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,26 +21,19 @@ describe('resource translations', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.translations.retrieve(
-        'locale_code',
-        {
-          annotate: true,
-          environment: 'development',
-          format: 'json',
-          hide_uncommitted_changes: true,
-          namespace: 'namespace',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.translations.retrieve('locale_code', {
+      environment: 'development',
+      annotate: true,
+      format: 'json',
+      hide_uncommitted_changes: true,
+      namespace: 'namespace',
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list', async () => {
-    const responsePromise = client.translations.list();
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.translations.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,29 +44,24 @@ describe('resource translations', () => {
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.translations.list(
-        {
-          after: 'after',
-          annotate: true,
-          before: 'before',
-          environment: 'development',
-          format: 'json',
-          hide_uncommitted_changes: true,
-          limit: 0,
-          locale_code: 'locale_code',
-          namespace: 'namespace',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.translations.list({
+      environment: 'development',
+      after: 'after',
+      annotate: true,
+      before: 'before',
+      format: 'json',
+      hide_uncommitted_changes: true,
+      limit: 0,
+      locale_code: 'locale_code',
+      namespace: 'namespace',
+    });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.translations.upsert('locale_code', {
+      environment: 'development',
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
     });
@@ -89,18 +77,20 @@ describe('resource translations', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('upsert: required and optional params', async () => {
     const response = await client.translations.upsert('locale_code', {
+      environment: 'development',
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
-      environment: 'development',
+      commit: true,
+      commit_message: 'commit_message',
       format: 'json',
-      hide_uncommitted_changes: true,
     });
   });
 
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: only required params', async () => {
     const responsePromise = client.translations.validate('locale_code', {
+      environment: 'development',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -115,10 +105,8 @@ describe('resource translations', () => {
   // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
   test.skip('validate: required and optional params', async () => {
     const response = await client.translations.validate('locale_code', {
-      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
-      annotate: true,
       environment: 'development',
-      hide_uncommitted_changes: true,
+      translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
     });
   });
 });
