@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0 (2025-05-01)
+
+Full Changelog: [v0.1.0-rc.2...v0.1.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.2...v0.1.0)
+
+### Chores
+
+* configure new SDK language ([3d7f4c3](https://github.com/knocklabs/knock-mgmt-node/commit/3d7f4c308d137c9be5a4c08c26584e3b6d76955f))
+* **internal:** refactor utils ([80a60d8](https://github.com/knocklabs/knock-mgmt-node/commit/80a60d85153c1fed8e995b3e9488766214a8a1b5))
+* update SDK settings ([d2efc1e](https://github.com/knocklabs/knock-mgmt-node/commit/d2efc1eb5abe156c72d963e0db4f98b7f0cc4952))
+
+
+### Documentation
+
+* **readme:** fix typo ([028631b](https://github.com/knocklabs/knock-mgmt-node/commit/028631bd09527a4415f5cf5040fa4caaebfedaaf))
+
 ## 0.1.0-rc.2 (2025-04-24)
 
 Full Changelog: [v0.1.0-rc.1...v0.1.0-rc.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.1...v0.1.0-rc.2)
