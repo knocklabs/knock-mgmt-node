@@ -1,6 +1,6 @@
 {
   "name": "@knocklabs/mgmt",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Knock Mgmt API",
   "author": "Knock Mgmt <support@knock.app>",
   "types": "dist/index.d.ts",
