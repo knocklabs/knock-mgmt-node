@@ -9,6 +9,13 @@ import { path } from '../internal/utils/path';
 export class Environments extends APIResource {
   /**
    * Returns a single environment by the `environment_slug`.
+   *
+   * @example
+   * ```ts
+   * const environment = await client.environments.retrieve(
+   *   'development',
+   * );
+   * ```
    */
   retrieve(environmentSlug: string, options?: RequestOptions): APIPromise<Environment> {
     return this._client.get(path`/v1/environments/${environmentSlug}`, options);
@@ -17,6 +24,14 @@ export class Environments extends APIResource {
   /**
    * Returns a paginated list of environments. The environments will be returned in
    * order of their index, with the `development` environment first.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const environment of client.environments.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: EnvironmentListParams | null | undefined = {},
