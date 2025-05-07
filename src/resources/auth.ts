@@ -7,6 +7,11 @@ import { RequestOptions } from '../internal/request-options';
 export class Auth extends APIResource {
   /**
    * Return information about the current service token.
+   *
+   * @example
+   * ```ts
+   * const response = await client.auth.verify();
+   * ```
    */
   verify(options?: RequestOptions): APIPromise<AuthVerifyResponse> {
     return this._client.get('/v1/whoami', options);

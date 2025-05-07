@@ -9,6 +9,14 @@ import { path } from '../internal/utils/path';
 export class Translations extends APIResource {
   /**
    * Retrieve a translation by its locale and namespace, in a given environment.
+   *
+   * @example
+   * ```ts
+   * const translation = await client.translations.retrieve(
+   *   'locale_code',
+   *   { environment: 'development' },
+   * );
+   * ```
    */
   retrieve(
     localeCode: string,
@@ -21,6 +29,16 @@ export class Translations extends APIResource {
   /**
    * Returns a paginated list of translations available in a given environment. The
    * translations are returned in alphabetical order by locale code.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const translation of client.translations.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: TranslationListParams,
@@ -35,6 +53,21 @@ export class Translations extends APIResource {
    *
    * Note: this endpoint only operates on translations in the "development"
    * environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.translations.upsert(
+   *   'locale_code',
+   *   {
+   *     environment: 'development',
+   *     namespace: 'namespace',
+   *     translation: {
+   *       content: '{"hello":"Hello, world!"}',
+   *       format: 'json',
+   *     },
+   *   },
+   * );
+   * ```
    */
   upsert(
     localeCode: string,
@@ -54,6 +87,20 @@ export class Translations extends APIResource {
    *
    * Note: this endpoint only operates on translations in the "development"
    * environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.translations.validate(
+   *   'locale_code',
+   *   {
+   *     environment: 'development',
+   *     translation: {
+   *       content: '{"hello":"Hello, world!"}',
+   *       format: 'json',
+   *     },
+   *   },
+   * );
+   * ```
    */
   validate(
     localeCode: string,
