@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.2.0 (2025-05-10)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **client:** add withOptions helper ([cfcded9](https://github.com/knocklabs/knock-mgmt-node/commit/cfcded9dc06bb9d543bbc80b41b48b2a706a7add))
+
+
+### Bug Fixes
+
+* **client:** always overwrite when merging headers ([dc958a7](https://github.com/knocklabs/knock-mgmt-node/commit/dc958a7d205905e79fe5ebde5c39ad9f72297dfc))
+
+
+### Chores
+
+* **client:** drop support for EOL node versions ([fdee065](https://github.com/knocklabs/knock-mgmt-node/commit/fdee0659a32ddec45e533175be91586f4a17ba54))
+* **internal:** codegen related update ([ae6ac20](https://github.com/knocklabs/knock-mgmt-node/commit/ae6ac206a33e386a9bfdf4289897517b53f8ef00))
+* **internal:** share typescript helpers ([7897360](https://github.com/knocklabs/knock-mgmt-node/commit/7897360fcb2f6b69e25aa5e5b2f57d978363d854))
+
+
+### Documentation
+
+* add examples to tsdocs ([b283a5f](https://github.com/knocklabs/knock-mgmt-node/commit/b283a5fa068bdbc1821fa2de5094b3ac151763f9))
+
 ## 0.1.0 (2025-05-01)
 
 Full Changelog: [v0.1.0-rc.2...v0.1.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.2...v0.1.0)
