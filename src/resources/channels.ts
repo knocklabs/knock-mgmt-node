@@ -8,6 +8,14 @@ export class Channels extends APIResource {
   /**
    * Returns a paginated list of channels. Note: the list of channels is across the
    * entire account, not scoped to an environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const channel of client.channels.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ChannelListParams | null | undefined = {},

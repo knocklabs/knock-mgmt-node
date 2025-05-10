@@ -9,6 +9,16 @@ import { path } from '../../internal/utils/path';
 export class Steps extends APIResource {
   /**
    * Generates a rendered template for a given channel step in a workflow.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.workflows.steps.previewTemplate('step_ref', {
+   *     workflow_key: 'workflow_key',
+   *     environment: 'development',
+   *     recipient: 'dnedry',
+   *   });
+   * ```
    */
   previewTemplate(
     stepRef: string,

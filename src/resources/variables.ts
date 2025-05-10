@@ -7,6 +7,16 @@ import { RequestOptions } from '../internal/request-options';
 export class Variables extends APIResource {
   /**
    * Returns a paginated list of variables for a given environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const variable of client.variables.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(query: VariableListParams, options?: RequestOptions): PagePromise<VariablesEntriesCursor, Variable> {
     return this._client.getAPIList('/v1/variables', EntriesCursor<Variable>, { query, ...options });

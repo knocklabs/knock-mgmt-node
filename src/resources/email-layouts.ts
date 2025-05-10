@@ -9,6 +9,14 @@ import { path } from '../internal/utils/path';
 export class EmailLayouts extends APIResource {
   /**
    * Retrieve an email layout by its key, in a given environment.
+   *
+   * @example
+   * ```ts
+   * const emailLayout = await client.emailLayouts.retrieve(
+   *   'email_layout_key',
+   *   { environment: 'development' },
+   * );
+   * ```
    */
   retrieve(
     emailLayoutKey: string,
@@ -20,6 +28,16 @@ export class EmailLayouts extends APIResource {
 
   /**
    * Returns a paginated list of email layouts available in a given environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const emailLayout of client.emailLayouts.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: EmailLayoutListParams,
@@ -32,6 +50,22 @@ export class EmailLayouts extends APIResource {
    * Updates an email layout, or creates a new one if it does not yet exist.
    *
    * Note: this endpoint only operates in the "development" environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.emailLayouts.upsert(
+   *   'email_layout_key',
+   *   {
+   *     environment: 'development',
+   *     email_layout: {
+   *       html_layout:
+   *         '<html><body>Hello, world!</body></html>',
+   *       name: 'Transactional',
+   *       text_layout: 'Hello, world!',
+   *     },
+   *   },
+   * );
+   * ```
    */
   upsert(
     emailLayoutKey: string,
@@ -50,6 +84,22 @@ export class EmailLayouts extends APIResource {
    * Validates an email layout payload without persisting it.
    *
    * Note: this endpoint only operates in the "development" environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.emailLayouts.validate(
+   *   'email_layout_key',
+   *   {
+   *     environment: 'development',
+   *     email_layout: {
+   *       html_layout:
+   *         '<html><body>Hello, world!</body></html>',
+   *       name: 'Transactional',
+   *       text_layout: 'Hello, world!',
+   *     },
+   *   },
+   * );
+   * ```
    */
   validate(
     emailLayoutKey: string,

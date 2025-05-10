@@ -9,6 +9,14 @@ import { path } from '../internal/utils/path';
 export class Partials extends APIResource {
   /**
    * Get a partial by its key.
+   *
+   * @example
+   * ```ts
+   * const partial = await client.partials.retrieve(
+   *   'partial_key',
+   *   { environment: 'development' },
+   * );
+   * ```
    */
   retrieve(partialKey: string, query: PartialRetrieveParams, options?: RequestOptions): APIPromise<Partial> {
     return this._client.get(path`/v1/partials/${partialKey}`, { query, ...options });
@@ -16,6 +24,16 @@ export class Partials extends APIResource {
 
   /**
    * List all partials for a given environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const partial of client.partials.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(query: PartialListParams, options?: RequestOptions): PagePromise<PartialsEntriesCursor, Partial> {
     return this._client.getAPIList('/v1/partials', EntriesCursor<Partial>, { query, ...options });
@@ -25,6 +43,21 @@ export class Partials extends APIResource {
    * Updates a partial of a given key, or creates a new one if it does not yet exist.
    *
    * Note: this endpoint only operates on partials in the “development” environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.partials.upsert(
+   *   'partial_key',
+   *   {
+   *     environment: 'development',
+   *     partial: {
+   *       content: '<p>Hello, world!</p>',
+   *       name: 'My Partial',
+   *       type: 'html',
+   *     },
+   *   },
+   * );
+   * ```
    */
   upsert(
     partialKey: string,
@@ -43,6 +76,21 @@ export class Partials extends APIResource {
    * Validates a partial payload without persisting it.
    *
    * Note: this endpoint only operates on partials in the “development” environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.partials.validate(
+   *   'partial_key',
+   *   {
+   *     environment: 'development',
+   *     partial: {
+   *       content: '<p>Hello, world!</p>',
+   *       name: 'My Partial',
+   *       type: 'html',
+   *     },
+   *   },
+   * );
+   * ```
    */
   validate(
     partialKey: string,

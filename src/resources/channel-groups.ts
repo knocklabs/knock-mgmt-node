@@ -9,6 +9,14 @@ export class ChannelGroups extends APIResource {
   /**
    * Returns a paginated list of channel groups. Note: the list of channel groups is
    * across the entire account, not scoped to an environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const channelGroup of client.channelGroups.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ChannelGroupListParams | null | undefined = {},

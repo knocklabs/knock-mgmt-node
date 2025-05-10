@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "@knocklabs/mgmt/*": ["dist/src/*"],
-      "@knocklabs/mgmt": ["dist/src/index.ts"],
+      "@knocklabs/mgmt": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

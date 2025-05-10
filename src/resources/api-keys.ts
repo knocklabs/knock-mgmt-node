@@ -9,6 +9,13 @@ export class APIKeys extends APIResource {
    * Given an authenticated service token and an environment, will exchange the
    * service token for a secret API key that can be used to make requests to the
    * public API.
+   *
+   * @example
+   * ```ts
+   * const response = await client.apiKeys.exchange({
+   *   environment: 'development',
+   * });
+   * ```
    */
   exchange(params: APIKeyExchangeParams, options?: RequestOptions): APIPromise<APIKeyExchangeResponse> {
     const { environment } = params;
