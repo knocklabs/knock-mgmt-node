@@ -26,14 +26,10 @@ const client = new KnockMgmt({
   serviceToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
-async function main() {
-  const page = await client.workflows.list({ environment: 'development' });
-  const workflow = page.entries[0];
+const page = await client.workflows.list({ environment: 'development' });
+const workflow = page.entries[0];
 
-  console.log(workflow.valid);
-}
-
-main();
+console.log(workflow.valid);
 ```
 
 ### Request & Response types
@@ -48,12 +44,8 @@ const client = new KnockMgmt({
   serviceToken: process.env['KNOCK_SERVICE_TOKEN'], // This is the default and can be omitted
 });
 
-async function main() {
-  const params: KnockMgmt.WorkflowListParams = { environment: 'development' };
-  const [workflow]: [KnockMgmt.Workflow] = await client.workflows.list(params);
-}
-
-main();
+const params: KnockMgmt.WorkflowListParams = { environment: 'development' };
+const [workflow]: [KnockMgmt.Workflow] = await client.workflows.list(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -66,19 +58,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const page = await client.workflows.list({ environment: 'development' }).catch(async (err) => {
-    if (err instanceof KnockMgmt.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
-}
-
-main();
+const page = await client.workflows.list({ environment: 'development' }).catch(async (err) => {
+  if (err instanceof KnockMgmt.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
