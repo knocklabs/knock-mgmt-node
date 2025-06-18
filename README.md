@@ -1,6 +1,6 @@
 # Knock Mgmt TypeScript API Library
 
-[![NPM version](https://img.shields.io/npm/v/@knocklabs/mgmt.svg)](https://npmjs.org/package/@knocklabs/mgmt) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@knocklabs/mgmt)
+[![NPM version](<https://img.shields.io/npm/v/@knocklabs/mgmt.svg?label=npm%20(stable)>)](https://npmjs.org/package/@knocklabs/mgmt) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@knocklabs/mgmt)
 
 This library provides convenient access to the Knock Mgmt REST API from server-side TypeScript or JavaScript.
 
