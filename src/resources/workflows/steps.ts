@@ -86,7 +86,7 @@ export interface StepPreviewTemplateParams {
   /**
    * Body param: The data to pass to the workflow template for rendering.
    */
-  data?: Record<string, unknown>;
+  data?: { [key: string]: unknown };
 
   /**
    * Body param: The tenant to associate the workflow with.

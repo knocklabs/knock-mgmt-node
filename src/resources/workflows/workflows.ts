@@ -394,7 +394,7 @@ export interface Workflow {
    * Used to validate trigger requests. Read more in the
    * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
    */
-  trigger_data_json_schema?: Record<string, unknown>;
+  trigger_data_json_schema?: { [key: string]: unknown };
 
   /**
    * The frequency at which the workflow should be triggered. One of:
@@ -1012,7 +1012,7 @@ export interface WorkflowRunParams {
   /**
    * Body param: A map of data to be used in the workflow run.
    */
-  data?: Record<string, unknown>;
+  data?: { [key: string]: unknown };
 
   /**
    * Body param: The tenant to associate the workflow run with.
@@ -1111,7 +1111,7 @@ export namespace WorkflowUpsertParams {
      * Used to validate trigger requests. Read more in the
      * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
-    trigger_data_json_schema?: Record<string, unknown>;
+    trigger_data_json_schema?: { [key: string]: unknown };
 
     /**
      * The frequency at which the workflow should be triggered. One of:
@@ -1197,7 +1197,7 @@ export namespace WorkflowValidateParams {
      * Used to validate trigger requests. Read more in the
      * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
-    trigger_data_json_schema?: Record<string, unknown>;
+    trigger_data_json_schema?: { [key: string]: unknown };
 
     /**
      * The frequency at which the workflow should be triggered. One of:
