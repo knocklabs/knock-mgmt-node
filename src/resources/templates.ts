@@ -474,7 +474,7 @@ export namespace EmailTemplate {
     /**
      * The attributes to pass to the partial block.
      */
-    attrs: Record<string, unknown>;
+    attrs: { [key: string]: unknown };
 
     /**
      * The key of the partial block to invoke.
