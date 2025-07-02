@@ -294,7 +294,7 @@ export interface GuideStep {
    * A map of values that make up the step's content. Each value must conform to its
    * respective template schema field settings.
    */
-  values?: { [key: string]: unknown };
+  values?: unknown;
 }
 
 /**
