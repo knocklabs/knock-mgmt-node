@@ -190,7 +190,7 @@ export interface Guide {
    * A list of activation location rules that describe when the guide should be
    * shown.
    */
-  activation_location_rules?: Array<Guide.ActivationLocationRule>;
+  activation_location_rules?: Array<GuideActivationLocationRule>;
 
   /**
    * The timestamp of when the guide was archived.
@@ -244,22 +244,20 @@ export interface Guide {
   valid?: boolean;
 }
 
-export namespace Guide {
+/**
+ * A rule that controls when a guide should be shown based on the user's location
+ * in the application.
+ */
+export interface GuideActivationLocationRule {
   /**
-   * A rule that controls when a guide should be shown based on the user's location
-   * in the application.
+   * Whether to allow or block the guide at the specified pathname.
    */
-  export interface ActivationLocationRule {
-    /**
-     * Whether to allow or block the guide at the specified pathname.
-     */
-    directive: 'allow' | 'block';
+  directive: 'allow' | 'block';
 
-    /**
-     * The URL pathname pattern to match against. Must be a valid URI path.
-     */
-    pathname: string;
-  }
+  /**
+   * The URL pathname pattern to match against. Must be a valid URI path.
+   */
+  pathname: string;
 }
 
 /**
@@ -296,7 +294,7 @@ export interface GuideStep {
    * A map of values that make up the step's content. Each value must conform to its
    * respective template schema field settings.
    */
-  values?: unknown;
+  values?: { [key: string]: unknown };
 }
 
 /**
@@ -455,7 +453,7 @@ export namespace GuideUpsertParams {
      * A list of activation location rules that describe when the guide should be
      * shown.
      */
-    activation_location_rules?: Array<Guide.ActivationLocationRule>;
+    activation_location_rules?: Array<GuidesAPI.GuideActivationLocationRule>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -492,24 +490,6 @@ export namespace GuideUpsertParams {
      * The type of the guide.
      */
     type?: string;
-  }
-
-  export namespace Guide {
-    /**
-     * A rule that controls when a guide should be shown based on the user's location
-     * in the application.
-     */
-    export interface ActivationLocationRule {
-      /**
-       * Whether to allow or block the guide at the specified pathname.
-       */
-      directive: 'allow' | 'block';
-
-      /**
-       * The URL pathname pattern to match against. Must be a valid URI path.
-       */
-      pathname: string;
-    }
   }
 }
 
@@ -549,7 +529,7 @@ export namespace GuideValidateParams {
      * A list of activation location rules that describe when the guide should be
      * shown.
      */
-    activation_location_rules?: Array<Guide.ActivationLocationRule>;
+    activation_location_rules?: Array<GuidesAPI.GuideActivationLocationRule>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -587,29 +567,12 @@ export namespace GuideValidateParams {
      */
     type?: string;
   }
-
-  export namespace Guide {
-    /**
-     * A rule that controls when a guide should be shown based on the user's location
-     * in the application.
-     */
-    export interface ActivationLocationRule {
-      /**
-       * Whether to allow or block the guide at the specified pathname.
-       */
-      directive: 'allow' | 'block';
-
-      /**
-       * The URL pathname pattern to match against. Must be a valid URI path.
-       */
-      pathname: string;
-    }
-  }
 }
 
 export declare namespace Guides {
   export {
     type Guide as Guide,
+    type GuideActivationLocationRule as GuideActivationLocationRule,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideUpsertResponse as GuideUpsertResponse,

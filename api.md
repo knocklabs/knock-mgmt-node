@@ -209,6 +209,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/guides.ts">Guide</a></code>
+- <code><a href="./src/resources/guides.ts">GuideActivationLocationRule</a></code>
 - <code><a href="./src/resources/guides.ts">GuideStep</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideUpsertResponse</a></code>
