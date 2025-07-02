@@ -996,13 +996,13 @@ export interface WorkflowRunParams {
   /**
    * Body param: A list of recipients to run the workflow for.
    */
-  recipients: Array<string | WorkflowRunParams.UnionMember1>;
+  recipients: Array<string | WorkflowRunParams.ObjectRecipientReference>;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  actor?: string | WorkflowRunParams.UnionMember1 | null;
+  actor?: string | WorkflowRunParams.ObjectRecipientReference | null;
 
   /**
    * Body param: A key to cancel the workflow run.
@@ -1024,7 +1024,7 @@ export namespace WorkflowRunParams {
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
     id: string;
 
     collection: string;
@@ -1033,7 +1033,7 @@ export namespace WorkflowRunParams {
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
     id: string;
 
     collection: string;

@@ -203,3 +203,21 @@ Types:
 Methods:
 
 - <code title="get /v1/variables">client.variables.<a href="./src/resources/variables.ts">list</a>({ ...params }) -> VariablesEntriesCursor</code>
+
+# Guides
+
+Types:
+
+- <code><a href="./src/resources/guides.ts">Guide</a></code>
+- <code><a href="./src/resources/guides.ts">GuideStep</a></code>
+- <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
+- <code><a href="./src/resources/guides.ts">GuideUpsertResponse</a></code>
+- <code><a href="./src/resources/guides.ts">GuideValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">retrieve</a>(guideKey, { ...params }) -> Guide</code>
+- <code title="get /v1/guides">client.guides.<a href="./src/resources/guides.ts">list</a>({ ...params }) -> GuidesEntriesCursor</code>
+- <code title="put /v1/guides/{guide_key}/activate">client.guides.<a href="./src/resources/guides.ts">activate</a>(guideKey, { ...params }) -> GuideActivateResponse</code>
+- <code title="put /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">upsert</a>(guideKey, { ...params }) -> GuideUpsertResponse</code>
+- <code title="put /v1/guides/{guide_key}/validate">client.guides.<a href="./src/resources/guides.ts">validate</a>(guideKey, { ...params }) -> GuideValidateResponse</code>

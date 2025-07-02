@@ -75,13 +75,13 @@ export interface StepPreviewTemplateParams {
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  recipient: string | StepPreviewTemplateParams.UnionMember1;
+  recipient: string | StepPreviewTemplateParams.ObjectRecipientReference;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  actor?: string | StepPreviewTemplateParams.UnionMember1 | null;
+  actor?: string | StepPreviewTemplateParams.ObjectRecipientReference | null;
 
   /**
    * Body param: The data to pass to the workflow template for rendering.
@@ -98,7 +98,7 @@ export namespace StepPreviewTemplateParams {
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
     id: string;
 
     collection: string;
@@ -107,7 +107,7 @@ export namespace StepPreviewTemplateParams {
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
     id: string;
 
     collection: string;

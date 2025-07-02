@@ -67,6 +67,20 @@ import {
   EnvironmentsEntriesCursor,
 } from './resources/environments';
 import {
+  Guide,
+  GuideActivateParams,
+  GuideActivateResponse,
+  GuideListParams,
+  GuideRetrieveParams,
+  GuideStep,
+  GuideUpsertParams,
+  GuideUpsertResponse,
+  GuideValidateParams,
+  GuideValidateResponse,
+  Guides,
+  GuidesEntriesCursor,
+} from './resources/guides';
+import {
   MessageType,
   MessageTypeListParams,
   MessageTypeRetrieveParams,
@@ -864,6 +878,7 @@ export class KnockMgmt {
   channels: API.Channels = new API.Channels(this);
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
+  guides: API.Guides = new API.Guides(this);
 }
 KnockMgmt.Templates = Templates;
 KnockMgmt.EmailLayouts = EmailLayouts;
@@ -878,6 +893,7 @@ KnockMgmt.ChannelGroups = ChannelGroups;
 KnockMgmt.Channels = Channels;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
+KnockMgmt.Guides = Guides;
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -1029,6 +1045,21 @@ export declare namespace KnockMgmt {
     type Variable as Variable,
     type VariablesEntriesCursor as VariablesEntriesCursor,
     type VariableListParams as VariableListParams,
+  };
+
+  export {
+    Guides as Guides,
+    type Guide as Guide,
+    type GuideStep as GuideStep,
+    type GuideActivateResponse as GuideActivateResponse,
+    type GuideUpsertResponse as GuideUpsertResponse,
+    type GuideValidateResponse as GuideValidateResponse,
+    type GuidesEntriesCursor as GuidesEntriesCursor,
+    type GuideRetrieveParams as GuideRetrieveParams,
+    type GuideListParams as GuideListParams,
+    type GuideActivateParams as GuideActivateParams,
+    type GuideUpsertParams as GuideUpsertParams,
+    type GuideValidateParams as GuideValidateParams,
   };
 
   export type PageInfo = API.PageInfo;
