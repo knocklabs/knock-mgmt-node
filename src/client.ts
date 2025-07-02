@@ -95,7 +95,7 @@ import {
   MessageTypesEntriesCursor,
 } from './resources/message-types';
 import {
-  Partial,
+  Partial as PartialResource, // rename to PartialResource to avoid confusion with Partial<T> in TypeScript
   PartialListParams,
   PartialRetrieveParams,
   PartialUpsertParams,
@@ -941,7 +941,7 @@ export declare namespace KnockMgmt {
 
   export {
     Partials as Partials,
-    type Partial as Partial,
+    type PartialResource as Partial,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
     type PartialsEntriesCursor as PartialsEntriesCursor,
