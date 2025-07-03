@@ -224,7 +224,8 @@ export interface Guide {
   steps?: Array<GuideStep>;
 
   /**
-   * The ID of the target audience for the guide.
+   * The ID of the target audience for the guide. When not set, will default to
+   * targeting all users.
    */
   target_audience_id?: string | null;
 
@@ -234,7 +235,7 @@ export interface Guide {
   target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
 
   /**
-   * The type of the guide.
+   * The type of the guide. This is derived from the message type of the guide steps.
    */
   type?: string;
 
@@ -294,7 +295,7 @@ export interface GuideStep {
    * A map of values that make up the step's content. Each value must conform to its
    * respective template schema field settings.
    */
-  values?: unknown;
+  values?: { [key: string]: unknown };
 }
 
 /**
@@ -366,10 +367,12 @@ export interface GuideListParams extends EntriesCursorParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export type GuideActivateParams = GuideActivateParams.Variant0 | GuideActivateParams.Variant1;
+export type GuideActivateParams =
+  | GuideActivateParams.GuideBooleanActivationParams
+  | GuideActivateParams.GuideScheduledActivationParams;
 
 export declare namespace GuideActivateParams {
-  export interface Variant0 {
+  export interface GuideBooleanActivationParams {
     /**
      * Query param: The environment slug.
      */
@@ -381,7 +384,7 @@ export declare namespace GuideActivateParams {
     status: boolean;
   }
 
-  export interface Variant1 {
+  export interface GuideScheduledActivationParams {
     /**
      * Query param: The environment slug.
      */
@@ -472,12 +475,8 @@ export namespace GuideUpsertParams {
     description?: string | null;
 
     /**
-     * The semver of the guide.
-     */
-    semver?: string;
-
-    /**
-     * The ID of the target audience for the guide.
+     * The ID of the target audience for the guide. When not set, will default to
+     * targeting all users.
      */
     target_audience_id?: string | null;
 
@@ -485,11 +484,6 @@ export namespace GuideUpsertParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * The type of the guide.
-     */
-    type?: string;
   }
 }
 
@@ -548,12 +542,8 @@ export namespace GuideValidateParams {
     description?: string | null;
 
     /**
-     * The semver of the guide.
-     */
-    semver?: string;
-
-    /**
-     * The ID of the target audience for the guide.
+     * The ID of the target audience for the guide. When not set, will default to
+     * targeting all users.
      */
     target_audience_id?: string | null;
 
@@ -561,11 +551,6 @@ export namespace GuideValidateParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * The type of the guide.
-     */
-    type?: string;
   }
 }
 
