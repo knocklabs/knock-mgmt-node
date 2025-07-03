@@ -10,6 +10,14 @@ import { path } from '../internal/utils/path';
 export class MessageTypes extends APIResource {
   /**
    * Retrieve a message type by its key, in a given environment.
+   *
+   * @example
+   * ```ts
+   * const messageType = await client.messageTypes.retrieve(
+   *   'email',
+   *   { environment: 'development' },
+   * );
+   * ```
    */
   retrieve(
     messageTypeKey: string,
@@ -21,6 +29,16 @@ export class MessageTypes extends APIResource {
 
   /**
    * Returns a paginated list of message types available in a given environment.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const messageType of client.messageTypes.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: MessageTypeListParams,
@@ -33,6 +51,18 @@ export class MessageTypes extends APIResource {
    * Updates a message type, or creates a new one if it does not yet exist.
    *
    * Note: this endpoint only operates in the `development` environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.messageTypes.upsert('email', {
+   *   environment: 'development',
+   *   message_type: {
+   *     description: 'This is a message type',
+   *     name: 'My Message Type',
+   *     preview: '<div>Hello, world!</div>',
+   *   },
+   * });
+   * ```
    */
   upsert(
     messageTypeKey: string,
@@ -52,6 +82,21 @@ export class MessageTypes extends APIResource {
    *
    * Note: this endpoint only operates on message types in the `development`
    * environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.messageTypes.validate(
+   *   'email',
+   *   {
+   *     environment: 'development',
+   *     message_type: {
+   *       description: 'This is a message type',
+   *       name: 'My Message Type',
+   *       preview: '<div>Hello, world!</div>',
+   *     },
+   *   },
+   * );
+   * ```
    */
   validate(
     messageTypeKey: string,

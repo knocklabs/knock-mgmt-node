@@ -50,6 +50,21 @@ export {
   type EnvironmentsEntriesCursor,
 } from './environments';
 export {
+  Guides,
+  type Guide,
+  type GuideActivationLocationRule,
+  type GuideStep,
+  type GuideActivateResponse,
+  type GuideUpsertResponse,
+  type GuideValidateResponse,
+  type GuideRetrieveParams,
+  type GuideListParams,
+  type GuideActivateParams,
+  type GuideUpsertParams,
+  type GuideValidateParams,
+  type GuidesEntriesCursor,
+} from './guides';
+export {
   MessageTypes,
   type MessageType,
   type MessageTypeTextField,

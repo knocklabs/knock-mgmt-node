@@ -9,6 +9,13 @@ import { path } from '../internal/utils/path';
 export class Commits extends APIResource {
   /**
    * Retrieve a single commit by its ID.
+   *
+   * @example
+   * ```ts
+   * const commit = await client.commits.retrieve(
+   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   * );
+   * ```
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<Commit> {
     return this._client.get(path`/v1/commits/${id}`, options);
@@ -17,6 +24,16 @@ export class Commits extends APIResource {
   /**
    * Returns a paginated list of commits in a given environment. The commits are
    * ordered from most recent first.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const commit of client.commits.list({
+   *   environment: 'development',
+   * })) {
+   *   // ...
+   * }
+   * ```
    */
   list(query: CommitListParams, options?: RequestOptions): PagePromise<CommitsEntriesCursor, Commit> {
     return this._client.getAPIList('/v1/commits', EntriesCursor<Commit>, { query, ...options });
@@ -24,6 +41,13 @@ export class Commits extends APIResource {
 
   /**
    * Commit all changes across all resources in the development environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.commits.commitAll({
+   *   environment: 'development',
+   * });
+   * ```
    */
   commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
     const { environment, commit_message } = params;
@@ -33,6 +57,13 @@ export class Commits extends APIResource {
   /**
    * Promote all changes across all resources to the target environment from its
    * preceding environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.commits.promoteAll({
+   *   to_environment: 'to_environment',
+   * });
+   * ```
    */
   promoteAll(params: CommitPromoteAllParams, options?: RequestOptions): APIPromise<CommitPromoteAllResponse> {
     const { to_environment } = params;
@@ -41,6 +72,11 @@ export class Commits extends APIResource {
 
   /**
    * Promotes one change to the subsequent environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.commits.promoteOne('id');
+   * ```
    */
   promoteOne(id: string, options?: RequestOptions): APIPromise<CommitPromoteOneResponse> {
     return this._client.put(path`/v1/commits/${id}/promote`, options);

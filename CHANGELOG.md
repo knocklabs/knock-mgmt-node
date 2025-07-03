@@ -1,5 +1,64 @@
 # Changelog
 
+## 0.2.0 (2025-07-03)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([cc19538](https://github.com/knocklabs/knock-mgmt-node/commit/cc19538c3cb7a52012f068bcdbeceea983c236f0))
+* **api:** api update ([1a7c8d5](https://github.com/knocklabs/knock-mgmt-node/commit/1a7c8d5e03d59f1f581cfd138d195169c20edcbc))
+* **api:** latest spec and config ([2c8931a](https://github.com/knocklabs/knock-mgmt-node/commit/2c8931ab5991381c667d4e3c5be3f798a50e7ee1))
+* **api:** manual updates ([58bb00f](https://github.com/knocklabs/knock-mgmt-node/commit/58bb00f60d255c633bc3074999543e3e19bc5860))
+* **api:** manual updates ([2389bc3](https://github.com/knocklabs/knock-mgmt-node/commit/2389bc38b447c3bb653f4851da819b58b6f5b5d1))
+* **client:** add support for endpoint-specific base URLs ([6677528](https://github.com/knocklabs/knock-mgmt-node/commit/66775286f0cd46c16c2f26687279d93dae3dd225))
+* **client:** add withOptions helper ([cfcded9](https://github.com/knocklabs/knock-mgmt-node/commit/cfcded9dc06bb9d543bbc80b41b48b2a706a7add))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([36e85a9](https://github.com/knocklabs/knock-mgmt-node/commit/36e85a9c9cddbd980fd0f508aa75e94a818b2295))
+* **client:** always overwrite when merging headers ([dc958a7](https://github.com/knocklabs/knock-mgmt-node/commit/dc958a7d205905e79fe5ebde5c39ad9f72297dfc))
+* **client:** explicitly copy fetch in withOptions ([b5e2b84](https://github.com/knocklabs/knock-mgmt-node/commit/b5e2b84fa32cdf6f2f788e0fea4dc88f11aab48a))
+* **client:** get fetchOptions type more reliably ([00f8be9](https://github.com/knocklabs/knock-mgmt-node/commit/00f8be9f532d529546d45f0b564ae49625081214))
+* **client:** rename Partial to avoid Typescript collision ([820767f](https://github.com/knocklabs/knock-mgmt-node/commit/820767fa4428f88ff21e0fef1a48ef3e0286e8e3))
+* compat with more runtimes ([d582941](https://github.com/knocklabs/knock-mgmt-node/commit/d58294138d3ad981c674bdd1faefa6244d6c57e5))
+* publish script — handle NPM errors correctly ([d6251f6](https://github.com/knocklabs/knock-mgmt-node/commit/d6251f64e7ba98e9db9efc2a68ef351b6a5f838a))
+
+
+### Chores
+
+* add docs to RequestOptions type ([698a18b](https://github.com/knocklabs/knock-mgmt-node/commit/698a18bdcaf726391a8402ebd39ceb4519a3c185))
+* adjust eslint.config.mjs ignore pattern ([b1e0ba0](https://github.com/knocklabs/knock-mgmt-node/commit/b1e0ba06df61401232a8d774ef284c52849f8195))
+* avoid type error in certain environments ([eeab32d](https://github.com/knocklabs/knock-mgmt-node/commit/eeab32d78e183131b215f7bb51400c2492c09092))
+* **ci:** enable for pull requests ([12a35ea](https://github.com/knocklabs/knock-mgmt-node/commit/12a35ea0d5d4c2aac21336a2b872dd9ff9f3d44e))
+* **ci:** only run for pushes and fork pull requests ([695608b](https://github.com/knocklabs/knock-mgmt-node/commit/695608b2fcb850cc23d6a50ebd8c99032bd655d7))
+* **client:** drop support for EOL node versions ([fdee065](https://github.com/knocklabs/knock-mgmt-node/commit/fdee0659a32ddec45e533175be91586f4a17ba54))
+* **client:** improve path param validation ([6c02f02](https://github.com/knocklabs/knock-mgmt-node/commit/6c02f0219b40a5b592f9fe2e0e358ec114a646dd))
+* **client:** refactor imports ([23f4a85](https://github.com/knocklabs/knock-mgmt-node/commit/23f4a8575e48698631164e2ab50c1536b0d3e382))
+* **deps:** bump eslint-plugin-prettier ([3c8964a](https://github.com/knocklabs/knock-mgmt-node/commit/3c8964a03bf413d8e69dc214f8805215aad635b5))
+* **docs:** grammar improvements ([dc2ef94](https://github.com/knocklabs/knock-mgmt-node/commit/dc2ef94b3ec91aba2fa0a15f78c1531d0911eb82))
+* **docs:** use top-level-await in example snippets ([82a46b8](https://github.com/knocklabs/knock-mgmt-node/commit/82a46b8d6da36d26231a0f9b6d88f4a7c11cff35))
+* improve publish-npm script --latest tag logic ([14bad1c](https://github.com/knocklabs/knock-mgmt-node/commit/14bad1c2243a12df875712a4f7e1908872ea9abf))
+* **internal:** add pure annotations, make base APIResource abstract ([6503208](https://github.com/knocklabs/knock-mgmt-node/commit/650320817b02db4aac5051ef4c495957048d97a5))
+* **internal:** codegen related update ([ae6ac20](https://github.com/knocklabs/knock-mgmt-node/commit/ae6ac206a33e386a9bfdf4289897517b53f8ef00))
+* **internal:** fix readablestream types in node 20 ([abcf320](https://github.com/knocklabs/knock-mgmt-node/commit/abcf3200a247131c6276ce3b0ff75c957cd2cc16))
+* **internal:** share typescript helpers ([7897360](https://github.com/knocklabs/knock-mgmt-node/commit/7897360fcb2f6b69e25aa5e5b2f57d978363d854))
+* **internal:** update jest config ([5d5ac29](https://github.com/knocklabs/knock-mgmt-node/commit/5d5ac29560789db864efc2b7d6dd1e7e3e5c9436))
+* **package:** remove engines ([27c8560](https://github.com/knocklabs/knock-mgmt-node/commit/27c8560300188499e487185d9b578d70ff5ad3df))
+* **readme:** update badges ([1b6d6a8](https://github.com/knocklabs/knock-mgmt-node/commit/1b6d6a82b98312ac7310da46b3cd63c956713513))
+* **readme:** use better example snippet for undocumented params ([ebb1cca](https://github.com/knocklabs/knock-mgmt-node/commit/ebb1cca365968470bb3d9acd9fc201ccf44bf23f))
+
+
+### Documentation
+
+* add examples to tsdocs ([b283a5f](https://github.com/knocklabs/knock-mgmt-node/commit/b283a5fa068bdbc1821fa2de5094b3ac151763f9))
+
+
+### Refactors
+
+* **types:** replace Record with mapped types ([4ff998f](https://github.com/knocklabs/knock-mgmt-node/commit/4ff998f05e523c02a400496416984ed1bef0020f))
+
 ## 0.1.0 (2025-05-01)
 
 Full Changelog: [v0.1.0-rc.2...v0.1.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0-rc.2...v0.1.0)

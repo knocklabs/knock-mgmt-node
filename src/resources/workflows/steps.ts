@@ -9,6 +9,16 @@ import { path } from '../../internal/utils/path';
 export class Steps extends APIResource {
   /**
    * Generates a rendered template for a given channel step in a workflow.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.workflows.steps.previewTemplate('step_ref', {
+   *     workflow_key: 'workflow_key',
+   *     environment: 'development',
+   *     recipient: 'dnedry',
+   *   });
+   * ```
    */
   previewTemplate(
     stepRef: string,
@@ -65,18 +75,18 @@ export interface StepPreviewTemplateParams {
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  recipient: string | StepPreviewTemplateParams.UnionMember1;
+  recipient: string | StepPreviewTemplateParams.ObjectRecipientReference;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  actor?: string | StepPreviewTemplateParams.UnionMember1 | null;
+  actor?: string | StepPreviewTemplateParams.ObjectRecipientReference | null;
 
   /**
    * Body param: The data to pass to the workflow template for rendering.
    */
-  data?: Record<string, unknown>;
+  data?: { [key: string]: unknown };
 
   /**
    * Body param: The tenant to associate the workflow with.
@@ -88,18 +98,30 @@ export namespace StepPreviewTemplateParams {
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
+    /**
+     * The ID of the object.
+     */
     id: string;
 
+    /**
+     * The collection of the object.
+     */
     collection: string;
   }
 
   /**
    * An object reference.
    */
-  export interface UnionMember1 {
+  export interface ObjectRecipientReference {
+    /**
+     * The ID of the object.
+     */
     id: string;
 
+    /**
+     * The collection of the object.
+     */
     collection: string;
   }
 }
