@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 (2025-07-17)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.0...v0.2.1)
+
+### Chores
+
+* make some internal functions async ([d7cb65a](https://github.com/knocklabs/knock-mgmt-node/commit/d7cb65a98decab073f72cd21b31b57083e898366))
+* **ts:** reorder package.json imports ([121c4c8](https://github.com/knocklabs/knock-mgmt-node/commit/121c4c8c75d3fcfea3f60589c320d0920faf4e58))
+
 ## 0.2.0 (2025-07-03)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.1.0...v0.2.0)
