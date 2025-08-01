@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.4 (2025-08-01)
+
+Full Changelog: [v0.2.3...v0.2.4](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.3...v0.2.4)
+
+### Chores
+
+* **internal:** update examples ([9e8649d](https://github.com/knocklabs/knock-mgmt-node/commit/9e8649de403db23a4e350d6aca432964047bf24e))
+
 ## 0.2.3 (2025-07-30)
 
 Full Changelog: [v0.2.2...v0.2.3](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.2...v0.2.3)
