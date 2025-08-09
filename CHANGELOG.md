@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.5 (2025-08-09)
+
+Full Changelog: [v0.2.4...v0.2.5](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.4...v0.2.5)
+
+### Chores
+
+* **internal:** move publish config ([2d0559b](https://github.com/knocklabs/knock-mgmt-node/commit/2d0559b6cf1e2d4e60bd6427b052564578da6855))
+* update @stainless-api/prism-cli to v5.15.0 ([976e16d](https://github.com/knocklabs/knock-mgmt-node/commit/976e16d29e8acc4a54afcf763f98116142fa25f5))
+
 ## 0.2.4 (2025-08-01)
 
 Full Changelog: [v0.2.3...v0.2.4](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.3...v0.2.4)
