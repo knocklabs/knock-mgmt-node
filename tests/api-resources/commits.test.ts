@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource commits', () => {
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('retrieve', async () => {
     const responsePromise = client.commits.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource commits', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('list: only required params', async () => {
     const responsePromise = client.commits.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource commits', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('list: required and optional params', async () => {
     const response = await client.commits.list({
       environment: 'development',
@@ -43,7 +43,7 @@ describe('resource commits', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('commitAll: only required params', async () => {
     const responsePromise = client.commits.commitAll({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +55,7 @@ describe('resource commits', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('commitAll: required and optional params', async () => {
     const response = await client.commits.commitAll({
       environment: 'development',
@@ -63,7 +63,7 @@ describe('resource commits', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('promoteAll: only required params', async () => {
     const responsePromise = client.commits.promoteAll({ to_environment: 'to_environment' });
     const rawResponse = await responsePromise.asResponse();
@@ -75,12 +75,12 @@ describe('resource commits', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('promoteAll: required and optional params', async () => {
     const response = await client.commits.promoteAll({ to_environment: 'to_environment' });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('promoteOne', async () => {
     const responsePromise = client.commits.promoteOne('id');
     const rawResponse = await responsePromise.asResponse();
