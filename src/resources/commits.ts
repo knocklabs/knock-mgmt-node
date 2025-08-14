@@ -153,7 +153,7 @@ export namespace Commit {
     /**
      * The type of the resource object.
      */
-    type: 'email_layout' | 'workflow' | 'translation' | 'partial' | 'message_type';
+    type: 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow';
   }
 }
 
@@ -198,6 +198,19 @@ export interface CommitListParams extends EntriesCursorParams {
    * the subsequent environment (false) or commits which have been promoted (true).
    */
   promoted?: boolean;
+
+  /**
+   * Filter commits by resource identifier. Must be used together with resource_type.
+   * For most resources, this will be the resource key. In the case of translations,
+   * this will be the locale code and namespace, separated by a `/`. For example,
+   * `en/courses` or `en`.
+   */
+  resource_id?: string;
+
+  /**
+   * Filter commits by resource type. Must be used together with resource_id.
+   */
+  resource_type?: 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow';
 }
 
 export interface CommitCommitAllParams {
