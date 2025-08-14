@@ -40,6 +40,8 @@ describe('resource commits', () => {
       before: 'before',
       limit: 0,
       promoted: true,
+      resource_id: 'resource_id',
+      resource_type: 'email_layout',
     });
   });
 
