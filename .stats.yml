@@ -1,4 +1,4 @@
 configured_endpoints: 40
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/knock%2Fknock-mapi-e3ba251959cf45caea32ab451a7e848a91441902184fca8fbecc59b0e1858725.yml
-openapi_spec_hash: 2ba9e807202fd4b970436522f1c1823e
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/knock%2Fknock-mapi-5c73cadae657fdd1d9dfe6f5f73053448e5cb428dd3117f7f5cf3d657a3a70a4.yml
+openapi_spec_hash: 2399db4830e6e174ad445dc8a6dbe406
 config_hash: f9e83854b42d2264516f449568348afa

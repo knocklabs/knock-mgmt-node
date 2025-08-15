@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource workflows', () => {
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.workflows.retrieve('workflow_key', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.workflows.retrieve('workflow_key', {
       environment: 'development',
@@ -29,7 +29,7 @@ describe('resource workflows', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('list: only required params', async () => {
     const responsePromise = client.workflows.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('list: required and optional params', async () => {
     const response = await client.workflows.list({
       environment: 'development',
@@ -53,7 +53,7 @@ describe('resource workflows', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('activate: only required params', async () => {
     const responsePromise = client.workflows.activate('workflow_key', {
       environment: 'development',
@@ -68,7 +68,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('activate: required and optional params', async () => {
     const response = await client.workflows.activate('workflow_key', {
       environment: 'development',
@@ -76,7 +76,7 @@ describe('resource workflows', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('run: only required params', async () => {
     const responsePromise = client.workflows.run('workflow_key', {
       environment: 'development',
@@ -91,7 +91,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('run: required and optional params', async () => {
     const response = await client.workflows.run('workflow_key', {
       environment: 'development',
@@ -103,7 +103,7 @@ describe('resource workflows', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.workflows.upsert('workflow_key', {
       environment: 'development',
@@ -118,7 +118,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('upsert: required and optional params', async () => {
     const response = await client.workflows.upsert('workflow_key', {
       environment: 'development',
@@ -140,7 +140,7 @@ describe('resource workflows', () => {
     });
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('validate: only required params', async () => {
     const responsePromise = client.workflows.validate('workflow_key', {
       environment: 'development',
@@ -155,7 +155,7 @@ describe('resource workflows', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('validate: required and optional params', async () => {
     const response = await client.workflows.validate('workflow_key', {
       environment: 'development',

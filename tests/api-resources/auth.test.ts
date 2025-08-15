@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource auth', () => {
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('verify', async () => {
     const responsePromise = client.auth.verify();
     const rawResponse = await responsePromise.asResponse();
