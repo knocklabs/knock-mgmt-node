@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.3.0 (2025-08-20)
+
+Full Changelog: [v0.2.4...v0.3.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.4...v0.3.0)
+
+### Features
+
+* **api:** api update ([7876c12](https://github.com/knocklabs/knock-mgmt-node/commit/7876c125fb3f60ea531985378f1eabcb22035f7f))
+* **api:** api update ([dabc831](https://github.com/knocklabs/knock-mgmt-node/commit/dabc8318965cfa13c08b1d6b070e1598094c6922))
+* **mcp:** add code execution tool ([9ac0471](https://github.com/knocklabs/knock-mgmt-node/commit/9ac04717ae48af1776f5b5e9cfdf9281728b8043))
+
+
+### Chores
+
+* **deps:** update dependency @types/node to v20.17.58 ([f0c70d4](https://github.com/knocklabs/knock-mgmt-node/commit/f0c70d44b864bec8468c69e289aeca572af36bb8))
+* **internal:** codegen related update ([5d88ec4](https://github.com/knocklabs/knock-mgmt-node/commit/5d88ec4c707947813815bec07a6afb657406a8e3))
+* **internal:** formatting change ([5cfef0b](https://github.com/knocklabs/knock-mgmt-node/commit/5cfef0b3ca0645710b04ca01408cae3844b3d574))
+* **internal:** move publish config ([2d0559b](https://github.com/knocklabs/knock-mgmt-node/commit/2d0559b6cf1e2d4e60bd6427b052564578da6855))
+* **internal:** update comment in script ([ea312f8](https://github.com/knocklabs/knock-mgmt-node/commit/ea312f88d42ff30e8498d1fa62e9ddfbfb8a0cb2))
+* update @stainless-api/prism-cli to v5.15.0 ([976e16d](https://github.com/knocklabs/knock-mgmt-node/commit/976e16d29e8acc4a54afcf763f98116142fa25f5))
+
 ## 0.2.4 (2025-08-01)
 
 Full Changelog: [v0.2.3...v0.2.4](https://github.com/knocklabs/knock-mgmt-node/compare/v0.2.3...v0.2.4)

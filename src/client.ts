@@ -886,6 +886,7 @@ export class KnockMgmt {
   variables: API.Variables = new API.Variables(this);
   guides: API.Guides = new API.Guides(this);
 }
+
 KnockMgmt.Templates = Templates;
 KnockMgmt.EmailLayouts = EmailLayouts;
 KnockMgmt.Commits = Commits;
@@ -900,6 +901,7 @@ KnockMgmt.Channels = Channels;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
+
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
 

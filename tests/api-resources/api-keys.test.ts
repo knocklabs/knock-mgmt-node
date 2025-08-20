@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource apiKeys', () => {
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('exchange: only required params', async () => {
     const responsePromise = client.apiKeys.exchange({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource apiKeys', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: currently no good way to test endpoints defining callbacks, Prism mock server will fail trying to reach the provided callback url
+  // Prism doesn't support callbacks yet
   test.skip('exchange: required and optional params', async () => {
     const response = await client.apiKeys.exchange({ environment: 'development' });
   });
