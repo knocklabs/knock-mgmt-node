@@ -991,7 +991,8 @@ export interface WorkflowRunParams {
   data?: { [key: string]: unknown };
 
   /**
-   * Body param: The tenant to associate the workflow run with.
+   * Body param: The tenant to associate the workflow run with. Must not contain
+   * whitespace.
    */
   tenant?: string;
 }

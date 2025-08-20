@@ -89,7 +89,8 @@ export interface StepPreviewTemplateParams {
   data?: { [key: string]: unknown };
 
   /**
-   * Body param: The tenant to associate the workflow with.
+   * Body param: The tenant to associate the workflow with. Must not contain
+   * whitespace.
    */
   tenant?: string | null;
 }
