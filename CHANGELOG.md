@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.0 (2025-08-30)
+
+Full Changelog: [v0.3.1...v0.4.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.3.1...v0.4.0)
+
+### Features
+
+* **api:** api update ([975394e](https://github.com/knocklabs/knock-mgmt-node/commit/975394e002f5e708ba1964b980626ecee01beaf2))
+
+
+### Chores
+
+* **client:** qualify global Blob ([b27e983](https://github.com/knocklabs/knock-mgmt-node/commit/b27e983343740f102d3008409a07c8fdbd2c9d16))
+* **internal:** update global Error reference ([b349655](https://github.com/knocklabs/knock-mgmt-node/commit/b349655e655582a86588551023f4bc599dc04f0a))
+* update CI script ([c6687e5](https://github.com/knocklabs/knock-mgmt-node/commit/c6687e5074753d5321b60a60315a401545962956))
+
 ## 0.3.1 (2025-08-21)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.3.0...v0.3.1)
