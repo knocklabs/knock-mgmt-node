@@ -70,7 +70,6 @@ import {
   Guide,
   GuideActivateParams,
   GuideActivateResponse,
-  GuideActivationLocationRule,
   GuideListParams,
   GuideRetrieveParams,
   GuideStep,
@@ -1058,7 +1057,6 @@ export declare namespace KnockMgmt {
   export {
     Guides as Guides,
     type Guide as Guide,
-    type GuideActivationLocationRule as GuideActivationLocationRule,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideUpsertResponse as GuideUpsertResponse,

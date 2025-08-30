@@ -187,10 +187,9 @@ export interface Guide {
   updated_at: string;
 
   /**
-   * A list of activation location rules that describe when the guide should be
-   * shown.
+   * A list of activation url patterns that describe when the guide should be shown.
    */
-  activation_location_rules?: Array<GuideActivationLocationRule>;
+  activation_url_patterns?: Array<Guide.ActivationURLPattern>;
 
   /**
    * The timestamp of when the guide was archived.
@@ -245,20 +244,22 @@ export interface Guide {
   valid?: boolean;
 }
 
-/**
- * A rule that controls when a guide should be shown based on the user's location
- * in the application.
- */
-export interface GuideActivationLocationRule {
+export namespace Guide {
   /**
-   * Whether to allow or block the guide at the specified pathname.
+   * A rule that controls when a guide should be shown based on the user's location
+   * in the application.
    */
-  directive: 'allow' | 'block';
+  export interface ActivationURLPattern {
+    /**
+     * Whether to allow or block the guide at the specified pathname.
+     */
+    directive: 'allow' | 'block';
 
-  /**
-   * The URL pathname pattern to match against. Must be a valid URI path.
-   */
-  pathname: string;
+    /**
+     * The URL pathname pattern to match against. Must be a valid URI path.
+     */
+    pathname: string;
+  }
 }
 
 /**
@@ -453,10 +454,9 @@ export namespace GuideUpsertParams {
     steps: Array<GuidesAPI.GuideStep>;
 
     /**
-     * A list of activation location rules that describe when the guide should be
-     * shown.
+     * A list of activation url patterns that describe when the guide should be shown.
      */
-    activation_location_rules?: Array<GuidesAPI.GuideActivationLocationRule>;
+    activation_url_patterns?: Array<Guide.ActivationURLPattern>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -484,6 +484,24 @@ export namespace GuideUpsertParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
+  }
+
+  export namespace Guide {
+    /**
+     * A rule that controls when a guide should be shown based on the user's location
+     * in the application.
+     */
+    export interface ActivationURLPattern {
+      /**
+       * Whether to allow or block the guide at the specified pathname.
+       */
+      directive: 'allow' | 'block';
+
+      /**
+       * The URL pathname pattern to match against. Must be a valid URI path.
+       */
+      pathname: string;
+    }
   }
 }
 
@@ -520,10 +538,9 @@ export namespace GuideValidateParams {
     steps: Array<GuidesAPI.GuideStep>;
 
     /**
-     * A list of activation location rules that describe when the guide should be
-     * shown.
+     * A list of activation url patterns that describe when the guide should be shown.
      */
-    activation_location_rules?: Array<GuidesAPI.GuideActivationLocationRule>;
+    activation_url_patterns?: Array<Guide.ActivationURLPattern>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -552,12 +569,29 @@ export namespace GuideValidateParams {
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
   }
+
+  export namespace Guide {
+    /**
+     * A rule that controls when a guide should be shown based on the user's location
+     * in the application.
+     */
+    export interface ActivationURLPattern {
+      /**
+       * Whether to allow or block the guide at the specified pathname.
+       */
+      directive: 'allow' | 'block';
+
+      /**
+       * The URL pathname pattern to match against. Must be a valid URI path.
+       */
+      pathname: string;
+    }
+  }
 }
 
 export declare namespace Guides {
   export {
     type Guide as Guide,
-    type GuideActivationLocationRule as GuideActivationLocationRule,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideUpsertResponse as GuideUpsertResponse,
