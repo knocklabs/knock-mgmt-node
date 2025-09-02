@@ -52,7 +52,6 @@ export {
 export {
   Guides,
   type Guide,
-  type GuideActivationLocationRule,
   type GuideStep,
   type GuideActivateResponse,
   type GuideUpsertResponse,
