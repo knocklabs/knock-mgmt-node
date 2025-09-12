@@ -6,7 +6,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Auth extends APIResource {
   /**
-   * Return information about the current service token.
+   * Return information about the current calling scope. Will either be a service
+   * token or from an OAuth context.
    *
    * @example
    * ```ts
@@ -19,14 +20,18 @@ export class Auth extends APIResource {
 }
 
 /**
- * Information about the current service token.
+ * Information about the current calling scope.
  */
 export interface AuthVerifyResponse {
   account_name: string;
 
   account_slug: string;
 
-  service_token_name: string;
+  type: 'service_token' | 'oauth_context';
+
+  service_token_name?: string | null;
+
+  user_id?: string | null;
 }
 
 export declare namespace Auth {
