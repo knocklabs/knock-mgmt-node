@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.0 (2025-09-12)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** api update ([ed02f91](https://github.com/knocklabs/knock-mgmt-node/commit/ed02f9199068c69a5349dd25416741993bf01815))
+
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([d6c572c](https://github.com/knocklabs/knock-mgmt-node/commit/d6c572ce5433bf299c09da713c8b2a3902938da3))
+
+
+### Chores
+
+* ci build action ([edf65f2](https://github.com/knocklabs/knock-mgmt-node/commit/edf65f2492434112a3205953ce596c1ed1e595a3))
+
 ## 0.4.0 (2025-08-30)
 
 Full Changelog: [v0.3.1...v0.4.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.3.1...v0.4.0)
