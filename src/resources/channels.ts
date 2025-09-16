@@ -32,6 +32,11 @@ export type ChannelsEntriesCursor = EntriesCursor<Channel>;
  */
 export interface Channel {
   /**
+   * The unique identifier for the channel.
+   */
+  id: string;
+
+  /**
    * The timestamp of when the channel was created.
    */
   created_at: string;
@@ -184,7 +189,12 @@ export interface SMSChannelSettings {
   link_tracking?: boolean;
 }
 
-export interface ChannelListParams extends EntriesCursorParams {}
+export interface ChannelListParams extends EntriesCursorParams {
+  /**
+   * A channel id to filter the results by.
+   */
+  id?: string;
+}
 
 export declare namespace Channels {
   export {
