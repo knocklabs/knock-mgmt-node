@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 (2025-09-19)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.6.0...v0.6.1)
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([1dc97a1](https://github.com/knocklabs/knock-mgmt-node/commit/1dc97a1f4a02977018134dd0de00e04e4f0f4fe5))
+
 ## 0.6.0 (2025-09-16)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.5.0...v0.6.0)
