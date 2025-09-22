@@ -107,7 +107,17 @@ describe('resource workflows', () => {
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.workflows.upsert('workflow_key', {
       environment: 'development',
-      workflow: { name: 'My Workflow', steps: [] },
+      workflow: {
+        name: 'My Workflow',
+        steps: [
+          {
+            name: 'Channel 1',
+            ref: 'channel_1',
+            template: { markdown_body: 'Hello **{{ recipient.name }}**' },
+            type: 'channel',
+          },
+        ],
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -124,7 +134,36 @@ describe('resource workflows', () => {
       environment: 'development',
       workflow: {
         name: 'My Workflow',
-        steps: [],
+        steps: [
+          {
+            name: 'Channel 1',
+            ref: 'channel_1',
+            template: {
+              markdown_body: 'Hello **{{ recipient.name }}**',
+              action_buttons: [{ action: 'https://example.com', label: 'Button 1' }],
+              action_url: '{{ vars.app_url }}',
+            },
+            type: 'channel',
+            channel_group_key: null,
+            channel_key: 'in-app-feed',
+            channel_overrides: {
+              bcc_address: null,
+              cc_address: null,
+              from_address: 'hello@example.com',
+              from_name: 'John Doe',
+              json_overrides: '{"some_override": true}',
+              link_tracking: true,
+              open_tracking: true,
+              reply_to_address: null,
+              to_address: 'hello@example.com',
+            },
+            conditions: {
+              all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+            },
+            description: 'This is a description of the channel step',
+            send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
+          },
+        ],
         categories: ['string'],
         conditions: {
           all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
@@ -144,7 +183,17 @@ describe('resource workflows', () => {
   test.skip('validate: only required params', async () => {
     const responsePromise = client.workflows.validate('workflow_key', {
       environment: 'development',
-      workflow: { name: 'My Workflow', steps: [] },
+      workflow: {
+        name: 'My Workflow',
+        steps: [
+          {
+            name: 'Channel 1',
+            ref: 'channel_1',
+            template: { markdown_body: 'Hello **{{ recipient.name }}**' },
+            type: 'channel',
+          },
+        ],
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -161,7 +210,36 @@ describe('resource workflows', () => {
       environment: 'development',
       workflow: {
         name: 'My Workflow',
-        steps: [],
+        steps: [
+          {
+            name: 'Channel 1',
+            ref: 'channel_1',
+            template: {
+              markdown_body: 'Hello **{{ recipient.name }}**',
+              action_buttons: [{ action: 'https://example.com', label: 'Button 1' }],
+              action_url: '{{ vars.app_url }}',
+            },
+            type: 'channel',
+            channel_group_key: null,
+            channel_key: 'in-app-feed',
+            channel_overrides: {
+              bcc_address: null,
+              cc_address: null,
+              from_address: 'hello@example.com',
+              from_name: 'John Doe',
+              json_overrides: '{"some_override": true}',
+              link_tracking: true,
+              open_tracking: true,
+              reply_to_address: null,
+              to_address: 'hello@example.com',
+            },
+            conditions: {
+              all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+            },
+            description: 'This is a description of the channel step',
+            send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
+          },
+        ],
         categories: ['string'],
         conditions: {
           all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
