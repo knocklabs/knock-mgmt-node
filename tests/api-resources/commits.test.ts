@@ -41,7 +41,7 @@ describe('resource commits', () => {
       limit: 0,
       promoted: true,
       resource_id: 'resource_id',
-      resource_type: 'email_layout',
+      resource_type: 'dynamic_audience',
     });
   });
 
