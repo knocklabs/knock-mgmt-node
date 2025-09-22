@@ -116,7 +116,19 @@ export class Workflows extends APIResource {
    *   'workflow_key',
    *   {
    *     environment: 'development',
-   *     workflow: { name: 'My Workflow', steps: [] },
+   *     workflow: {
+   *       name: 'My Workflow',
+   *       steps: [
+   *         {
+   *           name: 'Channel 1',
+   *           ref: 'channel_1',
+   *           template: {
+   *             markdown_body: 'Hello **{{ recipient.name }}**',
+   *           },
+   *           type: 'channel',
+   *         },
+   *       ],
+   *     },
    *   },
    * );
    * ```
@@ -146,7 +158,19 @@ export class Workflows extends APIResource {
    *   'workflow_key',
    *   {
    *     environment: 'development',
-   *     workflow: { name: 'My Workflow', steps: [] },
+   *     workflow: {
+   *       name: 'My Workflow',
+   *       steps: [
+   *         {
+   *           name: 'Channel 1',
+   *           ref: 'channel_1',
+   *           template: {
+   *             markdown_body: 'Hello **{{ recipient.name }}**',
+   *           },
+   *           type: 'channel',
+   *         },
+   *       ],
+   *     },
    *   },
    * );
    * ```
