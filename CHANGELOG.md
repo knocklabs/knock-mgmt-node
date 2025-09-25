@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.7.1 (2025-09-25)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.0...v0.7.1)
+
+### Performance Improvements
+
+* faster formatting ([439906e](https://github.com/knocklabs/knock-mgmt-node/commit/439906eb301c6a49201ba9802365ed8a0a8dde62))
+
+
+### Chores
+
+* **internal:** improve examples ([01201ff](https://github.com/knocklabs/knock-mgmt-node/commit/01201ff0e0ab19aca82df3dc88143fa2a05a8dd9))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([50c62be](https://github.com/knocklabs/knock-mgmt-node/commit/50c62bef312f762d7708a39c09a058c9291dd4a6))
+
 ## 0.7.0 (2025-09-22)
 
 Full Changelog: [v0.6.1...v0.7.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.6.1...v0.7.0)
