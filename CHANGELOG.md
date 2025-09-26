@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.2 (2025-09-26)
+
+Full Changelog: [v0.7.1...v0.7.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.1...v0.7.2)
+
+### Chores
+
+* **internal:** fix incremental formatting in some cases ([cbb7763](https://github.com/knocklabs/knock-mgmt-node/commit/cbb7763f846cbb6b4aa87f701aca9996b6bba78c))
+
 ## 0.7.1 (2025-09-25)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.0...v0.7.1)
