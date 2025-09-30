@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.3 (2025-09-29)
+
+Full Changelog: [v0.7.2...v0.7.3](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.2...v0.7.3)
+
+### Chores
+
+* **internal:** codegen related update ([550a491](https://github.com/knocklabs/knock-mgmt-node/commit/550a4910b43bdf583dffbeced850a14cefb4d9c4))
+* **internal:** ignore .eslintcache ([5c5e725](https://github.com/knocklabs/knock-mgmt-node/commit/5c5e72565a77b92050c177959d97ec9e80c3638a))
+
 ## 0.7.2 (2025-09-26)
 
 Full Changelog: [v0.7.1...v0.7.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.1...v0.7.2)
