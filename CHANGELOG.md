@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 (2025-10-02)
+
+Full Changelog: [v0.7.3...v0.8.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.3...v0.8.0)
+
+### Features
+
+* **api:** api update ([e77b9ba](https://github.com/knocklabs/knock-mgmt-node/commit/e77b9bac7ead6bddce5e36ee0276bb789e0749e3))
+* **api:** api update ([5c8a82f](https://github.com/knocklabs/knock-mgmt-node/commit/5c8a82fc96f754a5b7e380c8d3de14dcd0571053))
+
 ## 0.7.3 (2025-09-29)
 
 Full Changelog: [v0.7.2...v0.7.3](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.2...v0.7.3)
