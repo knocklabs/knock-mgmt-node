@@ -628,20 +628,20 @@ export interface RequestTemplate {
   body?: string | null;
 
   /**
-   * A list of key-value pairs for the request headers. Each object should contain
-   * key and value fields with string values.
+   * The headers of the request. Can be a template string or a list of key-value
+   * pairs.
    */
-  headers?: Array<RequestTemplate.Header>;
+  headers?: string | Array<RequestTemplate.UnionMember1>;
 
   /**
-   * A list of key-value pairs for the request query params. Each object should
-   * contain key and value fields with string values.
+   * The query params of the request. Can be a template string or a list of key-value
+   * pairs.
    */
-  query_params?: Array<RequestTemplate.QueryParam>;
+  query_params?: string | Array<RequestTemplate.UnionMember1>;
 }
 
 export namespace RequestTemplate {
-  export interface Header {
+  export interface UnionMember1 {
     /**
      * The key of the header.
      */
@@ -653,7 +653,7 @@ export namespace RequestTemplate {
     value: string;
   }
 
-  export interface QueryParam {
+  export interface UnionMember1 {
     /**
      * The key of the query param.
      */
