@@ -97,12 +97,7 @@ export interface Commit {
   /**
    * The author of the commit.
    */
-  commit_author: Commit.CommitAuthor;
-
-  /**
-   * The optional message about the commit.
-   */
-  commit_message: string;
+  author: Commit.Author;
 
   /**
    * The timestamp of when the commit was created.
@@ -120,16 +115,16 @@ export interface Commit {
   resource: Commit.Resource;
 
   /**
-   * The timestamp of when the commit was last updated.
+   * The optional message about the commit.
    */
-  updated_at: string;
+  commit_message?: string;
 }
 
 export namespace Commit {
   /**
    * The author of the commit.
    */
-  export interface CommitAuthor {
+  export interface Author {
     /**
      * The email address of the commit author.
      */
