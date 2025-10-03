@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2025-10-03)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.8.0...v0.8.1)
+
+### Chores
+
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([45ddc1c](https://github.com/knocklabs/knock-mgmt-node/commit/45ddc1c528578801215816d3f92a3bc20c24b7c6))
+
 ## 0.8.0 (2025-10-02)
 
 Full Changelog: [v0.7.3...v0.8.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.3...v0.8.0)
