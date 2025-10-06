@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.0 (2025-10-06)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** api update ([3e9268f](https://github.com/knocklabs/knock-mgmt-node/commit/3e9268fc436cfac9d8fbaf936e32ecb274b6857e))
+
+
+### Chores
+
+* **internal:** use npm pack for build uploads ([bca1476](https://github.com/knocklabs/knock-mgmt-node/commit/bca14761169f6f940cdd8cfd4ba4e38a61ebeb1d))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([45ddc1c](https://github.com/knocklabs/knock-mgmt-node/commit/45ddc1c528578801215816d3f92a3bc20c24b7c6))
+
 ## 0.8.0 (2025-10-02)
 
 Full Changelog: [v0.7.3...v0.8.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.3...v0.8.0)
