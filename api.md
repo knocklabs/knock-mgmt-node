@@ -96,6 +96,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerWorkflowStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRetrieveResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowActivateResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRunResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpsertResponse</a></code>
@@ -103,7 +104,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> Workflow</code>
+- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> WorkflowRetrieveResponse</code>
 - <code title="get /v1/workflows">client.workflows.<a href="./src/resources/workflows/workflows.ts">list</a>({ ...params }) -> WorkflowsEntriesCursor</code>
 - <code title="put /v1/workflows/{workflow_key}/activate">client.workflows.<a href="./src/resources/workflows/workflows.ts">activate</a>(workflowKey, { ...params }) -> WorkflowActivateResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/run">client.workflows.<a href="./src/resources/workflows/workflows.ts">run</a>(workflowKey, { ...params }) -> WorkflowRunResponse</code>

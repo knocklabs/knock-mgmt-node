@@ -16,6 +16,7 @@ export {
   type WorkflowStep,
   type WorkflowThrottleStep,
   type WorkflowTriggerWorkflowStep,
+  type WorkflowRetrieveResponse,
   type WorkflowActivateResponse,
   type WorkflowRunResponse,
   type WorkflowUpsertResponse,

@@ -148,14 +148,7 @@ export namespace Commit {
     /**
      * The type of the resource object.
      */
-    type:
-      | 'dynamic_audience'
-      | 'email_layout'
-      | 'guide'
-      | 'message_type'
-      | 'partial'
-      | 'translation'
-      | 'workflow';
+    type: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow';
   }
 }
 
@@ -213,7 +206,7 @@ export interface CommitListParams extends EntriesCursorParams {
    * Filter commits by resource type. Must be used together with resource_id.
    */
   resource_type?:
-    | 'dynamic_audience'
+    | 'audience'
     | 'email_layout'
     | 'guide'
     | 'message_type'
