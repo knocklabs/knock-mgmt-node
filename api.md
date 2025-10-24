@@ -90,7 +90,6 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBatchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBranchStep</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowChannelStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowDelayStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
