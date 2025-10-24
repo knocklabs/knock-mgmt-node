@@ -10,7 +10,6 @@ export {
   type Workflow,
   type WorkflowBatchStep,
   type WorkflowBranchStep,
-  type WorkflowChannelStep,
   type WorkflowDelayStep,
   type WorkflowFetchStep,
   type WorkflowStep,
