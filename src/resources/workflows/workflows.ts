@@ -120,7 +120,6 @@ export class Workflows extends APIResource {
    *       name: 'My Workflow',
    *       steps: [
    *         {
-   *           name: 'Channel 1',
    *           ref: 'channel_1',
    *           template: {
    *             markdown_body: 'Hello **{{ recipient.name }}**',
@@ -162,7 +161,6 @@ export class Workflows extends APIResource {
    *       name: 'My Workflow',
    *       steps: [
    *         {
-   *           name: 'Channel 1',
    *           ref: 'channel_1',
    *           template: {
    *             markdown_body: 'Hello **{{ recipient.name }}**',
@@ -431,17 +429,6 @@ export namespace Workflow {
  */
 export interface WorkflowBatchStep {
   /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name: string;
-
-  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -455,6 +442,17 @@ export interface WorkflowBatchStep {
    * The type of the workflow step.
    */
   type: 'batch';
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 export namespace WorkflowBatchStep {
@@ -527,17 +525,6 @@ export interface WorkflowBranchStep {
   branches: Array<WorkflowBranchStep.Branch>;
 
   /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description: string;
-
-  /**
-   * A name for the workflow step.
-   */
-  name: string;
-
-  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -546,6 +533,17 @@ export interface WorkflowBranchStep {
    * The type of step.
    */
   type: 'branch';
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 export namespace WorkflowBranchStep {
@@ -581,22 +579,6 @@ export namespace WorkflowBranchStep {
  */
 export interface WorkflowDelayStep {
   /**
-   * A group of conditions to be evaluated.
-   */
-  conditions: ConditionGroup | null;
-
-  /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name: string;
-
-  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -611,6 +593,22 @@ export interface WorkflowDelayStep {
    * The type of the workflow step.
    */
   type: 'delay';
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 export namespace WorkflowDelayStep {
@@ -638,11 +636,6 @@ export namespace WorkflowDelayStep {
  */
 export interface WorkflowFetchStep {
   /**
-   * A name for the workflow step.
-   */
-  name: string;
-
-  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -655,7 +648,7 @@ export interface WorkflowFetchStep {
   /**
    * The type of the workflow step.
    */
-  type: 'fetch';
+  type: 'http_fetch';
 
   /**
    * A group of conditions to be evaluated.
@@ -667,6 +660,11 @@ export interface WorkflowFetchStep {
    * the workflow for internal purposes.
    */
   description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 /**
@@ -694,11 +692,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowWebhookStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -731,6 +724,11 @@ export namespace WorkflowStep {
     channel_key?: string | null;
 
     /**
+     * The type of the channel step. Always `http` for webhook steps.
+     */
+    channel_type?: 'http';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -740,6 +738,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -753,11 +756,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowInAppFeedStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -794,6 +792,11 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.InAppFeedChannelSettings | null;
 
     /**
+     * The type of the channel step. Always `in_app_feed` for in-app feed steps.
+     */
+    channel_type?: 'in_app_feed';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -803,6 +806,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -816,11 +824,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowChatStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -857,6 +860,11 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.ChatChannelSettings | null;
 
     /**
+     * The type of the channel step. Always `chat` for chat steps.
+     */
+    channel_type?: 'chat';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -866,6 +874,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -879,11 +892,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowSMSStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -920,6 +928,11 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.SMSChannelSettings | null;
 
     /**
+     * The type of the channel step. Always `sms` for SMS steps.
+     */
+    channel_type?: 'sms';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -929,6 +942,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -942,11 +960,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowPushStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -983,6 +996,11 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.PushChannelSettings | null;
 
     /**
+     * The type of the channel step. Always `push` for push steps.
+     */
+    channel_type?: 'push';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -992,6 +1010,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -1005,11 +1028,6 @@ export namespace WorkflowStep {
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowEmailStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -1046,6 +1064,11 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.EmailChannelSettings | null;
 
     /**
+     * The type of the channel step. Always `email` for email steps.
+     */
+    channel_type?: 'email';
+
+    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -1055,6 +1078,11 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -1069,11 +1097,6 @@ export namespace WorkflowStep {
  * [docs](https://docs.knock.app/designing-workflows/throttle-function).
  */
 export interface WorkflowThrottleStep {
-  /**
-   * A name for the workflow step.
-   */
-  name: string;
-
   /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
@@ -1099,6 +1122,11 @@ export interface WorkflowThrottleStep {
    * the workflow for internal purposes.
    */
   description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 export namespace WorkflowThrottleStep {
@@ -1137,11 +1165,6 @@ export namespace WorkflowThrottleStep {
  */
 export interface WorkflowTriggerWorkflowStep {
   /**
-   * A name for the workflow step.
-   */
-  name: string;
-
-  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -1164,7 +1187,12 @@ export interface WorkflowTriggerWorkflowStep {
   /**
    * A description for the workflow step.
    */
-  description?: string;
+  description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
 }
 
 export namespace WorkflowTriggerWorkflowStep {

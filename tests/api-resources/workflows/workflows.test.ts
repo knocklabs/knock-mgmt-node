@@ -111,7 +111,6 @@ describe('resource workflows', () => {
         name: 'My Workflow',
         steps: [
           {
-            name: 'Channel 1',
             ref: 'channel_1',
             template: { markdown_body: 'Hello **{{ recipient.name }}**' },
             type: 'channel',
@@ -136,7 +135,6 @@ describe('resource workflows', () => {
         name: 'My Workflow',
         steps: [
           {
-            name: 'Channel 1',
             ref: 'channel_1',
             template: {
               markdown_body: 'Hello **{{ recipient.name }}**',
@@ -147,10 +145,12 @@ describe('resource workflows', () => {
             channel_group_key: null,
             channel_key: 'in-app-feed',
             channel_overrides: { link_tracking: true },
+            channel_type: 'in_app_feed',
             conditions: {
               all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
             },
             description: 'This is a description of the channel step',
+            name: 'Channel 1',
             send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
           },
         ],
@@ -177,7 +177,6 @@ describe('resource workflows', () => {
         name: 'My Workflow',
         steps: [
           {
-            name: 'Channel 1',
             ref: 'channel_1',
             template: { markdown_body: 'Hello **{{ recipient.name }}**' },
             type: 'channel',
@@ -202,7 +201,6 @@ describe('resource workflows', () => {
         name: 'My Workflow',
         steps: [
           {
-            name: 'Channel 1',
             ref: 'channel_1',
             template: {
               markdown_body: 'Hello **{{ recipient.name }}**',
@@ -213,10 +211,12 @@ describe('resource workflows', () => {
             channel_group_key: null,
             channel_key: 'in-app-feed',
             channel_overrides: { link_tracking: true },
+            channel_type: 'in_app_feed',
             conditions: {
               all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
             },
             description: 'This is a description of the channel step',
+            name: 'Channel 1',
             send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
           },
         ],
