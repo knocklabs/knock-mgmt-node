@@ -14,6 +14,7 @@ export {
   type WorkflowDelayStep,
   type WorkflowEmailStep,
   type WorkflowFetchStep,
+  type WorkflowInAppFeedStep,
   type WorkflowPushStep,
   type WorkflowSMSStep,
   type WorkflowStep,

@@ -94,6 +94,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowDelayStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowEmailStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowInAppFeedStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowPushStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowSMSStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
