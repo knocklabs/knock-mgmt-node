@@ -69,6 +69,18 @@ export class Guides extends APIResource {
   }
 
   /**
+   * Archives a given guide across all environments.
+   *
+   * @example
+   * ```ts
+   * const response = await client.guides.archive('guide_key');
+   * ```
+   */
+  archive(guideKey: string, options?: RequestOptions): APIPromise<GuideArchiveResponse> {
+    return this._client.delete(path`/v1/guides/${guideKey}`, options);
+  }
+
+  /**
    * Updates a guide of a given key, or creates a new one if it does not yet exist.
    *
    * Note: this endpoint only operates on guides in the "development" environment.
@@ -189,7 +201,7 @@ export interface Guide {
   /**
    * A list of activation url patterns that describe when the guide should be shown.
    */
-  activation_url_patterns?: Array<Guide.ActivationURLPattern>;
+  activation_url_patterns?: Array<GuideActivationURLPattern>;
 
   /**
    * The timestamp of when the guide was archived.
@@ -244,22 +256,20 @@ export interface Guide {
   valid?: boolean;
 }
 
-export namespace Guide {
+/**
+ * A rule that controls when a guide should be shown based on the user's location
+ * in the application.
+ */
+export interface GuideActivationURLPattern {
   /**
-   * A rule that controls when a guide should be shown based on the user's location
-   * in the application.
+   * Whether to allow or block the guide at the specified pathname.
    */
-  export interface ActivationURLPattern {
-    /**
-     * Whether to allow or block the guide at the specified pathname.
-     */
-    directive: 'allow' | 'block';
+  directive: 'allow' | 'block';
 
-    /**
-     * The URL pathname pattern to match against. Must be a valid URI path.
-     */
-    pathname: string;
-  }
+  /**
+   * The URL pathname pattern to match against. Must be a valid URI path.
+   */
+  pathname: string;
 }
 
 /**
@@ -308,6 +318,16 @@ export interface GuideActivateResponse {
    * and other conditions.
    */
   guide: Guide;
+}
+
+/**
+ * The response from archiving a guide.
+ */
+export interface GuideArchiveResponse {
+  /**
+   * The result of the promote operation.
+   */
+  result: string;
 }
 
 /**
@@ -456,7 +476,7 @@ export namespace GuideUpsertParams {
     /**
      * A list of activation url patterns that describe when the guide should be shown.
      */
-    activation_url_patterns?: Array<Guide.ActivationURLPattern>;
+    activation_url_patterns?: Array<GuidesAPI.GuideActivationURLPattern>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -484,24 +504,6 @@ export namespace GuideUpsertParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
-  }
-
-  export namespace Guide {
-    /**
-     * A rule that controls when a guide should be shown based on the user's location
-     * in the application.
-     */
-    export interface ActivationURLPattern {
-      /**
-       * Whether to allow or block the guide at the specified pathname.
-       */
-      directive: 'allow' | 'block';
-
-      /**
-       * The URL pathname pattern to match against. Must be a valid URI path.
-       */
-      pathname: string;
-    }
   }
 }
 
@@ -540,7 +542,7 @@ export namespace GuideValidateParams {
     /**
      * A list of activation url patterns that describe when the guide should be shown.
      */
-    activation_url_patterns?: Array<Guide.ActivationURLPattern>;
+    activation_url_patterns?: Array<GuidesAPI.GuideActivationURLPattern>;
 
     /**
      * The timestamp of when the guide was archived.
@@ -569,31 +571,15 @@ export namespace GuideValidateParams {
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
   }
-
-  export namespace Guide {
-    /**
-     * A rule that controls when a guide should be shown based on the user's location
-     * in the application.
-     */
-    export interface ActivationURLPattern {
-      /**
-       * Whether to allow or block the guide at the specified pathname.
-       */
-      directive: 'allow' | 'block';
-
-      /**
-       * The URL pathname pattern to match against. Must be a valid URI path.
-       */
-      pathname: string;
-    }
-  }
 }
 
 export declare namespace Guides {
   export {
     type Guide as Guide,
+    type GuideActivationURLPattern as GuideActivationURLPattern,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
+    type GuideArchiveResponse as GuideArchiveResponse,
     type GuideUpsertResponse as GuideUpsertResponse,
     type GuideValidateResponse as GuideValidateResponse,
     type GuidesEntriesCursor as GuidesEntriesCursor,

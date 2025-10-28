@@ -120,6 +120,7 @@ export class Workflows extends APIResource {
    *       name: 'My Workflow',
    *       steps: [
    *         {
+   *           name: 'Channel 1',
    *           ref: 'channel_1',
    *           template: {
    *             markdown_body: 'Hello **{{ recipient.name }}**',
@@ -161,6 +162,7 @@ export class Workflows extends APIResource {
    *       name: 'My Workflow',
    *       steps: [
    *         {
+   *           name: 'Channel 1',
    *           ref: 'channel_1',
    *           template: {
    *             markdown_body: 'Hello **{{ recipient.name }}**',
@@ -429,6 +431,17 @@ export namespace Workflow {
  */
 export interface WorkflowBatchStep {
   /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -442,17 +455,6 @@ export interface WorkflowBatchStep {
    * The type of the workflow step.
    */
   type: 'batch';
-
-  /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description?: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name?: string | null;
 }
 
 export namespace WorkflowBatchStep {
@@ -525,6 +527,17 @@ export interface WorkflowBranchStep {
   branches: Array<WorkflowBranchStep.Branch>;
 
   /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description: string;
+
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -533,17 +546,6 @@ export interface WorkflowBranchStep {
    * The type of step.
    */
   type: 'branch';
-
-  /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description?: string;
-
-  /**
-   * A name for the workflow step.
-   */
-  name?: string | null;
 }
 
 export namespace WorkflowBranchStep {
@@ -574,10 +576,89 @@ export namespace WorkflowBranchStep {
 }
 
 /**
+ * A chat step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowChatStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * A chat template.
+   */
+  template: TemplatesAPI.ChatTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * Chat channel settings. Only used as configuration as part of a workflow channel
+   * step.
+   */
+  channel_overrides?: ChannelsAPI.ChatChannelSettings | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
+}
+
+/**
  * A delay function step. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/delay-function).
  */
 export interface WorkflowDelayStep {
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
   /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
@@ -593,22 +674,6 @@ export interface WorkflowDelayStep {
    * The type of the workflow step.
    */
   type: 'delay';
-
-  /**
-   * A group of conditions to be evaluated.
-   */
-  conditions?: ConditionGroup | null;
-
-  /**
-   * An arbitrary string attached to a workflow step. Useful for adding notes about
-   * the workflow for internal purposes.
-   */
-  description?: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name?: string | null;
 }
 
 export namespace WorkflowDelayStep {
@@ -631,24 +696,49 @@ export namespace WorkflowDelayStep {
 }
 
 /**
- * A fetch function step. Read more in the
- * [docs](https://docs.knock.app/designing-workflows/fetch-function).
+ * An email step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
  */
-export interface WorkflowFetchStep {
+export interface WorkflowEmailStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
   /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
 
   /**
-   * A request template for a fetch function step.
+   * An email message template.
    */
-  settings: TemplatesAPI.RequestTemplate;
+  template: TemplatesAPI.EmailTemplate;
 
   /**
    * The type of the workflow step.
    */
-  type: 'http_fetch';
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * Email channel settings. Only used as configuration as part of a workflow channel
+   * step.
+   */
+  channel_overrides?: ChannelsAPI.EmailChannelSettings | null;
 
   /**
    * A group of conditions to be evaluated.
@@ -662,9 +752,173 @@ export interface WorkflowFetchStep {
   description?: string | null;
 
   /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
+}
+
+/**
+ * A fetch function step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/fetch-function).
+ */
+export interface WorkflowFetchStep {
+  /**
    * A name for the workflow step.
    */
-  name?: string | null;
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * A request template for a fetch function step.
+   */
+  settings: TemplatesAPI.RequestTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'fetch';
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+}
+
+/**
+ * A push step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowPushStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * A push notification template.
+   */
+  template: TemplatesAPI.PushTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * Push channel settings. Only used as configuration as part of a workflow channel
+   * step.
+   */
+  channel_overrides?: ChannelsAPI.PushChannelSettings | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
+}
+
+/**
+ * A SMS step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowSMSStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * An SMS template.
+   */
+  template: TemplatesAPI.SMSTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * SMS channel settings. Only used as configuration as part of a workflow channel
+   * step.
+   */
+  channel_overrides?: ChannelsAPI.SMSChannelSettings | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
 }
 
 /**
@@ -673,12 +927,12 @@ export interface WorkflowFetchStep {
  * `conditions`).
  */
 export type WorkflowStep =
-  | WorkflowStep.WorkflowWebhookStep
+  | WorkflowWebhookStep
   | WorkflowStep.WorkflowInAppFeedStep
-  | WorkflowStep.WorkflowChatStep
-  | WorkflowStep.WorkflowSMSStep
-  | WorkflowStep.WorkflowPushStep
-  | WorkflowStep.WorkflowEmailStep
+  | WorkflowChatStep
+  | WorkflowSMSStep
+  | WorkflowPushStep
+  | WorkflowEmailStep
   | WorkflowDelayStep
   | WorkflowBatchStep
   | WorkflowFetchStep
@@ -688,74 +942,15 @@ export type WorkflowStep =
 
 export namespace WorkflowStep {
   /**
-   * A webhook step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowWebhookStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * A webhook template. By default, a webhook step will use the request settings you
-     * configured in your webhook channel. You can override this as you see fit on a
-     * per-step basis.
-     */
-    template: TemplatesAPI.WebhookTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * The type of the channel step. Always `http` for webhook steps.
-     */
-    channel_type?: 'http';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
    * An in-app feed step within a workflow. Read more in the
    * [docs](https://docs.knock.app/designing-workflows/channel-step).
    */
   export interface WorkflowInAppFeedStep {
+    /**
+     * A name for the workflow step.
+     */
+    name: string;
+
     /**
      * The reference key of the workflow step. Must be unique per workflow.
      */
@@ -792,11 +987,6 @@ export namespace WorkflowStep {
     channel_overrides?: ChannelsAPI.InAppFeedChannelSettings | null;
 
     /**
-     * The type of the channel step. Always `in_app_feed` for in-app feed steps.
-     */
-    channel_type?: 'in_app_feed';
-
-    /**
      * A group of conditions to be evaluated.
      */
     conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -806,283 +996,6 @@ export namespace WorkflowStep {
      * the workflow for internal purposes.
      */
     description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * A chat step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowChatStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * A chat template.
-     */
-    template: TemplatesAPI.ChatTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * Chat channel settings. Only used as configuration as part of a workflow channel
-     * step.
-     */
-    channel_overrides?: ChannelsAPI.ChatChannelSettings | null;
-
-    /**
-     * The type of the channel step. Always `chat` for chat steps.
-     */
-    channel_type?: 'chat';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * A SMS step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowSMSStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * An SMS template.
-     */
-    template: TemplatesAPI.SMSTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * SMS channel settings. Only used as configuration as part of a workflow channel
-     * step.
-     */
-    channel_overrides?: ChannelsAPI.SMSChannelSettings | null;
-
-    /**
-     * The type of the channel step. Always `sms` for SMS steps.
-     */
-    channel_type?: 'sms';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * A push step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowPushStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * A push notification template.
-     */
-    template: TemplatesAPI.PushTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * Push channel settings. Only used as configuration as part of a workflow channel
-     * step.
-     */
-    channel_overrides?: ChannelsAPI.PushChannelSettings | null;
-
-    /**
-     * The type of the channel step. Always `push` for push steps.
-     */
-    channel_type?: 'push';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * An email step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowEmailStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * An email message template.
-     */
-    template: TemplatesAPI.EmailTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * Email channel settings. Only used as configuration as part of a workflow channel
-     * step.
-     */
-    channel_overrides?: ChannelsAPI.EmailChannelSettings | null;
-
-    /**
-     * The type of the channel step. Always `email` for email steps.
-     */
-    channel_type?: 'email';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
 
     /**
      * A list of send window objects. Must include one send window object per day of
@@ -1097,6 +1010,11 @@ export namespace WorkflowStep {
  * [docs](https://docs.knock.app/designing-workflows/throttle-function).
  */
 export interface WorkflowThrottleStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
   /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
@@ -1122,11 +1040,6 @@ export interface WorkflowThrottleStep {
    * the workflow for internal purposes.
    */
   description?: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name?: string | null;
 }
 
 export namespace WorkflowThrottleStep {
@@ -1165,6 +1078,11 @@ export namespace WorkflowThrottleStep {
  */
 export interface WorkflowTriggerWorkflowStep {
   /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
    * The reference key of the workflow step. Must be unique per workflow.
    */
   ref: string;
@@ -1187,12 +1105,7 @@ export interface WorkflowTriggerWorkflowStep {
   /**
    * A description for the workflow step.
    */
-  description?: string | null;
-
-  /**
-   * A name for the workflow step.
-   */
-  name?: string | null;
+  description?: string;
 }
 
 export namespace WorkflowTriggerWorkflowStep {
@@ -1230,6 +1143,65 @@ export namespace WorkflowTriggerWorkflowStep {
      */
     workflow_key?: string;
   }
+}
+
+/**
+ * A webhook step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowWebhookStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * A webhook template. By default, a webhook step will use the request settings you
+   * configured in your webhook channel. You can override this as you see fit on a
+   * per-step basis.
+   */
+  template: TemplatesAPI.WebhookTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
 }
 
 /**
@@ -1751,11 +1723,16 @@ export declare namespace Workflows {
     type Workflow as Workflow,
     type WorkflowBatchStep as WorkflowBatchStep,
     type WorkflowBranchStep as WorkflowBranchStep,
+    type WorkflowChatStep as WorkflowChatStep,
     type WorkflowDelayStep as WorkflowDelayStep,
+    type WorkflowEmailStep as WorkflowEmailStep,
     type WorkflowFetchStep as WorkflowFetchStep,
+    type WorkflowPushStep as WorkflowPushStep,
+    type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
+    type WorkflowWebhookStep as WorkflowWebhookStep,
     type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
     type WorkflowRunResponse as WorkflowRunResponse,
