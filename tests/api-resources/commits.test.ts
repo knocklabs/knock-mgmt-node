@@ -41,7 +41,7 @@ describe('resource commits', () => {
       limit: 0,
       promoted: true,
       resource_id: 'resource_id',
-      resource_type: 'dynamic_audience',
+      resource_type: 'audience',
     });
   });
 
@@ -62,6 +62,8 @@ describe('resource commits', () => {
     const response = await client.commits.commitAll({
       environment: 'development',
       commit_message: 'commit_message',
+      resource_id: 'resource_id',
+      resource_type: 'audience',
     });
   });
 
@@ -79,7 +81,11 @@ describe('resource commits', () => {
 
   // Prism doesn't support callbacks yet
   test.skip('promoteAll: required and optional params', async () => {
-    const response = await client.commits.promoteAll({ to_environment: 'to_environment' });
+    const response = await client.commits.promoteAll({
+      to_environment: 'to_environment',
+      resource_id: 'resource_id',
+      resource_type: 'audience',
+    });
   });
 
   // Prism doesn't support callbacks yet

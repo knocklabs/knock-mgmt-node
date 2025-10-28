@@ -50,8 +50,11 @@ export class Commits extends APIResource {
    * ```
    */
   commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
-    const { environment, commit_message } = params;
-    return this._client.put('/v1/commits', { query: { environment, commit_message }, ...options });
+    const { environment, commit_message, resource_id, resource_type } = params;
+    return this._client.put('/v1/commits', {
+      query: { environment, commit_message, resource_id, resource_type },
+      ...options,
+    });
   }
 
   /**
@@ -66,8 +69,11 @@ export class Commits extends APIResource {
    * ```
    */
   promoteAll(params: CommitPromoteAllParams, options?: RequestOptions): APIPromise<CommitPromoteAllResponse> {
-    const { to_environment } = params;
-    return this._client.put('/v1/commits/promote', { query: { to_environment }, ...options });
+    const { to_environment, resource_id, resource_type } = params;
+    return this._client.put('/v1/commits/promote', {
+      query: { to_environment, resource_id, resource_type },
+      ...options,
+    });
   }
 
   /**
@@ -148,14 +154,7 @@ export namespace Commit {
     /**
      * The type of the resource object.
      */
-    type:
-      | 'dynamic_audience'
-      | 'email_layout'
-      | 'guide'
-      | 'message_type'
-      | 'partial'
-      | 'translation'
-      | 'workflow';
+    type: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow';
   }
 }
 
@@ -210,16 +209,18 @@ export interface CommitListParams extends EntriesCursorParams {
   resource_id?: string;
 
   /**
-   * Filter commits by resource type. Must be used together with resource_id.
+   * Filter commits by resource type(s). Accepts a single type or array of types. Can
+   * be combined with resource_id to filter for specific resources.
    */
   resource_type?:
-    | 'dynamic_audience'
+    | 'audience'
     | 'email_layout'
     | 'guide'
     | 'message_type'
     | 'partial'
     | 'translation'
-    | 'workflow';
+    | 'workflow'
+    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export interface CommitCommitAllParams {
@@ -232,6 +233,26 @@ export interface CommitCommitAllParams {
    * An optional message to include in a commit.
    */
   commit_message?: string;
+
+  /**
+   * Filter changes to commit by resource identifier. Must be used together with
+   * resource_type.
+   */
+  resource_id?: string;
+
+  /**
+   * Filter changes to commit by resource type(s). Accepts a single type or array of
+   * types. Can be combined with resource_id to filter for specific resources.
+   */
+  resource_type?:
+    | 'audience'
+    | 'email_layout'
+    | 'guide'
+    | 'message_type'
+    | 'partial'
+    | 'translation'
+    | 'workflow'
+    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export interface CommitPromoteAllParams {
@@ -246,6 +267,26 @@ export interface CommitPromoteAllParams {
    * Note: This must be a non-development environment.
    */
   to_environment: string;
+
+  /**
+   * Filter commits to promote by resource identifier. Must be used together with
+   * resource_type.
+   */
+  resource_id?: string;
+
+  /**
+   * Filter commits to promote by resource type(s). Accepts a single type or array of
+   * types. Can be combined with resource_id to filter for specific resources.
+   */
+  resource_type?:
+    | 'audience'
+    | 'email_layout'
+    | 'guide'
+    | 'message_type'
+    | 'partial'
+    | 'translation'
+    | 'workflow'
+    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export declare namespace Commits {

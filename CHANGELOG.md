@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.9.0 (2025-10-28)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** add missing in-app feed step ([9a46683](https://github.com/knocklabs/knock-mgmt-node/commit/9a46683658a23734580f196b6dcac9a603eafdfa))
+* **api:** add new guide methods ([ce72b5c](https://github.com/knocklabs/knock-mgmt-node/commit/ce72b5c2e8f6f79a0eaf08dc6ce2c287114f370c))
+* **api:** api update ([54908bc](https://github.com/knocklabs/knock-mgmt-node/commit/54908bc1786c05991697b5b81f87803f5bc800a6))
+* **api:** api update ([ad21d1a](https://github.com/knocklabs/knock-mgmt-node/commit/ad21d1a1e8b604b40eb0df3db1194e0a6e671ec3))
+* **api:** api update ([56f081f](https://github.com/knocklabs/knock-mgmt-node/commit/56f081f8b55fcfc6937cbed2d8726aaef5890bd7))
+* **api:** api update ([df1a549](https://github.com/knocklabs/knock-mgmt-node/commit/df1a5494d2adbcbf4784a74b9598277508a2b406))
+* **api:** api update ([05cff4b](https://github.com/knocklabs/knock-mgmt-node/commit/05cff4b7c095a3030e0d4bc6d3b4ccbd674d6a18))
+* **api:** api update ([1977c93](https://github.com/knocklabs/knock-mgmt-node/commit/1977c9333c33bbf3970e024132d7131e8ee79f78))
+* **api:** api update ([3e9268f](https://github.com/knocklabs/knock-mgmt-node/commit/3e9268fc436cfac9d8fbaf936e32ecb274b6857e))
+
+
+### Chores
+
+* **internal:** use npm pack for build uploads ([bca1476](https://github.com/knocklabs/knock-mgmt-node/commit/bca14761169f6f940cdd8cfd4ba4e38a61ebeb1d))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([45ddc1c](https://github.com/knocklabs/knock-mgmt-node/commit/45ddc1c528578801215816d3f92a3bc20c24b7c6))
+
 ## 0.8.0 (2025-10-02)
 
 Full Changelog: [v0.7.3...v0.8.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.7.3...v0.8.0)

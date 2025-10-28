@@ -90,12 +90,18 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBatchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBranchStep</a></code>
-- <code><a href="./src/resources/workflows/workflows.ts">WorkflowChannelStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowChatStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowDelayStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowEmailStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowInAppFeedStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowPushStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowSMSStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerWorkflowStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowWebhookStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRetrieveResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowActivateResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRunResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpsertResponse</a></code>
@@ -103,7 +109,7 @@ Types:
 
 Methods:
 
-- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> Workflow</code>
+- <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> WorkflowRetrieveResponse</code>
 - <code title="get /v1/workflows">client.workflows.<a href="./src/resources/workflows/workflows.ts">list</a>({ ...params }) -> WorkflowsEntriesCursor</code>
 - <code title="put /v1/workflows/{workflow_key}/activate">client.workflows.<a href="./src/resources/workflows/workflows.ts">activate</a>(workflowKey, { ...params }) -> WorkflowActivateResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/run">client.workflows.<a href="./src/resources/workflows/workflows.ts">run</a>(workflowKey, { ...params }) -> WorkflowRunResponse</code>
@@ -209,8 +215,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/guides.ts">Guide</a></code>
+- <code><a href="./src/resources/guides.ts">GuideActivationURLPattern</a></code>
 - <code><a href="./src/resources/guides.ts">GuideStep</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
+- <code><a href="./src/resources/guides.ts">GuideArchiveResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideUpsertResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideValidateResponse</a></code>
 
@@ -219,5 +227,6 @@ Methods:
 - <code title="get /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">retrieve</a>(guideKey, { ...params }) -> Guide</code>
 - <code title="get /v1/guides">client.guides.<a href="./src/resources/guides.ts">list</a>({ ...params }) -> GuidesEntriesCursor</code>
 - <code title="put /v1/guides/{guide_key}/activate">client.guides.<a href="./src/resources/guides.ts">activate</a>(guideKey, { ...params }) -> GuideActivateResponse</code>
+- <code title="delete /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">archive</a>(guideKey) -> GuideArchiveResponse</code>
 - <code title="put /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">upsert</a>(guideKey, { ...params }) -> GuideUpsertResponse</code>
 - <code title="put /v1/guides/{guide_key}/validate">client.guides.<a href="./src/resources/guides.ts">validate</a>(guideKey, { ...params }) -> GuideValidateResponse</code>
