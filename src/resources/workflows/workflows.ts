@@ -796,6 +796,69 @@ export interface WorkflowFetchStep {
 }
 
 /**
+ * An in-app feed step within a workflow. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowInAppFeedStep {
+  /**
+   * A name for the workflow step.
+   */
+  name: string;
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * An in-app feed template.
+   */
+  template: TemplatesAPI.InAppFeedTemplate;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. A channel step can have either a channel key or a channel group
+   * key, but not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of the channel to which the channel step will be sending a notification.
+   * A channel step can have either a channel key or a channel group key, but not
+   * both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * In-app feed channel settings. Only used as configuration as part of a workflow
+   * channel step.
+   */
+  channel_overrides?: ChannelsAPI.InAppFeedChannelSettings | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
+}
+
+/**
  * A push step within a workflow. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/channel-step).
  */
@@ -928,7 +991,7 @@ export interface WorkflowSMSStep {
  */
 export type WorkflowStep =
   | WorkflowWebhookStep
-  | WorkflowStep.WorkflowInAppFeedStep
+  | WorkflowInAppFeedStep
   | WorkflowChatStep
   | WorkflowSMSStep
   | WorkflowPushStep
@@ -939,71 +1002,6 @@ export type WorkflowStep =
   | WorkflowThrottleStep
   | WorkflowBranchStep
   | WorkflowTriggerWorkflowStep;
-
-export namespace WorkflowStep {
-  /**
-   * An in-app feed step within a workflow. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowInAppFeedStep {
-    /**
-     * A name for the workflow step.
-     */
-    name: string;
-
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * An in-app feed template.
-     */
-    template: TemplatesAPI.InAppFeedTemplate;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. A channel step can have either a channel key or a channel group
-     * key, but not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of the channel to which the channel step will be sending a notification.
-     * A channel step can have either a channel key or a channel group key, but not
-     * both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * In-app feed channel settings. Only used as configuration as part of a workflow
-     * channel step.
-     */
-    channel_overrides?: ChannelsAPI.InAppFeedChannelSettings | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-}
 
 /**
  * A throttle function step. Read more in the
@@ -1727,6 +1725,7 @@ export declare namespace Workflows {
     type WorkflowDelayStep as WorkflowDelayStep,
     type WorkflowEmailStep as WorkflowEmailStep,
     type WorkflowFetchStep as WorkflowFetchStep,
+    type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
     type WorkflowPushStep as WorkflowPushStep,
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
