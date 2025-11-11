@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 (2025-11-11)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([39ac412](https://github.com/knocklabs/knock-mgmt-node/commit/39ac412ddac78bcdac00cd3a82947abb49d1c246))
+
 ## 0.10.0 (2025-10-28)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.9.0...v0.10.0)
