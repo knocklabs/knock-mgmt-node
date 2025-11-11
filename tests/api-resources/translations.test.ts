@@ -25,6 +25,7 @@ describe('resource translations', () => {
     const response = await client.translations.retrieve('locale_code', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       format: 'json',
       hide_uncommitted_changes: true,
       namespace: 'namespace',
@@ -50,6 +51,7 @@ describe('resource translations', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       format: 'json',
       hide_uncommitted_changes: true,
       limit: 0,
@@ -81,6 +83,7 @@ describe('resource translations', () => {
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
       format: 'json',
@@ -107,6 +110,7 @@ describe('resource translations', () => {
     const response = await client.translations.validate('locale_code', {
       environment: 'development',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
+      branch: 'feature-branch',
     });
   });
 });

@@ -30,6 +30,7 @@ describe('resource steps', () => {
       workflow_key: 'workflow_key',
       environment: 'development',
       recipient: 'dnedry',
+      branch: 'feature-branch',
       actor: 'dnedry',
       data: { park_id: 'bar' },
       tenant: 'acme-corp',

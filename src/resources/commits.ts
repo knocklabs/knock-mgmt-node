@@ -50,9 +50,9 @@ export class Commits extends APIResource {
    * ```
    */
   commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
-    const { environment, commit_message, resource_id, resource_type } = params;
+    const { environment, branch, commit_message, resource_id, resource_type } = params;
     return this._client.put('/v1/commits', {
-      query: { environment, commit_message, resource_id, resource_type },
+      query: { environment, branch, commit_message, resource_id, resource_type },
       ...options,
     });
   }
@@ -195,6 +195,12 @@ export interface CommitListParams extends EntriesCursorParams {
   environment: string;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Whether to show commits in the given environment that have not been promoted to
    * the subsequent environment (false) or commits which have been promoted (true).
    */
@@ -228,6 +234,12 @@ export interface CommitCommitAllParams {
    * The environment slug.
    */
   environment: string;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * An optional message to include in a commit.

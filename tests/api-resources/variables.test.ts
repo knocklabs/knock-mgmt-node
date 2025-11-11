@@ -26,6 +26,7 @@ describe('resource variables', () => {
       environment: 'development',
       after: 'after',
       before: 'before',
+      branch: 'feature-branch',
       limit: 0,
     });
   });
