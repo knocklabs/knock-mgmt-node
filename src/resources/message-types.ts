@@ -69,9 +69,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, annotate, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, annotate, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message },
       body,
       ...options,
     });
@@ -103,9 +103,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeValidateParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeValidateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -766,6 +766,12 @@ export interface MessageTypeRetrieveParams {
   annotate?: boolean;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
    * returned. When false, both committed and uncommitted changes will be returned.
    */
@@ -782,6 +788,12 @@ export interface MessageTypeListParams extends EntriesCursorParams {
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -805,6 +817,12 @@ export interface MessageTypeUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -866,6 +884,12 @@ export interface MessageTypeValidateParams {
    * Body param: A request to create a message type.
    */
   message_type: MessageTypeValidateParams.MessageType;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export namespace MessageTypeValidateParams {

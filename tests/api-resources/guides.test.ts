@@ -25,6 +25,7 @@ describe('resource guides', () => {
     const response = await client.guides.retrieve('guide_key', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
     });
   });
@@ -48,6 +49,7 @@ describe('resource guides', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
       limit: 0,
     });
@@ -67,7 +69,11 @@ describe('resource guides', () => {
 
   // Prism doesn't support callbacks yet
   test.skip('activate: required and optional params', async () => {
-    const response = await client.guides.activate('guide_key', { environment: 'development', status: true });
+    const response = await client.guides.activate('guide_key', {
+      environment: 'development',
+      status: true,
+      branch: 'feature-branch',
+    });
   });
 
   // Prism doesn't support callbacks yet
@@ -135,6 +141,7 @@ describe('resource guides', () => {
         },
       },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
     });
@@ -192,6 +199,7 @@ describe('resource guides', () => {
           all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
         },
       },
+      branch: 'feature-branch',
     });
   });
 });

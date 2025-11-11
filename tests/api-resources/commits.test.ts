@@ -38,6 +38,7 @@ describe('resource commits', () => {
       environment: 'development',
       after: 'after',
       before: 'before',
+      branch: 'feature-branch',
       limit: 0,
       promoted: true,
       resource_id: 'resource_id',
@@ -61,6 +62,7 @@ describe('resource commits', () => {
   test.skip('commitAll: required and optional params', async () => {
     const response = await client.commits.commitAll({
       environment: 'development',
+      branch: 'feature-branch',
       commit_message: 'commit_message',
       resource_id: 'resource_id',
       resource_type: 'audience',

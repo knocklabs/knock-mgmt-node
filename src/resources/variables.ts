@@ -65,6 +65,12 @@ export interface VariableListParams extends EntriesCursorParams {
    * The environment slug.
    */
   environment: string;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 }
 
 export declare namespace Variables {

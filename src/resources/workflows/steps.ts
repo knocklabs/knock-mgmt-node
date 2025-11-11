@@ -25,9 +25,9 @@ export class Steps extends APIResource {
     params: StepPreviewTemplateParams,
     options?: RequestOptions,
   ): APIPromise<StepPreviewTemplateResponse> {
-    const { workflow_key, environment, ...body } = params;
+    const { workflow_key, environment, branch, ...body } = params;
     return this._client.post(path`/v1/workflows/${workflow_key}/steps/${stepRef}/preview_template`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -76,6 +76,12 @@ export interface StepPreviewTemplateParams {
    * their ID (for a user), or by a reference for an object.
    */
   recipient: string | StepPreviewTemplateParams.ObjectRecipientReference;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either

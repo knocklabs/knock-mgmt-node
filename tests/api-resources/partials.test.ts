@@ -25,6 +25,7 @@ describe('resource partials', () => {
     const response = await client.partials.retrieve('partial_key', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
     });
   });
@@ -48,6 +49,7 @@ describe('resource partials', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
       limit: 0,
     });
@@ -81,6 +83,7 @@ describe('resource partials', () => {
         visual_block_enabled: false,
       },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
     });
@@ -113,6 +116,7 @@ describe('resource partials', () => {
         icon_name: 'icon_name',
         visual_block_enabled: false,
       },
+      branch: 'feature-branch',
     });
   });
 });
