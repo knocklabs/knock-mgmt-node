@@ -25,6 +25,7 @@ describe('resource workflows', () => {
     const response = await client.workflows.retrieve('workflow_key', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
     });
   });
@@ -48,6 +49,7 @@ describe('resource workflows', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
       limit: 0,
     });
@@ -73,6 +75,7 @@ describe('resource workflows', () => {
     const response = await client.workflows.activate('workflow_key', {
       environment: 'development',
       status: true,
+      branch: 'feature-branch',
     });
   });
 
@@ -96,6 +99,7 @@ describe('resource workflows', () => {
     const response = await client.workflows.run('workflow_key', {
       environment: 'development',
       recipients: ['dnedry'],
+      branch: 'feature-branch',
       actor: { id: 'project_1', collection: 'projects' },
       cancellation_key: 'cancellation_key',
       data: { park_id: 'bar' },
@@ -164,6 +168,7 @@ describe('resource workflows', () => {
         trigger_frequency: 'every_trigger',
       },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
     });
@@ -229,6 +234,7 @@ describe('resource workflows', () => {
         trigger_data_json_schema: { foo: 'bar' },
         trigger_frequency: 'every_trigger',
       },
+      branch: 'feature-branch',
     });
   });
 });

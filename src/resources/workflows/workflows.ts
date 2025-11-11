@@ -71,9 +71,9 @@ export class Workflows extends APIResource {
     params: WorkflowActivateParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowActivateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/activate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -96,9 +96,9 @@ export class Workflows extends APIResource {
     params: WorkflowRunParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowRunResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/run`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -137,9 +137,9 @@ export class Workflows extends APIResource {
     params: WorkflowUpsertParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowUpsertResponse> {
-    const { environment, annotate, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}`, {
-      query: { environment, annotate, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message },
       body,
       ...options,
     });
@@ -178,9 +178,9 @@ export class Workflows extends APIResource {
     params: WorkflowValidateParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowValidateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/validate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -1447,6 +1447,12 @@ export interface WorkflowRetrieveParams {
   annotate?: boolean;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
    * returned. When false, both committed and uncommitted changes will be returned.
    */
@@ -1463,6 +1469,12 @@ export interface WorkflowListParams extends EntriesCursorParams {
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -1482,6 +1494,12 @@ export interface WorkflowActivateParams {
    * default, which will activate the workflow.
    */
   status: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export interface WorkflowRunParams {
@@ -1494,6 +1512,12 @@ export interface WorkflowRunParams {
    * Body param: A list of recipients to run the workflow for.
    */
   recipients: Array<string | WorkflowRunParams.ObjectRecipientReference>;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either
@@ -1565,6 +1589,12 @@ export interface WorkflowUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -1662,6 +1692,12 @@ export interface WorkflowValidateParams {
    * Body param: A workflow request for upserting a workflow.
    */
   workflow: WorkflowValidateParams.Workflow;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export namespace WorkflowValidateParams {

@@ -74,9 +74,9 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { environment, namespace, annotate, commit, commit_message, format, ...body } = params;
+    const { environment, namespace, annotate, branch, commit, commit_message, format, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, commit, commit_message, format },
+      query: { environment, namespace, annotate, branch, commit, commit_message, format },
       body,
       ...options,
     });
@@ -107,9 +107,9 @@ export class Translations extends APIResource {
     params: TranslationValidateParams,
     options?: RequestOptions,
   ): APIPromise<TranslationValidateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -197,6 +197,12 @@ export interface TranslationRetrieveParams {
   annotate?: boolean;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
    * Defaults to 'json'.
    */
@@ -224,6 +230,12 @@ export interface TranslationListParams extends EntriesCursorParams {
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -269,6 +281,12 @@ export interface TranslationUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -319,6 +337,12 @@ export interface TranslationValidateParams {
    * create a translation.
    */
   translation: TranslationValidateParams.Translation;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export namespace TranslationValidateParams {

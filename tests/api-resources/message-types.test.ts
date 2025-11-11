@@ -25,6 +25,7 @@ describe('resource messageTypes', () => {
     const response = await client.messageTypes.retrieve('email', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
     });
   });
@@ -48,6 +49,7 @@ describe('resource messageTypes', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
       limit: 0,
     });
@@ -104,6 +106,7 @@ describe('resource messageTypes', () => {
         ],
       },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
     });
@@ -159,6 +162,7 @@ describe('resource messageTypes', () => {
           },
         ],
       },
+      branch: 'feature-branch',
     });
   });
 });

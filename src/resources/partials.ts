@@ -64,9 +64,9 @@ export class Partials extends APIResource {
     params: PartialUpsertParams,
     options?: RequestOptions,
   ): APIPromise<PartialUpsertResponse> {
-    const { environment, annotate, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}`, {
-      query: { environment, annotate, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message },
       body,
       ...options,
     });
@@ -97,9 +97,9 @@ export class Partials extends APIResource {
     params: PartialValidateParams,
     options?: RequestOptions,
   ): APIPromise<PartialValidateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}/validate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -203,6 +203,12 @@ export interface PartialRetrieveParams {
   annotate?: boolean;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
    * returned. When false, both committed and uncommitted changes will be returned.
    */
@@ -219,6 +225,12 @@ export interface PartialListParams extends EntriesCursorParams {
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -242,6 +254,12 @@ export interface PartialUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -304,6 +322,12 @@ export interface PartialValidateParams {
    * Body param: A partial object with attributes to update or create a partial.
    */
   partial: PartialValidateParams.Partial;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export namespace PartialValidateParams {

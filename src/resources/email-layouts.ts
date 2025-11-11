@@ -72,9 +72,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { environment, annotate, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { environment, annotate, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message },
       body,
       ...options,
     });
@@ -106,9 +106,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { environment, ...body } = params;
+    const { environment, branch, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { environment },
+      query: { environment, branch },
       body,
       ...options,
     });
@@ -213,6 +213,12 @@ export interface EmailLayoutRetrieveParams {
   annotate?: boolean;
 
   /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
+
+  /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
    * returned. When false, both committed and uncommitted changes will be returned.
    */
@@ -229,6 +235,12 @@ export interface EmailLayoutListParams extends EntriesCursorParams {
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The slug of a branch to use. This option can only be used when `environment` is
+   * `"development"`.
+   */
+  branch?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -252,6 +264,12 @@ export interface EmailLayoutUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 
   /**
    * Query param: Whether to commit the resource at the same time as modifying it.
@@ -316,6 +334,12 @@ export interface EmailLayoutValidateParams {
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutValidateParams.EmailLayout;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
 }
 
 export namespace EmailLayoutValidateParams {

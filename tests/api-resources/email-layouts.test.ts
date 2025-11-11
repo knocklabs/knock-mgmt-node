@@ -25,6 +25,7 @@ describe('resource emailLayouts', () => {
     const response = await client.emailLayouts.retrieve('email_layout_key', {
       environment: 'development',
       annotate: true,
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
     });
   });
@@ -48,6 +49,7 @@ describe('resource emailLayouts', () => {
       after: 'after',
       annotate: true,
       before: 'before',
+      branch: 'feature-branch',
       hide_uncommitted_changes: true,
       limit: 0,
     });
@@ -83,6 +85,7 @@ describe('resource emailLayouts', () => {
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
       },
       annotate: true,
+      branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
     });
@@ -117,6 +120,7 @@ describe('resource emailLayouts', () => {
         text_layout: 'Hello, world!',
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
       },
+      branch: 'feature-branch',
     });
   });
 });
