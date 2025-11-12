@@ -230,3 +230,16 @@ Methods:
 - <code title="delete /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">archive</a>(guideKey) -> GuideArchiveResponse</code>
 - <code title="put /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">upsert</a>(guideKey, { ...params }) -> GuideUpsertResponse</code>
 - <code title="put /v1/guides/{guide_key}/validate">client.guides.<a href="./src/resources/guides.ts">validate</a>(guideKey, { ...params }) -> GuideValidateResponse</code>
+
+# Branches
+
+Types:
+
+- <code><a href="./src/resources/branches.ts">Branch</a></code>
+
+Methods:
+
+- <code title="post /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">create</a>(branchSlug, { ...params }) -> Branch</code>
+- <code title="get /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">retrieve</a>(branchSlug, { ...params }) -> Branch</code>
+- <code title="get /v1/branches">client.branches.<a href="./src/resources/branches.ts">list</a>({ ...params }) -> BranchesEntriesCursor</code>
+- <code title="delete /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">delete</a>(branchSlug, { ...params }) -> void</code>

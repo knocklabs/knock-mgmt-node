@@ -4,6 +4,15 @@ export * from './shared';
 export { APIKeys, type APIKeyExchangeResponse, type APIKeyExchangeParams } from './api-keys';
 export { Auth, type AuthVerifyResponse } from './auth';
 export {
+  Branches,
+  type Branch,
+  type BranchCreateParams,
+  type BranchRetrieveParams,
+  type BranchListParams,
+  type BranchDeleteParams,
+  type BranchesEntriesCursor,
+} from './branches';
+export {
   ChannelGroups,
   type ChannelGroup,
   type ChannelGroupRule,

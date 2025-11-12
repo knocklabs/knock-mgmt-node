@@ -22,6 +22,15 @@ import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
 import { Auth, AuthVerifyResponse } from './resources/auth';
 import {
+  Branch,
+  BranchCreateParams,
+  BranchDeleteParams,
+  BranchListParams,
+  BranchRetrieveParams,
+  Branches,
+  BranchesEntriesCursor,
+} from './resources/branches';
+import {
   ChannelGroup,
   ChannelGroupListParams,
   ChannelGroupRule,
@@ -877,6 +886,7 @@ export class KnockMgmt {
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
   guides: API.Guides = new API.Guides(this);
+  branches: API.Branches = new API.Branches(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -893,6 +903,7 @@ KnockMgmt.Channels = Channels;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
+KnockMgmt.Branches = Branches;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1068,6 +1079,16 @@ export declare namespace KnockMgmt {
     type GuideActivateParams as GuideActivateParams,
     type GuideUpsertParams as GuideUpsertParams,
     type GuideValidateParams as GuideValidateParams,
+  };
+
+  export {
+    Branches as Branches,
+    type Branch as Branch,
+    type BranchesEntriesCursor as BranchesEntriesCursor,
+    type BranchCreateParams as BranchCreateParams,
+    type BranchRetrieveParams as BranchRetrieveParams,
+    type BranchListParams as BranchListParams,
+    type BranchDeleteParams as BranchDeleteParams,
   };
 
   export type PageInfo = API.PageInfo;
