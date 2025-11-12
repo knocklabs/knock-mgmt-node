@@ -13,6 +13,22 @@ export {
   type BranchesEntriesCursor,
 } from './branches';
 export {
+  Broadcasts,
+  type Broadcast,
+  type BroadcastRequest,
+  type BroadcastCancelResponse,
+  type BroadcastSendResponse,
+  type BroadcastUpsertResponse,
+  type BroadcastValidateResponse,
+  type BroadcastRetrieveParams,
+  type BroadcastListParams,
+  type BroadcastCancelParams,
+  type BroadcastSendParams,
+  type BroadcastUpsertParams,
+  type BroadcastValidateParams,
+  type BroadcastsEntriesCursor,
+} from './broadcasts';
+export {
   ChannelGroups,
   type ChannelGroup,
   type ChannelGroupRule,

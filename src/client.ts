@@ -31,6 +31,22 @@ import {
   BranchesEntriesCursor,
 } from './resources/branches';
 import {
+  Broadcast,
+  BroadcastCancelParams,
+  BroadcastCancelResponse,
+  BroadcastListParams,
+  BroadcastRequest,
+  BroadcastRetrieveParams,
+  BroadcastSendParams,
+  BroadcastSendResponse,
+  BroadcastUpsertParams,
+  BroadcastUpsertResponse,
+  BroadcastValidateParams,
+  BroadcastValidateResponse,
+  Broadcasts,
+  BroadcastsEntriesCursor,
+} from './resources/broadcasts';
+import {
   ChannelGroup,
   ChannelGroupListParams,
   ChannelGroupRule,
@@ -887,6 +903,7 @@ export class KnockMgmt {
   variables: API.Variables = new API.Variables(this);
   guides: API.Guides = new API.Guides(this);
   branches: API.Branches = new API.Branches(this);
+  broadcasts: API.Broadcasts = new API.Broadcasts(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -904,6 +921,7 @@ KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
 KnockMgmt.Branches = Branches;
+KnockMgmt.Broadcasts = Broadcasts;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1089,6 +1107,23 @@ export declare namespace KnockMgmt {
     type BranchRetrieveParams as BranchRetrieveParams,
     type BranchListParams as BranchListParams,
     type BranchDeleteParams as BranchDeleteParams,
+  };
+
+  export {
+    Broadcasts as Broadcasts,
+    type Broadcast as Broadcast,
+    type BroadcastRequest as BroadcastRequest,
+    type BroadcastCancelResponse as BroadcastCancelResponse,
+    type BroadcastSendResponse as BroadcastSendResponse,
+    type BroadcastUpsertResponse as BroadcastUpsertResponse,
+    type BroadcastValidateResponse as BroadcastValidateResponse,
+    type BroadcastsEntriesCursor as BroadcastsEntriesCursor,
+    type BroadcastRetrieveParams as BroadcastRetrieveParams,
+    type BroadcastListParams as BroadcastListParams,
+    type BroadcastCancelParams as BroadcastCancelParams,
+    type BroadcastSendParams as BroadcastSendParams,
+    type BroadcastUpsertParams as BroadcastUpsertParams,
+    type BroadcastValidateParams as BroadcastValidateParams,
   };
 
   export type PageInfo = API.PageInfo;

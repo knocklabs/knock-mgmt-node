@@ -69,9 +69,9 @@ export class Commits extends APIResource {
    * ```
    */
   promoteAll(params: CommitPromoteAllParams, options?: RequestOptions): APIPromise<CommitPromoteAllResponse> {
-    const { to_environment, resource_id, resource_type } = params;
+    const { to_environment, branch, resource_id, resource_type } = params;
     return this._client.put('/v1/commits/promote', {
-      query: { to_environment, resource_id, resource_type },
+      query: { to_environment, branch, resource_id, resource_type },
       ...options,
     });
   }
@@ -276,9 +276,15 @@ export interface CommitPromoteAllParams {
    * “production” (in that order), setting this param to “production” will promote
    * all commits not currently in production from staging.
    *
-   * Note: This must be a non-development environment.
+   * When this param is set to `"development"`, the `"branch"` param must be
+   * provided.
    */
   to_environment: string;
+
+  /**
+   * The slug of the branch to promote all changes from.
+   */
+  branch?: string;
 
   /**
    * Filter commits to promote by resource identifier. Must be used together with

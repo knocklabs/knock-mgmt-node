@@ -243,3 +243,23 @@ Methods:
 - <code title="get /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">retrieve</a>(branchSlug, { ...params }) -> Branch</code>
 - <code title="get /v1/branches">client.branches.<a href="./src/resources/branches.ts">list</a>({ ...params }) -> BranchesEntriesCursor</code>
 - <code title="delete /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">delete</a>(branchSlug, { ...params }) -> void</code>
+
+# Broadcasts
+
+Types:
+
+- <code><a href="./src/resources/broadcasts.ts">Broadcast</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastRequest</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastCancelResponse</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastSendResponse</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastUpsertResponse</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">retrieve</a>(broadcastKey, { ...params }) -> Broadcast</code>
+- <code title="get /v1/broadcasts">client.broadcasts.<a href="./src/resources/broadcasts.ts">list</a>({ ...params }) -> BroadcastsEntriesCursor</code>
+- <code title="put /v1/broadcasts/{broadcast_key}/cancel">client.broadcasts.<a href="./src/resources/broadcasts.ts">cancel</a>(broadcastKey, { ...params }) -> BroadcastCancelResponse</code>
+- <code title="put /v1/broadcasts/{broadcast_key}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastKey, { ...params }) -> BroadcastSendResponse</code>
+- <code title="put /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">upsert</a>(broadcastKey, { ...params }) -> BroadcastUpsertResponse</code>
+- <code title="put /v1/broadcasts/{broadcast_key}/validate">client.broadcasts.<a href="./src/resources/broadcasts.ts">validate</a>(broadcastKey, { ...params }) -> BroadcastValidateResponse</code>

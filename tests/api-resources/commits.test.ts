@@ -85,6 +85,7 @@ describe('resource commits', () => {
   test.skip('promoteAll: required and optional params', async () => {
     const response = await client.commits.promoteAll({
       to_environment: 'to_environment',
+      branch: 'branch',
       resource_id: 'resource_id',
       resource_type: 'audience',
     });
