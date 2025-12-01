@@ -98,6 +98,11 @@ export namespace AuthVerifyResponse {
     guides_monthly_notified_recipients_limit?: number | null;
 
     /**
+     * Whether per-tenant scope for guide messages is allowed.
+     */
+    guides_per_tenant_scope_allowed?: boolean;
+
+    /**
      * Whether Heap integration extension is available.
      */
     heap_extension_allowed?: boolean;
