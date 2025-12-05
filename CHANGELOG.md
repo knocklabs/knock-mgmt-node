@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.13.1 (2025-12-05)
+
+Full Changelog: [v0.13.0...v0.13.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.13.0...v0.13.1)
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([83e5a2d](https://github.com/knocklabs/knock-mgmt-node/commit/83e5a2d39535e82edd1249b6a8c3bd7d04695b7f))
+* **mcp:** return correct lines on typescript errors ([3ee46f6](https://github.com/knocklabs/knock-mgmt-node/commit/3ee46f62a1b8ce9b6c723228c076971961bd6924))
+
+
+### Chores
+
+* **internal:** codegen related update ([ce112d4](https://github.com/knocklabs/knock-mgmt-node/commit/ce112d4a5aef5e774b760438071059d189ab7681))
+* **internal:** codegen related update ([a205861](https://github.com/knocklabs/knock-mgmt-node/commit/a2058613252bf5d6e6e8f1f246a4cc4c545cebcd))
+
 ## 0.13.0 (2025-12-02)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.12.0...v0.13.0)
