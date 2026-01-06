@@ -87,7 +87,11 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new KnockMgmt({ logger: logger, logLevel: 'debug', serviceToken: 'My Service Token' });
+      const client = new KnockMgmt({
+        logger: logger,
+        logLevel: 'debug',
+        serviceToken: 'My Service Token',
+      });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).toHaveBeenCalled();
@@ -107,7 +111,11 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new KnockMgmt({ logger: logger, logLevel: 'info', serviceToken: 'My Service Token' });
+      const client = new KnockMgmt({
+        logger: logger,
+        logLevel: 'info',
+        serviceToken: 'My Service Token',
+      });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -157,7 +165,11 @@ describe('instantiate client', () => {
       };
 
       process.env['KNOCK_MGMT_LOG'] = 'debug';
-      const client = new KnockMgmt({ logger: logger, logLevel: 'off', serviceToken: 'My Service Token' });
+      const client = new KnockMgmt({
+        logger: logger,
+        logLevel: 'off',
+        serviceToken: 'My Service Token',
+      });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -173,7 +185,11 @@ describe('instantiate client', () => {
       };
 
       process.env['KNOCK_MGMT_LOG'] = 'not a log level';
-      const client = new KnockMgmt({ logger: logger, logLevel: 'debug', serviceToken: 'My Service Token' });
+      const client = new KnockMgmt({
+        logger: logger,
+        logLevel: 'debug',
+        serviceToken: 'My Service Token',
+      });
       expect(client.logLevel).toBe('debug');
       expect(warnMock).not.toHaveBeenCalled();
     });
@@ -552,7 +568,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMgmt({ serviceToken: 'My Service Token', timeout: 10, fetch: testFetch });
+    const client = new KnockMgmt({
+      serviceToken: 'My Service Token',
+      timeout: 10,
+      fetch: testFetch,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -582,7 +602,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new KnockMgmt({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
+    const client = new KnockMgmt({
+      serviceToken: 'My Service Token',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -606,7 +630,11 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new KnockMgmt({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
+    const client = new KnockMgmt({
+      serviceToken: 'My Service Token',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
@@ -668,7 +696,11 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new KnockMgmt({ serviceToken: 'My Service Token', fetch: testFetch, maxRetries: 4 });
+    const client = new KnockMgmt({
+      serviceToken: 'My Service Token',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
