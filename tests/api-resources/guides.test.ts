@@ -137,7 +137,13 @@ describe('resource guides', () => {
         description: 'A guide to help users get started with the application',
         target_audience_id: null,
         target_property_conditions: {
-          all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+          all: [
+            {
+              operator: 'equal_to',
+              variable: 'recipient.property',
+              argument: 'some_property',
+            },
+          ],
         },
       },
       annotate: true,
@@ -196,7 +202,13 @@ describe('resource guides', () => {
         description: 'A guide to help users get started with the application',
         target_audience_id: null,
         target_property_conditions: {
-          all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+          all: [
+            {
+              operator: 'equal_to',
+              variable: 'recipient.property',
+              argument: 'some_property',
+            },
+          ],
         },
       },
       branch: 'feature-branch',

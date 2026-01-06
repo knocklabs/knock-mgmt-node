@@ -59,7 +59,11 @@ describe('resource partials', () => {
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.partials.upsert('partial_key', {
       environment: 'development',
-      partial: { content: '<p>Hello, world!</p>', name: 'My Partial', type: 'html' },
+      partial: {
+        content: '<p>Hello, world!</p>',
+        name: 'My Partial',
+        type: 'html',
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -93,7 +97,11 @@ describe('resource partials', () => {
   test.skip('validate: only required params', async () => {
     const responsePromise = client.partials.validate('partial_key', {
       environment: 'development',
-      partial: { content: '<p>Hello, world!</p>', name: 'My Partial', type: 'html' },
+      partial: {
+        content: '<p>Hello, world!</p>',
+        name: 'My Partial',
+        type: 'html',
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
