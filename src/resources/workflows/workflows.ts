@@ -567,7 +567,8 @@ export namespace WorkflowBranchStep {
     steps?: Array<WorkflowsAPI.WorkflowStep>;
 
     /**
-     * If the workflow should halt at the end of the branch.
+     * If the workflow should halt at the end of the branch. Defaults to false if not
+     * provided.
      */
     terminates?: boolean;
   }
