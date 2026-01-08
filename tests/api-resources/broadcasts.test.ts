@@ -140,11 +140,24 @@ describe('resource broadcasts', () => {
             channel_overrides: { link_tracking: true },
             channel_type: 'in_app_feed',
             conditions: {
-              all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+              all: [
+                {
+                  operator: 'equal_to',
+                  variable: 'recipient.property',
+                  argument: 'some_property',
+                },
+              ],
             },
             description: 'This is a description of the channel step',
             name: 'Channel 1',
-            send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
+            send_windows: [
+              {
+                day: 'monday',
+                type: 'send',
+                from: '18:11:19.117Z',
+                until: '18:11:19.117Z',
+              },
+            ],
           },
         ],
         categories: ['announcement'],
@@ -202,11 +215,24 @@ describe('resource broadcasts', () => {
             channel_overrides: { link_tracking: true },
             channel_type: 'in_app_feed',
             conditions: {
-              all: [{ operator: 'equal_to', variable: 'recipient.property', argument: 'some_property' }],
+              all: [
+                {
+                  operator: 'equal_to',
+                  variable: 'recipient.property',
+                  argument: 'some_property',
+                },
+              ],
             },
             description: 'This is a description of the channel step',
             name: 'Channel 1',
-            send_windows: [{ day: 'monday', type: 'send', from: '18:11:19.117Z', until: '18:11:19.117Z' }],
+            send_windows: [
+              {
+                day: 'monday',
+                type: 'send',
+                from: '18:11:19.117Z',
+                until: '18:11:19.117Z',
+              },
+            ],
           },
         ],
         categories: ['announcement'],
