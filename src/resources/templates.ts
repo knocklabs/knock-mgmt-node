@@ -573,6 +573,12 @@ export namespace InAppFeedTemplate {
  */
 export interface PushTemplate {
   /**
+   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
+   * for the push template.
+   */
+  settings: PushTemplate.Settings;
+
+  /**
    * The body of the push notification.
    */
   text_body: string;
@@ -581,25 +587,19 @@ export interface PushTemplate {
    * The title of the push notification.
    */
   title: string;
-
-  /**
-   * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
-   * for the push template. Can be omitted.
-   */
-  settings?: PushTemplate.Settings | null;
 }
 
 export namespace PushTemplate {
   /**
    * The [settings](https://docs.knock.app/integrations/sms/settings-and-overrides)
-   * for the push template. Can be omitted.
+   * for the push template.
    */
   export interface Settings {
     /**
-     * The delivery type of the push notification. Defaults to `content`. Set as silent
-     * to send a data-only notification. When set to `data`, no body will be sent.
+     * The delivery type of the push notification. Set as silent to send a data-only
+     * notification. When set to `silent`, no body will be sent.
      */
-    delivery_type?: 'silent' | 'content';
+    delivery_type: 'silent' | 'content';
 
     /**
      * A JSON object that overrides the payload sent to the push provider.
