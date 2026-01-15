@@ -207,8 +207,14 @@ export interface Condition {
     | 'not_contains'
     | 'contains_all'
     | 'not_contains_all'
+    | 'is_timestamp_before'
+    | 'is_timestamp_after'
+    | 'is_timestamp_before_date'
+    | 'is_timestamp_after_date'
+    | 'is_timestamp_between'
     | 'empty'
     | 'not_empty'
+    | 'is_timestamp'
     | 'is_audience_member'
     | 'is_not_audience_member';
 
