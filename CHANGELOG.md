@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0 (2026-01-15)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** api update ([c96f924](https://github.com/knocklabs/knock-mgmt-node/commit/c96f9240ac07457c9b1ff552f9d8994e4c592a0c))
+
+
+### Chores
+
+* **internal:** upgrade babel, qs, js-yaml ([987eb4e](https://github.com/knocklabs/knock-mgmt-node/commit/987eb4e6494a1e8345249e2154821b6f6cf5fc6e))
+
 ## 0.15.0 (2026-01-12)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.14.0...v0.15.0)
