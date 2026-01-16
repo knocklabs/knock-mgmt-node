@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.1 (2026-01-16)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.16.0...v0.16.1)
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([b3ad0cb](https://github.com/knocklabs/knock-mgmt-node/commit/b3ad0cb9c81eabc4621fa1452e5bd1fc0b7da461))
+
 ## 0.16.0 (2026-01-15)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.15.0...v0.16.0)
