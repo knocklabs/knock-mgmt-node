@@ -258,18 +258,24 @@ export interface Guide {
 
 /**
  * A rule that controls when a guide should be shown based on the user's location
- * in the application.
+ * in the application. At least one of `pathname` or `search` must be provided.
  */
 export interface GuideActivationURLPattern {
   /**
-   * Whether to allow or block the guide at the specified pathname.
+   * Whether to allow or block the guide at the specified location.
    */
   directive: 'allow' | 'block';
 
   /**
    * The URL pathname pattern to match against. Must be a valid URI path.
    */
-  pathname: string;
+  pathname?: string;
+
+  /**
+   * The URL query string pattern to match against (without the leading '?').
+   * Supports URLPattern API syntax.
+   */
+  search?: string;
 }
 
 /**
