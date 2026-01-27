@@ -131,7 +131,13 @@ describe('resource guides', () => {
             values: { text_field: 'bar' },
           },
         ],
-        activation_url_patterns: [{ directive: 'allow', pathname: '/dashboard/*' }],
+        activation_url_patterns: [
+          {
+            directive: 'allow',
+            pathname: '/dashboard/*',
+            search: 'tab=settings',
+          },
+        ],
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
@@ -196,7 +202,13 @@ describe('resource guides', () => {
             values: { text_field: 'bar' },
           },
         ],
-        activation_url_patterns: [{ directive: 'allow', pathname: '/dashboard/*' }],
+        activation_url_patterns: [
+          {
+            directive: 'allow',
+            pathname: '/dashboard/*',
+            search: 'tab=settings',
+          },
+        ],
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
