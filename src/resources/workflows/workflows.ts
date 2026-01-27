@@ -315,7 +315,8 @@ export interface SendWindow {
 }
 
 /**
- * A workflow object.
+ * A workflow object. Read more in the
+ * [docs](https://docs.knock.app/concepts/workflows).
  */
 export interface Workflow {
   /**
@@ -395,8 +396,9 @@ export interface Workflow {
   settings?: Workflow.Settings;
 
   /**
-   * A JSON schema for the expected structure of the workflow trigger's data payload.
-   * Used to validate trigger requests. Read more in the
+   * A JSON schema for the expected structure of the workflow trigger's `data`
+   * payload (available in templates as `{{ data.field_name }}`). Used to validate
+   * trigger requests. Read more in the
    * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
    */
   trigger_data_json_schema?: { [key: string]: unknown };
@@ -602,15 +604,15 @@ export interface WorkflowChatStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -727,15 +729,15 @@ export interface WorkflowEmailStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -746,7 +748,9 @@ export interface WorkflowEmailStep {
   channel_overrides?: ChannelsAPI.EmailChannelSettings | null;
 
   /**
-   * The type of the channel step. Always `email` for email steps.
+   * The category of channel for this step. Always `email` for email steps. This
+   * identifies the type of notification (email, sms, push, etc.) while `channel_key`
+   * specifies which configured provider instance to use.
    */
   channel_type?: 'email';
 
@@ -774,7 +778,8 @@ export interface WorkflowEmailStep {
 }
 
 /**
- * A fetch function step. Read more in the
+ * A fetch function step. Retrieves data from an external source and merges it into
+ * the workflow's `data` scope for use in later steps. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/fetch-function).
  */
 export interface WorkflowFetchStep {
@@ -832,15 +837,15 @@ export interface WorkflowInAppFeedStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -900,15 +905,15 @@ export interface WorkflowPushStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -968,15 +973,15 @@ export interface WorkflowSMSStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -1174,7 +1179,8 @@ export namespace WorkflowTriggerWorkflowStep {
 }
 
 /**
- * A webhook step within a workflow. Read more in the
+ * A webhook step within a workflow to send an HTTP request to a generic channel.
+ * Read more in the
  * [docs](https://docs.knock.app/designing-workflows/channel-step).
  */
 export interface WorkflowWebhookStep {
@@ -1197,15 +1203,15 @@ export interface WorkflowWebhookStep {
 
   /**
    * The key of the channel group to which the channel step will be sending a
-   * notification. A channel step can have either a channel key or a channel group
-   * key, but not both.
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
    */
   channel_group_key?: string | null;
 
   /**
-   * The key of the channel to which the channel step will be sending a notification.
-   * A channel step can have either a channel key or a channel group key, but not
-   * both.
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
    */
   channel_key?: string | null;
 
@@ -1302,7 +1308,8 @@ export interface WorkflowRetrieveResponse {
   conditions?: ConditionGroup | null;
 
   /**
-   * User information.
+   * Information about a user within the Knock dashboard. Not to be confused with an
+   * external user (recipient) of a workflow.
    */
   created_by?: WorkflowRetrieveResponse.CreatedBy | null;
 
@@ -1323,8 +1330,9 @@ export interface WorkflowRetrieveResponse {
   settings?: WorkflowRetrieveResponse.Settings;
 
   /**
-   * A JSON schema for the expected structure of the workflow trigger's data payload.
-   * Used to validate trigger requests. Read more in the
+   * A JSON schema for the expected structure of the workflow trigger's `data`
+   * payload (available in templates as `{{ data.field_name }}`). Used to validate
+   * trigger requests. Read more in the
    * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
    */
   trigger_data_json_schema?: { [key: string]: unknown };
@@ -1338,14 +1346,16 @@ export interface WorkflowRetrieveResponse {
   trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
 
   /**
-   * User information.
+   * Information about a user within the Knock dashboard. Not to be confused with an
+   * external user (recipient) of a workflow.
    */
   updated_by?: WorkflowRetrieveResponse.UpdatedBy | null;
 }
 
 export namespace WorkflowRetrieveResponse {
   /**
-   * User information.
+   * Information about a user within the Knock dashboard. Not to be confused with an
+   * external user (recipient) of a workflow.
    */
   export interface CreatedBy {
     /**
@@ -1382,7 +1392,8 @@ export namespace WorkflowRetrieveResponse {
   }
 
   /**
-   * User information.
+   * Information about a user within the Knock dashboard. Not to be confused with an
+   * external user (recipient) of a workflow.
    */
   export interface UpdatedBy {
     /**
@@ -1407,7 +1418,8 @@ export namespace WorkflowRetrieveResponse {
  */
 export interface WorkflowActivateResponse {
   /**
-   * A workflow object.
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
    */
   workflow: Workflow;
 }
@@ -1427,7 +1439,8 @@ export interface WorkflowRunResponse {
  */
 export interface WorkflowUpsertResponse {
   /**
-   * A workflow object.
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
    */
   workflow: Workflow;
 }
@@ -1437,7 +1450,8 @@ export interface WorkflowUpsertResponse {
  */
 export interface WorkflowValidateResponse {
   /**
-   * A workflow object.
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
    */
   workflow: Workflow;
 }
@@ -1538,7 +1552,10 @@ export interface WorkflowRunParams {
   cancellation_key?: string | null;
 
   /**
-   * Body param: A map of data to be used in the workflow run.
+   * Body param: A map of data to be used in the workflow run. The structure should
+   * conform to the workflow's `trigger_data_json_schema` if one is defined.
+   * Available in templates as `{{ data.field_name }}`. See
+   * [trigger data validation docs](https://docs.knock.app/developer-tools/validating-trigger-data).
    */
   data?: { [key: string]: unknown };
 
@@ -1654,8 +1671,9 @@ export namespace WorkflowUpsertParams {
     settings?: Workflow.Settings;
 
     /**
-     * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. Read more in the
+     * A JSON schema for the expected structure of the workflow trigger's `data`
+     * payload (available in templates as `{{ data.field_name }}`). Used to validate
+     * trigger requests. Read more in the
      * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
     trigger_data_json_schema?: { [key: string]: unknown };
@@ -1746,8 +1764,9 @@ export namespace WorkflowValidateParams {
     settings?: Workflow.Settings;
 
     /**
-     * A JSON schema for the expected structure of the workflow trigger's data payload.
-     * Used to validate trigger requests. Read more in the
+     * A JSON schema for the expected structure of the workflow trigger's `data`
+     * payload (available in templates as `{{ data.field_name }}`). Used to validate
+     * trigger requests. Read more in the
      * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
      */
     trigger_data_json_schema?: { [key: string]: unknown };
