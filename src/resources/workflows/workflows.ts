@@ -209,8 +209,6 @@ export interface Condition {
     | 'not_contains_all'
     | 'is_timestamp_before'
     | 'is_timestamp_after'
-    | 'is_timestamp_before_date'
-    | 'is_timestamp_after_date'
     | 'is_timestamp_between'
     | 'empty'
     | 'not_empty'
