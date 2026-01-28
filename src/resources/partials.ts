@@ -750,36 +750,506 @@ export namespace PartialUpsertParams {
    */
   export interface Partial {
     /**
-     * The content of the partial.
+     * The partial content.
      */
     content: string;
 
     /**
-     * The name of the partial.
+     * A name for the partial. Must be at maximum 255 characters in length.
      */
     name: string;
 
     /**
-     * The type of the partial.
+     * The partial type. One of 'html', 'json', 'markdown', 'text'.
      */
     type: 'html' | 'text' | 'json' | 'markdown';
 
     /**
-     * The description of the partial.
+     * An arbitrary string attached to a partial object. Useful for adding notes about
+     * the partial for internal purposes. Maximum of 280 characters allowed.
      */
-    description?: string | null;
+    description?: string;
 
     /**
-     * The name of the icon to be used in the visual editor. Only relevant when
-     * `visual_block_enabled` is `true`.
+     * The name of the icon to be used in the visual editor.
      */
-    icon_name?: string | null;
+    icon_name?: string;
+
+    /**
+     * The field types available for the partial.
+     */
+    input_schema?: Array<
+      | Partial.MessageTypeBooleanField
+      | Partial.MessageTypeButtonField
+      | Partial.MessageTypeImageField
+      | Partial.MessageTypeMarkdownField
+      | Partial.MessageTypeMultiSelectField
+      | Partial.MessageTypeSelectField
+      | MessageTypesAPI.MessageTypeTextField
+      | Partial.MessageTypeTextareaField
+      | Partial.MessageTypeURLField
+    >;
 
     /**
      * Indicates whether the partial can be used in the visual editor. Only applies to
      * HTML partials.
      */
-    visual_block_enabled?: boolean | null;
+    visual_block_enabled?: boolean;
+  }
+
+  export namespace Partial {
+    /**
+     * A boolean field used in a message type.
+     */
+    export interface MessageTypeBooleanField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'boolean';
+
+      /**
+       * Settings for the boolean field.
+       */
+      settings?: MessageTypeBooleanField.Settings;
+    }
+
+    export namespace MessageTypeBooleanField {
+      /**
+       * Settings for the boolean field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the boolean field.
+         */
+        default?: boolean;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A button field used in a message type.
+     */
+    export interface MessageTypeButtonField {
+      /**
+       * A text field used in a message type.
+       */
+      action: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * A text field used in a message type.
+       */
+      text: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The type of the field.
+       */
+      type: 'button';
+
+      /**
+       * Settings for the button field.
+       */
+      settings?: MessageTypeButtonField.Settings;
+    }
+
+    export namespace MessageTypeButtonField {
+      /**
+       * Settings for the button field.
+       */
+      export interface Settings {
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * An image field used in a message type.
+     */
+    export interface MessageTypeImageField {
+      /**
+       * A text field used in a message type.
+       */
+      action: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * A text field used in a message type.
+       */
+      alt: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'image';
+
+      /**
+       * A URL field used in a message type.
+       */
+      url: MessageTypeImageField.URL;
+
+      /**
+       * Settings for the image field.
+       */
+      settings?: MessageTypeImageField.Settings;
+    }
+
+    export namespace MessageTypeImageField {
+      /**
+       * A URL field used in a message type.
+       */
+      export interface URL {
+        /**
+         * The unique key of the field.
+         */
+        key: string;
+
+        /**
+         * The label of the field.
+         */
+        label: string | null;
+
+        /**
+         * The type of the field.
+         */
+        type: 'url';
+
+        /**
+         * Settings for the url field.
+         */
+        settings?: URL.Settings;
+      }
+
+      export namespace URL {
+        /**
+         * Settings for the url field.
+         */
+        export interface Settings {
+          /**
+           * The default value of the URL field.
+           */
+          default?: string | null;
+
+          description?: string;
+
+          /**
+           * Whether the field is required.
+           */
+          required?: boolean;
+        }
+      }
+
+      /**
+       * Settings for the image field.
+       */
+      export interface Settings {
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A markdown field used in a message type.
+     */
+    export interface MessageTypeMarkdownField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'markdown';
+
+      /**
+       * Settings for the markdown field.
+       */
+      settings?: MessageTypeMarkdownField.Settings;
+    }
+
+    export namespace MessageTypeMarkdownField {
+      /**
+       * Settings for the markdown field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the markdown field.
+         */
+        default?: string;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A multi-select field used in a message type.
+     */
+    export interface MessageTypeMultiSelectField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * Settings for the multi_select field.
+       */
+      settings: MessageTypeMultiSelectField.Settings;
+
+      /**
+       * The type of the field.
+       */
+      type: 'multi_select';
+    }
+
+    export namespace MessageTypeMultiSelectField {
+      /**
+       * Settings for the multi_select field.
+       */
+      export interface Settings {
+        /**
+         * The default values for the multi-select field.
+         */
+        default?: Array<string> | null;
+
+        description?: string;
+
+        /**
+         * The available options for the multi-select field.
+         */
+        options?: Array<Settings.Option>;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+
+      export namespace Settings {
+        export interface Option {
+          /**
+           * The value for the option.
+           */
+          value: string;
+
+          /**
+           * The display label for the option.
+           */
+          label?: string;
+        }
+      }
+    }
+
+    /**
+     * A select field used in a message type.
+     */
+    export interface MessageTypeSelectField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * Settings for the select field.
+       */
+      settings: MessageTypeSelectField.Settings;
+
+      /**
+       * The type of the field.
+       */
+      type: 'select';
+    }
+
+    export namespace MessageTypeSelectField {
+      /**
+       * Settings for the select field.
+       */
+      export interface Settings {
+        /**
+         * The default value for the select field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        /**
+         * The available options for the select field.
+         */
+        options?: Array<Settings.Option>;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+
+      export namespace Settings {
+        export interface Option {
+          /**
+           * The value for the option.
+           */
+          value: string;
+
+          /**
+           * The display label for the option.
+           */
+          label?: string;
+        }
+      }
+    }
+
+    /**
+     * A textarea field used in a message type.
+     */
+    export interface MessageTypeTextareaField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'textarea';
+
+      /**
+       * Settings for the textarea field.
+       */
+      settings?: MessageTypeTextareaField.Settings;
+    }
+
+    export namespace MessageTypeTextareaField {
+      /**
+       * Settings for the textarea field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the textarea field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        max_length?: number;
+
+        min_length?: number;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A URL field used in a message type.
+     */
+    export interface MessageTypeURLField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'url';
+
+      /**
+       * Settings for the url field.
+       */
+      settings?: MessageTypeURLField.Settings;
+    }
+
+    export namespace MessageTypeURLField {
+      /**
+       * Settings for the url field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the URL field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
   }
 }
 
@@ -807,36 +1277,506 @@ export namespace PartialValidateParams {
    */
   export interface Partial {
     /**
-     * The content of the partial.
+     * The partial content.
      */
     content: string;
 
     /**
-     * The name of the partial.
+     * A name for the partial. Must be at maximum 255 characters in length.
      */
     name: string;
 
     /**
-     * The type of the partial.
+     * The partial type. One of 'html', 'json', 'markdown', 'text'.
      */
     type: 'html' | 'text' | 'json' | 'markdown';
 
     /**
-     * The description of the partial.
+     * An arbitrary string attached to a partial object. Useful for adding notes about
+     * the partial for internal purposes. Maximum of 280 characters allowed.
      */
-    description?: string | null;
+    description?: string;
 
     /**
-     * The name of the icon to be used in the visual editor. Only relevant when
-     * `visual_block_enabled` is `true`.
+     * The name of the icon to be used in the visual editor.
      */
-    icon_name?: string | null;
+    icon_name?: string;
+
+    /**
+     * The field types available for the partial.
+     */
+    input_schema?: Array<
+      | Partial.MessageTypeBooleanField
+      | Partial.MessageTypeButtonField
+      | Partial.MessageTypeImageField
+      | Partial.MessageTypeMarkdownField
+      | Partial.MessageTypeMultiSelectField
+      | Partial.MessageTypeSelectField
+      | MessageTypesAPI.MessageTypeTextField
+      | Partial.MessageTypeTextareaField
+      | Partial.MessageTypeURLField
+    >;
 
     /**
      * Indicates whether the partial can be used in the visual editor. Only applies to
      * HTML partials.
      */
-    visual_block_enabled?: boolean | null;
+    visual_block_enabled?: boolean;
+  }
+
+  export namespace Partial {
+    /**
+     * A boolean field used in a message type.
+     */
+    export interface MessageTypeBooleanField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'boolean';
+
+      /**
+       * Settings for the boolean field.
+       */
+      settings?: MessageTypeBooleanField.Settings;
+    }
+
+    export namespace MessageTypeBooleanField {
+      /**
+       * Settings for the boolean field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the boolean field.
+         */
+        default?: boolean;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A button field used in a message type.
+     */
+    export interface MessageTypeButtonField {
+      /**
+       * A text field used in a message type.
+       */
+      action: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * A text field used in a message type.
+       */
+      text: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The type of the field.
+       */
+      type: 'button';
+
+      /**
+       * Settings for the button field.
+       */
+      settings?: MessageTypeButtonField.Settings;
+    }
+
+    export namespace MessageTypeButtonField {
+      /**
+       * Settings for the button field.
+       */
+      export interface Settings {
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * An image field used in a message type.
+     */
+    export interface MessageTypeImageField {
+      /**
+       * A text field used in a message type.
+       */
+      action: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * A text field used in a message type.
+       */
+      alt: MessageTypesAPI.MessageTypeTextField;
+
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'image';
+
+      /**
+       * A URL field used in a message type.
+       */
+      url: MessageTypeImageField.URL;
+
+      /**
+       * Settings for the image field.
+       */
+      settings?: MessageTypeImageField.Settings;
+    }
+
+    export namespace MessageTypeImageField {
+      /**
+       * A URL field used in a message type.
+       */
+      export interface URL {
+        /**
+         * The unique key of the field.
+         */
+        key: string;
+
+        /**
+         * The label of the field.
+         */
+        label: string | null;
+
+        /**
+         * The type of the field.
+         */
+        type: 'url';
+
+        /**
+         * Settings for the url field.
+         */
+        settings?: URL.Settings;
+      }
+
+      export namespace URL {
+        /**
+         * Settings for the url field.
+         */
+        export interface Settings {
+          /**
+           * The default value of the URL field.
+           */
+          default?: string | null;
+
+          description?: string;
+
+          /**
+           * Whether the field is required.
+           */
+          required?: boolean;
+        }
+      }
+
+      /**
+       * Settings for the image field.
+       */
+      export interface Settings {
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A markdown field used in a message type.
+     */
+    export interface MessageTypeMarkdownField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'markdown';
+
+      /**
+       * Settings for the markdown field.
+       */
+      settings?: MessageTypeMarkdownField.Settings;
+    }
+
+    export namespace MessageTypeMarkdownField {
+      /**
+       * Settings for the markdown field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the markdown field.
+         */
+        default?: string;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A multi-select field used in a message type.
+     */
+    export interface MessageTypeMultiSelectField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * Settings for the multi_select field.
+       */
+      settings: MessageTypeMultiSelectField.Settings;
+
+      /**
+       * The type of the field.
+       */
+      type: 'multi_select';
+    }
+
+    export namespace MessageTypeMultiSelectField {
+      /**
+       * Settings for the multi_select field.
+       */
+      export interface Settings {
+        /**
+         * The default values for the multi-select field.
+         */
+        default?: Array<string> | null;
+
+        description?: string;
+
+        /**
+         * The available options for the multi-select field.
+         */
+        options?: Array<Settings.Option>;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+
+      export namespace Settings {
+        export interface Option {
+          /**
+           * The value for the option.
+           */
+          value: string;
+
+          /**
+           * The display label for the option.
+           */
+          label?: string;
+        }
+      }
+    }
+
+    /**
+     * A select field used in a message type.
+     */
+    export interface MessageTypeSelectField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * Settings for the select field.
+       */
+      settings: MessageTypeSelectField.Settings;
+
+      /**
+       * The type of the field.
+       */
+      type: 'select';
+    }
+
+    export namespace MessageTypeSelectField {
+      /**
+       * Settings for the select field.
+       */
+      export interface Settings {
+        /**
+         * The default value for the select field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        /**
+         * The available options for the select field.
+         */
+        options?: Array<Settings.Option>;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+
+      export namespace Settings {
+        export interface Option {
+          /**
+           * The value for the option.
+           */
+          value: string;
+
+          /**
+           * The display label for the option.
+           */
+          label?: string;
+        }
+      }
+    }
+
+    /**
+     * A textarea field used in a message type.
+     */
+    export interface MessageTypeTextareaField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'textarea';
+
+      /**
+       * Settings for the textarea field.
+       */
+      settings?: MessageTypeTextareaField.Settings;
+    }
+
+    export namespace MessageTypeTextareaField {
+      /**
+       * Settings for the textarea field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the textarea field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        max_length?: number;
+
+        min_length?: number;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A URL field used in a message type.
+     */
+    export interface MessageTypeURLField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'url';
+
+      /**
+       * Settings for the url field.
+       */
+      settings?: MessageTypeURLField.Settings;
+    }
+
+    export namespace MessageTypeURLField {
+      /**
+       * Settings for the url field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the URL field.
+         */
+        default?: string | null;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
   }
 }
 
