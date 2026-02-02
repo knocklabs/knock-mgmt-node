@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.17.0 (2026-02-02)
+
+Full Changelog: [v0.16.1...v0.17.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.16.1...v0.17.0)
+
+### Features
+
+* **api:** api update ([e0a379a](https://github.com/knocklabs/knock-mgmt-node/commit/e0a379a511eb3d7242c6eba74616116b7bcbebf6))
+* **api:** api update ([802d0bf](https://github.com/knocklabs/knock-mgmt-node/commit/802d0bfb9b42f944bd156ffb0d7bb4b750381fe8))
+* **api:** api update ([36d7e68](https://github.com/knocklabs/knock-mgmt-node/commit/36d7e685ae68c57f4ecca3a66c498da4efd16d12))
+* **api:** api update ([6757b0b](https://github.com/knocklabs/knock-mgmt-node/commit/6757b0be909d5a5c1fa831e1b1be72a45d4f9a0b))
+* **api:** api update ([e197913](https://github.com/knocklabs/knock-mgmt-node/commit/e197913f2bbd90d18fe99ab1029019fe71359aba))
+* **api:** api update ([e865718](https://github.com/knocklabs/knock-mgmt-node/commit/e865718a8daa38b02509807a797ef80934ed75f3))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([525d222](https://github.com/knocklabs/knock-mgmt-node/commit/525d22226cc9b98ca0cc933b5c5bc447271f46fb))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([ea7490a](https://github.com/knocklabs/knock-mgmt-node/commit/ea7490a0ce1bc02b20f8a0f1800995facda5e04a))
+
 ## 0.16.1 (2026-01-16)
 
 Full Changelog: [v0.16.0...v0.16.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.16.0...v0.16.1)
