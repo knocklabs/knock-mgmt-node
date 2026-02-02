@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.1 (2026-02-02)
+
+Full Changelog: [v0.17.0...v0.17.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.17.0...v0.17.1)
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([a5e4cb3](https://github.com/knocklabs/knock-mgmt-node/commit/a5e4cb3af96f550a818c0b051e120cff2ea08184))
+
 ## 0.17.0 (2026-02-02)
 
 Full Changelog: [v0.16.1...v0.17.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.16.1...v0.17.0)
