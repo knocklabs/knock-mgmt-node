@@ -1032,9 +1032,62 @@ export type WorkflowStep =
   | WorkflowDelayStep
   | WorkflowBatchStep
   | WorkflowFetchStep
+  | WorkflowStep.WorkflowUpdateDataStep
   | WorkflowThrottleStep
   | WorkflowBranchStep
   | WorkflowTriggerWorkflowStep;
+
+export namespace WorkflowStep {
+  /**
+   * An update data function step. Merges data into the workflow's `data` scope for
+   * use in subsequent steps.
+   */
+  export interface WorkflowUpdateDataStep {
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The settings for the update data step.
+     */
+    settings: WorkflowUpdateDataStep.Settings;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'update_data';
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+  }
+
+  export namespace WorkflowUpdateDataStep {
+    /**
+     * The settings for the update data step.
+     */
+    export interface Settings {
+      /**
+       * A JSON string or Liquid template that evaluates to the data to merge into the
+       * workflow's data scope.
+       */
+      data: string;
+    }
+  }
+}
 
 /**
  * A throttle function step. Read more in the
