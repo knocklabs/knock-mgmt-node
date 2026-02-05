@@ -1033,6 +1033,9 @@ export type WorkflowStep =
   | WorkflowBatchStep
   | WorkflowFetchStep
   | WorkflowStep.WorkflowUpdateDataStep
+  | WorkflowStep.WorkflowUpdateObjectStep
+  | WorkflowStep.WorkflowUpdateTenantStep
+  | WorkflowStep.WorkflowUpdateUserStep
   | WorkflowThrottleStep
   | WorkflowBranchStep
   | WorkflowTriggerWorkflowStep;
@@ -1085,6 +1088,186 @@ export namespace WorkflowStep {
        * workflow's data scope.
        */
       data: string;
+    }
+  }
+
+  /**
+   * An update object step. Updates properties of a specific object referenced in the
+   * workflow.
+   */
+  export interface WorkflowUpdateObjectStep {
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The settings for the update object step.
+     */
+    settings: WorkflowUpdateObjectStep.Settings;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'update_object';
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+  }
+
+  export namespace WorkflowUpdateObjectStep {
+    /**
+     * The settings for the update object step.
+     */
+    export interface Settings {
+      /**
+       * The global identifier (GID) of the object to update. Format:
+       * gid://Object/{collection}/{id}
+       */
+      recipient_gid: string;
+
+      /**
+       * A JSON string or Liquid template that evaluates to the properties to update on
+       * the object.
+       */
+      update_properties: string;
+    }
+  }
+
+  /**
+   * An update tenant step. Updates properties of a specific tenant referenced in the
+   * workflow.
+   */
+  export interface WorkflowUpdateTenantStep {
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The settings for the update tenant step.
+     */
+    settings: WorkflowUpdateTenantStep.Settings;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'update_tenant';
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+  }
+
+  export namespace WorkflowUpdateTenantStep {
+    /**
+     * The settings for the update tenant step.
+     */
+    export interface Settings {
+      /**
+       * The recipient mode determining how the tenant is selected. 'current' uses the
+       * workflow's current tenant. 'reference' uses a specific tenant ID.
+       */
+      recipient_mode: 'current' | 'reference';
+
+      /**
+       * A JSON string or Liquid template that evaluates to the properties to update on
+       * the tenant.
+       */
+      update_properties: string;
+
+      /**
+       * The global identifier (GID) of the tenant to update. Required when
+       * recipient_mode is 'reference'. Format: gid://Object/$tenants/{id}
+       */
+      recipient_gid?: string | null;
+    }
+  }
+
+  /**
+   * An update user step. Updates properties of a specific user referenced in the
+   * workflow.
+   */
+  export interface WorkflowUpdateUserStep {
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The settings for the update user step.
+     */
+    settings: WorkflowUpdateUserStep.Settings;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'update_user';
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+  }
+
+  export namespace WorkflowUpdateUserStep {
+    /**
+     * The settings for the update user step.
+     */
+    export interface Settings {
+      /**
+       * The recipient mode determining how the user is selected. 'current' uses the
+       * workflow's current user. 'reference' uses a specific user ID.
+       */
+      recipient_mode: 'current' | 'reference';
+
+      /**
+       * A JSON string or Liquid template that evaluates to the properties to update on
+       * the user.
+       */
+      update_properties: string;
+
+      /**
+       * The global identifier (GID) of the user to update. Required when recipient_mode
+       * is 'reference'. Format: gid://Object/$users/{id}
+       */
+      recipient_gid?: string | null;
     }
   }
 }
