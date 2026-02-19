@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource environments', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.environments.retrieve('development');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource environments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.environments.list();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource environments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

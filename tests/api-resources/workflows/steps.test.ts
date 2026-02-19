@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource steps', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('previewTemplate: only required params', async () => {
     const responsePromise = client.workflows.steps.previewTemplate('step_ref', {
       workflow_key: 'workflow_key',
@@ -24,7 +24,7 @@ describe('resource steps', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('previewTemplate: required and optional params', async () => {
     const response = await client.workflows.steps.previewTemplate('step_ref', {
       workflow_key: 'workflow_key',

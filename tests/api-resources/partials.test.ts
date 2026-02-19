@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource partials', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.partials.retrieve('partial_key', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource partials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.partials.retrieve('partial_key', {
       environment: 'development',
@@ -30,7 +30,7 @@ describe('resource partials', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.partials.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource partials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.partials.list({
       environment: 'development',
@@ -55,7 +55,7 @@ describe('resource partials', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.partials.upsert('partial_key', {
       environment: 'development',
@@ -74,7 +74,7 @@ describe('resource partials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.partials.upsert('partial_key', {
       environment: 'development',
@@ -107,7 +107,7 @@ describe('resource partials', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.partials.validate('partial_key', {
       environment: 'development',
@@ -126,7 +126,7 @@ describe('resource partials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.partials.validate('partial_key', {
       environment: 'development',

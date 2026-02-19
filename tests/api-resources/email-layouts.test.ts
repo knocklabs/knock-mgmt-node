@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource emailLayouts', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.emailLayouts.retrieve('email_layout_key', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource emailLayouts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.emailLayouts.retrieve('email_layout_key', {
       environment: 'development',
@@ -30,7 +30,7 @@ describe('resource emailLayouts', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.emailLayouts.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource emailLayouts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.emailLayouts.list({
       environment: 'development',
@@ -55,7 +55,7 @@ describe('resource emailLayouts', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.emailLayouts.upsert('email_layout_key', {
       environment: 'development',
@@ -74,7 +74,7 @@ describe('resource emailLayouts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.emailLayouts.upsert('email_layout_key', {
       environment: 'development',
@@ -91,7 +91,7 @@ describe('resource emailLayouts', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.emailLayouts.validate('email_layout_key', {
       environment: 'development',
@@ -110,7 +110,7 @@ describe('resource emailLayouts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.emailLayouts.validate('email_layout_key', {
       environment: 'development',
