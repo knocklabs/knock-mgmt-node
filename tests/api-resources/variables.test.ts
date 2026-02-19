@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource variables', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('list: only required params', async () => {
     const responsePromise = client.variables.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource variables', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('list: required and optional params', async () => {
     const response = await client.variables.list({
       environment: 'development',
