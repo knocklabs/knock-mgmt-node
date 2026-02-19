@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource branches', () => {
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.branches.create('feature-branch', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource branches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.branches.create('feature-branch', { environment: 'development' });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.branches.retrieve('feature-branch', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,12 +37,12 @@ describe('resource branches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.branches.retrieve('feature-branch', { environment: 'development' });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.branches.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource branches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.branches.list({
       environment: 'development',
@@ -64,7 +64,7 @@ describe('resource branches', () => {
     });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.branches.delete('feature-branch', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -76,7 +76,7 @@ describe('resource branches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.branches.delete('feature-branch', { environment: 'development' });
   });
