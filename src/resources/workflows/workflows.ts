@@ -1040,6 +1040,7 @@ export type WorkflowStep =
   | WorkflowStep.WorkflowUpdateUserStep
   | WorkflowThrottleStep
   | WorkflowBranchStep
+  | unknown
   | WorkflowTriggerWorkflowStep;
 
 export namespace WorkflowStep {
