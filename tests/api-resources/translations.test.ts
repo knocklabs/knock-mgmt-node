@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource translations', () => {
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.translations.retrieve('locale_code', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource translations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.translations.retrieve('locale_code', {
       environment: 'development',
@@ -32,7 +32,7 @@ describe('resource translations', () => {
     });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.translations.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource translations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.translations.list({
       environment: 'development',
@@ -60,7 +60,7 @@ describe('resource translations', () => {
     });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.translations.upsert('locale_code', {
       environment: 'development',
@@ -76,7 +76,7 @@ describe('resource translations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.translations.upsert('locale_code', {
       environment: 'development',
@@ -90,7 +90,7 @@ describe('resource translations', () => {
     });
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.translations.validate('locale_code', {
       environment: 'development',
@@ -105,7 +105,7 @@ describe('resource translations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.translations.validate('locale_code', {
       environment: 'development',

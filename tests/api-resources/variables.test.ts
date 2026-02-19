@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource variables', () => {
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.variables.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource variables', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support callbacks yet
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.variables.list({
       environment: 'development',
