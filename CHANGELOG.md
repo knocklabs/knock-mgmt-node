@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.19.0 (2026-02-19)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** api update ([803c3a7](https://github.com/knocklabs/knock-mgmt-node/commit/803c3a798ecf55b3d7de3585a7ed208b2c96b932))
+* **api:** api update ([3efb8c0](https://github.com/knocklabs/knock-mgmt-node/commit/3efb8c0db439834e0710e9e94ae26ee5f9ae6771))
+
+
+### Bug Fixes
+
+* **client:** avoid removing abort listener too early ([c471992](https://github.com/knocklabs/knock-mgmt-node/commit/c471992f82fd7062e21d44466541c2c23d52affc))
+
+
+### Chores
+
+* **client:** restructure abort controller binding ([db78676](https://github.com/knocklabs/knock-mgmt-node/commit/db7867664631043bb1423a309936ebae89d4555d))
+* **internal/client:** fix form-urlencoded requests ([0c73bc4](https://github.com/knocklabs/knock-mgmt-node/commit/0c73bc4ed78848658972f0a99fee5a5faebe3c69))
+* **internal:** avoid type checking errors with ts-reset ([e983234](https://github.com/knocklabs/knock-mgmt-node/commit/e9832348775a10b0bebcdb69961da67fed9515b0))
+* **internal:** fix pagination internals not accepting option promises ([98651ce](https://github.com/knocklabs/knock-mgmt-node/commit/98651ce0a31d7a6573a972f3717fd0b7c5b48b71))
+* **internal:** remove mock server code ([ccb1c3b](https://github.com/knocklabs/knock-mgmt-node/commit/ccb1c3b0368fee540fa7cf3c9f6bdc4374b23c49))
+* **test:** update skip reason message ([03044e2](https://github.com/knocklabs/knock-mgmt-node/commit/03044e2c03f753844731de6f21d29b960e0efd28))
+* update mock server docs ([84d7fa2](https://github.com/knocklabs/knock-mgmt-node/commit/84d7fa2edb9e85ddf8b5d2a02ea617cffca0a75d))
+
 ## 0.18.0 (2026-02-03)
 
 Full Changelog: [v0.17.1...v0.18.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.17.1...v0.18.0)
