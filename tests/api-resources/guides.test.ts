@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource guides', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.guides.retrieve('guide_key', { environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.guides.retrieve('guide_key', {
       environment: 'development',
@@ -30,7 +30,7 @@ describe('resource guides', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('list: only required params', async () => {
     const responsePromise = client.guides.list({ environment: 'development' });
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('list: required and optional params', async () => {
     const response = await client.guides.list({
       environment: 'development',
@@ -55,7 +55,7 @@ describe('resource guides', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('activate: only required params', async () => {
     const responsePromise = client.guides.activate('guide_key', { environment: 'development', status: true });
     const rawResponse = await responsePromise.asResponse();
@@ -67,7 +67,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('activate: required and optional params', async () => {
     const response = await client.guides.activate('guide_key', {
       environment: 'development',
@@ -76,7 +76,7 @@ describe('resource guides', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('archive', async () => {
     const responsePromise = client.guides.archive('guide_key');
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +88,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.guides.upsert('guide_key', {
       environment: 'development',
@@ -114,7 +114,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('upsert: required and optional params', async () => {
     const response = await client.guides.upsert('guide_key', {
       environment: 'development',
@@ -159,7 +159,7 @@ describe('resource guides', () => {
     });
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('validate: only required params', async () => {
     const responsePromise = client.guides.validate('guide_key', {
       environment: 'development',
@@ -185,7 +185,7 @@ describe('resource guides', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('validate: required and optional params', async () => {
     const response = await client.guides.validate('guide_key', {
       environment: 'development',

@@ -8,7 +8,7 @@ const client = new KnockMgmt({
 });
 
 describe('resource auth', () => {
-  // Prism doesn't support callbacks yet
+  // Mock server doesn't support callbacks yet
   test.skip('verify', async () => {
     const responsePromise = client.auth.verify();
     const rawResponse = await responsePromise.asResponse();
