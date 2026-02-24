@@ -257,6 +257,7 @@ export interface MessageTypeVariant {
     | MessageTypeVariant.MessageTypeBooleanField
     | MessageTypeVariant.MessageTypeButtonField
     | MessageTypeVariant.MessageTypeImageField
+    | MessageTypeVariant.MessageTypeJsonField
     | MessageTypeVariant.MessageTypeMarkdownField
     | MessageTypeVariant.MessageTypeMultiSelectField
     | MessageTypeVariant.MessageTypeSelectField
@@ -466,6 +467,56 @@ export namespace MessageTypeVariant {
        * Whether the field is required.
        */
       required?: boolean;
+    }
+  }
+
+  /**
+   * A JSON field used in a message type.
+   */
+  export interface MessageTypeJsonField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'json';
+
+    /**
+     * Settings for the json field.
+     */
+    settings?: MessageTypeJsonField.Settings;
+  }
+
+  export namespace MessageTypeJsonField {
+    /**
+     * Settings for the json field.
+     */
+    export interface Settings {
+      /**
+       * The default value of the JSON field.
+       */
+      default?: unknown | null;
+
+      description?: string;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+
+      /**
+       * A JSON schema used to validate the structure of the JSON provided. Must be a
+       * valid JSON schema.
+       */
+      schema?: unknown | null;
     }
   }
 

@@ -172,6 +172,7 @@ export interface Partial {
     | Partial.MessageTypeBooleanField
     | Partial.MessageTypeButtonField
     | Partial.MessageTypeImageField
+    | Partial.MessageTypeJsonField
     | Partial.MessageTypeMarkdownField
     | Partial.MessageTypeMultiSelectField
     | Partial.MessageTypeSelectField
@@ -376,6 +377,56 @@ export namespace Partial {
        * Whether the field is required.
        */
       required?: boolean;
+    }
+  }
+
+  /**
+   * A JSON field used in a message type.
+   */
+  export interface MessageTypeJsonField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'json';
+
+    /**
+     * Settings for the json field.
+     */
+    settings?: MessageTypeJsonField.Settings;
+  }
+
+  export namespace MessageTypeJsonField {
+    /**
+     * Settings for the json field.
+     */
+    export interface Settings {
+      /**
+       * The default value of the JSON field.
+       */
+      default?: unknown | null;
+
+      description?: string;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+
+      /**
+       * A JSON schema used to validate the structure of the JSON provided. Must be a
+       * valid JSON schema.
+       */
+      schema?: unknown | null;
     }
   }
 
@@ -782,6 +833,7 @@ export namespace PartialUpsertParams {
       | Partial.MessageTypeBooleanField
       | Partial.MessageTypeButtonField
       | Partial.MessageTypeImageField
+      | Partial.MessageTypeJsonField
       | Partial.MessageTypeMarkdownField
       | Partial.MessageTypeMultiSelectField
       | Partial.MessageTypeSelectField
@@ -986,6 +1038,56 @@ export namespace PartialUpsertParams {
          * Whether the field is required.
          */
         required?: boolean;
+      }
+    }
+
+    /**
+     * A JSON field used in a message type.
+     */
+    export interface MessageTypeJsonField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'json';
+
+      /**
+       * Settings for the json field.
+       */
+      settings?: MessageTypeJsonField.Settings;
+    }
+
+    export namespace MessageTypeJsonField {
+      /**
+       * Settings for the json field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the JSON field.
+         */
+        default?: unknown | null;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+
+        /**
+         * A JSON schema used to validate the structure of the JSON provided. Must be a
+         * valid JSON schema.
+         */
+        schema?: unknown | null;
       }
     }
 
@@ -1309,6 +1411,7 @@ export namespace PartialValidateParams {
       | Partial.MessageTypeBooleanField
       | Partial.MessageTypeButtonField
       | Partial.MessageTypeImageField
+      | Partial.MessageTypeJsonField
       | Partial.MessageTypeMarkdownField
       | Partial.MessageTypeMultiSelectField
       | Partial.MessageTypeSelectField
@@ -1513,6 +1616,56 @@ export namespace PartialValidateParams {
          * Whether the field is required.
          */
         required?: boolean;
+      }
+    }
+
+    /**
+     * A JSON field used in a message type.
+     */
+    export interface MessageTypeJsonField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'json';
+
+      /**
+       * Settings for the json field.
+       */
+      settings?: MessageTypeJsonField.Settings;
+    }
+
+    export namespace MessageTypeJsonField {
+      /**
+       * Settings for the json field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the JSON field.
+         */
+        default?: unknown | null;
+
+        description?: string;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+
+        /**
+         * A JSON schema used to validate the structure of the JSON provided. Must be a
+         * valid JSON schema.
+         */
+        schema?: unknown | null;
       }
     }
 
