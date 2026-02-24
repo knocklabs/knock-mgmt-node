@@ -73,6 +73,11 @@ export interface ChannelGroup {
    * The timestamp of when the channel group was last updated.
    */
   updated_at: string;
+
+  /**
+   * The timestamp of when the channel group was archived (soft deleted).
+   */
+  archived_at?: string | null;
 }
 
 /**
