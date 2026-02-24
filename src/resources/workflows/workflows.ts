@@ -1601,12 +1601,27 @@ export namespace WorkflowRetrieveResponse {
     id: string;
 
     /**
+     * The timestamp of when the user was created.
+     */
+    created_at: string;
+
+    /**
      * The user's email address.
      */
     email: string;
 
     /**
-     * The user's name.
+     * The timestamp of when the user was last updated.
+     */
+    updated_at: string;
+
+    /**
+     * The URL of the user's avatar image.
+     */
+    avatar_url?: string | null;
+
+    /**
+     * The user's display name.
      */
     name?: string | null;
   }
@@ -1639,12 +1654,27 @@ export namespace WorkflowRetrieveResponse {
     id: string;
 
     /**
+     * The timestamp of when the user was created.
+     */
+    created_at: string;
+
+    /**
      * The user's email address.
      */
     email: string;
 
     /**
-     * The user's name.
+     * The timestamp of when the user was last updated.
+     */
+    updated_at: string;
+
+    /**
+     * The URL of the user's avatar image.
+     */
+    avatar_url?: string | null;
+
+    /**
+     * The user's display name.
      */
     name?: string | null;
   }

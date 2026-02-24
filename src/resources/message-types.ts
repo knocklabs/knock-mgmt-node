@@ -233,11 +233,13 @@ export namespace MessageTypeTextField {
      */
     default?: string | null;
 
-    description?: string;
+    description?: string | null;
 
     max_length?: number;
 
     min_length?: number;
+
+    placeholder?: string | null;
 
     /**
      * Whether the field is required.
@@ -314,7 +316,9 @@ export namespace MessageTypeVariant {
        */
       default?: boolean;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -363,7 +367,9 @@ export namespace MessageTypeVariant {
      * Settings for the button field.
      */
     export interface Settings {
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -448,7 +454,9 @@ export namespace MessageTypeVariant {
          */
         default?: string | null;
 
-        description?: string;
+        description?: string | null;
+
+        placeholder?: string | null;
 
         /**
          * Whether the field is required.
@@ -461,7 +469,9 @@ export namespace MessageTypeVariant {
      * Settings for the image field.
      */
     export interface Settings {
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -505,7 +515,9 @@ export namespace MessageTypeVariant {
        */
       default?: unknown | null;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -555,7 +567,9 @@ export namespace MessageTypeVariant {
        */
       default?: string;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -599,12 +613,14 @@ export namespace MessageTypeVariant {
        */
       default?: Array<string> | null;
 
-      description?: string;
+      description?: string | null;
 
       /**
        * The available options for the multi-select field.
        */
       options?: Array<Settings.Option>;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -662,12 +678,14 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
 
       /**
        * The available options for the select field.
        */
       options?: Array<Settings.Option>;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -725,11 +743,13 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
 
       max_length?: number;
 
       min_length?: number;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -773,7 +793,9 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
