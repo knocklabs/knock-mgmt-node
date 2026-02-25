@@ -224,6 +224,7 @@ export interface Broadcast {
     | WorkflowsAPI.WorkflowEmailStep
     | WorkflowsAPI.WorkflowBranchStep
     | WorkflowsAPI.WorkflowDelayStep
+    | WorkflowsAPI.WorkflowRandomCohortStep
   >;
 
   /**
@@ -314,6 +315,7 @@ export interface BroadcastRequest {
     | WorkflowsAPI.WorkflowEmailStep
     | WorkflowsAPI.WorkflowBranchStep
     | WorkflowsAPI.WorkflowDelayStep
+    | WorkflowsAPI.WorkflowRandomCohortStep
   >;
 
   /**
