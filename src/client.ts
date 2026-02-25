@@ -50,6 +50,8 @@ import {
   ChannelGroup,
   ChannelGroupListParams,
   ChannelGroupRule,
+  ChannelGroupUpsertParams,
+  ChannelGroupUpsertResponse,
   ChannelGroups,
   ChannelGroupsEntriesCursor,
 } from './resources/channel-groups';
@@ -108,6 +110,7 @@ import {
   Guides,
   GuidesEntriesCursor,
 } from './resources/guides';
+import { Member, MemberListParams, MemberUser, Members, MembersEntriesCursor } from './resources/members';
 import {
   MessageType,
   MessageTypeListParams,
@@ -172,6 +175,7 @@ import {
   WorkflowInAppFeedStep,
   WorkflowListParams,
   WorkflowPushStep,
+  WorkflowRandomCohortStep,
   WorkflowRetrieveParams,
   WorkflowRetrieveResponse,
   WorkflowRunParams,
@@ -180,6 +184,10 @@ import {
   WorkflowStep,
   WorkflowThrottleStep,
   WorkflowTriggerWorkflowStep,
+  WorkflowUpdateDataStep,
+  WorkflowUpdateObjectStep,
+  WorkflowUpdateTenantStep,
+  WorkflowUpdateUserStep,
   WorkflowUpsertParams,
   WorkflowUpsertResponse,
   WorkflowValidateParams,
@@ -919,6 +927,7 @@ export class KnockMgmt {
   apiKeys: API.APIKeys = new API.APIKeys(this);
   channelGroups: API.ChannelGroups = new API.ChannelGroups(this);
   channels: API.Channels = new API.Channels(this);
+  members: API.Members = new API.Members(this);
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
   guides: API.Guides = new API.Guides(this);
@@ -937,6 +946,7 @@ KnockMgmt.Auth = Auth;
 KnockMgmt.APIKeys = APIKeys;
 KnockMgmt.ChannelGroups = ChannelGroups;
 KnockMgmt.Channels = Channels;
+KnockMgmt.Members = Members;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
@@ -1027,10 +1037,15 @@ export declare namespace KnockMgmt {
     type WorkflowFetchStep as WorkflowFetchStep,
     type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
     type WorkflowPushStep as WorkflowPushStep,
+    type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
+    type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
+    type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,
+    type WorkflowUpdateTenantStep as WorkflowUpdateTenantStep,
+    type WorkflowUpdateUserStep as WorkflowUpdateUserStep,
     type WorkflowWebhookStep as WorkflowWebhookStep,
     type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
@@ -1072,8 +1087,10 @@ export declare namespace KnockMgmt {
     ChannelGroups as ChannelGroups,
     type ChannelGroup as ChannelGroup,
     type ChannelGroupRule as ChannelGroupRule,
+    type ChannelGroupUpsertResponse as ChannelGroupUpsertResponse,
     type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
     type ChannelGroupListParams as ChannelGroupListParams,
+    type ChannelGroupUpsertParams as ChannelGroupUpsertParams,
   };
 
   export {
@@ -1086,6 +1103,14 @@ export declare namespace KnockMgmt {
     type SMSChannelSettings as SMSChannelSettings,
     type ChannelsEntriesCursor as ChannelsEntriesCursor,
     type ChannelListParams as ChannelListParams,
+  };
+
+  export {
+    Members as Members,
+    type Member as Member,
+    type MemberUser as MemberUser,
+    type MembersEntriesCursor as MembersEntriesCursor,
+    type MemberListParams as MemberListParams,
   };
 
   export {

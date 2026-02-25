@@ -689,17 +689,17 @@ export interface RequestTemplate {
    * The headers of the request. Can be a template string or a list of key-value
    * pairs.
    */
-  headers?: string | Array<RequestTemplate.UnionMember1>;
+  headers?: string | Array<RequestTemplate.RequestTemplateHeadersArray>;
 
   /**
    * The query params of the request. Can be a template string or a list of key-value
    * pairs.
    */
-  query_params?: string | Array<RequestTemplate.UnionMember1>;
+  query_params?: string | Array<RequestTemplate.RequestTemplateQueryParamsArray>;
 }
 
 export namespace RequestTemplate {
-  export interface UnionMember1 {
+  export interface RequestTemplateHeadersArray {
     /**
      * The key of the header.
      */
@@ -711,7 +711,7 @@ export namespace RequestTemplate {
     value: string;
   }
 
-  export interface UnionMember1 {
+  export interface RequestTemplateQueryParamsArray {
     /**
      * The key of the query param.
      */
