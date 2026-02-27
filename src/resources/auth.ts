@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Resources for managing your Knock account.
+ */
 export class Auth extends APIResource {
   /**
    * Return information about the current calling scope. Will either be a service

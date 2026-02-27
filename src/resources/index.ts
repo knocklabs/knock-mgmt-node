@@ -32,7 +32,9 @@ export {
   ChannelGroups,
   type ChannelGroup,
   type ChannelGroupRule,
+  type ChannelGroupUpsertResponse,
   type ChannelGroupListParams,
+  type ChannelGroupUpsertParams,
   type ChannelGroupsEntriesCursor,
 } from './channel-groups';
 export {
@@ -90,6 +92,13 @@ export {
   type GuideValidateParams,
   type GuidesEntriesCursor,
 } from './guides';
+export {
+  Members,
+  type Member,
+  type MemberUser,
+  type MemberListParams,
+  type MembersEntriesCursor,
+} from './members';
 export {
   MessageTypes,
   type MessageType,
@@ -152,10 +161,15 @@ export {
   type WorkflowFetchStep,
   type WorkflowInAppFeedStep,
   type WorkflowPushStep,
+  type WorkflowRandomCohortStep,
   type WorkflowSMSStep,
   type WorkflowStep,
   type WorkflowThrottleStep,
   type WorkflowTriggerWorkflowStep,
+  type WorkflowUpdateDataStep,
+  type WorkflowUpdateObjectStep,
+  type WorkflowUpdateTenantStep,
+  type WorkflowUpdateUserStep,
   type WorkflowWebhookStep,
   type WorkflowRetrieveResponse,
   type WorkflowActivateResponse,
