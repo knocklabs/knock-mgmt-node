@@ -917,20 +917,50 @@ export class KnockMgmt {
   static toFile = Uploads.toFile;
 
   templates: API.Templates = new API.Templates(this);
+  /**
+   * Email layouts wrap your email templates and provide a consistent look and feel.
+   */
   emailLayouts: API.EmailLayouts = new API.EmailLayouts(this);
+  /**
+   * Commits are versioned changes to resources.
+   */
   commits: API.Commits = new API.Commits(this);
+  /**
+   * Partials allow you to reuse content across templates.
+   */
   partials: API.Partials = new API.Partials(this);
+  /**
+   * Translations are per-locale string files that can be used in your templates.
+   */
   translations: API.Translations = new API.Translations(this);
+  /**
+   * Workflows let you express your cross-channel notification logic.
+   */
   workflows: API.Workflows = new API.Workflows(this);
+  /**
+   * A message type allows you to specify an in-app schema that defines the fields available for your in-app notifications.
+   */
   messageTypes: API.MessageTypes = new API.MessageTypes(this);
+  /**
+   * Resources for managing your Knock account.
+   */
   auth: API.Auth = new API.Auth(this);
   apiKeys: API.APIKeys = new API.APIKeys(this);
   channelGroups: API.ChannelGroups = new API.ChannelGroups(this);
   channels: API.Channels = new API.Channels(this);
   members: API.Members = new API.Members(this);
+  /**
+   * Environments are isolated instances of your account that map to your infrastructure.
+   */
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
+  /**
+   * Guides let you define in-app guides that can be displayed to users based on priority and other conditions.
+   */
   guides: API.Guides = new API.Guides(this);
+  /**
+   * Branches in Knock are a way to isolate changes to your Knock resources.
+   */
   branches: API.Branches = new API.Branches(this);
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
 }
