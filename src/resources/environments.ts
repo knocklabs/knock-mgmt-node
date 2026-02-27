@@ -6,6 +6,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Environments are isolated instances of your account that map to your infrastructure.
+ */
 export class Environments extends APIResource {
   /**
    * Returns a single environment by the `environment_slug`.

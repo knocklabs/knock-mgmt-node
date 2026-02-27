@@ -7,6 +7,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Partials allow you to reuse content across templates.
+ */
 export class Partials extends APIResource {
   /**
    * Get a partial by its key.

@@ -6,6 +6,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Translations are per-locale string files that can be used in your templates.
+ */
 export class Translations extends APIResource {
   /**
    * Retrieve a translation by its locale and namespace, in a given environment.

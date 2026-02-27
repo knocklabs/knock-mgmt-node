@@ -12,6 +12,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../../core
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Workflows let you express your cross-channel notification logic.
+ */
 export class Workflows extends APIResource {
   steps: StepsAPI.Steps = new StepsAPI.Steps(this._client);
 

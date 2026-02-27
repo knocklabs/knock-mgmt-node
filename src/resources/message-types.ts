@@ -7,6 +7,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * A message type allows you to specify an in-app schema that defines the fields available for your in-app notifications.
+ */
 export class MessageTypes extends APIResource {
   /**
    * Retrieve a message type by its key, in a given environment.
