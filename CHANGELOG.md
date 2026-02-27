@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.20.0 (2026-02-27)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** api update ([dc86246](https://github.com/knocklabs/knock-mgmt-node/commit/dc86246e2c5088220cf15cf9d13e62b513866f06))
+* **api:** api update ([7d2c051](https://github.com/knocklabs/knock-mgmt-node/commit/7d2c051a07087baf6653d6843849f9dbdb4e9bb7))
+* **api:** api update ([6934d9c](https://github.com/knocklabs/knock-mgmt-node/commit/6934d9c21115c2283572621094ef6a12b127d460))
+* **api:** api update ([f1295c2](https://github.com/knocklabs/knock-mgmt-node/commit/f1295c2220f887ce61315dd26474c9d1f7e9ba13))
+* **api:** manual updates ([4079a08](https://github.com/knocklabs/knock-mgmt-node/commit/4079a0886f8bfe1b5bfd0730c54997ff8485b02b))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([74634f4](https://github.com/knocklabs/knock-mgmt-node/commit/74634f4a238af4a43930ffe49dda81d22da59bc7))
+
+
+### Chores
+
+* **docs:** add missing descriptions ([0e30ca7](https://github.com/knocklabs/knock-mgmt-node/commit/0e30ca7798bbcd3616fe44904439eba15aa0167a))
+* **internal:** move stringifyQuery implementation to internal function ([fa3c9ed](https://github.com/knocklabs/knock-mgmt-node/commit/fa3c9ededaa43464f2146b32a171ebd297fb9e26))
+* update SDK settings ([2f27e3d](https://github.com/knocklabs/knock-mgmt-node/commit/2f27e3d68a9e6116a7b175ef98b321d8c2f7c540))
+
 ## 0.19.0 (2026-02-19)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.18.0...v0.19.0)
