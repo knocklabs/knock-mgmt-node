@@ -88,6 +88,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">Duration</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">SendWindow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowAIAgentStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBatchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBranchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowChatStep</a></code>
