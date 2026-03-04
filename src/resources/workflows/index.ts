@@ -8,6 +8,7 @@ export {
   type Duration,
   type SendWindow,
   type Workflow,
+  type WorkflowAIAgentStep,
   type WorkflowBatchStep,
   type WorkflowBranchStep,
   type WorkflowChatStep,

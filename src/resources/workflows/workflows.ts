@@ -436,6 +436,85 @@ export namespace Workflow {
 }
 
 /**
+ * An AI agent function step. Fetches data from an AI model and merges it into the
+ * workflow's `data` scope for use in later steps. Supports Liquid templating in
+ * the prompt. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/ai-agent-function).
+ */
+export interface WorkflowAIAgentStep {
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * The settings for the AI agent step.
+   */
+  settings: WorkflowAIAgentStep.Settings;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'ai_agent';
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
+}
+
+export namespace WorkflowAIAgentStep {
+  /**
+   * The settings for the AI agent step.
+   */
+  export interface Settings {
+    /**
+     * The AI model to use in `provider:model` format (e.g.
+     * `anthropic:claude-haiku-4-5`, `openai:gpt-5.2-chat-latest`). See the
+     * documentation for a list of supported models.
+     */
+    model: string;
+
+    /**
+     * The prompt template for the AI request. Supports Liquid templating.
+     */
+    request_prompt: string;
+
+    /**
+     * The type of response to expect from the AI model.
+     */
+    response_type: 'text' | 'json';
+
+    /**
+     * Whether to halt the workflow if the AI fetch fails.
+     */
+    halt_on_error?: boolean | null;
+
+    /**
+     * A JSON schema string for structured output. Required when `response_type` is
+     * `json`. Must not be set when `response_type` is `text`.
+     */
+    response_schema?: string | null;
+
+    /**
+     * Whether to enable web search for the AI request.
+     */
+    web_search_enabled?: boolean | null;
+  }
+}
+
+/**
  * A batch function step. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/batch-function).
  */
@@ -1074,7 +1153,7 @@ export type WorkflowStep =
   | WorkflowSMSStep
   | WorkflowPushStep
   | WorkflowEmailStep
-  | WorkflowStep.WorkflowAIAgentStep
+  | WorkflowAIAgentStep
   | WorkflowDelayStep
   | WorkflowBatchStep
   | WorkflowFetchStep
@@ -1086,87 +1165,6 @@ export type WorkflowStep =
   | WorkflowBranchStep
   | WorkflowRandomCohortStep
   | WorkflowTriggerWorkflowStep;
-
-export namespace WorkflowStep {
-  /**
-   * An AI agent function step. Fetches data from an AI model and merges it into the
-   * workflow's `data` scope for use in later steps. Supports Liquid templating in
-   * the prompt. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/ai-agent-function).
-   */
-  export interface WorkflowAIAgentStep {
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * The settings for the AI agent step.
-     */
-    settings: WorkflowAIAgentStep.Settings;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'ai_agent';
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-  }
-
-  export namespace WorkflowAIAgentStep {
-    /**
-     * The settings for the AI agent step.
-     */
-    export interface Settings {
-      /**
-       * The AI model to use in `provider:model` format (e.g.
-       * `anthropic:claude-haiku-4-5`, `openai:gpt-5.2-chat-latest`). See the
-       * documentation for a list of supported models.
-       */
-      model: string;
-
-      /**
-       * The prompt template for the AI request. Supports Liquid templating.
-       */
-      request_prompt: string;
-
-      /**
-       * The type of response to expect from the AI model.
-       */
-      response_type: 'text' | 'json';
-
-      /**
-       * Whether to halt the workflow if the AI fetch fails.
-       */
-      halt_on_error?: boolean | null;
-
-      /**
-       * A JSON schema string for structured output. Required when `response_type` is
-       * `json`. Must not be set when `response_type` is `text`.
-       */
-      response_schema?: string | null;
-
-      /**
-       * Whether to enable web search for the AI request.
-       */
-      web_search_enabled?: boolean | null;
-    }
-  }
-}
 
 /**
  * A throttle function step. Read more in the
@@ -2127,6 +2125,7 @@ export declare namespace Workflows {
     type Duration as Duration,
     type SendWindow as SendWindow,
     type Workflow as Workflow,
+    type WorkflowAIAgentStep as WorkflowAIAgentStep,
     type WorkflowBatchStep as WorkflowBatchStep,
     type WorkflowBranchStep as WorkflowBranchStep,
     type WorkflowChatStep as WorkflowChatStep,
