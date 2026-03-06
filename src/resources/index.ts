@@ -2,6 +2,7 @@
 
 export * from './shared';
 export { APIKeys, type APIKeyExchangeResponse, type APIKeyExchangeParams } from './api-keys';
+export { Audiences, type Audience, type DynamicAudience, type StaticAudience } from './audiences';
 export { Auth, type AuthVerifyResponse } from './auth';
 export {
   Branches,

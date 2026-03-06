@@ -286,3 +286,11 @@ Methods:
 - <code title="put /v1/broadcasts/{broadcast_key}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastKey, { ...params }) -> BroadcastSendResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">upsert</a>(broadcastKey, { ...params }) -> BroadcastUpsertResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/validate">client.broadcasts.<a href="./src/resources/broadcasts.ts">validate</a>(broadcastKey, { ...params }) -> BroadcastValidateResponse</code>
+
+# Audiences
+
+Types:
+
+- <code><a href="./src/resources/audiences.ts">Audience</a></code>
+- <code><a href="./src/resources/audiences.ts">DynamicAudience</a></code>
+- <code><a href="./src/resources/audiences.ts">StaticAudience</a></code>

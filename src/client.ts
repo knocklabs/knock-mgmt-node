@@ -20,6 +20,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
+import { Audience, Audiences, DynamicAudience, StaticAudience } from './resources/audiences';
 import { Auth, AuthVerifyResponse } from './resources/auth';
 import {
   Branch,
@@ -964,6 +965,7 @@ export class KnockMgmt {
    */
   branches: API.Branches = new API.Branches(this);
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
+  audiences: API.Audiences = new API.Audiences(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -983,6 +985,7 @@ KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
 KnockMgmt.Branches = Branches;
 KnockMgmt.Broadcasts = Broadcasts;
+KnockMgmt.Audiences = Audiences;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1201,6 +1204,13 @@ export declare namespace KnockMgmt {
     type BroadcastSendParams as BroadcastSendParams,
     type BroadcastUpsertParams as BroadcastUpsertParams,
     type BroadcastValidateParams as BroadcastValidateParams,
+  };
+
+  export {
+    Audiences as Audiences,
+    type Audience as Audience,
+    type DynamicAudience as DynamicAudience,
+    type StaticAudience as StaticAudience,
   };
 
   export type PageInfo = API.PageInfo;
