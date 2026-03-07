@@ -11,7 +11,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
@@ -50,6 +50,8 @@ import {
   ChannelGroup,
   ChannelGroupListParams,
   ChannelGroupRule,
+  ChannelGroupUpsertParams,
+  ChannelGroupUpsertResponse,
   ChannelGroups,
   ChannelGroupsEntriesCursor,
 } from './resources/channel-groups';
@@ -108,6 +110,7 @@ import {
   Guides,
   GuidesEntriesCursor,
 } from './resources/guides';
+import { Member, MemberListParams, MemberUser, Members, MembersEntriesCursor } from './resources/members';
 import {
   MessageType,
   MessageTypeListParams,
@@ -161,6 +164,7 @@ import {
   Duration,
   SendWindow,
   Workflow,
+  WorkflowAIAgentStep,
   WorkflowActivateParams,
   WorkflowActivateResponse,
   WorkflowBatchStep,
@@ -172,6 +176,7 @@ import {
   WorkflowInAppFeedStep,
   WorkflowListParams,
   WorkflowPushStep,
+  WorkflowRandomCohortStep,
   WorkflowRetrieveParams,
   WorkflowRetrieveResponse,
   WorkflowRunParams,
@@ -180,6 +185,10 @@ import {
   WorkflowStep,
   WorkflowThrottleStep,
   WorkflowTriggerWorkflowStep,
+  WorkflowUpdateDataStep,
+  WorkflowUpdateObjectStep,
+  WorkflowUpdateTenantStep,
+  WorkflowUpdateUserStep,
   WorkflowUpsertParams,
   WorkflowUpsertResponse,
   WorkflowValidateParams,
@@ -381,8 +390,8 @@ export class KnockMgmt {
     return buildHeaders([{ Authorization: `Bearer ${this.serviceToken}` }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -414,12 +423,13 @@ export class KnockMgmt {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -748,9 +758,9 @@ export class KnockMgmt {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -882,7 +892,7 @@ export class KnockMgmt {
     ) {
       return {
         bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: this.stringifyQuery(body as Record<string, unknown>),
+        body: this.stringifyQuery(body),
       };
     } else {
       return this.#encoder({ body, headers });
@@ -909,19 +919,50 @@ export class KnockMgmt {
   static toFile = Uploads.toFile;
 
   templates: API.Templates = new API.Templates(this);
+  /**
+   * Email layouts wrap your email templates and provide a consistent look and feel.
+   */
   emailLayouts: API.EmailLayouts = new API.EmailLayouts(this);
+  /**
+   * Commits are versioned changes to resources.
+   */
   commits: API.Commits = new API.Commits(this);
+  /**
+   * Partials allow you to reuse content across templates.
+   */
   partials: API.Partials = new API.Partials(this);
+  /**
+   * Translations are per-locale string files that can be used in your templates.
+   */
   translations: API.Translations = new API.Translations(this);
+  /**
+   * Workflows let you express your cross-channel notification logic.
+   */
   workflows: API.Workflows = new API.Workflows(this);
+  /**
+   * A message type allows you to specify an in-app schema that defines the fields available for your in-app notifications.
+   */
   messageTypes: API.MessageTypes = new API.MessageTypes(this);
+  /**
+   * Resources for managing your Knock account.
+   */
   auth: API.Auth = new API.Auth(this);
   apiKeys: API.APIKeys = new API.APIKeys(this);
   channelGroups: API.ChannelGroups = new API.ChannelGroups(this);
   channels: API.Channels = new API.Channels(this);
+  members: API.Members = new API.Members(this);
+  /**
+   * Environments are isolated instances of your account that map to your infrastructure.
+   */
   environments: API.Environments = new API.Environments(this);
   variables: API.Variables = new API.Variables(this);
+  /**
+   * Guides let you define in-app guides that can be displayed to users based on priority and other conditions.
+   */
   guides: API.Guides = new API.Guides(this);
+  /**
+   * Branches in Knock are a way to isolate changes to your Knock resources.
+   */
   branches: API.Branches = new API.Branches(this);
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
 }
@@ -937,6 +978,7 @@ KnockMgmt.Auth = Auth;
 KnockMgmt.APIKeys = APIKeys;
 KnockMgmt.ChannelGroups = ChannelGroups;
 KnockMgmt.Channels = Channels;
+KnockMgmt.Members = Members;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
@@ -1019,6 +1061,7 @@ export declare namespace KnockMgmt {
     type Duration as Duration,
     type SendWindow as SendWindow,
     type Workflow as Workflow,
+    type WorkflowAIAgentStep as WorkflowAIAgentStep,
     type WorkflowBatchStep as WorkflowBatchStep,
     type WorkflowBranchStep as WorkflowBranchStep,
     type WorkflowChatStep as WorkflowChatStep,
@@ -1027,10 +1070,15 @@ export declare namespace KnockMgmt {
     type WorkflowFetchStep as WorkflowFetchStep,
     type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
     type WorkflowPushStep as WorkflowPushStep,
+    type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
+    type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
+    type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,
+    type WorkflowUpdateTenantStep as WorkflowUpdateTenantStep,
+    type WorkflowUpdateUserStep as WorkflowUpdateUserStep,
     type WorkflowWebhookStep as WorkflowWebhookStep,
     type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
@@ -1072,8 +1120,10 @@ export declare namespace KnockMgmt {
     ChannelGroups as ChannelGroups,
     type ChannelGroup as ChannelGroup,
     type ChannelGroupRule as ChannelGroupRule,
+    type ChannelGroupUpsertResponse as ChannelGroupUpsertResponse,
     type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
     type ChannelGroupListParams as ChannelGroupListParams,
+    type ChannelGroupUpsertParams as ChannelGroupUpsertParams,
   };
 
   export {
@@ -1086,6 +1136,14 @@ export declare namespace KnockMgmt {
     type SMSChannelSettings as SMSChannelSettings,
     type ChannelsEntriesCursor as ChannelsEntriesCursor,
     type ChannelListParams as ChannelListParams,
+  };
+
+  export {
+    Members as Members,
+    type Member as Member,
+    type MemberUser as MemberUser,
+    type MembersEntriesCursor as MembersEntriesCursor,
+    type MemberListParams as MemberListParams,
   };
 
   export {

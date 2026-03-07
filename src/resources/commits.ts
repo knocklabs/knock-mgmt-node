@@ -6,6 +6,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Commits are versioned changes to resources.
+ */
 export class Commits extends APIResource {
   /**
    * Retrieve a single commit by its ID.

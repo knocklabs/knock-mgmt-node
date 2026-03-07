@@ -7,6 +7,9 @@ import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Branches in Knock are a way to isolate changes to your Knock resources.
+ */
 export class Branches extends APIResource {
   /**
    * Creates a new branch off of the development environment with the given slug.
