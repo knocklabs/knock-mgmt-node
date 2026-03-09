@@ -7,6 +7,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * A message type allows you to specify an in-app schema that defines the fields available for your in-app notifications.
+ */
 export class MessageTypes extends APIResource {
   /**
    * Retrieve a message type by its key, in a given environment.
@@ -233,11 +236,13 @@ export namespace MessageTypeTextField {
      */
     default?: string | null;
 
-    description?: string;
+    description?: string | null;
 
     max_length?: number;
 
     min_length?: number;
+
+    placeholder?: string | null;
 
     /**
      * Whether the field is required.
@@ -257,6 +262,7 @@ export interface MessageTypeVariant {
     | MessageTypeVariant.MessageTypeBooleanField
     | MessageTypeVariant.MessageTypeButtonField
     | MessageTypeVariant.MessageTypeImageField
+    | MessageTypeVariant.MessageTypeJsonField
     | MessageTypeVariant.MessageTypeMarkdownField
     | MessageTypeVariant.MessageTypeMultiSelectField
     | MessageTypeVariant.MessageTypeSelectField
@@ -313,7 +319,9 @@ export namespace MessageTypeVariant {
        */
       default?: boolean;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -362,7 +370,9 @@ export namespace MessageTypeVariant {
      * Settings for the button field.
      */
     export interface Settings {
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -447,7 +457,9 @@ export namespace MessageTypeVariant {
          */
         default?: string | null;
 
-        description?: string;
+        description?: string | null;
+
+        placeholder?: string | null;
 
         /**
          * Whether the field is required.
@@ -460,12 +472,66 @@ export namespace MessageTypeVariant {
      * Settings for the image field.
      */
     export interface Settings {
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
        */
       required?: boolean;
+    }
+  }
+
+  /**
+   * A JSON field used in a message type.
+   */
+  export interface MessageTypeJsonField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'json';
+
+    /**
+     * Settings for the json field.
+     */
+    settings?: MessageTypeJsonField.Settings;
+  }
+
+  export namespace MessageTypeJsonField {
+    /**
+     * Settings for the json field.
+     */
+    export interface Settings {
+      /**
+       * The default value of the JSON field.
+       */
+      default?: unknown | null;
+
+      description?: string | null;
+
+      placeholder?: string | null;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+
+      /**
+       * A JSON schema used to validate the structure of the JSON provided. Must be a
+       * valid JSON schema.
+       */
+      schema?: unknown | null;
     }
   }
 
@@ -504,7 +570,9 @@ export namespace MessageTypeVariant {
        */
       default?: string;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -548,12 +616,14 @@ export namespace MessageTypeVariant {
        */
       default?: Array<string> | null;
 
-      description?: string;
+      description?: string | null;
 
       /**
        * The available options for the multi-select field.
        */
       options?: Array<Settings.Option>;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -611,12 +681,14 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
 
       /**
        * The available options for the select field.
        */
       options?: Array<Settings.Option>;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -674,11 +746,13 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
 
       max_length?: number;
 
       min_length?: number;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.
@@ -722,7 +796,9 @@ export namespace MessageTypeVariant {
        */
       default?: string | null;
 
-      description?: string;
+      description?: string | null;
+
+      placeholder?: string | null;
 
       /**
        * Whether the field is required.

@@ -88,6 +88,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">Duration</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">SendWindow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowAIAgentStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBatchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowBranchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowChatStep</a></code>
@@ -96,10 +97,15 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowInAppFeedStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowPushStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRandomCohortStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowSMSStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerWorkflowStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateDataStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateObjectStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateTenantStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateUserStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowWebhookStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRetrieveResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowActivateResponse</a></code>
@@ -169,10 +175,14 @@ Types:
 
 - <code><a href="./src/resources/channel-groups.ts">ChannelGroup</a></code>
 - <code><a href="./src/resources/channel-groups.ts">ChannelGroupRule</a></code>
+- <code><a href="./src/resources/channel-groups.ts">ChannelGroupUpsertResponse</a></code>
 
 Methods:
 
+- <code title="get /v1/channel_groups/{channel_group_key}">client.channelGroups.<a href="./src/resources/channel-groups.ts">retrieve</a>(channelGroupKey) -> ChannelGroup</code>
 - <code title="get /v1/channel_groups">client.channelGroups.<a href="./src/resources/channel-groups.ts">list</a>({ ...params }) -> ChannelGroupsEntriesCursor</code>
+- <code title="delete /v1/channel_groups/{channel_group_key}">client.channelGroups.<a href="./src/resources/channel-groups.ts">delete</a>(channelGroupKey) -> void</code>
+- <code title="put /v1/channel_groups/{channel_group_key}">client.channelGroups.<a href="./src/resources/channel-groups.ts">upsert</a>(channelGroupKey, { ...params }) -> ChannelGroupUpsertResponse</code>
 
 # Channels
 
@@ -188,6 +198,19 @@ Types:
 Methods:
 
 - <code title="get /v1/channels">client.channels.<a href="./src/resources/channels.ts">list</a>({ ...params }) -> ChannelsEntriesCursor</code>
+
+# Members
+
+Types:
+
+- <code><a href="./src/resources/members.ts">Member</a></code>
+- <code><a href="./src/resources/members.ts">MemberUser</a></code>
+
+Methods:
+
+- <code title="get /v1/members/{id}">client.members.<a href="./src/resources/members.ts">retrieve</a>(id) -> Member</code>
+- <code title="get /v1/members">client.members.<a href="./src/resources/members.ts">list</a>({ ...params }) -> MembersEntriesCursor</code>
+- <code title="delete /v1/members/{id}">client.members.<a href="./src/resources/members.ts">delete</a>(id) -> void</code>
 
 # Environments
 

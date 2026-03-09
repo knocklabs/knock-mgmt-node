@@ -29,6 +29,7 @@ describe('resource channels', () => {
           id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           after: 'after',
           before: 'before',
+          include: ['environment_settings'],
           limit: 0,
         },
         { path: '/_stainless_unknown_path' },

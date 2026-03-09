@@ -6,6 +6,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Workflows let you express your cross-channel notification logic.
+ */
 export class Steps extends APIResource {
   /**
    * Generates a rendered template for a given channel step in a workflow.

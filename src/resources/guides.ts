@@ -8,6 +8,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Guides let you define in-app guides that can be displayed to users based on priority and other conditions.
+ */
 export class Guides extends APIResource {
   /**
    * Get a guide by its key.

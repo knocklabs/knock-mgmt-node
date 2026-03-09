@@ -6,6 +6,9 @@ import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pa
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Email layouts wrap your email templates and provide a consistent look and feel.
+ */
 export class EmailLayouts extends APIResource {
   /**
    * Retrieve an email layout by its key, in a given environment.
