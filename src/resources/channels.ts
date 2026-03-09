@@ -83,6 +83,49 @@ export interface Channel {
    * Optional description of the channel's purpose or usage.
    */
   description?: string | null;
+
+  /**
+   * Per-environment settings for this channel, keyed by environment slug (e.g.,
+   * 'development', 'production'). Only included when requested via the `include`
+   * parameter or when retrieving a single channel.
+   */
+  environment_settings?: { [key: string]: Channel.EnvironmentSettings } | null;
+}
+
+export namespace Channel {
+  /**
+   * Environment-specific settings for a channel.
+   */
+  export interface EnvironmentSettings {
+    /**
+     * The unique identifier for these environment settings.
+     */
+    id: string;
+
+    /**
+     * Whether the channel is in sandbox mode for this environment. Sandbox mode may
+     * prevent actual message delivery.
+     */
+    is_sandbox: boolean;
+
+    /**
+     * Whether the channel configuration is valid and ready to send messages in this
+     * environment.
+     */
+    is_valid: boolean;
+
+    /**
+     * Channel-type-specific settings (e.g., from_address for email). Structure varies
+     * by channel type.
+     */
+    channel_settings?: { [key: string]: unknown } | null;
+
+    /**
+     * Provider-specific settings (e.g., API keys, credentials). Structure varies by
+     * provider. Secret values are obfuscated unless they are Liquid templates.
+     */
+    provider_settings?: { [key: string]: unknown } | null;
+  }
 }
 
 /**
@@ -194,6 +237,12 @@ export interface ChannelListParams extends EntriesCursorParams {
    * A channel id to filter the results by.
    */
   id?: string;
+
+  /**
+   * Associated resources to include in the response. Accepts `environment_settings`
+   * to include per-environment channel configuration.
+   */
+  include?: Array<'environment_settings'>;
 }
 
 export declare namespace Channels {
