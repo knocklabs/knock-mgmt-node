@@ -1,10 +1,28 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Channels extends APIResource {
+  /**
+   * Returns a channel with all environment-specific settings. Secret values in
+   * provider settings are obfuscated unless they are Liquid templates (e.g.,
+   * `{{ vars.api_key }}`).
+   *
+   * @example
+   * ```ts
+   * const channel = await client.channels.retrieve(
+   *   'channel_key',
+   * );
+   * ```
+   */
+  retrieve(channelKey: string, options?: RequestOptions): APIPromise<Channel> {
+    return this._client.get(path`/v1/channels/${channelKey}`, options);
+  }
+
   /**
    * Returns a paginated list of channels. Note: the list of channels is across the
    * entire account, not scoped to an environment.
@@ -89,43 +107,41 @@ export interface Channel {
    * 'development', 'production'). Only included when requested via the `include`
    * parameter or when retrieving a single channel.
    */
-  environment_settings?: { [key: string]: Channel.EnvironmentSettings } | null;
+  environment_settings?: { [key: string]: ChannelEnvironmentSettings } | null;
 }
 
-export namespace Channel {
+/**
+ * Environment-specific settings for a channel.
+ */
+export interface ChannelEnvironmentSettings {
   /**
-   * Environment-specific settings for a channel.
+   * The unique identifier for these environment settings.
    */
-  export interface EnvironmentSettings {
-    /**
-     * The unique identifier for these environment settings.
-     */
-    id: string;
+  id: string;
 
-    /**
-     * Whether the channel is in sandbox mode for this environment. Sandbox mode may
-     * prevent actual message delivery.
-     */
-    is_sandbox: boolean;
+  /**
+   * Whether the channel is in sandbox mode for this environment. Sandbox mode may
+   * prevent actual message delivery.
+   */
+  is_sandbox: boolean;
 
-    /**
-     * Whether the channel configuration is valid and ready to send messages in this
-     * environment.
-     */
-    is_valid: boolean;
+  /**
+   * Whether the channel configuration is valid and ready to send messages in this
+   * environment.
+   */
+  is_valid: boolean;
 
-    /**
-     * Channel-type-specific settings (e.g., from_address for email). Structure varies
-     * by channel type.
-     */
-    channel_settings?: { [key: string]: unknown } | null;
+  /**
+   * Channel-type-specific settings (e.g., from_address for email). Structure varies
+   * by channel type.
+   */
+  channel_settings?: { [key: string]: unknown } | null;
 
-    /**
-     * Provider-specific settings (e.g., API keys, credentials). Structure varies by
-     * provider. Secret values are obfuscated unless they are Liquid templates.
-     */
-    provider_settings?: { [key: string]: unknown } | null;
-  }
+  /**
+   * Provider-specific settings (e.g., API keys, credentials). Structure varies by
+   * provider. Secret values are obfuscated unless they are Liquid templates.
+   */
+  provider_settings?: { [key: string]: unknown } | null;
 }
 
 /**
@@ -248,6 +264,7 @@ export interface ChannelListParams extends EntriesCursorParams {
 export declare namespace Channels {
   export {
     type Channel as Channel,
+    type ChannelEnvironmentSettings as ChannelEnvironmentSettings,
     type ChatChannelSettings as ChatChannelSettings,
     type EmailChannelSettings as EmailChannelSettings,
     type InAppFeedChannelSettings as InAppFeedChannelSettings,
