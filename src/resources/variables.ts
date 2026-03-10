@@ -1,10 +1,24 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Variables extends APIResource {
+  /**
+   * Returns a single variable by key with per-environment value overrides.
+   *
+   * @example
+   * ```ts
+   * const variable = await client.variables.retrieve('key');
+   * ```
+   */
+  retrieve(key: string, options?: RequestOptions): APIPromise<Variable> {
+    return this._client.get(path`/v1/variables/${key}`, options);
+  }
+
   /**
    * Returns a list of variables. When an environment is specified, returns
    * per-environment variables. Otherwise, returns project-scoped variables with

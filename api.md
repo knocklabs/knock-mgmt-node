@@ -242,6 +242,7 @@ Types:
 
 Methods:
 
+- <code title="get /v1/variables/{key}">client.variables.<a href="./src/resources/variables.ts">retrieve</a>(key) -> Variable</code>
 - <code title="get /v1/variables">client.variables.<a href="./src/resources/variables.ts">list</a>({ ...params }) -> VariablesEntriesCursor</code>
 
 # Guides
