@@ -2,6 +2,15 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">MessageTypeBooleanField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeButtonField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeImageField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeJsonField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeMarkdownField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeMultiSelectField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeSelectField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeTextareaField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeURLField</a></code>
 - <code><a href="./src/resources/shared.ts">PageInfo</a></code>
 
 # Templates
@@ -189,6 +198,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/channels.ts">Channel</a></code>
+- <code><a href="./src/resources/channels.ts">ChannelEnvironmentSettings</a></code>
 - <code><a href="./src/resources/channels.ts">ChatChannelSettings</a></code>
 - <code><a href="./src/resources/channels.ts">EmailChannelSettings</a></code>
 - <code><a href="./src/resources/channels.ts">InAppFeedChannelSettings</a></code>
@@ -197,6 +207,7 @@ Types:
 
 Methods:
 
+- <code title="get /v1/channels/{channel_key}">client.channels.<a href="./src/resources/channels.ts">retrieve</a>(channelKey) -> Channel</code>
 - <code title="get /v1/channels">client.channels.<a href="./src/resources/channels.ts">list</a>({ ...params }) -> ChannelsEntriesCursor</code>
 
 # Members
@@ -286,3 +297,23 @@ Methods:
 - <code title="put /v1/broadcasts/{broadcast_key}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastKey, { ...params }) -> BroadcastSendResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">upsert</a>(broadcastKey, { ...params }) -> BroadcastUpsertResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/validate">client.broadcasts.<a href="./src/resources/broadcasts.ts">validate</a>(broadcastKey, { ...params }) -> BroadcastValidateResponse</code>
+
+# Audiences
+
+Types:
+
+- <code><a href="./src/resources/audiences.ts">Audience</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceCondition</a></code>
+- <code><a href="./src/resources/audiences.ts">DynamicAudience</a></code>
+- <code><a href="./src/resources/audiences.ts">StaticAudience</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceArchiveResponse</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceUpsertResponse</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">retrieve</a>(audienceKey, { ...params }) -> Audience</code>
+- <code title="get /v1/audiences">client.audiences.<a href="./src/resources/audiences.ts">list</a>({ ...params }) -> AudiencesEntriesCursor</code>
+- <code title="delete /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">archive</a>(audienceKey, { ...params }) -> AudienceArchiveResponse</code>
+- <code title="put /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">upsert</a>(audienceKey, { ...params }) -> AudienceUpsertResponse</code>
+- <code title="put /v1/audiences/{audience_key}/validate">client.audiences.<a href="./src/resources/audiences.ts">validate</a>(audienceKey, { ...params }) -> AudienceValidateResponse</code>
