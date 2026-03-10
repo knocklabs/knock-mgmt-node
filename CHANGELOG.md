@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.21.0 (2026-03-10)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** added audience methods and models ([8e30a4c](https://github.com/knocklabs/knock-mgmt-node/commit/8e30a4ce1da7d8fcc9c9be8eb6fdc0df088da241))
+* **api:** added channel config ([88a7b26](https://github.com/knocklabs/knock-mgmt-node/commit/88a7b26f41d84d282a52e209f6f5649315ec2420))
+
+
+### Chores
+
+* **internal:** update dependencies to address dependabot vulnerabilities ([7b71575](https://github.com/knocklabs/knock-mgmt-node/commit/7b715759a5400930a0334b60653674029623cee2))
+
 ## 0.20.0 (2026-03-09)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.19.0...v0.20.0)
