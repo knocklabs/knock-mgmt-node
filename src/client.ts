@@ -20,6 +20,22 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
+import {
+  Audience,
+  AudienceArchiveParams,
+  AudienceArchiveResponse,
+  AudienceCondition,
+  AudienceListParams,
+  AudienceRetrieveParams,
+  AudienceUpsertParams,
+  AudienceUpsertResponse,
+  AudienceValidateParams,
+  AudienceValidateResponse,
+  Audiences,
+  AudiencesEntriesCursor,
+  DynamicAudience,
+  StaticAudience,
+} from './resources/audiences';
 import { Auth, AuthVerifyResponse } from './resources/auth';
 import {
   Branch,
@@ -966,6 +982,10 @@ export class KnockMgmt {
    */
   branches: API.Branches = new API.Branches(this);
   broadcasts: API.Broadcasts = new API.Broadcasts(this);
+  /**
+   * Audiences define sets of users that can be targeted for notifications.
+   */
+  audiences: API.Audiences = new API.Audiences(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -985,6 +1005,7 @@ KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
 KnockMgmt.Branches = Branches;
 KnockMgmt.Broadcasts = Broadcasts;
+KnockMgmt.Audiences = Audiences;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1206,5 +1227,31 @@ export declare namespace KnockMgmt {
     type BroadcastValidateParams as BroadcastValidateParams,
   };
 
+  export {
+    Audiences as Audiences,
+    type Audience as Audience,
+    type AudienceCondition as AudienceCondition,
+    type DynamicAudience as DynamicAudience,
+    type StaticAudience as StaticAudience,
+    type AudienceArchiveResponse as AudienceArchiveResponse,
+    type AudienceUpsertResponse as AudienceUpsertResponse,
+    type AudienceValidateResponse as AudienceValidateResponse,
+    type AudiencesEntriesCursor as AudiencesEntriesCursor,
+    type AudienceRetrieveParams as AudienceRetrieveParams,
+    type AudienceListParams as AudienceListParams,
+    type AudienceArchiveParams as AudienceArchiveParams,
+    type AudienceUpsertParams as AudienceUpsertParams,
+    type AudienceValidateParams as AudienceValidateParams,
+  };
+
+  export type MessageTypeBooleanField = API.MessageTypeBooleanField;
+  export type MessageTypeButtonField = API.MessageTypeButtonField;
+  export type MessageTypeImageField = API.MessageTypeImageField;
+  export type MessageTypeJsonField = API.MessageTypeJsonField;
+  export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
+  export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
+  export type MessageTypeSelectField = API.MessageTypeSelectField;
+  export type MessageTypeTextareaField = API.MessageTypeTextareaField;
+  export type MessageTypeURLField = API.MessageTypeURLField;
   export type PageInfo = API.PageInfo;
 }
