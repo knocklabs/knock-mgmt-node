@@ -57,6 +57,7 @@ import {
 } from './resources/channel-groups';
 import {
   Channel,
+  ChannelEnvironmentSettings,
   ChannelListParams,
   Channels,
   ChannelsEntriesCursor,
@@ -1129,6 +1130,7 @@ export declare namespace KnockMgmt {
   export {
     Channels as Channels,
     type Channel as Channel,
+    type ChannelEnvironmentSettings as ChannelEnvironmentSettings,
     type ChatChannelSettings as ChatChannelSettings,
     type EmailChannelSettings as EmailChannelSettings,
     type InAppFeedChannelSettings as InAppFeedChannelSettings,

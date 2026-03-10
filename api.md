@@ -189,6 +189,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/channels.ts">Channel</a></code>
+- <code><a href="./src/resources/channels.ts">ChannelEnvironmentSettings</a></code>
 - <code><a href="./src/resources/channels.ts">ChatChannelSettings</a></code>
 - <code><a href="./src/resources/channels.ts">EmailChannelSettings</a></code>
 - <code><a href="./src/resources/channels.ts">InAppFeedChannelSettings</a></code>
@@ -197,6 +198,7 @@ Types:
 
 Methods:
 
+- <code title="get /v1/channels/{channel_key}">client.channels.<a href="./src/resources/channels.ts">retrieve</a>(channelKey) -> Channel</code>
 - <code title="get /v1/channels">client.channels.<a href="./src/resources/channels.ts">list</a>({ ...params }) -> ChannelsEntriesCursor</code>
 
 # Members

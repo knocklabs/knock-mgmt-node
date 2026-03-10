@@ -40,6 +40,7 @@ export {
 export {
   Channels,
   type Channel,
+  type ChannelEnvironmentSettings,
   type ChatChannelSettings,
   type EmailChannelSettings,
   type InAppFeedChannelSettings,
