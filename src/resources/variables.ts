@@ -6,7 +6,9 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Variables extends APIResource {
   /**
-   * Returns a paginated list of variables for a given environment.
+   * Returns a list of variables. When an environment is specified, returns
+   * per-environment variables. Otherwise, returns project-scoped variables with
+   * per-environment overrides.
    *
    * @example
    * ```ts
@@ -50,14 +52,20 @@ export interface Variable {
   updated_at: string;
 
   /**
-   * The value of the variable.
-   */
-  value: string;
-
-  /**
    * The description of the variable.
    */
   description?: string | null;
+
+  /**
+   * A map of environment slugs to their override values. Only present for
+   * project-scoped responses.
+   */
+  environment_values?: { [key: string]: string | null };
+
+  /**
+   * The default value of the variable. For secret variables, this is obfuscated.
+   */
+  value?: string | null;
 }
 
 export interface VariableListParams extends EntriesCursorParams {
@@ -71,6 +79,11 @@ export interface VariableListParams extends EntriesCursorParams {
    * `"development"`.
    */
   branch?: string;
+
+  /**
+   * Filter variables by type. Supports 'public' or 'secret'.
+   */
+  type?: 'public' | 'secret';
 }
 
 export declare namespace Variables {

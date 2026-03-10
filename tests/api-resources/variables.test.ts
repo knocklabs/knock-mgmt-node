@@ -28,6 +28,7 @@ describe('resource variables', () => {
       before: 'before',
       branch: 'feature-branch',
       limit: 0,
+      type: 'public',
     });
   });
 });
