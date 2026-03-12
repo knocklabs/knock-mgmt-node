@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.22.0 (2026-03-12)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** add variable get ([f3bfe23](https://github.com/knocklabs/knock-mgmt-node/commit/f3bfe23465d7051fd0d9463e5895e2066ae25500))
+* **api:** api update ([1722bc4](https://github.com/knocklabs/knock-mgmt-node/commit/1722bc418ee0be3a9870c53a78c24dfe6788b50f))
+* **api:** api update ([dede36e](https://github.com/knocklabs/knock-mgmt-node/commit/dede36e5050c3cdf45b514207058a2aaa9615a61))
+* **api:** api update ([8b70ec6](https://github.com/knocklabs/knock-mgmt-node/commit/8b70ec6bee4d477ff87b47b23392f6e483b69e7d))
+
 ## 0.21.0 (2026-03-10)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.20.0...v0.21.0)
