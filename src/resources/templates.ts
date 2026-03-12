@@ -46,15 +46,23 @@ export interface EmailTemplate {
   subject: string;
 
   /**
-   * An HTML template for the email body. **Required** if `visual_blocks` is not
-   * provided. Only one of `html_body` or `visual_blocks` should be set. Supports
-   * Liquid templating with variables like `{{ recipient.name }}`,
-   * `{{ actor.name }}`, `{{ vars.app_name }}`, `{{ data.custom_field }}`, and
-   * `{{ tenant.name }}`. See the
+   * An HTML or MJML template for the email body. **Required** if `visual_blocks` is
+   * not provided. Only one of `html_body` or `visual_blocks` should be set. When
+   * `is_mjml` is true, this must contain MJML components. Supports Liquid templating
+   * with variables like `{{ recipient.name }}`, `{{ actor.name }}`,
+   * `{{ vars.app_name }}`, `{{ data.custom_field }}`, and `{{ tenant.name }}`. See
+   * the
    * [template variables reference](https://docs.knock.app/designing-workflows/template-editor/variables)
    * for available variables.
    */
   html_body?: string | null;
+
+  /**
+   * Whether this template uses MJML format. When true, the template content will be
+   * compiled from MJML to HTML. Only valid when the selected layout is also MJML or
+   * when no layout is selected.
+   */
+  is_mjml?: boolean | null;
 
   /**
    * A text template for the email body. When omitted, the email template will be

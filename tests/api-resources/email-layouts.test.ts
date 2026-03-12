@@ -83,6 +83,7 @@ describe('resource emailLayouts', () => {
         name: 'Transactional',
         text_layout: 'Hello, world!',
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
+        is_mjml: true,
       },
       annotate: true,
       branch: 'feature-branch',
@@ -119,6 +120,7 @@ describe('resource emailLayouts', () => {
         name: 'Transactional',
         text_layout: 'Hello, world!',
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
+        is_mjml: true,
       },
       branch: 'feature-branch',
     });
