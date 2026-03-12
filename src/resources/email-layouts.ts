@@ -130,7 +130,7 @@ export interface EmailLayout {
   created_at: string;
 
   /**
-   * The complete HTML content of the email layout.
+   * The complete HTML or MJML content of the email layout.
    */
   html_layout: string;
 
@@ -163,6 +163,12 @@ export interface EmailLayout {
    * A list of one or more items to show in the footer of the email layout.
    */
   footer_links?: Array<EmailLayout.FooterLink>;
+
+  /**
+   * Whether this layout uses MJML format. When true, html_layout must contain <mjml>
+   * tags.
+   */
+  is_mjml?: boolean;
 
   /**
    * The timestamp of when the email layout was last updated.
@@ -292,7 +298,7 @@ export namespace EmailLayoutUpsertParams {
    */
   export interface EmailLayout {
     /**
-     * The complete HTML content of the email layout.
+     * The complete HTML or MJML content of the email layout.
      */
     html_layout: string;
 
@@ -310,6 +316,12 @@ export namespace EmailLayoutUpsertParams {
      * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
+
+    /**
+     * Whether this layout uses MJML format. When true, html_layout must contain <mjml>
+     * tags.
+     */
+    is_mjml?: boolean | null;
   }
 
   export namespace EmailLayout {
@@ -351,7 +363,7 @@ export namespace EmailLayoutValidateParams {
    */
   export interface EmailLayout {
     /**
-     * The complete HTML content of the email layout.
+     * The complete HTML or MJML content of the email layout.
      */
     html_layout: string;
 
@@ -369,6 +381,12 @@ export namespace EmailLayoutValidateParams {
      * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
+
+    /**
+     * Whether this layout uses MJML format. When true, html_layout must contain <mjml>
+     * tags.
+     */
+    is_mjml?: boolean | null;
   }
 
   export namespace EmailLayout {
