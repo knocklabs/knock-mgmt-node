@@ -86,6 +86,7 @@ describe('resource translations', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      force: true,
       format: 'json',
     });
   });

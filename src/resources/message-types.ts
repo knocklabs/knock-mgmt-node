@@ -73,9 +73,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, annotate, branch, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -386,6 +386,13 @@ export interface MessageTypeUpsertParams {
    * `true`.
    */
   commit_message?: string;
+
+  /**
+   * Query param: When set to true, forces the upsert to override existing content
+   * regardless of environment restrictions. This bypasses the development-only
+   * environment check and origin environment checks.
+   */
+  force?: boolean;
 }
 
 export namespace MessageTypeUpsertParams {
