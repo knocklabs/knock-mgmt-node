@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.23.0 (2026-03-18)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **api:** api update ([00f4aeb](https://github.com/knocklabs/knock-mgmt-node/commit/00f4aebd0a673b209f8357ea93d2769bb4a94b3f))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([d8d4737](https://github.com/knocklabs/knock-mgmt-node/commit/d8d473758002352ea3aa8f35cfa2b7cc0a0f140e))
+
 ## 0.22.0 (2026-03-12)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.21.0...v0.22.0)
