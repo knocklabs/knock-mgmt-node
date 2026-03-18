@@ -77,9 +77,10 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { environment, namespace, annotate, branch, commit, commit_message, format, ...body } = params;
+    const { environment, namespace, annotate, branch, commit, commit_message, force, format, ...body } =
+      params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, branch, commit, commit_message, format },
+      query: { environment, namespace, annotate, branch, commit, commit_message, force, format },
       body,
       ...options,
     });
@@ -301,6 +302,13 @@ export interface TranslationUpsertParams {
    * `true`.
    */
   commit_message?: string;
+
+  /**
+   * Query param: When set to true, forces the upsert to override existing content
+   * regardless of environment restrictions. This bypasses the development-only
+   * environment check and origin environment checks.
+   */
+  force?: boolean;
 
   /**
    * Query param: Optionally specify the returned content format. Supports 'json' and

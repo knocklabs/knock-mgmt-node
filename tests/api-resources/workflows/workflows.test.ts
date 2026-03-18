@@ -190,6 +190,7 @@ describe('resource workflows', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      force: true,
     });
   });
 

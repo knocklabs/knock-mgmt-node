@@ -69,9 +69,9 @@ export class Partials extends APIResource {
     params: PartialUpsertParams,
     options?: RequestOptions,
   ): APIPromise<PartialUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}`, {
-      query: { environment, annotate, branch, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -292,6 +292,13 @@ export interface PartialUpsertParams {
    * `true`.
    */
   commit_message?: string;
+
+  /**
+   * Query param: When set to true, forces the upsert to override existing content
+   * regardless of environment restrictions. This bypasses the development-only
+   * environment check and origin environment checks.
+   */
+  force?: boolean;
 }
 
 export namespace PartialUpsertParams {
