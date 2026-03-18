@@ -87,9 +87,9 @@ export class Audiences extends APIResource {
     params: AudienceUpsertParams,
     options?: RequestOptions,
   ): APIPromise<AudienceUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, ...body } = params;
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/audiences/${audienceKey}`, {
-      query: { environment, annotate, branch, commit, commit_message },
+      query: { environment, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -405,6 +405,13 @@ export interface AudienceUpsertParams {
    * `true`.
    */
   commit_message?: string;
+
+  /**
+   * Query param: When set to true, forces the upsert to override existing content
+   * regardless of environment restrictions. This bypasses the development-only
+   * environment check and origin environment checks.
+   */
+  force?: boolean;
 }
 
 export namespace AudienceUpsertParams {
