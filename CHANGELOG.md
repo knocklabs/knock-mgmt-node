@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.23.1 (2026-03-27)
+
+Full Changelog: [v0.23.0...v0.23.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.23.0...v0.23.1)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([dbb7ddc](https://github.com/knocklabs/knock-mgmt-node/commit/dbb7ddc3f5c7ef09752844faa92b790526728601))
+* **internal:** codegen related update ([c6cae9a](https://github.com/knocklabs/knock-mgmt-node/commit/c6cae9a7343de8add1dffc5ed11bda30236501bc))
+* **internal:** update gitignore ([4422412](https://github.com/knocklabs/knock-mgmt-node/commit/44224120eb7a5cee1569ca8908e0c559d0a7547a))
+
 ## 0.23.0 (2026-03-18)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.22.0...v0.23.0)
