@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.2 (2026-03-31)
+
+Full Changelog: [v0.23.1...v0.23.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.23.1...v0.23.2)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([b063c05](https://github.com/knocklabs/knock-mgmt-node/commit/b063c05314ea5ffe3082dcf5667a8fbfe5db3a98))
+
 ## 0.23.1 (2026-03-27)
 
 Full Changelog: [v0.23.0...v0.23.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.23.0...v0.23.1)
