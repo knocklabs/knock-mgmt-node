@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.3 (2026-04-08)
+
+Full Changelog: [v0.23.2...v0.23.3](https://github.com/knocklabs/knock-mgmt-node/compare/v0.23.2...v0.23.3)
+
+### Chores
+
+* **internal:** codegen related update ([be4d9df](https://github.com/knocklabs/knock-mgmt-node/commit/be4d9dfa47410ba90924cbd0566293e64ef02d5c))
+
 ## 0.23.2 (2026-03-31)
 
 Full Changelog: [v0.23.1...v0.23.2](https://github.com/knocklabs/knock-mgmt-node/compare/v0.23.1...v0.23.2)
