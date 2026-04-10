@@ -24,6 +24,11 @@ Types:
 - <code><a href="./src/resources/templates.ts">RequestTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">SMSTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">WebhookTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">TemplatePreviewResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/templates/preview">client.templates.<a href="./src/resources/templates.ts">preview</a>({ ...params }) -> TemplatePreviewResponse</code>
 
 # EmailLayouts
 

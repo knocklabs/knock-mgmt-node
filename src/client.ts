@@ -159,6 +159,8 @@ import {
   PushTemplate,
   RequestTemplate,
   SMSTemplate,
+  TemplatePreviewParams,
+  TemplatePreviewResponse,
   Templates,
   WebhookTemplate,
 } from './resources/templates';
@@ -1025,6 +1027,8 @@ export declare namespace KnockMgmt {
     type RequestTemplate as RequestTemplate,
     type SMSTemplate as SMSTemplate,
     type WebhookTemplate as WebhookTemplate,
+    type TemplatePreviewResponse as TemplatePreviewResponse,
+    type TemplatePreviewParams as TemplatePreviewParams,
   };
 
   export {

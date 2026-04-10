@@ -149,6 +149,8 @@ export {
   type RequestTemplate,
   type SMSTemplate,
   type WebhookTemplate,
+  type TemplatePreviewResponse,
+  type TemplatePreviewParams,
 } from './templates';
 export {
   Translations,
