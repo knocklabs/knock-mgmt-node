@@ -29,6 +29,7 @@ describe('resource translations', () => {
       format: 'json',
       hide_uncommitted_changes: true,
       namespace: 'namespace',
+      tenant: 'tenant',
     });
   });
 
@@ -57,6 +58,7 @@ describe('resource translations', () => {
       limit: 0,
       locale_code: 'locale_code',
       namespace: 'namespace',
+      tenant: 'tenant',
     });
   });
 
@@ -88,6 +90,7 @@ describe('resource translations', () => {
       commit_message: 'commit_message',
       force: true,
       format: 'json',
+      tenant: 'tenant',
     });
   });
 
