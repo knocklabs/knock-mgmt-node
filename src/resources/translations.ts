@@ -77,10 +77,20 @@ export class Translations extends APIResource {
     params: TranslationUpsertParams,
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
-    const { environment, namespace, annotate, branch, commit, commit_message, force, format, ...body } =
-      params;
+    const {
+      environment,
+      namespace,
+      annotate,
+      branch,
+      commit,
+      commit_message,
+      force,
+      format,
+      tenant,
+      ...body
+    } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, branch, commit, commit_message, force, format },
+      query: { environment, namespace, annotate, branch, commit, commit_message, force, format, tenant },
       body,
       ...options,
     });
@@ -157,6 +167,11 @@ export interface Translation {
    * The timestamp of when the translation was last updated.
    */
   updated_at: string;
+
+  /**
+   * An optional tenant identifier to scope the translation to a specific tenant.
+   */
+  tenant?: string;
 }
 
 /**
@@ -222,6 +237,11 @@ export interface TranslationRetrieveParams {
    * A specific namespace to filter translations for.
    */
   namespace?: string;
+
+  /**
+   * A specific tenant to scope the translation to.
+   */
+  tenant?: string;
 }
 
 export interface TranslationListParams extends EntriesCursorParams {
@@ -262,6 +282,11 @@ export interface TranslationListParams extends EntriesCursorParams {
    * A specific namespace to filter translations for.
    */
   namespace?: string;
+
+  /**
+   * A specific tenant to filter translations for.
+   */
+  tenant?: string;
 }
 
 export interface TranslationUpsertParams {
@@ -315,6 +340,11 @@ export interface TranslationUpsertParams {
    * 'po'. Defaults to 'json'.
    */
   format?: 'json' | 'po';
+
+  /**
+   * Query param: An optional tenant to scope the translation to.
+   */
+  tenant?: string;
 }
 
 export namespace TranslationUpsertParams {

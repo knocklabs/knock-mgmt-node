@@ -1,8 +1,36 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
 
-export class Templates extends APIResource {}
+export class Templates extends APIResource {
+  /**
+   * Renders a template preview, without requiring a template to be persisted within
+   * Knock. This is useful for previewing templates in isolation, without the need to
+   * use a workflow.
+   *
+   * For email templates, you can optionally specify a layout by key or provide
+   * inline layout content.
+   *
+   * @example
+   * ```ts
+   * const response = await client.templates.preview({
+   *   environment: 'development',
+   *   channel_type: 'email',
+   *   recipient: 'user_123',
+   *   template: {
+   *     settings: {},
+   *     subject: 'Hello {{ recipient.name }}',
+   *   },
+   * });
+   * ```
+   */
+  preview(params: TemplatePreviewParams, options?: RequestOptions): APIPromise<TemplatePreviewResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.post('/v1/templates/preview', { query: { environment, branch }, body, ...options });
+  }
+}
 
 /**
  * A chat template.
@@ -827,6 +855,158 @@ export namespace WebhookTemplate {
   }
 }
 
+/**
+ * A response to a template preview request.
+ */
+export interface TemplatePreviewResponse {
+  /**
+   * The content type of the preview.
+   */
+  content_type: 'email' | 'in_app_feed' | 'push' | 'chat' | 'sms';
+
+  /**
+   * The result of the preview.
+   */
+  result: 'success' | 'error';
+
+  /**
+   * A list of errors encountered during rendering. Present when result is "error".
+   */
+  errors?: Array<TemplatePreviewResponse.Error> | null;
+
+  /**
+   * The rendered template, ready to be previewed.
+   */
+  template?: EmailTemplate | InAppFeedTemplate | PushTemplate | ChatTemplate | SMSTemplate;
+}
+
+export namespace TemplatePreviewResponse {
+  /**
+   * A rendering error with optional location information.
+   */
+  export interface Error {
+    /**
+     * A human-readable description of the error.
+     */
+    message: string;
+
+    /**
+     * The template field that caused the error, if available.
+     */
+    field?: string | null;
+
+    /**
+     * The line number where the error occurred, if available.
+     */
+    line?: number | null;
+  }
+}
+
+export interface TemplatePreviewParams {
+  /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
+   * Body param: The channel type of the template to preview.
+   */
+  channel_type: 'email' | 'sms' | 'push' | 'chat' | 'in_app_feed';
+
+  /**
+   * Body param: A recipient reference, used when referencing a recipient by either
+   * their ID (for a user), or by a reference for an object.
+   */
+  recipient: string | TemplatePreviewParams.ObjectRecipientReference;
+
+  /**
+   * Body param: The template content to preview. Structure depends on channel_type.
+   */
+  template: EmailTemplate | SMSTemplate | PushTemplate | ChatTemplate | InAppFeedTemplate;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * Body param: A recipient reference, used when referencing a recipient by either
+   * their ID (for a user), or by a reference for an object.
+   */
+  actor?: string | TemplatePreviewParams.ObjectRecipientReference | null;
+
+  /**
+   * Body param: The data to pass to the template for rendering.
+   */
+  data?: { [key: string]: unknown };
+
+  /**
+   * Body param: Email layout configuration. Only applicable for email channel type.
+   * Falls back to environment default if not provided.
+   */
+  layout?: TemplatePreviewParams.Layout | null;
+
+  /**
+   * Body param: The tenant to associate with the preview. Must not contain
+   * whitespace.
+   */
+  tenant?: string | null;
+}
+
+export namespace TemplatePreviewParams {
+  /**
+   * An object reference.
+   */
+  export interface ObjectRecipientReference {
+    /**
+     * The ID of the object.
+     */
+    id: string;
+
+    /**
+     * The collection of the object.
+     */
+    collection: string;
+  }
+
+  /**
+   * An object reference.
+   */
+  export interface ObjectRecipientReference {
+    /**
+     * The ID of the object.
+     */
+    id: string;
+
+    /**
+     * The collection of the object.
+     */
+    collection: string;
+  }
+
+  /**
+   * Email layout configuration. Only applicable for email channel type. Falls back
+   * to environment default if not provided.
+   */
+  export interface Layout {
+    /**
+     * Inline HTML content for the layout. Must include `{{ content }}` placeholder.
+     */
+    html_content?: string | null;
+
+    /**
+     * The key of an existing email layout to use.
+     */
+    key?: string | null;
+
+    /**
+     * Inline text content for the layout.
+     */
+    text_content?: string | null;
+  }
+}
+
 export declare namespace Templates {
   export {
     type ChatTemplate as ChatTemplate,
@@ -836,5 +1016,7 @@ export declare namespace Templates {
     type RequestTemplate as RequestTemplate,
     type SMSTemplate as SMSTemplate,
     type WebhookTemplate as WebhookTemplate,
+    type TemplatePreviewResponse as TemplatePreviewResponse,
+    type TemplatePreviewParams as TemplatePreviewParams,
   };
 }
