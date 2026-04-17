@@ -952,6 +952,12 @@ export interface TemplatePreviewParams {
    * whitespace.
    */
   tenant?: string | null;
+
+  /**
+   * Body param: Optional workflow context for variable hydration. When provided,
+   * recipient/actor/tenant are resolved via Knock.
+   */
+  workflow?: TemplatePreviewParams.Workflow | null;
 }
 
 export namespace TemplatePreviewParams {
@@ -1004,6 +1010,22 @@ export namespace TemplatePreviewParams {
      * Inline text content for the layout.
      */
     text_content?: string | null;
+  }
+
+  /**
+   * Optional workflow context for variable hydration. When provided,
+   * recipient/actor/tenant are resolved via Knock.
+   */
+  export interface Workflow {
+    /**
+     * The workflow key.
+     */
+    key: string;
+
+    /**
+     * Workflow categories.
+     */
+    categories?: Array<string> | null;
   }
 }
 
