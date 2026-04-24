@@ -23,7 +23,7 @@ export class Branches extends APIResource {
    * ```
    */
   create(branchSlug: string, params: BranchCreateParams, options?: RequestOptions): APIPromise<Branch> {
-    const { environment } = params;
+    const { environment } = params
     return this._client.post(path`/v1/branches/${branchSlug}`, { query: { environment }, ...options });
   }
 
@@ -71,16 +71,12 @@ export class Branches extends APIResource {
    * ```
    */
   delete(branchSlug: string, params: BranchDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { environment } = params;
-    return this._client.delete(path`/v1/branches/${branchSlug}`, {
-      query: { environment },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    const { environment } = params
+    return this._client.delete(path`/v1/branches/${branchSlug}`, { query: { environment }, ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
-export type BranchesEntriesCursor = EntriesCursor<Branch>;
+export type BranchesEntriesCursor = EntriesCursor<Branch>
 
 /**
  * A branch object.
@@ -147,6 +143,6 @@ export declare namespace Branches {
     type BranchCreateParams as BranchCreateParams,
     type BranchRetrieveParams as BranchRetrieveParams,
     type BranchListParams as BranchListParams,
-    type BranchDeleteParams as BranchDeleteParams,
+    type BranchDeleteParams as BranchDeleteParams
   };
 }

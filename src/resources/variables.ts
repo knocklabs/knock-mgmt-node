@@ -39,7 +39,7 @@ export class Variables extends APIResource {
   }
 }
 
-export type VariablesEntriesCursor = EntriesCursor<Variable>;
+export type VariablesEntriesCursor = EntriesCursor<Variable>
 
 /**
  * An environment variable object.
@@ -104,6 +104,6 @@ export declare namespace Variables {
   export {
     type Variable as Variable,
     type VariablesEntriesCursor as VariablesEntriesCursor,
-    type VariableListParams as VariableListParams,
+    type VariableListParams as VariableListParams
   };
 }

@@ -36,15 +36,12 @@ export class Environments extends APIResource {
    * }
    * ```
    */
-  list(
-    query: EnvironmentListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<EnvironmentsEntriesCursor, Environment> {
+  list(query: EnvironmentListParams | null | undefined = {}, options?: RequestOptions): PagePromise<EnvironmentsEntriesCursor, Environment> {
     return this._client.getAPIList('/v1/environments', EntriesCursor<Environment>, { query, ...options });
   }
 }
 
-export type EnvironmentsEntriesCursor = EntriesCursor<Environment>;
+export type EnvironmentsEntriesCursor = EntriesCursor<Environment>
 
 /**
  * An environment object.
@@ -103,12 +100,13 @@ export interface Environment {
   last_commit_at?: string | null;
 }
 
-export interface EnvironmentListParams extends EntriesCursorParams {}
+export interface EnvironmentListParams extends EntriesCursorParams {
+}
 
 export declare namespace Environments {
   export {
     type Environment as Environment,
     type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
-    type EnvironmentListParams as EnvironmentListParams,
+    type EnvironmentListParams as EnvironmentListParams
   };
 }

@@ -2,10 +2,7 @@
 
 import KnockMgmt from '@knocklabs/mgmt';
 
-const client = new KnockMgmt({
-  serviceToken: 'My Service Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new KnockMgmt({ serviceToken: 'My Service Token', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource members', () => {
   // Mock server tests are disabled
@@ -35,18 +32,15 @@ describe('resource members', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.members.list(
-        {
-          after: 'after',
-          before: 'before',
-          email: 'email',
-          limit: 0,
-          role: 'role',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(KnockMgmt.NotFoundError);
+    await expect(client.members.list({
+    after: 'after',
+    before: 'before',
+    email: 'email',
+    limit: 0,
+    role: 'role',
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled

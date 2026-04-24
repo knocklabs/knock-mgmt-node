@@ -23,11 +23,7 @@ export class MessageTypes extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    messageTypeKey: string,
-    query: MessageTypeRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<MessageType> {
+  retrieve(messageTypeKey: string, query: MessageTypeRetrieveParams, options?: RequestOptions): APIPromise<MessageType> {
     return this._client.get(path`/v1/message_types/${messageTypeKey}`, { query, ...options });
   }
 
@@ -44,10 +40,7 @@ export class MessageTypes extends APIResource {
    * }
    * ```
    */
-  list(
-    query: MessageTypeListParams,
-    options?: RequestOptions,
-  ): PagePromise<MessageTypesEntriesCursor, MessageType> {
+  list(query: MessageTypeListParams, options?: RequestOptions): PagePromise<MessageTypesEntriesCursor, MessageType> {
     return this._client.getAPIList('/v1/message_types', EntriesCursor<MessageType>, { query, ...options });
   }
 
@@ -68,17 +61,9 @@ export class MessageTypes extends APIResource {
    * });
    * ```
    */
-  upsert(
-    messageTypeKey: string,
-    params: MessageTypeUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
-    return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
-      body,
-      ...options,
-    });
+  upsert(messageTypeKey: string, params: MessageTypeUpsertParams, options?: RequestOptions): APIPromise<MessageTypeUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
+    return this._client.put(path`/v1/message_types/${messageTypeKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
   }
 
   /**
@@ -102,21 +87,13 @@ export class MessageTypes extends APIResource {
    * );
    * ```
    */
-  validate(
-    messageTypeKey: string,
-    params: MessageTypeValidateParams,
-    options?: RequestOptions,
-  ): APIPromise<MessageTypeValidateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  validate(messageTypeKey: string, params: MessageTypeValidateParams, options?: RequestOptions): APIPromise<MessageTypeValidateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, { query: { environment, branch }, body, ...options });
   }
 }
 
-export type MessageTypesEntriesCursor = EntriesCursor<MessageType>;
+export type MessageTypesEntriesCursor = EntriesCursor<MessageType>
 
 /**
  * A message type is a schema for a message that maps to a UI component or element
@@ -259,18 +236,7 @@ export interface MessageTypeVariant {
   /**
    * The field types available for the variant.
    */
-  fields: Array<
-    | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeButtonField
-    | Shared.MessageTypeImageField
-    | Shared.MessageTypeJsonField
-    | Shared.MessageTypeMarkdownField
-    | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeSelectField
-    | MessageTypeTextField
-    | Shared.MessageTypeTextareaField
-    | Shared.MessageTypeURLField
-  >;
+  fields: Array<Shared.MessageTypeBooleanField | Shared.MessageTypeButtonField | Shared.MessageTypeImageField | Shared.MessageTypeJsonField | Shared.MessageTypeMarkdownField | Shared.MessageTypeMultiSelectField | Shared.MessageTypeSelectField | MessageTypeTextField | Shared.MessageTypeTextareaField | Shared.MessageTypeURLField>;
 
   /**
    * The unique key string for the variant. Must be at minimum 3 characters and at
@@ -500,6 +466,6 @@ export declare namespace MessageTypes {
     type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
     type MessageTypeListParams as MessageTypeListParams,
     type MessageTypeUpsertParams as MessageTypeUpsertParams,
-    type MessageTypeValidateParams as MessageTypeValidateParams,
+    type MessageTypeValidateParams as MessageTypeValidateParams
   };
 }

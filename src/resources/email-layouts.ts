@@ -21,11 +21,7 @@ export class EmailLayouts extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    emailLayoutKey: string,
-    query: EmailLayoutRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<EmailLayout> {
+  retrieve(emailLayoutKey: string, query: EmailLayoutRetrieveParams, options?: RequestOptions): APIPromise<EmailLayout> {
     return this._client.get(path`/v1/email_layouts/${emailLayoutKey}`, { query, ...options });
   }
 
@@ -42,10 +38,7 @@ export class EmailLayouts extends APIResource {
    * }
    * ```
    */
-  list(
-    query: EmailLayoutListParams,
-    options?: RequestOptions,
-  ): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
+  list(query: EmailLayoutListParams, options?: RequestOptions): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
     return this._client.getAPIList('/v1/email_layouts', EntriesCursor<EmailLayout>, { query, ...options });
   }
 
@@ -70,17 +63,9 @@ export class EmailLayouts extends APIResource {
    * );
    * ```
    */
-  upsert(
-    emailLayoutKey: string,
-    params: EmailLayoutUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<EmailLayoutUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
-    return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
-      body,
-      ...options,
-    });
+  upsert(emailLayoutKey: string, params: EmailLayoutUpsertParams, options?: RequestOptions): APIPromise<EmailLayoutUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
+    return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
   }
 
   /**
@@ -104,21 +89,13 @@ export class EmailLayouts extends APIResource {
    * );
    * ```
    */
-  validate(
-    emailLayoutKey: string,
-    params: EmailLayoutValidateParams,
-    options?: RequestOptions,
-  ): APIPromise<EmailLayoutValidateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  validate(emailLayoutKey: string, params: EmailLayoutValidateParams, options?: RequestOptions): APIPromise<EmailLayoutValidateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, { query: { environment, branch }, body, ...options });
   }
 }
 
-export type EmailLayoutsEntriesCursor = EntriesCursor<EmailLayout>;
+export type EmailLayoutsEntriesCursor = EntriesCursor<EmailLayout>
 
 /**
  * A versioned email layout used within an environment.
@@ -606,6 +583,6 @@ export declare namespace EmailLayouts {
     type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
     type EmailLayoutListParams as EmailLayoutListParams,
     type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
-    type EmailLayoutValidateParams as EmailLayoutValidateParams,
+    type EmailLayoutValidateParams as EmailLayoutValidateParams
   };
 }
