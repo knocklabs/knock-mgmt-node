@@ -2,10 +2,7 @@
 
 import KnockMgmt from '@knocklabs/mgmt';
 
-const client = new KnockMgmt({
-  serviceToken: 'My Service Token',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new KnockMgmt({ serviceToken: 'My Service Token', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource commits', () => {
   // Mock server tests are disabled
@@ -35,15 +32,15 @@ describe('resource commits', () => {
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.commits.list({
-      environment: 'development',
-      after: 'after',
-      before: 'before',
-      branch: 'feature-branch',
-      limit: 0,
-      promoted: true,
-      resource_id: 'resource_id',
-      resource_type: 'audience',
-    });
+    environment: 'development',
+    after: 'after',
+    before: 'before',
+    branch: 'feature-branch',
+    limit: 0,
+    promoted: true,
+    resource_id: 'resource_id',
+    resource_type: 'audience',
+  });
   });
 
   // Mock server tests are disabled
@@ -61,12 +58,12 @@ describe('resource commits', () => {
   // Mock server tests are disabled
   test.skip('commitAll: required and optional params', async () => {
     const response = await client.commits.commitAll({
-      environment: 'development',
-      branch: 'feature-branch',
-      commit_message: 'commit_message',
-      resource_id: 'resource_id',
-      resource_type: 'audience',
-    });
+    environment: 'development',
+    branch: 'feature-branch',
+    commit_message: 'commit_message',
+    resource_id: 'resource_id',
+    resource_type: 'audience',
+  });
   });
 
   // Mock server tests are disabled
@@ -84,11 +81,11 @@ describe('resource commits', () => {
   // Mock server tests are disabled
   test.skip('promoteAll: required and optional params', async () => {
     const response = await client.commits.promoteAll({
-      to_environment: 'to_environment',
-      branch: 'branch',
-      resource_id: 'resource_id',
-      resource_type: 'audience',
-    });
+    to_environment: 'to_environment',
+    branch: 'branch',
+    resource_id: 'resource_id',
+    resource_type: 'audience',
+  });
   });
 
   // Mock server tests are disabled

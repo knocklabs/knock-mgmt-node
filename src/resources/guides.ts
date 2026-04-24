@@ -58,17 +58,9 @@ export class Guides extends APIResource {
    * });
    * ```
    */
-  activate(
-    guideKey: string,
-    params: GuideActivateParams,
-    options?: RequestOptions,
-  ): APIPromise<GuideActivateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/guides/${guideKey}/activate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  activate(guideKey: string, params: GuideActivateParams, options?: RequestOptions): APIPromise<GuideActivateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/guides/${guideKey}/activate`, { query: { environment, branch }, body, ...options });
   }
 
   /**
@@ -107,17 +99,9 @@ export class Guides extends APIResource {
    * });
    * ```
    */
-  upsert(
-    guideKey: string,
-    params: GuideUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<GuideUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
-    return this._client.put(path`/v1/guides/${guideKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
-      body,
-      ...options,
-    });
+  upsert(guideKey: string, params: GuideUpsertParams, options?: RequestOptions): APIPromise<GuideUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
+    return this._client.put(path`/v1/guides/${guideKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
   }
 
   /**
@@ -144,21 +128,13 @@ export class Guides extends APIResource {
    * });
    * ```
    */
-  validate(
-    guideKey: string,
-    params: GuideValidateParams,
-    options?: RequestOptions,
-  ): APIPromise<GuideValidateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/guides/${guideKey}/validate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  validate(guideKey: string, params: GuideValidateParams, options?: RequestOptions): APIPromise<GuideValidateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/guides/${guideKey}/validate`, { query: { environment, branch }, body, ...options });
   }
 }
 
-export type GuidesEntriesCursor = EntriesCursor<Guide>;
+export type GuidesEntriesCursor = EntriesCursor<Guide>
 
 /**
  * A guide defines an in-app guide that can be displayed to users based on priority
@@ -409,9 +385,7 @@ export interface GuideListParams extends EntriesCursorParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export type GuideActivateParams =
-  | GuideActivateParams.GuideBooleanActivationParams
-  | GuideActivateParams.GuideScheduledActivationParams;
+export type GuideActivateParams = GuideActivateParams.GuideBooleanActivationParams | GuideActivateParams.GuideScheduledActivationParams
 
 export declare namespace GuideActivateParams {
   export interface GuideBooleanActivationParams {
@@ -639,6 +613,6 @@ export declare namespace Guides {
     type GuideListParams as GuideListParams,
     type GuideActivateParams as GuideActivateParams,
     type GuideUpsertParams as GuideUpsertParams,
-    type GuideValidateParams as GuideValidateParams,
+    type GuideValidateParams as GuideValidateParams
   };
 }

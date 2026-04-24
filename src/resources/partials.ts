@@ -64,17 +64,9 @@ export class Partials extends APIResource {
    * );
    * ```
    */
-  upsert(
-    partialKey: string,
-    params: PartialUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<PartialUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
-    return this._client.put(path`/v1/partials/${partialKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
-      body,
-      ...options,
-    });
+  upsert(partialKey: string, params: PartialUpsertParams, options?: RequestOptions): APIPromise<PartialUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
+    return this._client.put(path`/v1/partials/${partialKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
   }
 
   /**
@@ -97,21 +89,13 @@ export class Partials extends APIResource {
    * );
    * ```
    */
-  validate(
-    partialKey: string,
-    params: PartialValidateParams,
-    options?: RequestOptions,
-  ): APIPromise<PartialValidateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/partials/${partialKey}/validate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  validate(partialKey: string, params: PartialValidateParams, options?: RequestOptions): APIPromise<PartialValidateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/partials/${partialKey}/validate`, { query: { environment, branch }, body, ...options });
   }
 }
 
-export type PartialsEntriesCursor = EntriesCursor<Partial>;
+export type PartialsEntriesCursor = EntriesCursor<Partial>
 
 /**
  * A partial is a reusable piece of content that can be used in a template.
@@ -172,18 +156,7 @@ export interface Partial {
   /**
    * The field types available for the partial.
    */
-  input_schema?: Array<
-    | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeButtonField
-    | Shared.MessageTypeImageField
-    | Shared.MessageTypeJsonField
-    | Shared.MessageTypeMarkdownField
-    | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeSelectField
-    | MessageTypesAPI.MessageTypeTextField
-    | Shared.MessageTypeTextareaField
-    | Shared.MessageTypeURLField
-  >;
+  input_schema?: Array<Shared.MessageTypeBooleanField | Shared.MessageTypeButtonField | Shared.MessageTypeImageField | Shared.MessageTypeJsonField | Shared.MessageTypeMarkdownField | Shared.MessageTypeMultiSelectField | Shared.MessageTypeSelectField | MessageTypesAPI.MessageTypeTextField | Shared.MessageTypeTextareaField | Shared.MessageTypeURLField>;
 
   /**
    * Indicates whether the partial can be used in the visual editor. Only applies to
@@ -335,18 +308,7 @@ export namespace PartialUpsertParams {
     /**
      * The field types available for the partial.
      */
-    input_schema?: Array<
-      | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeImageField
-      | Shared.MessageTypeJsonField
-      | Shared.MessageTypeMarkdownField
-      | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeSelectField
-      | MessageTypesAPI.MessageTypeTextField
-      | Shared.MessageTypeTextareaField
-      | Shared.MessageTypeURLField
-    >;
+    input_schema?: Array<Shared.MessageTypeBooleanField | Shared.MessageTypeButtonField | Shared.MessageTypeImageField | Shared.MessageTypeJsonField | Shared.MessageTypeMarkdownField | Shared.MessageTypeMultiSelectField | Shared.MessageTypeSelectField | MessageTypesAPI.MessageTypeTextField | Shared.MessageTypeTextareaField | Shared.MessageTypeURLField>;
 
     /**
      * Indicates whether the partial can be used in the visual editor. Only applies to
@@ -408,18 +370,7 @@ export namespace PartialValidateParams {
     /**
      * The field types available for the partial.
      */
-    input_schema?: Array<
-      | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeImageField
-      | Shared.MessageTypeJsonField
-      | Shared.MessageTypeMarkdownField
-      | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeSelectField
-      | MessageTypesAPI.MessageTypeTextField
-      | Shared.MessageTypeTextareaField
-      | Shared.MessageTypeURLField
-    >;
+    input_schema?: Array<Shared.MessageTypeBooleanField | Shared.MessageTypeButtonField | Shared.MessageTypeImageField | Shared.MessageTypeJsonField | Shared.MessageTypeMarkdownField | Shared.MessageTypeMultiSelectField | Shared.MessageTypeSelectField | MessageTypesAPI.MessageTypeTextField | Shared.MessageTypeTextareaField | Shared.MessageTypeURLField>;
 
     /**
      * Indicates whether the partial can be used in the visual editor. Only applies to
@@ -438,6 +389,6 @@ export declare namespace Partials {
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
     type PartialUpsertParams as PartialUpsertParams,
-    type PartialValidateParams as PartialValidateParams,
+    type PartialValidateParams as PartialValidateParams
   };
 }

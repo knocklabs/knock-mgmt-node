@@ -21,11 +21,7 @@ export class Translations extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    localeCode: string,
-    query: TranslationRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<TranslationRetrieveResponse> {
+  retrieve(localeCode: string, query: TranslationRetrieveParams, options?: RequestOptions): APIPromise<TranslationRetrieveResponse> {
     return this._client.get(path`/v1/translations/${localeCode}`, { query, ...options });
   }
 
@@ -43,10 +39,7 @@ export class Translations extends APIResource {
    * }
    * ```
    */
-  list(
-    query: TranslationListParams,
-    options?: RequestOptions,
-  ): PagePromise<TranslationsEntriesCursor, Translation> {
+  list(query: TranslationListParams, options?: RequestOptions): PagePromise<TranslationsEntriesCursor, Translation> {
     return this._client.getAPIList('/v1/translations', EntriesCursor<Translation>, { query, ...options });
   }
 
@@ -72,28 +65,9 @@ export class Translations extends APIResource {
    * );
    * ```
    */
-  upsert(
-    localeCode: string,
-    params: TranslationUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<TranslationUpsertResponse> {
-    const {
-      environment,
-      namespace,
-      annotate,
-      branch,
-      commit,
-      commit_message,
-      force,
-      format,
-      tenant,
-      ...body
-    } = params;
-    return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, branch, commit, commit_message, force, format, tenant },
-      body,
-      ...options,
-    });
+  upsert(localeCode: string, params: TranslationUpsertParams, options?: RequestOptions): APIPromise<TranslationUpsertResponse> {
+    const { environment, namespace, annotate, branch, commit, commit_message, force, format, tenant, ...body } = params
+    return this._client.put(path`/v1/translations/${localeCode}`, { query: { environment, namespace, annotate, branch, commit, commit_message, force, format, tenant }, body, ...options });
   }
 
   /**
@@ -116,21 +90,13 @@ export class Translations extends APIResource {
    * );
    * ```
    */
-  validate(
-    localeCode: string,
-    params: TranslationValidateParams,
-    options?: RequestOptions,
-  ): APIPromise<TranslationValidateResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { environment, branch },
-      body,
-      ...options,
-    });
+  validate(localeCode: string, params: TranslationValidateParams, options?: RequestOptions): APIPromise<TranslationValidateResponse> {
+    const { environment, branch, ...body } = params
+    return this._client.put(path`/v1/translations/${localeCode}/validate`, { query: { environment, branch }, body, ...options });
   }
 }
 
-export type TranslationsEntriesCursor = EntriesCursor<Translation>;
+export type TranslationsEntriesCursor = EntriesCursor<Translation>
 
 /**
  * A translation object.
@@ -416,6 +382,6 @@ export declare namespace Translations {
     type TranslationRetrieveParams as TranslationRetrieveParams,
     type TranslationListParams as TranslationListParams,
     type TranslationUpsertParams as TranslationUpsertParams,
-    type TranslationValidateParams as TranslationValidateParams,
+    type TranslationValidateParams as TranslationValidateParams
   };
 }

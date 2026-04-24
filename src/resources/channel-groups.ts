@@ -35,10 +35,7 @@ export class ChannelGroups extends APIResource {
    * }
    * ```
    */
-  list(
-    query: ChannelGroupListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ChannelGroupsEntriesCursor, ChannelGroup> {
+  list(query: ChannelGroupListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ChannelGroupsEntriesCursor, ChannelGroup> {
     return this._client.getAPIList('/v1/channel_groups', EntriesCursor<ChannelGroup>, { query, ...options });
   }
 
@@ -51,10 +48,7 @@ export class ChannelGroups extends APIResource {
    * ```
    */
   delete(channelGroupKey: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/channel_groups/${channelGroupKey}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/v1/channel_groups/${channelGroupKey}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
@@ -73,16 +67,12 @@ export class ChannelGroups extends APIResource {
    * );
    * ```
    */
-  upsert(
-    channelGroupKey: string,
-    body: ChannelGroupUpsertParams,
-    options?: RequestOptions,
-  ): APIPromise<ChannelGroupUpsertResponse> {
+  upsert(channelGroupKey: string, body: ChannelGroupUpsertParams, options?: RequestOptions): APIPromise<ChannelGroupUpsertResponse> {
     return this._client.put(path`/v1/channel_groups/${channelGroupKey}`, { body, ...options });
   }
 }
 
-export type ChannelGroupsEntriesCursor = EntriesCursor<ChannelGroup>;
+export type ChannelGroupsEntriesCursor = EntriesCursor<ChannelGroup>
 
 /**
  * A group of channels with rules for when they are applicable.
@@ -175,29 +165,7 @@ export interface ChannelGroupRule {
   /**
    * For conditional rules, the operator to apply.
    */
-  operator?:
-    | 'equal_to'
-    | 'not_equal_to'
-    | 'greater_than'
-    | 'less_than'
-    | 'greater_than_or_equal_to'
-    | 'less_than_or_equal_to'
-    | 'contains'
-    | 'not_contains'
-    | 'contains_all'
-    | 'not_contains_all'
-    | 'is_timestamp_before'
-    | 'is_timestamp_on_or_after'
-    | 'is_timestamp_between'
-    | 'is_between'
-    | 'empty'
-    | 'not_empty'
-    | 'exists'
-    | 'not_exists'
-    | 'is_timestamp'
-    | 'is_audience_member'
-    | 'is_not_audience_member'
-    | null;
+  operator?: 'equal_to' | 'not_equal_to' | 'greater_than' | 'less_than' | 'greater_than_or_equal_to' | 'less_than_or_equal_to' | 'contains' | 'not_contains' | 'contains_all' | 'not_contains_all' | 'is_timestamp_before' | 'is_timestamp_on_or_after' | 'is_timestamp_between' | 'is_between' | 'empty' | 'not_empty' | 'exists' | 'not_exists' | 'is_timestamp' | 'is_audience_member' | 'is_not_audience_member' | null;
 
   /**
    * For conditional rules, the variable to evaluate.
@@ -215,7 +183,8 @@ export interface ChannelGroupUpsertResponse {
   channel_group: ChannelGroup;
 }
 
-export interface ChannelGroupListParams extends EntriesCursorParams {}
+export interface ChannelGroupListParams extends EntriesCursorParams {
+}
 
 export interface ChannelGroupUpsertParams {
   /**
@@ -281,29 +250,7 @@ export namespace ChannelGroupUpsertParams {
       /**
        * For conditional rules, the operator to apply.
        */
-      operator?:
-        | 'equal_to'
-        | 'not_equal_to'
-        | 'greater_than'
-        | 'less_than'
-        | 'greater_than_or_equal_to'
-        | 'less_than_or_equal_to'
-        | 'contains'
-        | 'not_contains'
-        | 'contains_all'
-        | 'not_contains_all'
-        | 'is_timestamp_before'
-        | 'is_timestamp_on_or_after'
-        | 'is_timestamp_between'
-        | 'is_between'
-        | 'empty'
-        | 'not_empty'
-        | 'exists'
-        | 'not_exists'
-        | 'is_timestamp'
-        | 'is_audience_member'
-        | 'is_not_audience_member'
-        | null;
+      operator?: 'equal_to' | 'not_equal_to' | 'greater_than' | 'less_than' | 'greater_than_or_equal_to' | 'less_than_or_equal_to' | 'contains' | 'not_contains' | 'contains_all' | 'not_contains_all' | 'is_timestamp_before' | 'is_timestamp_on_or_after' | 'is_timestamp_between' | 'is_between' | 'empty' | 'not_empty' | 'exists' | 'not_exists' | 'is_timestamp' | 'is_audience_member' | 'is_not_audience_member' | null;
 
       /**
        * For conditional rules, the variable to evaluate.
@@ -320,6 +267,6 @@ export declare namespace ChannelGroups {
     type ChannelGroupUpsertResponse as ChannelGroupUpsertResponse,
     type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
     type ChannelGroupListParams as ChannelGroupListParams,
-    type ChannelGroupUpsertParams as ChannelGroupUpsertParams,
+    type ChannelGroupUpsertParams as ChannelGroupUpsertParams
   };
 }

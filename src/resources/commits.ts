@@ -53,11 +53,8 @@ export class Commits extends APIResource {
    * ```
    */
   commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
-    const { environment, branch, commit_message, resource_id, resource_type } = params;
-    return this._client.put('/v1/commits', {
-      query: { environment, branch, commit_message, resource_id, resource_type },
-      ...options,
-    });
+    const { environment, branch, commit_message, resource_id, resource_type } = params
+    return this._client.put('/v1/commits', { query: { environment, branch, commit_message, resource_id, resource_type }, ...options });
   }
 
   /**
@@ -72,11 +69,8 @@ export class Commits extends APIResource {
    * ```
    */
   promoteAll(params: CommitPromoteAllParams, options?: RequestOptions): APIPromise<CommitPromoteAllResponse> {
-    const { to_environment, branch, resource_id, resource_type } = params;
-    return this._client.put('/v1/commits/promote', {
-      query: { to_environment, branch, resource_id, resource_type },
-      ...options,
-    });
+    const { to_environment, branch, resource_id, resource_type } = params
+    return this._client.put('/v1/commits/promote', { query: { to_environment, branch, resource_id, resource_type }, ...options });
   }
 
   /**
@@ -92,7 +86,7 @@ export class Commits extends APIResource {
   }
 }
 
-export type CommitsEntriesCursor = EntriesCursor<Commit>;
+export type CommitsEntriesCursor = EntriesCursor<Commit>
 
 /**
  * A commit is a change to a resource within an environment, made by an author.
@@ -221,15 +215,7 @@ export interface CommitListParams extends EntriesCursorParams {
    * Filter commits by resource type(s). Accepts a single type or array of types. Can
    * be combined with resource_id to filter for specific resources.
    */
-  resource_type?:
-    | 'audience'
-    | 'email_layout'
-    | 'guide'
-    | 'message_type'
-    | 'partial'
-    | 'translation'
-    | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+  resource_type?: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow' | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export interface CommitCommitAllParams {
@@ -259,15 +245,7 @@ export interface CommitCommitAllParams {
    * Filter changes to commit by resource type(s). Accepts a single type or array of
    * types. Can be combined with resource_id to filter for specific resources.
    */
-  resource_type?:
-    | 'audience'
-    | 'email_layout'
-    | 'guide'
-    | 'message_type'
-    | 'partial'
-    | 'translation'
-    | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+  resource_type?: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow' | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export interface CommitPromoteAllParams {
@@ -299,15 +277,7 @@ export interface CommitPromoteAllParams {
    * Filter commits to promote by resource type(s). Accepts a single type or array of
    * types. Can be combined with resource_id to filter for specific resources.
    */
-  resource_type?:
-    | 'audience'
-    | 'email_layout'
-    | 'guide'
-    | 'message_type'
-    | 'partial'
-    | 'translation'
-    | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+  resource_type?: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow' | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
 }
 
 export declare namespace Commits {
@@ -319,6 +289,6 @@ export declare namespace Commits {
     type CommitsEntriesCursor as CommitsEntriesCursor,
     type CommitListParams as CommitListParams,
     type CommitCommitAllParams as CommitCommitAllParams,
-    type CommitPromoteAllParams as CommitPromoteAllParams,
+    type CommitPromoteAllParams as CommitPromoteAllParams
   };
 }

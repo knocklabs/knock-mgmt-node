@@ -27,7 +27,7 @@ export class Templates extends APIResource {
    * ```
    */
   preview(params: TemplatePreviewParams, options?: RequestOptions): APIPromise<TemplatePreviewResponse> {
-    const { environment, branch, ...body } = params;
+    const { environment, branch, ...body } = params
     return this._client.post('/v1/templates/preview', { query: { environment, branch }, body, ...options });
   }
 }
@@ -101,14 +101,7 @@ export interface EmailTemplate {
   /**
    * The visual blocks that make up the email template.
    */
-  visual_blocks?: Array<
-    | EmailTemplate.EmailButtonSetBlock
-    | EmailTemplate.EmailDividerBlock
-    | EmailTemplate.EmailHTMLBlock
-    | EmailTemplate.EmailImageBlock
-    | EmailTemplate.EmailMarkdownBlock
-    | EmailTemplate.EmailPartialBlock
-  > | null;
+  visual_blocks?: Array<EmailTemplate.EmailButtonSetBlock | EmailTemplate.EmailDividerBlock | EmailTemplate.EmailHTMLBlock | EmailTemplate.EmailImageBlock | EmailTemplate.EmailMarkdownBlock | EmailTemplate.EmailPartialBlock> | null;
 }
 
 export namespace EmailTemplate {
@@ -1039,6 +1032,6 @@ export declare namespace Templates {
     type SMSTemplate as SMSTemplate,
     type WebhookTemplate as WebhookTemplate,
     type TemplatePreviewResponse as TemplatePreviewResponse,
-    type TemplatePreviewParams as TemplatePreviewParams,
+    type TemplatePreviewParams as TemplatePreviewParams
   };
 }

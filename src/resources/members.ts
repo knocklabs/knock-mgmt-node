@@ -34,10 +34,7 @@ export class Members extends APIResource {
    * }
    * ```
    */
-  list(
-    query: MemberListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<MembersEntriesCursor, Member> {
+  list(query: MemberListParams | null | undefined = {}, options?: RequestOptions): PagePromise<MembersEntriesCursor, Member> {
     return this._client.getAPIList('/v1/members', EntriesCursor<Member>, { query, ...options });
   }
 
@@ -52,14 +49,11 @@ export class Members extends APIResource {
    * ```
    */
   delete(id: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/v1/members/${id}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/v1/members/${id}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 }
 
-export type MembersEntriesCursor = EntriesCursor<Member>;
+export type MembersEntriesCursor = EntriesCursor<Member>
 
 /**
  * A member of the account.
@@ -146,6 +140,6 @@ export declare namespace Members {
     type Member as Member,
     type MemberUser as MemberUser,
     type MembersEntriesCursor as MembersEntriesCursor,
-    type MemberListParams as MemberListParams,
+    type MemberListParams as MemberListParams
   };
 }
