@@ -2,7 +2,10 @@
 
 import KnockMgmt from '@knocklabs/mgmt';
 
-const client = new KnockMgmt({ serviceToken: 'My Service Token', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new KnockMgmt({
+  serviceToken: 'My Service Token',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource auth', () => {
   // Mock server tests are disabled

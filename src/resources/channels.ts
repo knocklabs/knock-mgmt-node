@@ -35,12 +35,15 @@ export class Channels extends APIResource {
    * }
    * ```
    */
-  list(query: ChannelListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ChannelsEntriesCursor, Channel> {
+  list(
+    query: ChannelListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ChannelsEntriesCursor, Channel> {
     return this._client.getAPIList('/v1/channels', EntriesCursor<Channel>, { query, ...options });
   }
 }
 
-export type ChannelsEntriesCursor = EntriesCursor<Channel>
+export type ChannelsEntriesCursor = EntriesCursor<Channel>;
 
 /**
  * A configured channel, which is a way to route messages to a provider.
@@ -268,6 +271,6 @@ export declare namespace Channels {
     type PushChannelSettings as PushChannelSettings,
     type SMSChannelSettings as SMSChannelSettings,
     type ChannelsEntriesCursor as ChannelsEntriesCursor,
-    type ChannelListParams as ChannelListParams
+    type ChannelListParams as ChannelListParams,
   };
 }

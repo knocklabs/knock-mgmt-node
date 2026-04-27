@@ -87,7 +87,8 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
+      async (client, props) =>
+        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
     );
   }
 
@@ -131,7 +132,12 @@ export class EntriesCursor<Item> extends AbstractPage<Item> implements EntriesCu
 
   page_info: EntriesCursorResponse.PageInfo;
 
-  constructor(client: KnockMgmt, response: Response, body: EntriesCursorResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: KnockMgmt,
+    response: Response,
+    body: EntriesCursorResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.entries = body.entries || [];
@@ -143,7 +149,7 @@ export class EntriesCursor<Item> extends AbstractPage<Item> implements EntriesCu
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const cursor = this.page_info?.after
+    const cursor = this.page_info?.after;
     if (!cursor) {
       return null;
     }
