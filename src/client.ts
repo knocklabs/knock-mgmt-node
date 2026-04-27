@@ -20,28 +20,213 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
-import { Audience, AudienceArchiveParams, AudienceArchiveResponse, AudienceCondition, AudienceListParams, AudienceRetrieveParams, AudienceUpsertParams, AudienceUpsertResponse, AudienceValidateParams, AudienceValidateResponse, Audiences, AudiencesEntriesCursor, DynamicAudience, StaticAudience } from './resources/audiences';
+import {
+  Audience,
+  AudienceArchiveParams,
+  AudienceArchiveResponse,
+  AudienceCondition,
+  AudienceListParams,
+  AudienceRetrieveParams,
+  AudienceUpsertParams,
+  AudienceUpsertResponse,
+  AudienceValidateParams,
+  AudienceValidateResponse,
+  Audiences,
+  AudiencesEntriesCursor,
+  DynamicAudience,
+  StaticAudience,
+} from './resources/audiences';
 import { Auth, AuthVerifyResponse } from './resources/auth';
-import { Branch, BranchCreateParams, BranchDeleteParams, BranchListParams, BranchRetrieveParams, Branches, BranchesEntriesCursor } from './resources/branches';
-import { Broadcast, BroadcastCancelParams, BroadcastCancelResponse, BroadcastListParams, BroadcastRequest, BroadcastRetrieveParams, BroadcastSendParams, BroadcastSendResponse, BroadcastUpsertParams, BroadcastUpsertResponse, BroadcastValidateParams, BroadcastValidateResponse, Broadcasts, BroadcastsEntriesCursor } from './resources/broadcasts';
-import { ChannelGroup, ChannelGroupListParams, ChannelGroupRule, ChannelGroupUpsertParams, ChannelGroupUpsertResponse, ChannelGroups, ChannelGroupsEntriesCursor } from './resources/channel-groups';
-import { Channel, ChannelEnvironmentSettings, ChannelListParams, Channels, ChannelsEntriesCursor, ChatChannelSettings, EmailChannelSettings, InAppFeedChannelSettings, PushChannelSettings, SMSChannelSettings } from './resources/channels';
-import { Commit, CommitCommitAllParams, CommitCommitAllResponse, CommitListParams, CommitPromoteAllParams, CommitPromoteAllResponse, CommitPromoteOneResponse, Commits, CommitsEntriesCursor } from './resources/commits';
-import { EmailLayout, EmailLayoutListParams, EmailLayoutRetrieveParams, EmailLayoutUpsertParams, EmailLayoutUpsertResponse, EmailLayoutValidateParams, EmailLayoutValidateResponse, EmailLayouts, EmailLayoutsEntriesCursor } from './resources/email-layouts';
-import { Environment, EnvironmentListParams, Environments, EnvironmentsEntriesCursor } from './resources/environments';
-import { Guide, GuideActivateParams, GuideActivateResponse, GuideActivationURLPattern, GuideArchiveResponse, GuideListParams, GuideRetrieveParams, GuideStep, GuideUpsertParams, GuideUpsertResponse, GuideValidateParams, GuideValidateResponse, Guides, GuidesEntriesCursor } from './resources/guides';
+import {
+  Branch,
+  BranchCreateParams,
+  BranchDeleteParams,
+  BranchListParams,
+  BranchRetrieveParams,
+  Branches,
+  BranchesEntriesCursor,
+} from './resources/branches';
+import {
+  Broadcast,
+  BroadcastCancelParams,
+  BroadcastCancelResponse,
+  BroadcastListParams,
+  BroadcastRequest,
+  BroadcastRetrieveParams,
+  BroadcastSendParams,
+  BroadcastSendResponse,
+  BroadcastUpsertParams,
+  BroadcastUpsertResponse,
+  BroadcastValidateParams,
+  BroadcastValidateResponse,
+  Broadcasts,
+  BroadcastsEntriesCursor,
+} from './resources/broadcasts';
+import {
+  ChannelGroup,
+  ChannelGroupListParams,
+  ChannelGroupRule,
+  ChannelGroupUpsertParams,
+  ChannelGroupUpsertResponse,
+  ChannelGroups,
+  ChannelGroupsEntriesCursor,
+} from './resources/channel-groups';
+import {
+  Channel,
+  ChannelEnvironmentSettings,
+  ChannelListParams,
+  Channels,
+  ChannelsEntriesCursor,
+  ChatChannelSettings,
+  EmailChannelSettings,
+  InAppFeedChannelSettings,
+  PushChannelSettings,
+  SMSChannelSettings,
+} from './resources/channels';
+import {
+  Commit,
+  CommitCommitAllParams,
+  CommitCommitAllResponse,
+  CommitListParams,
+  CommitPromoteAllParams,
+  CommitPromoteAllResponse,
+  CommitPromoteOneResponse,
+  Commits,
+  CommitsEntriesCursor,
+} from './resources/commits';
+import {
+  EmailLayout,
+  EmailLayoutListParams,
+  EmailLayoutRetrieveParams,
+  EmailLayoutUpsertParams,
+  EmailLayoutUpsertResponse,
+  EmailLayoutValidateParams,
+  EmailLayoutValidateResponse,
+  EmailLayouts,
+  EmailLayoutsEntriesCursor,
+} from './resources/email-layouts';
+import {
+  Environment,
+  EnvironmentListParams,
+  Environments,
+  EnvironmentsEntriesCursor,
+} from './resources/environments';
+import {
+  Guide,
+  GuideActivateParams,
+  GuideActivateResponse,
+  GuideActivationURLPattern,
+  GuideArchiveResponse,
+  GuideListParams,
+  GuideRetrieveParams,
+  GuideStep,
+  GuideUpsertParams,
+  GuideUpsertResponse,
+  GuideValidateParams,
+  GuideValidateResponse,
+  Guides,
+  GuidesEntriesCursor,
+} from './resources/guides';
 import { Member, MemberListParams, MemberUser, Members, MembersEntriesCursor } from './resources/members';
-import { MessageType, MessageTypeListParams, MessageTypeRetrieveParams, MessageTypeTextField, MessageTypeUpsertParams, MessageTypeUpsertResponse, MessageTypeValidateParams, MessageTypeValidateResponse, MessageTypeVariant, MessageTypes, MessageTypesEntriesCursor } from './resources/message-types';
-import { Partial, PartialListParams, PartialRetrieveParams, PartialUpsertParams, PartialUpsertResponse, PartialValidateParams, PartialValidateResponse, Partials, PartialsEntriesCursor } from './resources/partials';
-import { ChatTemplate, EmailTemplate, InAppFeedTemplate, PushTemplate, RequestTemplate, SMSTemplate, TemplatePreviewParams, TemplatePreviewResponse, Templates, WebhookTemplate } from './resources/templates';
-import { Translation, TranslationListParams, TranslationRetrieveParams, TranslationRetrieveResponse, TranslationUpsertParams, TranslationUpsertResponse, TranslationValidateParams, TranslationValidateResponse, Translations, TranslationsEntriesCursor } from './resources/translations';
+import {
+  MessageType,
+  MessageTypeListParams,
+  MessageTypeRetrieveParams,
+  MessageTypeTextField,
+  MessageTypeUpsertParams,
+  MessageTypeUpsertResponse,
+  MessageTypeValidateParams,
+  MessageTypeValidateResponse,
+  MessageTypeVariant,
+  MessageTypes,
+  MessageTypesEntriesCursor,
+} from './resources/message-types';
+import {
+  Partial,
+  PartialListParams,
+  PartialRetrieveParams,
+  PartialUpsertParams,
+  PartialUpsertResponse,
+  PartialValidateParams,
+  PartialValidateResponse,
+  Partials,
+  PartialsEntriesCursor,
+} from './resources/partials';
+import {
+  ChatTemplate,
+  EmailTemplate,
+  InAppFeedTemplate,
+  PushTemplate,
+  RequestTemplate,
+  SMSTemplate,
+  TemplatePreviewParams,
+  TemplatePreviewResponse,
+  Templates,
+  WebhookTemplate,
+} from './resources/templates';
+import {
+  Translation,
+  TranslationListParams,
+  TranslationRetrieveParams,
+  TranslationRetrieveResponse,
+  TranslationUpsertParams,
+  TranslationUpsertResponse,
+  TranslationValidateParams,
+  TranslationValidateResponse,
+  Translations,
+  TranslationsEntriesCursor,
+} from './resources/translations';
 import { Variable, VariableListParams, Variables, VariablesEntriesCursor } from './resources/variables';
-import { Condition, ConditionGroup, Duration, SendWindow, Workflow, WorkflowAIAgentStep, WorkflowActivateParams, WorkflowActivateResponse, WorkflowBatchStep, WorkflowBranchStep, WorkflowChatStep, WorkflowDelayStep, WorkflowEmailStep, WorkflowFetchStep, WorkflowInAppFeedStep, WorkflowListParams, WorkflowPushStep, WorkflowRandomCohortStep, WorkflowRetrieveParams, WorkflowRetrieveResponse, WorkflowRunParams, WorkflowRunResponse, WorkflowSMSStep, WorkflowStep, WorkflowThrottleStep, WorkflowTriggerWorkflowStep, WorkflowUpdateDataStep, WorkflowUpdateObjectStep, WorkflowUpdateTenantStep, WorkflowUpdateUserStep, WorkflowUpsertParams, WorkflowUpsertResponse, WorkflowValidateParams, WorkflowValidateResponse, WorkflowWebhookStep, Workflows, WorkflowsEntriesCursor } from './resources/workflows/workflows';
+import {
+  Condition,
+  ConditionGroup,
+  Duration,
+  SendWindow,
+  Workflow,
+  WorkflowAIAgentStep,
+  WorkflowActivateParams,
+  WorkflowActivateResponse,
+  WorkflowBatchStep,
+  WorkflowBranchStep,
+  WorkflowChatStep,
+  WorkflowDelayStep,
+  WorkflowEmailStep,
+  WorkflowFetchStep,
+  WorkflowInAppFeedStep,
+  WorkflowListParams,
+  WorkflowPushStep,
+  WorkflowRandomCohortStep,
+  WorkflowRetrieveParams,
+  WorkflowRetrieveResponse,
+  WorkflowRunParams,
+  WorkflowRunResponse,
+  WorkflowSMSStep,
+  WorkflowStep,
+  WorkflowThrottleStep,
+  WorkflowTriggerWorkflowStep,
+  WorkflowUpdateDataStep,
+  WorkflowUpdateObjectStep,
+  WorkflowUpdateTenantStep,
+  WorkflowUpdateUserStep,
+  WorkflowUpsertParams,
+  WorkflowUpsertResponse,
+  WorkflowValidateParams,
+  WorkflowValidateResponse,
+  WorkflowWebhookStep,
+  Workflows,
+  WorkflowsEntriesCursor,
+} from './resources/workflows/workflows';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
+import {
+  type LogLevel,
+  type Logger,
+  formatRequestDetails,
+  loggerFor,
+  parseLogLevel,
+} from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -120,7 +305,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Knock Mgmt API. 
+ * API Client for interfacing with the Knock Mgmt API.
  */
 export class KnockMgmt {
   serviceToken: string;
@@ -156,7 +341,7 @@ export class KnockMgmt {
   }: ClientOptions = {}) {
     if (serviceToken === undefined) {
       throw new Errors.KnockMgmtError(
-        'The KNOCK_SERVICE_TOKEN environment variable is missing or empty; either provide it, or instantiate the KnockMgmt client with an serviceToken option, like new KnockMgmt({ serviceToken: \'My Service Token\' }).'
+        "The KNOCK_SERVICE_TOKEN environment variable is missing or empty; either provide it, or instantiate the KnockMgmt client with an serviceToken option, like new KnockMgmt({ serviceToken: 'My Service Token' }).",
       );
     }
 
@@ -172,7 +357,10 @@ export class KnockMgmt {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('KNOCK_MGMT_LOG'), 'process.env[\'KNOCK_MGMT_LOG\']', this) ?? defaultLogLevel;
+    this.logLevel =
+      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
+      parseLogLevel(readEnv('KNOCK_MGMT_LOG'), "process.env['KNOCK_MGMT_LOG']", this) ??
+      defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -197,7 +385,7 @@ export class KnockMgmt {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       serviceToken: this.serviceToken,
-      ...options
+      ...options,
     });
     return client;
   }
@@ -210,7 +398,7 @@ export class KnockMgmt {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery
+    return this._options.defaultQuery;
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
@@ -242,7 +430,11 @@ export class KnockMgmt {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
+  buildURL(
+    path: string,
+    query: Record<string, unknown> | null | undefined,
+    defaultBaseURL?: string | undefined,
+  ): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -330,7 +522,9 @@ export class KnockMgmt {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
+    const { req, url, timeout } = await this.buildRequest(options, {
+      retryCount: maxRetries - retriesRemaining,
+    });
 
     await this.prepareRequest(req, { url, options });
 
@@ -339,7 +533,16 @@ export class KnockMgmt {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
+    loggerFor(this).debug(
+      `[${requestLogID}] sending request`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        method: options.method,
+        url,
+        options,
+        headers: req.headers,
+      }),
+    );
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -358,21 +561,45 @@ export class KnockMgmt {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
+      const isTimeout =
+        isAbortError(response) ||
+        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
       if (retriesRemaining) {
-        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+        loggerFor(this).info(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
+        );
+        loggerFor(this).debug(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url,
+            durationMs: headersTime - startTime,
+            message: response.message,
+          }),
+        );
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
-      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+      loggerFor(this).info(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
+      );
+      loggerFor(this).debug(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url,
+          durationMs: headersTime - startTime,
+          message: response.message,
+        }),
+      );
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+      response.ok ? 'succeeded' : 'failed'
+    } with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -381,27 +608,60 @@ export class KnockMgmt {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+        loggerFor(this).debug(
+          `[${requestLogID}] response error (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url: response.url,
+            status: response.status,
+            headers: response.headers,
+            durationMs: headersTime - startTime,
+          }),
+        );
+        return this.retryRequest(
+          options,
+          retriesRemaining,
+          retryOfRequestLogID ?? requestLogID,
+          response.headers,
+        );
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
+      loggerFor(this).debug(
+        `[${requestLogID}] response error (${retryMessage})`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url: response.url,
+          status: response.status,
+          headers: response.headers,
+          message: errMessage,
+          durationMs: Date.now() - startTime,
+        }),
+      );
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo)
-    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+    loggerFor(this).info(responseInfo);
+    loggerFor(this).debug(
+      `[${requestLogID}] response start`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        url: response.url,
+        status: response.status,
+        headers: response.headers,
+        durationMs: headersTime - startTime,
+      }),
+    );
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -419,7 +679,10 @@ export class KnockMgmt {
     );
   }
 
-  requestAPIList<Item = unknown, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
     Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
@@ -439,7 +702,9 @@ export class KnockMgmt {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody =
+      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
+      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -454,7 +719,6 @@ export class KnockMgmt {
     }
 
     try {
-
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -555,11 +819,12 @@ export class KnockMgmt {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal}),
-      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
+      ...(options.signal && { signal: options.signal }),
+      ...((globalThis as any).ReadableStream &&
+        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       ...(body && { body }),
-      ...(this.fetchOptions as any ?? {}),
-      ...(options.fetchOptions as any ?? {}),
+      ...((this.fetchOptions as any) ?? {}),
+      ...((options.fetchOptions as any) ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -584,15 +849,17 @@ export class KnockMgmt {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {Accept: 'application/json',
-      'User-Agent': this.getUserAgent(),
-      'X-Stainless-Retry-Count': String(retryCount),
-      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-      ...getPlatformHeaders()},
+      {
+        Accept: 'application/json',
+        'User-Agent': this.getUserAgent(),
+        'X-Stainless-Retry-Count': String(retryCount),
+        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+        ...getPlatformHeaders(),
+      },
       await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers
+      options.headers,
     ]);
 
     this.validateHeaders(headers);
@@ -619,11 +886,9 @@ export class KnockMgmt {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (
-        typeof body === 'string' &&
+      (typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')
-      ) ||
+        headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -654,7 +919,7 @@ export class KnockMgmt {
   }
 
   static KnockMgmt = this;
-  static DEFAULT_TIMEOUT = 60000 // 1 minute
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
   static KnockMgmtError = Errors.KnockMgmtError;
   static APIError = Errors.APIError;
@@ -745,255 +1010,252 @@ KnockMgmt.Broadcasts = Broadcasts;
 KnockMgmt.Audiences = Audiences;
 
 export declare namespace KnockMgmt {
-      export type RequestOptions = Opts.RequestOptions;
+  export type RequestOptions = Opts.RequestOptions;
 
-      export import EntriesCursor = Pagination.EntriesCursor;
-export {
-  type EntriesCursorParams as EntriesCursorParams,
-  type EntriesCursorResponse as EntriesCursorResponse
-};
+  export import EntriesCursor = Pagination.EntriesCursor;
+  export {
+    type EntriesCursorParams as EntriesCursorParams,
+    type EntriesCursorResponse as EntriesCursorResponse,
+  };
 
-export {
-  Templates as Templates,
-  type ChatTemplate as ChatTemplate,
-  type EmailTemplate as EmailTemplate,
-  type InAppFeedTemplate as InAppFeedTemplate,
-  type PushTemplate as PushTemplate,
-  type RequestTemplate as RequestTemplate,
-  type SMSTemplate as SMSTemplate,
-  type WebhookTemplate as WebhookTemplate,
-  type TemplatePreviewResponse as TemplatePreviewResponse,
-  type TemplatePreviewParams as TemplatePreviewParams
-};
+  export {
+    Templates as Templates,
+    type ChatTemplate as ChatTemplate,
+    type EmailTemplate as EmailTemplate,
+    type InAppFeedTemplate as InAppFeedTemplate,
+    type PushTemplate as PushTemplate,
+    type RequestTemplate as RequestTemplate,
+    type SMSTemplate as SMSTemplate,
+    type WebhookTemplate as WebhookTemplate,
+    type TemplatePreviewResponse as TemplatePreviewResponse,
+    type TemplatePreviewParams as TemplatePreviewParams,
+  };
 
-export {
-  EmailLayouts as EmailLayouts,
-  type EmailLayout as EmailLayout,
-  type EmailLayoutUpsertResponse as EmailLayoutUpsertResponse,
-  type EmailLayoutValidateResponse as EmailLayoutValidateResponse,
-  type EmailLayoutsEntriesCursor as EmailLayoutsEntriesCursor,
-  type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
-  type EmailLayoutListParams as EmailLayoutListParams,
-  type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
-  type EmailLayoutValidateParams as EmailLayoutValidateParams
-};
+  export {
+    EmailLayouts as EmailLayouts,
+    type EmailLayout as EmailLayout,
+    type EmailLayoutUpsertResponse as EmailLayoutUpsertResponse,
+    type EmailLayoutValidateResponse as EmailLayoutValidateResponse,
+    type EmailLayoutsEntriesCursor as EmailLayoutsEntriesCursor,
+    type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
+    type EmailLayoutListParams as EmailLayoutListParams,
+    type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
+    type EmailLayoutValidateParams as EmailLayoutValidateParams,
+  };
 
-export {
-  Commits as Commits,
-  type Commit as Commit,
-  type CommitCommitAllResponse as CommitCommitAllResponse,
-  type CommitPromoteAllResponse as CommitPromoteAllResponse,
-  type CommitPromoteOneResponse as CommitPromoteOneResponse,
-  type CommitsEntriesCursor as CommitsEntriesCursor,
-  type CommitListParams as CommitListParams,
-  type CommitCommitAllParams as CommitCommitAllParams,
-  type CommitPromoteAllParams as CommitPromoteAllParams
-};
+  export {
+    Commits as Commits,
+    type Commit as Commit,
+    type CommitCommitAllResponse as CommitCommitAllResponse,
+    type CommitPromoteAllResponse as CommitPromoteAllResponse,
+    type CommitPromoteOneResponse as CommitPromoteOneResponse,
+    type CommitsEntriesCursor as CommitsEntriesCursor,
+    type CommitListParams as CommitListParams,
+    type CommitCommitAllParams as CommitCommitAllParams,
+    type CommitPromoteAllParams as CommitPromoteAllParams,
+  };
 
-export {
-  Partials as Partials,
-  type Partial as Partial,
-  type PartialUpsertResponse as PartialUpsertResponse,
-  type PartialValidateResponse as PartialValidateResponse,
-  type PartialsEntriesCursor as PartialsEntriesCursor,
-  type PartialRetrieveParams as PartialRetrieveParams,
-  type PartialListParams as PartialListParams,
-  type PartialUpsertParams as PartialUpsertParams,
-  type PartialValidateParams as PartialValidateParams
-};
+  export {
+    Partials as Partials,
+    type Partial as Partial,
+    type PartialUpsertResponse as PartialUpsertResponse,
+    type PartialValidateResponse as PartialValidateResponse,
+    type PartialsEntriesCursor as PartialsEntriesCursor,
+    type PartialRetrieveParams as PartialRetrieveParams,
+    type PartialListParams as PartialListParams,
+    type PartialUpsertParams as PartialUpsertParams,
+    type PartialValidateParams as PartialValidateParams,
+  };
 
-export {
-  Translations as Translations,
-  type Translation as Translation,
-  type TranslationRetrieveResponse as TranslationRetrieveResponse,
-  type TranslationUpsertResponse as TranslationUpsertResponse,
-  type TranslationValidateResponse as TranslationValidateResponse,
-  type TranslationsEntriesCursor as TranslationsEntriesCursor,
-  type TranslationRetrieveParams as TranslationRetrieveParams,
-  type TranslationListParams as TranslationListParams,
-  type TranslationUpsertParams as TranslationUpsertParams,
-  type TranslationValidateParams as TranslationValidateParams
-};
+  export {
+    Translations as Translations,
+    type Translation as Translation,
+    type TranslationRetrieveResponse as TranslationRetrieveResponse,
+    type TranslationUpsertResponse as TranslationUpsertResponse,
+    type TranslationValidateResponse as TranslationValidateResponse,
+    type TranslationsEntriesCursor as TranslationsEntriesCursor,
+    type TranslationRetrieveParams as TranslationRetrieveParams,
+    type TranslationListParams as TranslationListParams,
+    type TranslationUpsertParams as TranslationUpsertParams,
+    type TranslationValidateParams as TranslationValidateParams,
+  };
 
-export {
-  Workflows as Workflows,
-  type Condition as Condition,
-  type ConditionGroup as ConditionGroup,
-  type Duration as Duration,
-  type SendWindow as SendWindow,
-  type Workflow as Workflow,
-  type WorkflowAIAgentStep as WorkflowAIAgentStep,
-  type WorkflowBatchStep as WorkflowBatchStep,
-  type WorkflowBranchStep as WorkflowBranchStep,
-  type WorkflowChatStep as WorkflowChatStep,
-  type WorkflowDelayStep as WorkflowDelayStep,
-  type WorkflowEmailStep as WorkflowEmailStep,
-  type WorkflowFetchStep as WorkflowFetchStep,
-  type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
-  type WorkflowPushStep as WorkflowPushStep,
-  type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
-  type WorkflowSMSStep as WorkflowSMSStep,
-  type WorkflowStep as WorkflowStep,
-  type WorkflowThrottleStep as WorkflowThrottleStep,
-  type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
-  type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
-  type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,
-  type WorkflowUpdateTenantStep as WorkflowUpdateTenantStep,
-  type WorkflowUpdateUserStep as WorkflowUpdateUserStep,
-  type WorkflowWebhookStep as WorkflowWebhookStep,
-  type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
-  type WorkflowActivateResponse as WorkflowActivateResponse,
-  type WorkflowRunResponse as WorkflowRunResponse,
-  type WorkflowUpsertResponse as WorkflowUpsertResponse,
-  type WorkflowValidateResponse as WorkflowValidateResponse,
-  type WorkflowsEntriesCursor as WorkflowsEntriesCursor,
-  type WorkflowRetrieveParams as WorkflowRetrieveParams,
-  type WorkflowListParams as WorkflowListParams,
-  type WorkflowActivateParams as WorkflowActivateParams,
-  type WorkflowRunParams as WorkflowRunParams,
-  type WorkflowUpsertParams as WorkflowUpsertParams,
-  type WorkflowValidateParams as WorkflowValidateParams
-};
+  export {
+    Workflows as Workflows,
+    type Condition as Condition,
+    type ConditionGroup as ConditionGroup,
+    type Duration as Duration,
+    type SendWindow as SendWindow,
+    type Workflow as Workflow,
+    type WorkflowAIAgentStep as WorkflowAIAgentStep,
+    type WorkflowBatchStep as WorkflowBatchStep,
+    type WorkflowBranchStep as WorkflowBranchStep,
+    type WorkflowChatStep as WorkflowChatStep,
+    type WorkflowDelayStep as WorkflowDelayStep,
+    type WorkflowEmailStep as WorkflowEmailStep,
+    type WorkflowFetchStep as WorkflowFetchStep,
+    type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
+    type WorkflowPushStep as WorkflowPushStep,
+    type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
+    type WorkflowSMSStep as WorkflowSMSStep,
+    type WorkflowStep as WorkflowStep,
+    type WorkflowThrottleStep as WorkflowThrottleStep,
+    type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
+    type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
+    type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,
+    type WorkflowUpdateTenantStep as WorkflowUpdateTenantStep,
+    type WorkflowUpdateUserStep as WorkflowUpdateUserStep,
+    type WorkflowWebhookStep as WorkflowWebhookStep,
+    type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
+    type WorkflowActivateResponse as WorkflowActivateResponse,
+    type WorkflowRunResponse as WorkflowRunResponse,
+    type WorkflowUpsertResponse as WorkflowUpsertResponse,
+    type WorkflowValidateResponse as WorkflowValidateResponse,
+    type WorkflowsEntriesCursor as WorkflowsEntriesCursor,
+    type WorkflowRetrieveParams as WorkflowRetrieveParams,
+    type WorkflowListParams as WorkflowListParams,
+    type WorkflowActivateParams as WorkflowActivateParams,
+    type WorkflowRunParams as WorkflowRunParams,
+    type WorkflowUpsertParams as WorkflowUpsertParams,
+    type WorkflowValidateParams as WorkflowValidateParams,
+  };
 
-export {
-  MessageTypes as MessageTypes,
-  type MessageType as MessageType,
-  type MessageTypeTextField as MessageTypeTextField,
-  type MessageTypeVariant as MessageTypeVariant,
-  type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
-  type MessageTypeValidateResponse as MessageTypeValidateResponse,
-  type MessageTypesEntriesCursor as MessageTypesEntriesCursor,
-  type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
-  type MessageTypeListParams as MessageTypeListParams,
-  type MessageTypeUpsertParams as MessageTypeUpsertParams,
-  type MessageTypeValidateParams as MessageTypeValidateParams
-};
+  export {
+    MessageTypes as MessageTypes,
+    type MessageType as MessageType,
+    type MessageTypeTextField as MessageTypeTextField,
+    type MessageTypeVariant as MessageTypeVariant,
+    type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
+    type MessageTypeValidateResponse as MessageTypeValidateResponse,
+    type MessageTypesEntriesCursor as MessageTypesEntriesCursor,
+    type MessageTypeRetrieveParams as MessageTypeRetrieveParams,
+    type MessageTypeListParams as MessageTypeListParams,
+    type MessageTypeUpsertParams as MessageTypeUpsertParams,
+    type MessageTypeValidateParams as MessageTypeValidateParams,
+  };
 
-export {
-  Auth as Auth,
-  type AuthVerifyResponse as AuthVerifyResponse
-};
+  export { Auth as Auth, type AuthVerifyResponse as AuthVerifyResponse };
 
-export {
-  APIKeys as APIKeys,
-  type APIKeyExchangeResponse as APIKeyExchangeResponse,
-  type APIKeyExchangeParams as APIKeyExchangeParams
-};
+  export {
+    APIKeys as APIKeys,
+    type APIKeyExchangeResponse as APIKeyExchangeResponse,
+    type APIKeyExchangeParams as APIKeyExchangeParams,
+  };
 
-export {
-  ChannelGroups as ChannelGroups,
-  type ChannelGroup as ChannelGroup,
-  type ChannelGroupRule as ChannelGroupRule,
-  type ChannelGroupUpsertResponse as ChannelGroupUpsertResponse,
-  type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
-  type ChannelGroupListParams as ChannelGroupListParams,
-  type ChannelGroupUpsertParams as ChannelGroupUpsertParams
-};
+  export {
+    ChannelGroups as ChannelGroups,
+    type ChannelGroup as ChannelGroup,
+    type ChannelGroupRule as ChannelGroupRule,
+    type ChannelGroupUpsertResponse as ChannelGroupUpsertResponse,
+    type ChannelGroupsEntriesCursor as ChannelGroupsEntriesCursor,
+    type ChannelGroupListParams as ChannelGroupListParams,
+    type ChannelGroupUpsertParams as ChannelGroupUpsertParams,
+  };
 
-export {
-  Channels as Channels,
-  type Channel as Channel,
-  type ChannelEnvironmentSettings as ChannelEnvironmentSettings,
-  type ChatChannelSettings as ChatChannelSettings,
-  type EmailChannelSettings as EmailChannelSettings,
-  type InAppFeedChannelSettings as InAppFeedChannelSettings,
-  type PushChannelSettings as PushChannelSettings,
-  type SMSChannelSettings as SMSChannelSettings,
-  type ChannelsEntriesCursor as ChannelsEntriesCursor,
-  type ChannelListParams as ChannelListParams
-};
+  export {
+    Channels as Channels,
+    type Channel as Channel,
+    type ChannelEnvironmentSettings as ChannelEnvironmentSettings,
+    type ChatChannelSettings as ChatChannelSettings,
+    type EmailChannelSettings as EmailChannelSettings,
+    type InAppFeedChannelSettings as InAppFeedChannelSettings,
+    type PushChannelSettings as PushChannelSettings,
+    type SMSChannelSettings as SMSChannelSettings,
+    type ChannelsEntriesCursor as ChannelsEntriesCursor,
+    type ChannelListParams as ChannelListParams,
+  };
 
-export {
-  Members as Members,
-  type Member as Member,
-  type MemberUser as MemberUser,
-  type MembersEntriesCursor as MembersEntriesCursor,
-  type MemberListParams as MemberListParams
-};
+  export {
+    Members as Members,
+    type Member as Member,
+    type MemberUser as MemberUser,
+    type MembersEntriesCursor as MembersEntriesCursor,
+    type MemberListParams as MemberListParams,
+  };
 
-export {
-  Environments as Environments,
-  type Environment as Environment,
-  type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
-  type EnvironmentListParams as EnvironmentListParams
-};
+  export {
+    Environments as Environments,
+    type Environment as Environment,
+    type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
+    type EnvironmentListParams as EnvironmentListParams,
+  };
 
-export {
-  Variables as Variables,
-  type Variable as Variable,
-  type VariablesEntriesCursor as VariablesEntriesCursor,
-  type VariableListParams as VariableListParams
-};
+  export {
+    Variables as Variables,
+    type Variable as Variable,
+    type VariablesEntriesCursor as VariablesEntriesCursor,
+    type VariableListParams as VariableListParams,
+  };
 
-export {
-  Guides as Guides,
-  type Guide as Guide,
-  type GuideActivationURLPattern as GuideActivationURLPattern,
-  type GuideStep as GuideStep,
-  type GuideActivateResponse as GuideActivateResponse,
-  type GuideArchiveResponse as GuideArchiveResponse,
-  type GuideUpsertResponse as GuideUpsertResponse,
-  type GuideValidateResponse as GuideValidateResponse,
-  type GuidesEntriesCursor as GuidesEntriesCursor,
-  type GuideRetrieveParams as GuideRetrieveParams,
-  type GuideListParams as GuideListParams,
-  type GuideActivateParams as GuideActivateParams,
-  type GuideUpsertParams as GuideUpsertParams,
-  type GuideValidateParams as GuideValidateParams
-};
+  export {
+    Guides as Guides,
+    type Guide as Guide,
+    type GuideActivationURLPattern as GuideActivationURLPattern,
+    type GuideStep as GuideStep,
+    type GuideActivateResponse as GuideActivateResponse,
+    type GuideArchiveResponse as GuideArchiveResponse,
+    type GuideUpsertResponse as GuideUpsertResponse,
+    type GuideValidateResponse as GuideValidateResponse,
+    type GuidesEntriesCursor as GuidesEntriesCursor,
+    type GuideRetrieveParams as GuideRetrieveParams,
+    type GuideListParams as GuideListParams,
+    type GuideActivateParams as GuideActivateParams,
+    type GuideUpsertParams as GuideUpsertParams,
+    type GuideValidateParams as GuideValidateParams,
+  };
 
-export {
-  Branches as Branches,
-  type Branch as Branch,
-  type BranchesEntriesCursor as BranchesEntriesCursor,
-  type BranchCreateParams as BranchCreateParams,
-  type BranchRetrieveParams as BranchRetrieveParams,
-  type BranchListParams as BranchListParams,
-  type BranchDeleteParams as BranchDeleteParams
-};
+  export {
+    Branches as Branches,
+    type Branch as Branch,
+    type BranchesEntriesCursor as BranchesEntriesCursor,
+    type BranchCreateParams as BranchCreateParams,
+    type BranchRetrieveParams as BranchRetrieveParams,
+    type BranchListParams as BranchListParams,
+    type BranchDeleteParams as BranchDeleteParams,
+  };
 
-export {
-  Broadcasts as Broadcasts,
-  type Broadcast as Broadcast,
-  type BroadcastRequest as BroadcastRequest,
-  type BroadcastCancelResponse as BroadcastCancelResponse,
-  type BroadcastSendResponse as BroadcastSendResponse,
-  type BroadcastUpsertResponse as BroadcastUpsertResponse,
-  type BroadcastValidateResponse as BroadcastValidateResponse,
-  type BroadcastsEntriesCursor as BroadcastsEntriesCursor,
-  type BroadcastRetrieveParams as BroadcastRetrieveParams,
-  type BroadcastListParams as BroadcastListParams,
-  type BroadcastCancelParams as BroadcastCancelParams,
-  type BroadcastSendParams as BroadcastSendParams,
-  type BroadcastUpsertParams as BroadcastUpsertParams,
-  type BroadcastValidateParams as BroadcastValidateParams
-};
+  export {
+    Broadcasts as Broadcasts,
+    type Broadcast as Broadcast,
+    type BroadcastRequest as BroadcastRequest,
+    type BroadcastCancelResponse as BroadcastCancelResponse,
+    type BroadcastSendResponse as BroadcastSendResponse,
+    type BroadcastUpsertResponse as BroadcastUpsertResponse,
+    type BroadcastValidateResponse as BroadcastValidateResponse,
+    type BroadcastsEntriesCursor as BroadcastsEntriesCursor,
+    type BroadcastRetrieveParams as BroadcastRetrieveParams,
+    type BroadcastListParams as BroadcastListParams,
+    type BroadcastCancelParams as BroadcastCancelParams,
+    type BroadcastSendParams as BroadcastSendParams,
+    type BroadcastUpsertParams as BroadcastUpsertParams,
+    type BroadcastValidateParams as BroadcastValidateParams,
+  };
 
-export {
-  Audiences as Audiences,
-  type Audience as Audience,
-  type AudienceCondition as AudienceCondition,
-  type DynamicAudience as DynamicAudience,
-  type StaticAudience as StaticAudience,
-  type AudienceArchiveResponse as AudienceArchiveResponse,
-  type AudienceUpsertResponse as AudienceUpsertResponse,
-  type AudienceValidateResponse as AudienceValidateResponse,
-  type AudiencesEntriesCursor as AudiencesEntriesCursor,
-  type AudienceRetrieveParams as AudienceRetrieveParams,
-  type AudienceListParams as AudienceListParams,
-  type AudienceArchiveParams as AudienceArchiveParams,
-  type AudienceUpsertParams as AudienceUpsertParams,
-  type AudienceValidateParams as AudienceValidateParams
-};
+  export {
+    Audiences as Audiences,
+    type Audience as Audience,
+    type AudienceCondition as AudienceCondition,
+    type DynamicAudience as DynamicAudience,
+    type StaticAudience as StaticAudience,
+    type AudienceArchiveResponse as AudienceArchiveResponse,
+    type AudienceUpsertResponse as AudienceUpsertResponse,
+    type AudienceValidateResponse as AudienceValidateResponse,
+    type AudiencesEntriesCursor as AudiencesEntriesCursor,
+    type AudienceRetrieveParams as AudienceRetrieveParams,
+    type AudienceListParams as AudienceListParams,
+    type AudienceArchiveParams as AudienceArchiveParams,
+    type AudienceUpsertParams as AudienceUpsertParams,
+    type AudienceValidateParams as AudienceValidateParams,
+  };
 
-export type MessageTypeBooleanField = API.MessageTypeBooleanField;
-export type MessageTypeButtonField = API.MessageTypeButtonField;
-export type MessageTypeImageField = API.MessageTypeImageField;
-export type MessageTypeJsonField = API.MessageTypeJsonField;
-export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
-export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
-export type MessageTypeSelectField = API.MessageTypeSelectField;
-export type MessageTypeTextareaField = API.MessageTypeTextareaField;
-export type MessageTypeURLField = API.MessageTypeURLField;
-export type PageInfo = API.PageInfo;
-    }
+  export type MessageTypeBooleanField = API.MessageTypeBooleanField;
+  export type MessageTypeButtonField = API.MessageTypeButtonField;
+  export type MessageTypeImageField = API.MessageTypeImageField;
+  export type MessageTypeJsonField = API.MessageTypeJsonField;
+  export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
+  export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
+  export type MessageTypeSelectField = API.MessageTypeSelectField;
+  export type MessageTypeTextareaField = API.MessageTypeTextareaField;
+  export type MessageTypeURLField = API.MessageTypeURLField;
+  export type PageInfo = API.PageInfo;
+}

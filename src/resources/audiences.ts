@@ -22,7 +22,11 @@ export class Audiences extends APIResource {
    * );
    * ```
    */
-  retrieve(audienceKey: string, query: AudienceRetrieveParams, options?: RequestOptions): APIPromise<Audience> {
+  retrieve(
+    audienceKey: string,
+    query: AudienceRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<Audience> {
     return this._client.get(path`/v1/audiences/${audienceKey}`, { query, ...options });
   }
 
@@ -54,8 +58,12 @@ export class Audiences extends APIResource {
    * );
    * ```
    */
-  archive(audienceKey: string, params: AudienceArchiveParams, options?: RequestOptions): APIPromise<AudienceArchiveResponse> {
-    const { environment } = params
+  archive(
+    audienceKey: string,
+    params: AudienceArchiveParams,
+    options?: RequestOptions,
+  ): APIPromise<AudienceArchiveResponse> {
+    const { environment } = params;
     return this._client.delete(path`/v1/audiences/${audienceKey}`, { query: { environment }, ...options });
   }
 
@@ -74,9 +82,17 @@ export class Audiences extends APIResource {
    * );
    * ```
    */
-  upsert(audienceKey: string, params: AudienceUpsertParams, options?: RequestOptions): APIPromise<AudienceUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
-    return this._client.put(path`/v1/audiences/${audienceKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
+  upsert(
+    audienceKey: string,
+    params: AudienceUpsertParams,
+    options?: RequestOptions,
+  ): APIPromise<AudienceUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    return this._client.put(path`/v1/audiences/${audienceKey}`, {
+      query: { environment, annotate, branch, commit, commit_message, force },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -93,20 +109,28 @@ export class Audiences extends APIResource {
    * );
    * ```
    */
-  validate(audienceKey: string, params: AudienceValidateParams, options?: RequestOptions): APIPromise<AudienceValidateResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/audiences/${audienceKey}/validate`, { query: { environment, branch }, body, ...options });
+  validate(
+    audienceKey: string,
+    params: AudienceValidateParams,
+    options?: RequestOptions,
+  ): APIPromise<AudienceValidateResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/audiences/${audienceKey}/validate`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 }
 
-export type AudiencesEntriesCursor = EntriesCursor<Audience>
+export type AudiencesEntriesCursor = EntriesCursor<Audience>;
 
 /**
  * An audience defines a set of users that can be targeted for notifications. Can
  * be either a `StaticAudience` (members explicitly added/removed) or a
  * `DynamicAudience` (members determined by segment conditions).
  */
-export type Audience = StaticAudience | DynamicAudience
+export type Audience = StaticAudience | DynamicAudience;
 
 /**
  * A condition to evaluate for audience membership.
@@ -115,7 +139,28 @@ export interface AudienceCondition {
   /**
    * The operator to use when evaluating the condition.
    */
-  operator: 'equal_to' | 'not_equal_to' | 'greater_than' | 'less_than' | 'greater_than_or_equal_to' | 'less_than_or_equal_to' | 'contains' | 'not_contains' | 'contains_all' | 'not_contains_all' | 'is_timestamp_before' | 'is_timestamp_on_or_after' | 'is_timestamp_between' | 'is_between' | 'empty' | 'not_empty' | 'exists' | 'not_exists' | 'is_timestamp' | 'is_audience_member' | 'is_not_audience_member';
+  operator:
+    | 'equal_to'
+    | 'not_equal_to'
+    | 'greater_than'
+    | 'less_than'
+    | 'greater_than_or_equal_to'
+    | 'less_than_or_equal_to'
+    | 'contains'
+    | 'not_contains'
+    | 'contains_all'
+    | 'not_contains_all'
+    | 'is_timestamp_before'
+    | 'is_timestamp_on_or_after'
+    | 'is_timestamp_between'
+    | 'is_between'
+    | 'empty'
+    | 'not_empty'
+    | 'exists'
+    | 'not_exists'
+    | 'is_timestamp'
+    | 'is_audience_member'
+    | 'is_not_audience_member';
 
   /**
    * The property to be evaluated. Properties are dynamic values using path
@@ -519,6 +564,6 @@ export declare namespace Audiences {
     type AudienceListParams as AudienceListParams,
     type AudienceArchiveParams as AudienceArchiveParams,
     type AudienceUpsertParams as AudienceUpsertParams,
-    type AudienceValidateParams as AudienceValidateParams
+    type AudienceValidateParams as AudienceValidateParams,
   };
 }

@@ -158,7 +158,5 @@ export namespace AuthVerifyResponse {
 }
 
 export declare namespace Auth {
-  export {
-    type AuthVerifyResponse as AuthVerifyResponse
-  };
+  export { type AuthVerifyResponse as AuthVerifyResponse };
 }

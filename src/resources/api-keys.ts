@@ -18,7 +18,7 @@ export class APIKeys extends APIResource {
    * ```
    */
   exchange(params: APIKeyExchangeParams, options?: RequestOptions): APIPromise<APIKeyExchangeResponse> {
-    const { environment } = params
+    const { environment } = params;
     return this._client.post('/v1/api_keys/exchange', { query: { environment }, ...options });
   }
 }
@@ -43,6 +43,6 @@ export interface APIKeyExchangeParams {
 export declare namespace APIKeys {
   export {
     type APIKeyExchangeResponse as APIKeyExchangeResponse,
-    type APIKeyExchangeParams as APIKeyExchangeParams
+    type APIKeyExchangeParams as APIKeyExchangeParams,
   };
 }

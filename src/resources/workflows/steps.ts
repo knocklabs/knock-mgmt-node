@@ -23,9 +23,17 @@ export class Steps extends APIResource {
    *   });
    * ```
    */
-  previewTemplate(stepRef: string, params: StepPreviewTemplateParams, options?: RequestOptions): APIPromise<StepPreviewTemplateResponse> {
-    const { workflow_key, environment, branch, ...body } = params
-    return this._client.post(path`/v1/workflows/${workflow_key}/steps/${stepRef}/preview_template`, { query: { environment, branch }, body, ...options });
+  previewTemplate(
+    stepRef: string,
+    params: StepPreviewTemplateParams,
+    options?: RequestOptions,
+  ): APIPromise<StepPreviewTemplateResponse> {
+    const { workflow_key, environment, branch, ...body } = params;
+    return this._client.post(path`/v1/workflows/${workflow_key}/steps/${stepRef}/preview_template`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 }
 
@@ -46,7 +54,13 @@ export interface StepPreviewTemplateResponse {
   /**
    * The rendered template, ready to be previewed.
    */
-  template: TemplatesAPI.EmailTemplate | TemplatesAPI.InAppFeedTemplate | TemplatesAPI.PushTemplate | TemplatesAPI.ChatTemplate | TemplatesAPI.SMSTemplate | TemplatesAPI.RequestTemplate;
+  template:
+    | TemplatesAPI.EmailTemplate
+    | TemplatesAPI.InAppFeedTemplate
+    | TemplatesAPI.PushTemplate
+    | TemplatesAPI.ChatTemplate
+    | TemplatesAPI.SMSTemplate
+    | TemplatesAPI.RequestTemplate;
 }
 
 export interface StepPreviewTemplateParams {
@@ -125,6 +139,6 @@ export namespace StepPreviewTemplateParams {
 export declare namespace Steps {
   export {
     type StepPreviewTemplateResponse as StepPreviewTemplateResponse,
-    type StepPreviewTemplateParams as StepPreviewTemplateParams
+    type StepPreviewTemplateParams as StepPreviewTemplateParams,
   };
 }

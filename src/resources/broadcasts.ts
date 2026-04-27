@@ -19,7 +19,11 @@ export class Broadcasts extends APIResource {
    * );
    * ```
    */
-  retrieve(broadcastKey: string, query: BroadcastRetrieveParams, options?: RequestOptions): APIPromise<Broadcast> {
+  retrieve(
+    broadcastKey: string,
+    query: BroadcastRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<Broadcast> {
     return this._client.get(path`/v1/broadcasts/${broadcastKey}`, { query, ...options });
   }
 
@@ -37,7 +41,10 @@ export class Broadcasts extends APIResource {
    * }
    * ```
    */
-  list(query: BroadcastListParams, options?: RequestOptions): PagePromise<BroadcastsEntriesCursor, Broadcast> {
+  list(
+    query: BroadcastListParams,
+    options?: RequestOptions,
+  ): PagePromise<BroadcastsEntriesCursor, Broadcast> {
     return this._client.getAPIList('/v1/broadcasts', EntriesCursor<Broadcast>, { query, ...options });
   }
 
@@ -53,9 +60,16 @@ export class Broadcasts extends APIResource {
    * );
    * ```
    */
-  cancel(broadcastKey: string, params: BroadcastCancelParams, options?: RequestOptions): APIPromise<BroadcastCancelResponse> {
-    const { environment, branch } = params
-    return this._client.put(path`/v1/broadcasts/${broadcastKey}/cancel`, { query: { environment, branch }, ...options });
+  cancel(
+    broadcastKey: string,
+    params: BroadcastCancelParams,
+    options?: RequestOptions,
+  ): APIPromise<BroadcastCancelResponse> {
+    const { environment, branch } = params;
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}/cancel`, {
+      query: { environment, branch },
+      ...options,
+    });
   }
 
   /**
@@ -69,9 +83,17 @@ export class Broadcasts extends APIResource {
    * );
    * ```
    */
-  send(broadcastKey: string, params: BroadcastSendParams, options?: RequestOptions): APIPromise<BroadcastSendResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/broadcasts/${broadcastKey}/send`, { query: { environment, branch }, body, ...options });
+  send(
+    broadcastKey: string,
+    params: BroadcastSendParams,
+    options?: RequestOptions,
+  ): APIPromise<BroadcastSendResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}/send`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -100,9 +122,17 @@ export class Broadcasts extends APIResource {
    * );
    * ```
    */
-  upsert(broadcastKey: string, params: BroadcastUpsertParams, options?: RequestOptions): APIPromise<BroadcastUpsertResponse> {
-    const { environment, annotate, branch, ...body } = params
-    return this._client.put(path`/v1/broadcasts/${broadcastKey}`, { query: { environment, annotate, branch }, body, ...options });
+  upsert(
+    broadcastKey: string,
+    params: BroadcastUpsertParams,
+    options?: RequestOptions,
+  ): APIPromise<BroadcastUpsertResponse> {
+    const { environment, annotate, branch, ...body } = params;
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}`, {
+      query: { environment, annotate, branch },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -130,13 +160,21 @@ export class Broadcasts extends APIResource {
    * );
    * ```
    */
-  validate(broadcastKey: string, params: BroadcastValidateParams, options?: RequestOptions): APIPromise<BroadcastValidateResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/broadcasts/${broadcastKey}/validate`, { query: { environment, branch }, body, ...options });
+  validate(
+    broadcastKey: string,
+    params: BroadcastValidateParams,
+    options?: RequestOptions,
+  ): APIPromise<BroadcastValidateResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}/validate`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 }
 
-export type BroadcastsEntriesCursor = EntriesCursor<Broadcast>
+export type BroadcastsEntriesCursor = EntriesCursor<Broadcast>;
 
 /**
  * A broadcast object.
@@ -177,7 +215,17 @@ export interface Broadcast {
    * A list of broadcast step objects in the broadcast. Broadcasts only support
    * channel, branch, and delay steps.
    */
-  steps: Array<WorkflowsAPI.WorkflowWebhookStep | WorkflowsAPI.WorkflowInAppFeedStep | WorkflowsAPI.WorkflowChatStep | WorkflowsAPI.WorkflowSMSStep | WorkflowsAPI.WorkflowPushStep | WorkflowsAPI.WorkflowEmailStep | WorkflowsAPI.WorkflowBranchStep | WorkflowsAPI.WorkflowDelayStep | WorkflowsAPI.WorkflowRandomCohortStep>;
+  steps: Array<
+    | WorkflowsAPI.WorkflowWebhookStep
+    | WorkflowsAPI.WorkflowInAppFeedStep
+    | WorkflowsAPI.WorkflowChatStep
+    | WorkflowsAPI.WorkflowSMSStep
+    | WorkflowsAPI.WorkflowPushStep
+    | WorkflowsAPI.WorkflowEmailStep
+    | WorkflowsAPI.WorkflowBranchStep
+    | WorkflowsAPI.WorkflowDelayStep
+    | WorkflowsAPI.WorkflowRandomCohortStep
+  >;
 
   /**
    * The timestamp of when the broadcast was last updated. (read-only).
@@ -258,7 +306,17 @@ export interface BroadcastRequest {
    * A list of broadcast step objects in the broadcast. Broadcasts only support
    * channel, branch, and delay steps.
    */
-  steps: Array<WorkflowsAPI.WorkflowWebhookStep | WorkflowsAPI.WorkflowInAppFeedStep | WorkflowsAPI.WorkflowChatStep | WorkflowsAPI.WorkflowSMSStep | WorkflowsAPI.WorkflowPushStep | WorkflowsAPI.WorkflowEmailStep | WorkflowsAPI.WorkflowBranchStep | WorkflowsAPI.WorkflowDelayStep | WorkflowsAPI.WorkflowRandomCohortStep>;
+  steps: Array<
+    | WorkflowsAPI.WorkflowWebhookStep
+    | WorkflowsAPI.WorkflowInAppFeedStep
+    | WorkflowsAPI.WorkflowChatStep
+    | WorkflowsAPI.WorkflowSMSStep
+    | WorkflowsAPI.WorkflowPushStep
+    | WorkflowsAPI.WorkflowEmailStep
+    | WorkflowsAPI.WorkflowBranchStep
+    | WorkflowsAPI.WorkflowDelayStep
+    | WorkflowsAPI.WorkflowRandomCohortStep
+  >;
 
   /**
    * A list of categories that the broadcast belongs to.
@@ -482,6 +540,6 @@ export declare namespace Broadcasts {
     type BroadcastCancelParams as BroadcastCancelParams,
     type BroadcastSendParams as BroadcastSendParams,
     type BroadcastUpsertParams as BroadcastUpsertParams,
-    type BroadcastValidateParams as BroadcastValidateParams
+    type BroadcastValidateParams as BroadcastValidateParams,
   };
 }

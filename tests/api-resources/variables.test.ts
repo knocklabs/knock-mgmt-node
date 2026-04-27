@@ -2,7 +2,10 @@
 
 import KnockMgmt from '@knocklabs/mgmt';
 
-const client = new KnockMgmt({ serviceToken: 'My Service Token', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new KnockMgmt({
+  serviceToken: 'My Service Token',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource variables', () => {
   // Mock server tests are disabled
@@ -32,12 +35,12 @@ describe('resource variables', () => {
   // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.variables.list({
-    environment: 'development',
-    after: 'after',
-    before: 'before',
-    branch: 'feature-branch',
-    limit: 0,
-    type: 'public',
-  });
+      environment: 'development',
+      after: 'after',
+      before: 'before',
+      branch: 'feature-branch',
+      limit: 0,
+      type: 'public',
+    });
   });
 });

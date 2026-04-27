@@ -29,7 +29,11 @@ export class Workflows extends APIResource {
    * );
    * ```
    */
-  retrieve(workflowKey: string, query: WorkflowRetrieveParams, options?: RequestOptions): APIPromise<WorkflowRetrieveResponse> {
+  retrieve(
+    workflowKey: string,
+    query: WorkflowRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<WorkflowRetrieveResponse> {
     return this._client.get(path`/v1/workflows/${workflowKey}`, { query, ...options });
   }
 
@@ -66,9 +70,17 @@ export class Workflows extends APIResource {
    * );
    * ```
    */
-  activate(workflowKey: string, params: WorkflowActivateParams, options?: RequestOptions): APIPromise<WorkflowActivateResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/workflows/${workflowKey}/activate`, { query: { environment, branch }, body, ...options });
+  activate(
+    workflowKey: string,
+    params: WorkflowActivateParams,
+    options?: RequestOptions,
+  ): APIPromise<WorkflowActivateResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/workflows/${workflowKey}/activate`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -83,9 +95,17 @@ export class Workflows extends APIResource {
    * );
    * ```
    */
-  run(workflowKey: string, params: WorkflowRunParams, options?: RequestOptions): APIPromise<WorkflowRunResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/workflows/${workflowKey}/run`, { query: { environment, branch }, body, ...options });
+  run(
+    workflowKey: string,
+    params: WorkflowRunParams,
+    options?: RequestOptions,
+  ): APIPromise<WorkflowRunResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/workflows/${workflowKey}/run`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -116,9 +136,17 @@ export class Workflows extends APIResource {
    * );
    * ```
    */
-  upsert(workflowKey: string, params: WorkflowUpsertParams, options?: RequestOptions): APIPromise<WorkflowUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params
-    return this._client.put(path`/v1/workflows/${workflowKey}`, { query: { environment, annotate, branch, commit, commit_message, force }, body, ...options });
+  upsert(
+    workflowKey: string,
+    params: WorkflowUpsertParams,
+    options?: RequestOptions,
+  ): APIPromise<WorkflowUpsertResponse> {
+    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    return this._client.put(path`/v1/workflows/${workflowKey}`, {
+      query: { environment, annotate, branch, commit, commit_message, force },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -149,13 +177,21 @@ export class Workflows extends APIResource {
    * );
    * ```
    */
-  validate(workflowKey: string, params: WorkflowValidateParams, options?: RequestOptions): APIPromise<WorkflowValidateResponse> {
-    const { environment, branch, ...body } = params
-    return this._client.put(path`/v1/workflows/${workflowKey}/validate`, { query: { environment, branch }, body, ...options });
+  validate(
+    workflowKey: string,
+    params: WorkflowValidateParams,
+    options?: RequestOptions,
+  ): APIPromise<WorkflowValidateResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.put(path`/v1/workflows/${workflowKey}/validate`, {
+      query: { environment, branch },
+      body,
+      ...options,
+    });
   }
 }
 
-export type WorkflowsEntriesCursor = EntriesCursor<Workflow>
+export type WorkflowsEntriesCursor = EntriesCursor<Workflow>;
 
 /**
  * A condition to be evaluated.
@@ -164,7 +200,28 @@ export interface Condition {
   /**
    * The operator to use in the evaluation of the condition.
    */
-  operator: 'equal_to' | 'not_equal_to' | 'greater_than' | 'less_than' | 'greater_than_or_equal_to' | 'less_than_or_equal_to' | 'contains' | 'not_contains' | 'contains_all' | 'not_contains_all' | 'is_timestamp_before' | 'is_timestamp_on_or_after' | 'is_timestamp_between' | 'is_between' | 'empty' | 'not_empty' | 'exists' | 'not_exists' | 'is_timestamp' | 'is_audience_member' | 'is_not_audience_member';
+  operator:
+    | 'equal_to'
+    | 'not_equal_to'
+    | 'greater_than'
+    | 'less_than'
+    | 'greater_than_or_equal_to'
+    | 'less_than_or_equal_to'
+    | 'contains'
+    | 'not_contains'
+    | 'contains_all'
+    | 'not_contains_all'
+    | 'is_timestamp_before'
+    | 'is_timestamp_on_or_after'
+    | 'is_timestamp_between'
+    | 'is_between'
+    | 'empty'
+    | 'not_empty'
+    | 'exists'
+    | 'not_exists'
+    | 'is_timestamp'
+    | 'is_audience_member'
+    | 'is_not_audience_member';
 
   /**
    * The variable to be evaluated. Variables can be either static values or dynamic
@@ -186,7 +243,7 @@ export interface Condition {
 /**
  * A group of conditions to be evaluated.
  */
-export type ConditionGroup = ConditionGroup.ConditionGroupAllMatch | ConditionGroup.ConditionGroupAnyMatch
+export type ConditionGroup = ConditionGroup.ConditionGroupAllMatch | ConditionGroup.ConditionGroupAnyMatch;
 
 export namespace ConditionGroup {
   /**
@@ -1090,7 +1147,25 @@ export interface WorkflowSMSStep {
  * common set of core attributes (`type`, `ref`, `name`, `description`,
  * `conditions`).
  */
-export type WorkflowStep = WorkflowWebhookStep | WorkflowInAppFeedStep | WorkflowChatStep | WorkflowSMSStep | WorkflowPushStep | WorkflowEmailStep | WorkflowAIAgentStep | WorkflowDelayStep | WorkflowBatchStep | WorkflowFetchStep | WorkflowUpdateDataStep | WorkflowUpdateObjectStep | WorkflowUpdateTenantStep | WorkflowUpdateUserStep | WorkflowThrottleStep | WorkflowBranchStep | WorkflowRandomCohortStep | WorkflowTriggerWorkflowStep
+export type WorkflowStep =
+  | WorkflowWebhookStep
+  | WorkflowInAppFeedStep
+  | WorkflowChatStep
+  | WorkflowSMSStep
+  | WorkflowPushStep
+  | WorkflowEmailStep
+  | WorkflowAIAgentStep
+  | WorkflowDelayStep
+  | WorkflowBatchStep
+  | WorkflowFetchStep
+  | WorkflowUpdateDataStep
+  | WorkflowUpdateObjectStep
+  | WorkflowUpdateTenantStep
+  | WorkflowUpdateUserStep
+  | WorkflowThrottleStep
+  | WorkflowBranchStep
+  | WorkflowRandomCohortStep
+  | WorkflowTriggerWorkflowStep;
 
 /**
  * A throttle function step. Read more in the
@@ -2088,12 +2163,12 @@ export declare namespace Workflows {
     type WorkflowActivateParams as WorkflowActivateParams,
     type WorkflowRunParams as WorkflowRunParams,
     type WorkflowUpsertParams as WorkflowUpsertParams,
-    type WorkflowValidateParams as WorkflowValidateParams
+    type WorkflowValidateParams as WorkflowValidateParams,
   };
 
   export {
     Steps as Steps,
     type StepPreviewTemplateResponse as StepPreviewTemplateResponse,
-    type StepPreviewTemplateParams as StepPreviewTemplateParams
+    type StepPreviewTemplateParams as StepPreviewTemplateParams,
   };
 }
