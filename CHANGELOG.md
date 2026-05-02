@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.26.0 (2026-05-02)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** api update ([4474ad9](https://github.com/knocklabs/knock-mgmt-node/commit/4474ad9f328dd9a2b2ae95fbde2cf819bd5563f4))
+* **api:** api update ([bf54517](https://github.com/knocklabs/knock-mgmt-node/commit/bf54517382635b9ef990b856298d02ad1ddcf3f5))
+* support setting headers via env ([fe4cc69](https://github.com/knocklabs/knock-mgmt-node/commit/fe4cc6933c43d7667547c3cc59d79f00ae210675))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([403db22](https://github.com/knocklabs/knock-mgmt-node/commit/403db2207567c3d8ed98377fd7ae76569b9d4581))
+* **formatter:** run prettier and eslint separately ([46c4f6b](https://github.com/knocklabs/knock-mgmt-node/commit/46c4f6b6a352c208ba5f732f703ac03f0f35d360))
+* **internal:** codegen related update ([f71d534](https://github.com/knocklabs/knock-mgmt-node/commit/f71d5348fc2a0d3a703a4a3f80e114fd9f3db1bd))
+* **internal:** more robust bootstrap script ([2c4b35a](https://github.com/knocklabs/knock-mgmt-node/commit/2c4b35ac3ef32d75fcf308d9c8989bbf422413cd))
+
 ## 0.25.0 (2026-04-17)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.24.0...v0.25.0)

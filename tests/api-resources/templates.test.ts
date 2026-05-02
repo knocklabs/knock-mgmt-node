@@ -153,7 +153,11 @@ describe('resource templates', () => {
         text_content: 'text_content',
       },
       tenant: 'tenant',
-      workflow: { key: 'key', categories: ['string'] },
+      workflow: {
+        key: 'key',
+        categories: ['string'],
+        commercial: true,
+      },
     });
   });
 });
