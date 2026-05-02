@@ -1026,6 +1026,11 @@ export namespace TemplatePreviewParams {
      * Workflow categories.
      */
     categories?: Array<string> | null;
+
+    /**
+     * Whether the workflow is marked as commercial messaging.
+     */
+    commercial?: boolean | null;
   }
 }
 
