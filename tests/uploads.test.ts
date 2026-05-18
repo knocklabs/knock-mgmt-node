@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@knocklabs/mgmt/internal/to-file';
 import { toFile } from '@knocklabs/mgmt/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
