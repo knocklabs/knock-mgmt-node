@@ -173,16 +173,16 @@ export interface Partial {
    * The field types available for the partial.
    */
   input_schema?: Array<
+    | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeButtonField
-    | Shared.MessageTypeImageField
     | Shared.MessageTypeJsonField
+    | MessageTypesAPI.MessageTypeTextField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeSelectField
-    | MessageTypesAPI.MessageTypeTextField
+    | Shared.MessageTypeButtonField
     | Shared.MessageTypeTextareaField
-    | Shared.MessageTypeURLField
   >;
 
   /**
@@ -336,16 +336,16 @@ export namespace PartialUpsertParams {
      * The field types available for the partial.
      */
     input_schema?: Array<
+      | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeImageField
       | Shared.MessageTypeJsonField
+      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeImageField
+      | Shared.MessageTypeURLField
       | Shared.MessageTypeMarkdownField
       | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeSelectField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeButtonField
       | Shared.MessageTypeTextareaField
-      | Shared.MessageTypeURLField
     >;
 
     /**
@@ -409,16 +409,16 @@ export namespace PartialValidateParams {
      * The field types available for the partial.
      */
     input_schema?: Array<
+      | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeImageField
       | Shared.MessageTypeJsonField
+      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeImageField
+      | Shared.MessageTypeURLField
       | Shared.MessageTypeMarkdownField
       | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeSelectField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeButtonField
       | Shared.MessageTypeTextareaField
-      | Shared.MessageTypeURLField
     >;
 
     /**
