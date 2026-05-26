@@ -260,16 +260,16 @@ export interface MessageTypeVariant {
    * The field types available for the variant.
    */
   fields: Array<
+    | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeButtonField
-    | Shared.MessageTypeImageField
     | Shared.MessageTypeJsonField
+    | MessageTypeTextField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeSelectField
-    | MessageTypeTextField
+    | Shared.MessageTypeButtonField
     | Shared.MessageTypeTextareaField
-    | Shared.MessageTypeURLField
   >;
 
   /**
