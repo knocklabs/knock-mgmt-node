@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.26.0 (2026-05-27)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** api update ([09a8288](https://github.com/knocklabs/knock-mgmt-node/commit/09a828829055ff7c28a444daf23c7faca4b21cab))
+* **api:** api update ([32064f6](https://github.com/knocklabs/knock-mgmt-node/commit/32064f653e8431f72808281cc62a1a2b8afc7b0b))
+* **api:** api update ([4474ad9](https://github.com/knocklabs/knock-mgmt-node/commit/4474ad9f328dd9a2b2ae95fbde2cf819bd5563f4))
+* **api:** api update ([bf54517](https://github.com/knocklabs/knock-mgmt-node/commit/bf54517382635b9ef990b856298d02ad1ddcf3f5))
+* **mapi:** adds data sources ([4eba7fb](https://github.com/knocklabs/knock-mgmt-node/commit/4eba7fb8859be24643da6ed6739e1c2db5a30160))
+* support setting headers via env ([fe4cc69](https://github.com/knocklabs/knock-mgmt-node/commit/fe4cc6933c43d7667547c3cc59d79f00ae210675))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([aed1b60](https://github.com/knocklabs/knock-mgmt-node/commit/aed1b60024a18767318025bf33bde25ebefd8100))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([403db22](https://github.com/knocklabs/knock-mgmt-node/commit/403db2207567c3d8ed98377fd7ae76569b9d4581))
+* **formatter:** run prettier and eslint separately ([46c4f6b](https://github.com/knocklabs/knock-mgmt-node/commit/46c4f6b6a352c208ba5f732f703ac03f0f35d360))
+* **internal:** codegen related update ([f71d534](https://github.com/knocklabs/knock-mgmt-node/commit/f71d5348fc2a0d3a703a4a3f80e114fd9f3db1bd))
+* **internal:** more robust bootstrap script ([2c4b35a](https://github.com/knocklabs/knock-mgmt-node/commit/2c4b35ac3ef32d75fcf308d9c8989bbf422413cd))
+* redact api-key headers in debug logs ([32f0065](https://github.com/knocklabs/knock-mgmt-node/commit/32f0065c428eee6798819edbacaf04db3f439776))
+* **tests:** remove redundant File import ([1364653](https://github.com/knocklabs/knock-mgmt-node/commit/13646533f1d0274b1fe923fcc11885e4bc13f1e4))
+
 ## 0.25.0 (2026-04-17)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.24.0...v0.25.0)
