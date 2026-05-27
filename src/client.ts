@@ -95,6 +95,35 @@ import {
   CommitsEntriesCursor,
 } from './resources/commits';
 import {
+  DataSourceListEventsParams,
+  DataSourceListLogsParams,
+  DataSourceListSourcesParams,
+  DataSourceRehearseParams,
+  DataSourceRetrieveParams,
+  DataSourceRetrieveProviderParams,
+  DataSourceRetrieveStatusParams,
+  DataSourceUpsertParams,
+  DataSourceUpsertResponse,
+  DataSources,
+  Source,
+  SourceEnvironmentSettings,
+  SourceEvent,
+  SourceEventActionMapping,
+  SourceEventsResponse,
+  SourceLog,
+  SourceLogAction,
+  SourceLogsEntriesCursor,
+  SourceLogsResponse,
+  SourcePreprocessScript,
+  SourceProviderResponse,
+  SourceProvidersResponse,
+  SourceRehearseRequest,
+  SourceRehearseResponse,
+  SourceRequest,
+  SourceStatusResponse,
+  SourcesResponse,
+} from './resources/data-sources';
+import {
   EmailLayout,
   EmailLayoutListParams,
   EmailLayoutRetrieveParams,
@@ -159,8 +188,6 @@ import {
   PushTemplate,
   RequestTemplate,
   SMSTemplate,
-  TemplatePreviewParams,
-  TemplatePreviewResponse,
   Templates,
   WebhookTemplate,
 } from './resources/templates';
@@ -983,6 +1010,10 @@ export class KnockMgmt {
   channels: API.Channels = new API.Channels(this);
   members: API.Members = new API.Members(this);
   /**
+   * Sources receive external events that can trigger Knock actions.
+   */
+  dataSources: API.DataSources = new API.DataSources(this);
+  /**
    * Environments are isolated instances of your account that map to your infrastructure.
    */
   environments: API.Environments = new API.Environments(this);
@@ -1014,6 +1045,7 @@ KnockMgmt.APIKeys = APIKeys;
 KnockMgmt.ChannelGroups = ChannelGroups;
 KnockMgmt.Channels = Channels;
 KnockMgmt.Members = Members;
+KnockMgmt.DataSources = DataSources;
 KnockMgmt.Environments = Environments;
 KnockMgmt.Variables = Variables;
 KnockMgmt.Guides = Guides;
@@ -1039,8 +1071,6 @@ export declare namespace KnockMgmt {
     type RequestTemplate as RequestTemplate,
     type SMSTemplate as SMSTemplate,
     type WebhookTemplate as WebhookTemplate,
-    type TemplatePreviewResponse as TemplatePreviewResponse,
-    type TemplatePreviewParams as TemplatePreviewParams,
   };
 
   export {
@@ -1183,6 +1213,36 @@ export declare namespace KnockMgmt {
     type MemberUser as MemberUser,
     type MembersEntriesCursor as MembersEntriesCursor,
     type MemberListParams as MemberListParams,
+  };
+
+  export {
+    DataSources as DataSources,
+    type Source as Source,
+    type SourceEnvironmentSettings as SourceEnvironmentSettings,
+    type SourceEvent as SourceEvent,
+    type SourceEventActionMapping as SourceEventActionMapping,
+    type SourceEventsResponse as SourceEventsResponse,
+    type SourceLog as SourceLog,
+    type SourceLogAction as SourceLogAction,
+    type SourceLogsResponse as SourceLogsResponse,
+    type SourcePreprocessScript as SourcePreprocessScript,
+    type SourceProviderResponse as SourceProviderResponse,
+    type SourceProvidersResponse as SourceProvidersResponse,
+    type SourceRehearseRequest as SourceRehearseRequest,
+    type SourceRehearseResponse as SourceRehearseResponse,
+    type SourceRequest as SourceRequest,
+    type SourceStatusResponse as SourceStatusResponse,
+    type SourcesResponse as SourcesResponse,
+    type DataSourceUpsertResponse as DataSourceUpsertResponse,
+    type SourceLogsEntriesCursor as SourceLogsEntriesCursor,
+    type DataSourceRetrieveParams as DataSourceRetrieveParams,
+    type DataSourceListEventsParams as DataSourceListEventsParams,
+    type DataSourceListLogsParams as DataSourceListLogsParams,
+    type DataSourceListSourcesParams as DataSourceListSourcesParams,
+    type DataSourceRehearseParams as DataSourceRehearseParams,
+    type DataSourceRetrieveProviderParams as DataSourceRetrieveProviderParams,
+    type DataSourceRetrieveStatusParams as DataSourceRetrieveStatusParams,
+    type DataSourceUpsertParams as DataSourceUpsertParams,
   };
 
   export {

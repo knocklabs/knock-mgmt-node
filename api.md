@@ -24,11 +24,6 @@ Types:
 - <code><a href="./src/resources/templates.ts">RequestTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">SMSTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">WebhookTemplate</a></code>
-- <code><a href="./src/resources/templates.ts">TemplatePreviewResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/templates/preview">client.templates.<a href="./src/resources/templates.ts">preview</a>({ ...params }) -> TemplatePreviewResponse</code>
 
 # EmailLayouts
 
@@ -227,6 +222,40 @@ Methods:
 - <code title="get /v1/members/{id}">client.members.<a href="./src/resources/members.ts">retrieve</a>(id) -> Member</code>
 - <code title="get /v1/members">client.members.<a href="./src/resources/members.ts">list</a>({ ...params }) -> MembersEntriesCursor</code>
 - <code title="delete /v1/members/{id}">client.members.<a href="./src/resources/members.ts">delete</a>(id) -> void</code>
+
+# DataSources
+
+Types:
+
+- <code><a href="./src/resources/data-sources.ts">Source</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceEnvironmentSettings</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceEvent</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceEventActionMapping</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceEventsResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceLog</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceLogAction</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceLogsResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourcePreprocessScript</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceProviderResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceProvidersResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceRehearseRequest</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceRehearseResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceRequest</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourceStatusResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">SourcesResponse</a></code>
+- <code><a href="./src/resources/data-sources.ts">DataSourceUpsertResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/sources/{key}">client.dataSources.<a href="./src/resources/data-sources.ts">retrieve</a>(key, { ...params }) -> Source</code>
+- <code title="get /v1/sources/{key}/events">client.dataSources.<a href="./src/resources/data-sources.ts">listEvents</a>(key, { ...params }) -> SourceEventsResponse</code>
+- <code title="get /v1/sources/{key}/logs">client.dataSources.<a href="./src/resources/data-sources.ts">listLogs</a>(key, { ...params }) -> SourceLogsEntriesCursor</code>
+- <code title="get /v1/source_providers">client.dataSources.<a href="./src/resources/data-sources.ts">listProviders</a>() -> SourceProvidersResponse</code>
+- <code title="get /v1/sources">client.dataSources.<a href="./src/resources/data-sources.ts">listSources</a>({ ...params }) -> SourcesResponse</code>
+- <code title="post /v1/sources/{key}/rehearse">client.dataSources.<a href="./src/resources/data-sources.ts">rehearse</a>(key, { ...params }) -> SourceRehearseResponse</code>
+- <code title="get /v1/source_providers/{key}">client.dataSources.<a href="./src/resources/data-sources.ts">retrieveProvider</a>(key, { ...params }) -> SourceProviderResponse</code>
+- <code title="get /v1/sources/{key}/status">client.dataSources.<a href="./src/resources/data-sources.ts">retrieveStatus</a>(key, { ...params }) -> SourceStatusResponse</code>
+- <code title="put /v1/sources/{key}">client.dataSources.<a href="./src/resources/data-sources.ts">upsert</a>(key, { ...params }) -> DataSourceUpsertResponse</code>
 
 # Environments
 
