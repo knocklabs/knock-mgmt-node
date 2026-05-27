@@ -155,6 +155,12 @@ export interface EmailLayout {
   text_layout: string;
 
   /**
+   * Overrides to apply against account branding variables in an email layout,
+   * including dark mode-specific values.
+   */
+  branding_overrides?: EmailLayout.BrandingOverrides | null;
+
+  /**
    * The environment of the email layout.
    */
   environment?: string;
@@ -177,6 +183,62 @@ export interface EmailLayout {
 }
 
 export namespace EmailLayout {
+  /**
+   * Overrides to apply against account branding variables in an email layout,
+   * including dark mode-specific values.
+   */
+  export interface BrandingOverrides {
+    /**
+     * A URL for a dark mode icon override.
+     */
+    dark_icon_url?: string | null;
+
+    /**
+     * A URL for a dark mode logo override.
+     */
+    dark_logo_url?: string | null;
+
+    /**
+     * The dark mode primary brand color in hex format.
+     */
+    dark_primary_color?: string | null;
+
+    /**
+     * The dark mode contrast color for the primary brand color in hex format.
+     */
+    dark_primary_color_contrast?: string | null;
+
+    /**
+     * A URL for a light mode icon override.
+     */
+    icon_url?: string | null;
+
+    /**
+     * A URL for a light mode logo override.
+     */
+    logo_url?: string | null;
+
+    /**
+     * The light mode primary brand color in hex format.
+     */
+    primary_color?: string | null;
+
+    /**
+     * The light mode contrast color for the primary brand color in hex format.
+     */
+    primary_color_contrast?: string | null;
+
+    /**
+     * The light mode primary text color in hex format.
+     */
+    primary_text_color?: string | null;
+
+    /**
+     * The light mode secondary text color in hex format.
+     */
+    secondary_text_color?: string | null;
+  }
+
   export interface FooterLink {
     /**
      * The text to display as the link.
@@ -320,6 +382,12 @@ export namespace EmailLayoutUpsertParams {
     text_layout: string;
 
     /**
+     * Overrides to apply against account branding variables in an email layout,
+     * including dark mode-specific values.
+     */
+    branding_overrides?: EmailLayout.BrandingOverrides | null;
+
+    /**
      * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
@@ -332,6 +400,62 @@ export namespace EmailLayoutUpsertParams {
   }
 
   export namespace EmailLayout {
+    /**
+     * Overrides to apply against account branding variables in an email layout,
+     * including dark mode-specific values.
+     */
+    export interface BrandingOverrides {
+      /**
+       * A URL for a dark mode icon override.
+       */
+      dark_icon_url?: string | null;
+
+      /**
+       * A URL for a dark mode logo override.
+       */
+      dark_logo_url?: string | null;
+
+      /**
+       * The dark mode primary brand color in hex format.
+       */
+      dark_primary_color?: string | null;
+
+      /**
+       * The dark mode contrast color for the primary brand color in hex format.
+       */
+      dark_primary_color_contrast?: string | null;
+
+      /**
+       * A URL for a light mode icon override.
+       */
+      icon_url?: string | null;
+
+      /**
+       * A URL for a light mode logo override.
+       */
+      logo_url?: string | null;
+
+      /**
+       * The light mode primary brand color in hex format.
+       */
+      primary_color?: string | null;
+
+      /**
+       * The light mode contrast color for the primary brand color in hex format.
+       */
+      primary_color_contrast?: string | null;
+
+      /**
+       * The light mode primary text color in hex format.
+       */
+      primary_text_color?: string | null;
+
+      /**
+       * The light mode secondary text color in hex format.
+       */
+      secondary_text_color?: string | null;
+    }
+
     export interface FooterLink {
       /**
        * The text to display as the link.
@@ -385,6 +509,12 @@ export namespace EmailLayoutValidateParams {
     text_layout: string;
 
     /**
+     * Overrides to apply against account branding variables in an email layout,
+     * including dark mode-specific values.
+     */
+    branding_overrides?: EmailLayout.BrandingOverrides | null;
+
+    /**
      * A list of one or more items to show in the footer of the email layout.
      */
     footer_links?: Array<EmailLayout.FooterLink>;
@@ -397,6 +527,62 @@ export namespace EmailLayoutValidateParams {
   }
 
   export namespace EmailLayout {
+    /**
+     * Overrides to apply against account branding variables in an email layout,
+     * including dark mode-specific values.
+     */
+    export interface BrandingOverrides {
+      /**
+       * A URL for a dark mode icon override.
+       */
+      dark_icon_url?: string | null;
+
+      /**
+       * A URL for a dark mode logo override.
+       */
+      dark_logo_url?: string | null;
+
+      /**
+       * The dark mode primary brand color in hex format.
+       */
+      dark_primary_color?: string | null;
+
+      /**
+       * The dark mode contrast color for the primary brand color in hex format.
+       */
+      dark_primary_color_contrast?: string | null;
+
+      /**
+       * A URL for a light mode icon override.
+       */
+      icon_url?: string | null;
+
+      /**
+       * A URL for a light mode logo override.
+       */
+      logo_url?: string | null;
+
+      /**
+       * The light mode primary brand color in hex format.
+       */
+      primary_color?: string | null;
+
+      /**
+       * The light mode contrast color for the primary brand color in hex format.
+       */
+      primary_color_contrast?: string | null;
+
+      /**
+       * The light mode primary text color in hex format.
+       */
+      primary_text_color?: string | null;
+
+      /**
+       * The light mode secondary text color in hex format.
+       */
+      secondary_text_color?: string | null;
+    }
+
     export interface FooterLink {
       /**
        * The text to display as the link.
