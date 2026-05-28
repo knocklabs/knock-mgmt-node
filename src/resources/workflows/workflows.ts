@@ -401,6 +401,12 @@ export interface Workflow {
   settings?: Workflow.Settings;
 
   /**
+   * Use tags to organize resources internally within your account. For example, by
+   * team or product area.
+   */
+  tags?: Array<string>;
+
+  /**
    * A JSON schema for the expected structure of the workflow trigger's `data`
    * payload (available in templates as `{{ data.field_name }}`). Used to validate
    * trigger requests. Read more in the
@@ -1689,6 +1695,12 @@ export interface WorkflowRetrieveResponse {
   settings?: WorkflowRetrieveResponse.Settings;
 
   /**
+   * Use tags to organize resources internally within your account. For example, by
+   * team or product area.
+   */
+  tags?: Array<string>;
+
+  /**
    * A JSON schema for the expected structure of the workflow trigger's `data`
    * payload (available in templates as `{{ data.field_name }}`). Used to validate
    * trigger requests. Read more in the
@@ -1995,6 +2007,12 @@ export namespace WorkflowUpsertParams {
     settings?: Workflow.Settings;
 
     /**
+     * Use tags to organize resources internally within your account. For example, by
+     * team or product area.
+     */
+    tags?: Array<string>;
+
+    /**
      * A JSON schema for the expected structure of the workflow trigger's `data`
      * payload (available in templates as `{{ data.field_name }}`). Used to validate
      * trigger requests. Read more in the
@@ -2086,6 +2104,12 @@ export namespace WorkflowValidateParams {
      * A map of workflow settings.
      */
     settings?: Workflow.Settings;
+
+    /**
+     * Use tags to organize resources internally within your account. For example, by
+     * team or product area.
+     */
+    tags?: Array<string>;
 
     /**
      * A JSON schema for the expected structure of the workflow trigger's `data`
