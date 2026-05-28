@@ -141,6 +141,7 @@ describe('resource guides', () => {
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
+        tags: ['string'],
         target_audience_id: null,
         target_property_conditions: {
           all: [
@@ -213,6 +214,7 @@ describe('resource guides', () => {
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
+        tags: ['string'],
         target_audience_id: null,
         target_property_conditions: {
           all: [
