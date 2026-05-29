@@ -173,11 +173,14 @@ export interface Partial {
    * The field types available for the partial.
    */
   input_schema?: Array<
+    | Partial.MessageTypeListField
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
+    | Partial.MessageTypeNumberField
     | MessageTypesAPI.MessageTypeTextField
     | Shared.MessageTypeImageField
+    | Partial.MessageTypeColorField
     | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
@@ -190,6 +193,169 @@ export interface Partial {
    * HTML partials.
    */
   visual_block_enabled?: boolean;
+}
+
+export namespace Partial {
+  /**
+   * A list field used in a message type.
+   */
+  export interface MessageTypeListField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'list';
+
+    /**
+     * Settings for the list field.
+     */
+    settings?: MessageTypeListField.Settings;
+  }
+
+  export namespace MessageTypeListField {
+    /**
+     * Settings for the list field.
+     */
+    export interface Settings {
+      /**
+       * The default value of the list field.
+       */
+      default?: Array<unknown> | null;
+
+      description?: string | null;
+
+      /**
+       * A JSON schema used to validate the structure of each item in the list. Must be a
+       * valid JSON schema.
+       */
+      item_schema?: unknown | null;
+
+      placeholder?: string | null;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+    }
+  }
+
+  /**
+   * A numeric field used in a message type or partial input schema, with optional
+   * min/max bounds and a unit label for display.
+   */
+  export interface MessageTypeNumberField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'number';
+
+    /**
+     * Settings for the number field.
+     */
+    settings?: MessageTypeNumberField.Settings;
+  }
+
+  export namespace MessageTypeNumberField {
+    /**
+     * Settings for the number field.
+     */
+    export interface Settings {
+      /**
+       * The default numeric value.
+       */
+      default?: number | null;
+
+      description?: string | null;
+
+      /**
+       * Optional inclusive maximum allowed value.
+       */
+      max?: number | null;
+
+      /**
+       * Optional inclusive minimum allowed value.
+       */
+      min?: number | null;
+
+      placeholder?: string | null;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+
+      /**
+       * Optional short label shown after the input (e.g. px, kg).
+       */
+      unit_label?: string | null;
+    }
+  }
+
+  /**
+   * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
+   * schema.
+   */
+  export interface MessageTypeColorField {
+    /**
+     * The unique key of the field.
+     */
+    key: string;
+
+    /**
+     * The label of the field.
+     */
+    label: string | null;
+
+    /**
+     * The type of the field.
+     */
+    type: 'color';
+
+    /**
+     * Settings for the color field.
+     */
+    settings?: MessageTypeColorField.Settings;
+  }
+
+  export namespace MessageTypeColorField {
+    /**
+     * Settings for the color field.
+     */
+    export interface Settings {
+      /**
+       * The default hex color value.
+       */
+      default?: string | null;
+
+      description?: string | null;
+
+      placeholder?: string | null;
+
+      /**
+       * Whether the field is required.
+       */
+      required?: boolean;
+    }
+  }
 }
 
 /**
@@ -336,11 +502,14 @@ export namespace PartialUpsertParams {
      * The field types available for the partial.
      */
     input_schema?: Array<
+      | Partial.MessageTypeListField
       | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
+      | Partial.MessageTypeNumberField
       | MessageTypesAPI.MessageTypeTextField
       | Shared.MessageTypeImageField
+      | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
       | Shared.MessageTypeMarkdownField
       | Shared.MessageTypeMultiSelectField
@@ -353,6 +522,169 @@ export namespace PartialUpsertParams {
      * HTML partials.
      */
     visual_block_enabled?: boolean;
+  }
+
+  export namespace Partial {
+    /**
+     * A list field used in a message type.
+     */
+    export interface MessageTypeListField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'list';
+
+      /**
+       * Settings for the list field.
+       */
+      settings?: MessageTypeListField.Settings;
+    }
+
+    export namespace MessageTypeListField {
+      /**
+       * Settings for the list field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the list field.
+         */
+        default?: Array<unknown> | null;
+
+        description?: string | null;
+
+        /**
+         * A JSON schema used to validate the structure of each item in the list. Must be a
+         * valid JSON schema.
+         */
+        item_schema?: unknown | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A numeric field used in a message type or partial input schema, with optional
+     * min/max bounds and a unit label for display.
+     */
+    export interface MessageTypeNumberField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'number';
+
+      /**
+       * Settings for the number field.
+       */
+      settings?: MessageTypeNumberField.Settings;
+    }
+
+    export namespace MessageTypeNumberField {
+      /**
+       * Settings for the number field.
+       */
+      export interface Settings {
+        /**
+         * The default numeric value.
+         */
+        default?: number | null;
+
+        description?: string | null;
+
+        /**
+         * Optional inclusive maximum allowed value.
+         */
+        max?: number | null;
+
+        /**
+         * Optional inclusive minimum allowed value.
+         */
+        min?: number | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+
+        /**
+         * Optional short label shown after the input (e.g. px, kg).
+         */
+        unit_label?: string | null;
+      }
+    }
+
+    /**
+     * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
+     * schema.
+     */
+    export interface MessageTypeColorField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'color';
+
+      /**
+       * Settings for the color field.
+       */
+      settings?: MessageTypeColorField.Settings;
+    }
+
+    export namespace MessageTypeColorField {
+      /**
+       * Settings for the color field.
+       */
+      export interface Settings {
+        /**
+         * The default hex color value.
+         */
+        default?: string | null;
+
+        description?: string | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
   }
 }
 
@@ -409,11 +741,14 @@ export namespace PartialValidateParams {
      * The field types available for the partial.
      */
     input_schema?: Array<
+      | Partial.MessageTypeListField
       | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
+      | Partial.MessageTypeNumberField
       | MessageTypesAPI.MessageTypeTextField
       | Shared.MessageTypeImageField
+      | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
       | Shared.MessageTypeMarkdownField
       | Shared.MessageTypeMultiSelectField
@@ -426,6 +761,169 @@ export namespace PartialValidateParams {
      * HTML partials.
      */
     visual_block_enabled?: boolean;
+  }
+
+  export namespace Partial {
+    /**
+     * A list field used in a message type.
+     */
+    export interface MessageTypeListField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'list';
+
+      /**
+       * Settings for the list field.
+       */
+      settings?: MessageTypeListField.Settings;
+    }
+
+    export namespace MessageTypeListField {
+      /**
+       * Settings for the list field.
+       */
+      export interface Settings {
+        /**
+         * The default value of the list field.
+         */
+        default?: Array<unknown> | null;
+
+        description?: string | null;
+
+        /**
+         * A JSON schema used to validate the structure of each item in the list. Must be a
+         * valid JSON schema.
+         */
+        item_schema?: unknown | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
+
+    /**
+     * A numeric field used in a message type or partial input schema, with optional
+     * min/max bounds and a unit label for display.
+     */
+    export interface MessageTypeNumberField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'number';
+
+      /**
+       * Settings for the number field.
+       */
+      settings?: MessageTypeNumberField.Settings;
+    }
+
+    export namespace MessageTypeNumberField {
+      /**
+       * Settings for the number field.
+       */
+      export interface Settings {
+        /**
+         * The default numeric value.
+         */
+        default?: number | null;
+
+        description?: string | null;
+
+        /**
+         * Optional inclusive maximum allowed value.
+         */
+        max?: number | null;
+
+        /**
+         * Optional inclusive minimum allowed value.
+         */
+        min?: number | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+
+        /**
+         * Optional short label shown after the input (e.g. px, kg).
+         */
+        unit_label?: string | null;
+      }
+    }
+
+    /**
+     * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
+     * schema.
+     */
+    export interface MessageTypeColorField {
+      /**
+       * The unique key of the field.
+       */
+      key: string;
+
+      /**
+       * The label of the field.
+       */
+      label: string | null;
+
+      /**
+       * The type of the field.
+       */
+      type: 'color';
+
+      /**
+       * Settings for the color field.
+       */
+      settings?: MessageTypeColorField.Settings;
+    }
+
+    export namespace MessageTypeColorField {
+      /**
+       * Settings for the color field.
+       */
+      export interface Settings {
+        /**
+         * The default hex color value.
+         */
+        default?: string | null;
+
+        description?: string | null;
+
+        placeholder?: string | null;
+
+        /**
+         * Whether the field is required.
+         */
+        required?: boolean;
+      }
+    }
   }
 }
 
