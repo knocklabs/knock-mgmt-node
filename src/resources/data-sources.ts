@@ -174,8 +174,8 @@ export class DataSources extends APIResource {
     params: DataSourceUpsertParams,
     options?: RequestOptions,
   ): APIPromise<DataSourceUpsertResponse> {
-    const { environment, ...body } = params;
-    return this._client.put(path`/v1/sources/${key}`, { query: { environment }, body, ...options });
+    const { environment, annotate, ...body } = params;
+    return this._client.put(path`/v1/sources/${key}`, { query: { environment, annotate }, body, ...options });
   }
 }
 
@@ -225,11 +225,6 @@ export interface Source {
  * Environment-specific settings for a source.
  */
 export interface SourceEnvironmentSettings {
-  /**
-   * The timestamp of when these environment settings were created.
-   */
-  created_at: string;
-
   /**
    * Event action mappings configured for this source in the environment.
    */
@@ -1025,6 +1020,11 @@ export interface DataSourceRetrieveParams {
    * The environment slug.
    */
   environment: string;
+
+  /**
+   * Whether to annotate the resource. Only used in the Knock CLI.
+   */
+  annotate?: boolean;
 }
 
 export interface DataSourceListEventsParams {
@@ -1121,6 +1121,11 @@ export interface DataSourceUpsertParams {
    * configuration.
    */
   source: SourceRequest;
+
+  /**
+   * Query param: Whether to annotate the resource. Only used in the Knock CLI.
+   */
+  annotate?: boolean;
 }
 
 export declare namespace DataSources {

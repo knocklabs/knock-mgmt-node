@@ -22,7 +22,7 @@ describe('resource dataSources', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.dataSources.retrieve('key', { environment: 'development' });
+    const response = await client.dataSources.retrieve('key', { environment: 'development', annotate: true });
   });
 
   // Mock server tests are disabled
@@ -225,6 +225,7 @@ describe('resource dataSources', () => {
         },
         preconfigured_provider: 'preconfigured_provider',
       },
+      annotate: true,
     });
   });
 });
