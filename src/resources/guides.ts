@@ -238,6 +238,12 @@ export interface Guide {
   steps?: Array<GuideStep>;
 
   /**
+   * Use tags to organize resources internally within your account. For example, by
+   * team or product area.
+   */
+  tags?: Array<string>;
+
+  /**
    * The ID of the target audience for the guide. When not set, will default to
    * targeting all users.
    */
@@ -541,6 +547,12 @@ export namespace GuideUpsertParams {
     description?: string | null;
 
     /**
+     * Use tags to organize resources internally within your account. For example, by
+     * team or product area.
+     */
+    tags?: Array<string>;
+
+    /**
      * The ID of the target audience for the guide. When not set, will default to
      * targeting all users.
      */
@@ -611,6 +623,12 @@ export namespace GuideValidateParams {
      * the guide for internal purposes. Maximum of 280 characters allowed.
      */
     description?: string | null;
+
+    /**
+     * Use tags to organize resources internally within your account. For example, by
+     * team or product area.
+     */
+    tags?: Array<string>;
 
     /**
      * The ID of the target audience for the guide. When not set, will default to
