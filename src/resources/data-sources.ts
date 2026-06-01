@@ -368,7 +368,7 @@ export interface SourceLog {
 
   /**
    * The actions executed after receiving the source event. Only present when
-   * `includes` contains `actions`.
+   * `include` contains `actions`.
    */
   actions?: Array<SourceLogAction>;
 
@@ -440,7 +440,7 @@ export interface SourceLogAction {
 }
 
 /**
- * A paginated list of source logs. Include `actions` in the `includes` query
+ * A paginated list of source logs. Include `actions` in the `include` query
  * parameter to return action details for each log.
  */
 export interface SourceLogsResponse {
@@ -495,7 +495,7 @@ export interface SourceProviderResponse {
   version: string;
 
   /**
-   * Default event action mappings for the provider. Only present when `includes`
+   * Default event action mappings for the provider. Only present when `include`
    * contains `default_action_mappings`.
    */
   default_action_mappings?: Array<SourceProviderResponse.DefaultActionMapping>;
@@ -506,7 +506,7 @@ export interface SourceProviderResponse {
   example_payloads?: { [key: string]: Array<SourceProviderResponse.ExamplePayload> } | null;
 
   /**
-   * JSON Schema fields needed to configure the source. Only present when `includes`
+   * JSON Schema fields needed to configure the source. Only present when `include`
    * contains `static_fields`.
    */
   static_fields?: { [key: string]: unknown };
@@ -533,7 +533,7 @@ export namespace SourceProviderResponse {
     idempotency_key_path?: string | null;
 
     /**
-     * Verification script source code. Only present when `includes` contains
+     * Verification script source code. Only present when `include` contains
      * `preprocessing_script`.
      */
     preprocessing_script?: DefaultSettings.PreprocessingScript | null;
@@ -546,7 +546,7 @@ export namespace SourceProviderResponse {
 
   export namespace DefaultSettings {
     /**
-     * Verification script source code. Only present when `includes` contains
+     * Verification script source code. Only present when `include` contains
      * `preprocessing_script`.
      */
     export interface PreprocessingScript {
@@ -594,7 +594,7 @@ export namespace SourceProviderResponse {
     website_url: string | null;
 
     /**
-     * Provider branding assets. Only present when `includes` contains `branding`.
+     * Provider branding assets. Only present when `include` contains `branding`.
      */
     branding?: Provider.Branding | null;
 
@@ -611,7 +611,7 @@ export namespace SourceProviderResponse {
 
   export namespace Provider {
     /**
-     * Provider branding assets. Only present when `includes` contains `branding`.
+     * Provider branding assets. Only present when `include` contains `branding`.
      */
     export interface Branding {
       /**
@@ -1002,6 +1002,12 @@ export namespace SourcesResponse {
      * Source description.
      */
     description?: string | null;
+
+    /**
+     * Per-environment settings keyed by environment slug. Present only when requested
+     * via `include`.
+     */
+    environment_settings?: { [key: string]: DataSourcesAPI.SourceEnvironmentSettings } | null;
   }
 }
 
@@ -1064,7 +1070,7 @@ export interface DataSourceListLogsParams extends EntriesCursorParams {
    * Associated resources to include in the response. Accepts `actions` to include
    * the actions executed after receiving each source event.
    */
-  includes?: Array<'actions'>;
+  include?: Array<'actions'>;
 
   /**
    * Only return source logs at or after this timestamp.
@@ -1074,9 +1080,19 @@ export interface DataSourceListLogsParams extends EntriesCursorParams {
 
 export interface DataSourceListSourcesParams {
   /**
+   * Whether to annotate the resource. Only used in the Knock CLI.
+   */
+  annotate?: boolean;
+
+  /**
    * The environment slug.
    */
   environment?: string;
+
+  /**
+   * Associated resources to include in each source. Accepts `environment_settings`.
+   */
+  include?: Array<'environment_settings'>;
 }
 
 export interface DataSourceRehearseParams {
@@ -1098,7 +1114,7 @@ export interface DataSourceRetrieveProviderParams {
    * `default_action_mappings`, `example_payloads`, `preprocessing_script`,
    * `static_fields`.
    */
-  includes?: Array<
+  include?: Array<
     'branding' | 'default_action_mappings' | 'example_payloads' | 'preprocessing_script' | 'static_fields'
   >;
 }
