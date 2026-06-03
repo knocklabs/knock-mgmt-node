@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.29.0 (2026-06-03)
+
+Full Changelog: [v0.28.0...v0.29.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.28.0...v0.29.0)
+
+### Features
+
+* **api:** api update ([e4c6a84](https://github.com/knocklabs/knock-mgmt-node/commit/e4c6a84240bb430cf63a643322473693f8806a3c))
+* **api:** api update ([230ccdf](https://github.com/knocklabs/knock-mgmt-node/commit/230ccdf9bf142eceec3a6ca1c1675686883bb138))
+* **api:** api update ([c40c402](https://github.com/knocklabs/knock-mgmt-node/commit/c40c4027feb051e90265cca0c36fe07c79cccae6))
+* **api:** api update ([ce2e5a5](https://github.com/knocklabs/knock-mgmt-node/commit/ce2e5a52388b4822493df02816bd2d2df6afd053))
+* **api:** api update ([64207c1](https://github.com/knocklabs/knock-mgmt-node/commit/64207c14c6d804cda39b2984424fa7ba67ac5418))
+* **api:** api update ([055ebd9](https://github.com/knocklabs/knock-mgmt-node/commit/055ebd91709c540a0c63a282ba09dce69b71b940))
+* **api:** api update ([f86ce5d](https://github.com/knocklabs/knock-mgmt-node/commit/f86ce5d38918de3c58024771e201c64c1160263b))
+
 ## 0.28.0 (2026-05-29)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.27.0...v0.28.0)

@@ -244,10 +244,10 @@ export interface Guide {
   tags?: Array<string>;
 
   /**
-   * The ID of the target audience for the guide. When not set, will default to
+   * The key of the target audience for the guide. When not set, will default to
    * targeting all users.
    */
-  target_audience_id?: string | null;
+  target_audience_key?: string | null;
 
   /**
    * A group of conditions to be evaluated.
@@ -553,10 +553,10 @@ export namespace GuideUpsertParams {
     tags?: Array<string>;
 
     /**
-     * The ID of the target audience for the guide. When not set, will default to
+     * The key of the target audience for the guide. When not set, will default to
      * targeting all users.
      */
-    target_audience_id?: string | null;
+    target_audience_key?: string | null;
 
     /**
      * A group of conditions to be evaluated.
@@ -631,10 +631,10 @@ export namespace GuideValidateParams {
     tags?: Array<string>;
 
     /**
-     * The ID of the target audience for the guide. When not set, will default to
+     * The key of the target audience for the guide. When not set, will default to
      * targeting all users.
      */
-    target_audience_id?: string | null;
+    target_audience_key?: string | null;
 
     /**
      * A group of conditions to be evaluated.

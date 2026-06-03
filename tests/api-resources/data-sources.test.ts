@@ -22,7 +22,7 @@ describe('resource dataSources', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.dataSources.retrieve('key', { environment: 'development' });
+    const response = await client.dataSources.retrieve('key', { environment: 'development', annotate: true });
   });
 
   // Mock server tests are disabled
@@ -71,7 +71,7 @@ describe('resource dataSources', () => {
       date: 'date',
       ending_at: '2019-12-27T18:11:19.117Z',
       event: 'event',
-      includes: ['actions'],
+      include: ['actions'],
       limit: 0,
       starting_at: '2019-12-27T18:11:19.117Z',
     });
@@ -105,7 +105,14 @@ describe('resource dataSources', () => {
   test.skip('listSources: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.dataSources.listSources({ environment: 'development' }, { path: '/_stainless_unknown_path' }),
+      client.dataSources.listSources(
+        {
+          annotate: true,
+          environment: 'development',
+          include: ['environment_settings'],
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
@@ -150,7 +157,7 @@ describe('resource dataSources', () => {
     await expect(
       client.dataSources.retrieveProvider(
         'key',
-        { includes: ['branding'] },
+        { include: ['branding'] },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(KnockMgmt.NotFoundError);
@@ -225,6 +232,7 @@ describe('resource dataSources', () => {
         },
         preconfigured_provider: 'preconfigured_provider',
       },
+      annotate: true,
     });
   });
 });
