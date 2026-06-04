@@ -90,6 +90,7 @@ describe('resource channelGroups', () => {
           },
         ],
         operator: 'any',
+        visible_in: ['workflow'],
       },
     });
   });

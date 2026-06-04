@@ -134,6 +134,12 @@ export interface ChannelGroup {
    * The timestamp of when the channel group was archived (soft deleted).
    */
   archived_at?: string | null;
+
+  /**
+   * The resources where this channel group is visible as a step destination (e.g.
+   * workflow, broadcast).
+   */
+  visible_in?: Array<'workflow' | 'broadcast'>;
 }
 
 /**
@@ -246,9 +252,16 @@ export namespace ChannelGroupUpsertParams {
 
     /**
      * Determines how the channel rules are applied ('any' means any rule can match,
-     * 'all' means all rules must match).
+     * 'all' means all rules must match). Defaults to 'any'.
      */
     operator?: 'any' | 'all';
+
+    /**
+     * Optional. Where the channel group is visible as a step destination. Defaults to
+     * both workflow and broadcast when creating; omitted on update preserves the
+     * existing value.
+     */
+    visible_in?: Array<'workflow' | 'broadcast'>;
   }
 
   export namespace ChannelGroup {
