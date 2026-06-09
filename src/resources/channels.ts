@@ -108,6 +108,12 @@ export interface Channel {
    * parameter or when retrieving a single channel.
    */
   environment_settings?: { [key: string]: ChannelEnvironmentSettings } | null;
+
+  /**
+   * The resources where this channel is visible as a step destination (e.g.
+   * workflow, broadcast).
+   */
+  visible_in?: Array<'workflow' | 'broadcast'>;
 }
 
 /**
