@@ -253,12 +253,18 @@ export namespace SourceEnvironmentSettings {
      */
     endpoint?: string;
 
+    /**
+     * Whether the source processes events idempotently (CDP legacy sources only).
+     */
     enforce_idempotency?: boolean | null;
 
     enforce_verification?: boolean;
 
     event_type_path?: string | null;
 
+    /**
+     * Whether the source processes identify calls (CDP legacy sources only).
+     */
     handle_identifies?: boolean | null;
 
     idempotency_key_path?: string | null;
