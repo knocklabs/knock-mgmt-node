@@ -217,7 +217,7 @@ describe('resource dataSources', () => {
                 action_type: 'workflows_trigger',
                 event_type: 'event_type',
                 action_parameters: { foo: 'bar' },
-                inactive_at: '2019-12-27T18:11:19.117Z',
+                active: true,
                 is_deleted: true,
               },
             ],
