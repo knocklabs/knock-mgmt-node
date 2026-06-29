@@ -1164,6 +1164,7 @@ export type WorkflowStep =
   | WorkflowEmailStep
   | WorkflowAIAgentStep
   | WorkflowDelayStep
+  | WorkflowStep.WorkflowWaitForEventStep
   | WorkflowBatchStep
   | WorkflowFetchStep
   | WorkflowUpdateDataStep
@@ -1174,6 +1175,111 @@ export type WorkflowStep =
   | WorkflowBranchStep
   | WorkflowRandomCohortStep
   | WorkflowTriggerWorkflowStep;
+
+export namespace WorkflowStep {
+  /**
+   * A wait for event function step that pauses a workflow until a matching event is
+   * received.
+   */
+  export interface WorkflowWaitForEventStep {
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The settings for the wait for event step.
+     */
+    settings: WorkflowWaitForEventStep.Settings;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'wait_for_event';
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+  }
+
+  export namespace WorkflowWaitForEventStep {
+    /**
+     * The settings for the wait for event step.
+     */
+    export interface Settings {
+      /**
+       * An integration source event to wait for.
+       */
+      event: Settings.Event;
+
+      /**
+       * A duration of time, represented as a unit and a value.
+       */
+      expires_after?: WorkflowsAPI.Duration | null;
+
+      /**
+       * A list of condition groups the incoming event must match to resolve the wait.
+       */
+      match_conditions?: Array<Settings.MatchCondition>;
+
+      /**
+       * The action to take when a matching event is received.
+       */
+      on_match?: 'continue' | 'halt';
+
+      /**
+       * The action to take when the wait expires before a match.
+       */
+      on_timeout?: 'continue' | 'halt';
+    }
+
+    export namespace Settings {
+      /**
+       * An integration source event to wait for.
+       */
+      export interface Event {
+        /**
+         * The name of the event to wait for.
+         */
+        event_key: string;
+
+        /**
+         * The type of event to wait for.
+         */
+        event_type: 'integration_source';
+
+        /**
+         * The key of the integration source that emits the event to wait for.
+         */
+        integration_source_key: string;
+      }
+
+      export interface MatchCondition {
+        /**
+         * A list of conditions.
+         */
+        conditions?: Array<WorkflowsAPI.Condition>;
+
+        /**
+         * The operator used to join the conditions in the group.
+         */
+        operator?: 'and';
+      }
+    }
+  }
+}
 
 /**
  * A throttle function step. Read more in the
