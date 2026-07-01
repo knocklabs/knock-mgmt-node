@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.31.0 (2026-07-01)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* **api:** api update ([36e00fc](https://github.com/knocklabs/knock-mgmt-node/commit/36e00fc14fb82f773335088b495aa73aa840f31c))
+* **api:** api update ([9c9e391](https://github.com/knocklabs/knock-mgmt-node/commit/9c9e39103e5a858b0b03dace3565289c0c16e752))
+* **api:** api update ([20413b9](https://github.com/knocklabs/knock-mgmt-node/commit/20413b9d43827ac6db794e9c12c0290c2275a016))
+* **api:** api update ([54a7666](https://github.com/knocklabs/knock-mgmt-node/commit/54a766619506ab275def3f57cc0e06b9abd4114f))
+* **api:** api update ([398c078](https://github.com/knocklabs/knock-mgmt-node/commit/398c078a43914beb607b2989c977519d24db4eb2))
+* **api:** api update ([4b50940](https://github.com/knocklabs/knock-mgmt-node/commit/4b509409f5378642d0e41f379c33647070a86431))
+* **api:** api update ([6229305](https://github.com/knocklabs/knock-mgmt-node/commit/6229305a3f2eb2290550a276bc84e96a1142254f))
+* **api:** api update ([6b272a1](https://github.com/knocklabs/knock-mgmt-node/commit/6b272a11595c2fe2d00cf42179c47a638be520f6))
+* **api:** api update ([3a27f1e](https://github.com/knocklabs/knock-mgmt-node/commit/3a27f1e15dcf3bb412922af47bcb6ead51ebddee))
+* **api:** api update ([9d7375a](https://github.com/knocklabs/knock-mgmt-node/commit/9d7375a62ad059527f34d0abe149a48fd3094f74))
+* **api:** api update ([2bb366a](https://github.com/knocklabs/knock-mgmt-node/commit/2bb366af709cbd14c4bd191dd1358d1d6751695c))
+* **api:** api update ([5f2b194](https://github.com/knocklabs/knock-mgmt-node/commit/5f2b19437a149fbd76e099350cfad7815507959e))
+* **api:** api update ([45104fc](https://github.com/knocklabs/knock-mgmt-node/commit/45104fcaa34048184dac3b312a141c85158233ed))
+* **api:** api update ([f80aa5c](https://github.com/knocklabs/knock-mgmt-node/commit/f80aa5cd0b116f160220390016b28d64b90df64f))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([4d29bde](https://github.com/knocklabs/knock-mgmt-node/commit/4d29bde4306129243f90406e90932b0777355272))
+
 ## 0.30.0 (2026-06-09)
 
 Full Changelog: [v0.29.0...v0.30.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.29.0...v0.30.0)
