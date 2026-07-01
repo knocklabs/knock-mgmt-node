@@ -253,12 +253,18 @@ export namespace SourceEnvironmentSettings {
      */
     endpoint?: string;
 
+    /**
+     * Whether the source processes events idempotently (CDP legacy sources only).
+     */
     enforce_idempotency?: boolean | null;
 
     enforce_verification?: boolean;
 
     event_type_path?: string | null;
 
+    /**
+     * Whether the source processes identify calls (CDP legacy sources only).
+     */
     handle_identifies?: boolean | null;
 
     idempotency_key_path?: string | null;
@@ -310,6 +316,11 @@ export interface SourceEventActionMapping {
     | 'audiences_remove_member';
 
   /**
+   * Whether the mapping is active. Inactive mappings are skipped during execution.
+   */
+  active: boolean;
+
+  /**
    * The timestamp of when the mapping was created.
    */
   created_at: string;
@@ -335,11 +346,6 @@ export interface SourceEventActionMapping {
    * The action-specific parameters for the mapping.
    */
   action_parameters?: { [key: string]: unknown } | null;
-
-  /**
-   * The timestamp of when the mapping was deactivated.
-   */
-  inactive_at?: string | null;
 }
 
 /**
@@ -875,9 +881,10 @@ export namespace SourceRequest {
       action_parameters?: { [key: string]: unknown } | null;
 
       /**
-       * The timestamp to deactivate the mapping.
+       * Whether the mapping is active. Set to false to deactivate the mapping without
+       * deleting it. Defaults to true.
        */
-      inactive_at?: string | null;
+      active?: boolean;
 
       /**
        * Whether to delete the mapping. Workflow trigger mappings must be marked deleted
@@ -942,6 +949,11 @@ export namespace SourceStatusResponse {
     action_type: 'workflows_trigger';
 
     /**
+     * Whether the mapping is active. Inactive mappings are skipped during execution.
+     */
+    active: boolean;
+
+    /**
      * The decoded event type that triggers the action.
      */
     event_type: string;
@@ -960,11 +972,6 @@ export namespace SourceStatusResponse {
      * Whether the mapping is pending deletion or update.
      */
     status: 'deleted' | 'updated';
-
-    /**
-     * The timestamp of when the mapping was deactivated.
-     */
-    inactive_at?: string | null;
   }
 }
 
