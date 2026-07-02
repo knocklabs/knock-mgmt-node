@@ -148,7 +148,6 @@ export {
 export {
   MessageTypes,
   type MessageType,
-  type MessageTypeTextField,
   type MessageTypeVariant,
   type MessageTypeUpsertResponse,
   type MessageTypeValidateResponse,

@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as MessageTypesAPI from './message-types';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -178,7 +177,7 @@ export interface Partial {
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
     | Partial.MessageTypeNumberField
-    | MessageTypesAPI.MessageTypeTextField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
     | Partial.MessageTypeColorField
     | Shared.MessageTypeURLField
@@ -507,7 +506,7 @@ export namespace PartialUpsertParams {
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
       | Partial.MessageTypeNumberField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeTextField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
@@ -746,7 +745,7 @@ export namespace PartialValidateParams {
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
       | Partial.MessageTypeNumberField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeTextField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField

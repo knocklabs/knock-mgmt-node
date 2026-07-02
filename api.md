@@ -9,6 +9,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">MessageTypeMarkdownField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeMultiSelectField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeSelectField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeTextField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeTextareaField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeURLField</a></code>
 - <code><a href="./src/resources/shared.ts">PageInfo</a></code>
@@ -146,7 +147,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/message-types.ts">MessageType</a></code>
-- <code><a href="./src/resources/message-types.ts">MessageTypeTextField</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeVariant</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeUpsertResponse</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeValidateResponse</a></code>

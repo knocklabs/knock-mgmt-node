@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as MessageTypesAPI from './message-types';
-
 /**
  * A boolean field used in a message type.
  */
@@ -55,7 +53,7 @@ export interface MessageTypeButtonField {
   /**
    * A text field used in a message type.
    */
-  action: MessageTypesAPI.MessageTypeTextField;
+  action: MessageTypeTextField;
 
   /**
    * The unique key of the field.
@@ -70,7 +68,7 @@ export interface MessageTypeButtonField {
   /**
    * A text field used in a message type.
    */
-  text: MessageTypesAPI.MessageTypeTextField;
+  text: MessageTypeTextField;
 
   /**
    * The type of the field.
@@ -106,12 +104,12 @@ export interface MessageTypeImageField {
   /**
    * A text field used in a message type.
    */
-  action: MessageTypesAPI.MessageTypeTextField;
+  action: MessageTypeTextField;
 
   /**
    * A text field used in a message type.
    */
-  alt: MessageTypesAPI.MessageTypeTextField;
+  alt: MessageTypeTextField;
 
   /**
    * The unique key of the field.
@@ -380,6 +378,56 @@ export namespace MessageTypeSelectField {
        */
       label?: string;
     }
+  }
+}
+
+/**
+ * A text field used in a message type.
+ */
+export interface MessageTypeTextField {
+  /**
+   * The unique key of the field.
+   */
+  key: string;
+
+  /**
+   * The label of the field.
+   */
+  label: string | null;
+
+  /**
+   * The type of the field.
+   */
+  type: 'text';
+
+  /**
+   * Settings for the text field.
+   */
+  settings?: MessageTypeTextField.Settings;
+}
+
+export namespace MessageTypeTextField {
+  /**
+   * Settings for the text field.
+   */
+  export interface Settings {
+    /**
+     * The default value of the text field.
+     */
+    default?: string | null;
+
+    description?: string | null;
+
+    max_length?: number;
+
+    min_length?: number;
+
+    placeholder?: string | null;
+
+    /**
+     * Whether the field is required.
+     */
+    required?: boolean;
   }
 }
 
