@@ -161,7 +161,6 @@ import {
   MessageType,
   MessageTypeListParams,
   MessageTypeRetrieveParams,
-  MessageTypeTextField,
   MessageTypeUpsertParams,
   MessageTypeUpsertResponse,
   MessageTypeValidateParams,
@@ -1173,7 +1172,6 @@ export declare namespace KnockMgmt {
   export {
     MessageTypes as MessageTypes,
     type MessageType as MessageType,
-    type MessageTypeTextField as MessageTypeTextField,
     type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
@@ -1335,6 +1333,7 @@ export declare namespace KnockMgmt {
   export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
   export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
   export type MessageTypeSelectField = API.MessageTypeSelectField;
+  export type MessageTypeTextField = API.MessageTypeTextField;
   export type MessageTypeTextareaField = API.MessageTypeTextareaField;
   export type MessageTypeURLField = API.MessageTypeURLField;
   export type PageInfo = API.PageInfo;
