@@ -141,9 +141,9 @@ export class Workflows extends APIResource {
     params: WorkflowUpsertParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
+      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -2045,6 +2045,12 @@ export interface WorkflowUpsertParams {
    * Body param: A workflow request for upserting a workflow.
    */
   workflow: WorkflowUpsertParams.Workflow;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.

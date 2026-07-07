@@ -75,9 +75,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
+      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -330,6 +330,12 @@ export interface EmailLayoutUpsertParams {
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutUpsertParams.EmailLayout;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.

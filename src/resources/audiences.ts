@@ -87,9 +87,9 @@ export class Audiences extends APIResource {
     params: AudienceUpsertParams,
     options?: RequestOptions,
   ): APIPromise<AudienceUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/audiences/${audienceKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
+      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -385,6 +385,12 @@ export interface AudienceUpsertParams {
    * `type: dynamic` for audiences with segment-based membership.
    */
   audience: AudienceUpsertParams.StaticAudienceRequest | AudienceUpsertParams.DynamicAudienceRequest;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.

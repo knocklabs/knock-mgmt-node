@@ -112,9 +112,9 @@ export class Guides extends APIResource {
     params: GuideUpsertParams,
     options?: RequestOptions,
   ): APIPromise<GuideUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/guides/${guideKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
+      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -474,6 +474,12 @@ export interface GuideUpsertParams {
    * Body param: A request to create or update a guide.
    */
   guide: GuideUpsertParams.Guide;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
