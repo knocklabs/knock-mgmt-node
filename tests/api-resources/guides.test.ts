@@ -153,6 +153,7 @@ describe('resource guides', () => {
           ],
         },
       },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,

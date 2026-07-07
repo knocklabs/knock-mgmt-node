@@ -84,6 +84,7 @@ describe('resource translations', () => {
       environment: 'development',
       namespace: 'namespace',
       translation: { content: '{"hello":"Hello, world!"}', format: 'json' },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,

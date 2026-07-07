@@ -62,6 +62,7 @@ describe('resource commits', () => {
   test.skip('commitAll: required and optional params', async () => {
     const response = await client.commits.commitAll({
       environment: 'development',
+      allow_empty: true,
       branch: 'feature-branch',
       commit_message: 'commit_message',
       resource_id: 'resource_id',

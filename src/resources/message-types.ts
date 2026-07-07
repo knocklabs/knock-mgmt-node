@@ -73,9 +73,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, annotate, branch, commit, commit_message, force },
+      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
       body,
       ...options,
     });
@@ -530,6 +530,12 @@ export interface MessageTypeUpsertParams {
    * Body param: A request to create a message type.
    */
   message_type: MessageTypeUpsertParams.MessageType;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
