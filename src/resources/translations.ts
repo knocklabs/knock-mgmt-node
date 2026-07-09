@@ -80,6 +80,7 @@ export class Translations extends APIResource {
     const {
       environment,
       namespace,
+      allow_empty,
       annotate,
       branch,
       commit,
@@ -90,7 +91,18 @@ export class Translations extends APIResource {
       ...body
     } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
-      query: { environment, namespace, annotate, branch, commit, commit_message, force, format, tenant },
+      query: {
+        environment,
+        namespace,
+        allow_empty,
+        annotate,
+        branch,
+        commit,
+        commit_message,
+        force,
+        format,
+        tenant,
+      },
       body,
       ...options,
     });
@@ -305,6 +317,12 @@ export interface TranslationUpsertParams {
    * create a translation.
    */
   translation: TranslationUpsertParams.Translation;
+
+  /**
+   * Query param: When used with commit, creates a new version with identical content
+   * and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.

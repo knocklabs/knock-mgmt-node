@@ -97,6 +97,7 @@ describe('resource emailLayouts', () => {
         footer_links: [{ text: 'Example', url: 'http://example.com' }],
         is_mjml: true,
       },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,

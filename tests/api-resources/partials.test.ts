@@ -101,6 +101,7 @@ describe('resource partials', () => {
         ],
         visual_block_enabled: true,
       },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,

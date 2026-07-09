@@ -187,6 +187,7 @@ describe('resource workflows', () => {
         trigger_data_json_schema: { foo: 'bar' },
         trigger_frequency: 'every_trigger',
       },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,

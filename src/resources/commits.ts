@@ -53,9 +53,9 @@ export class Commits extends APIResource {
    * ```
    */
   commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
-    const { environment, branch, commit_message, resource_id, resource_type } = params;
+    const { environment, allow_empty, branch, commit_message, resource_id, resource_type } = params;
     return this._client.put('/v1/commits', {
-      query: { environment, branch, commit_message, resource_id, resource_type },
+      query: { environment, allow_empty, branch, commit_message, resource_id, resource_type },
       ...options,
     });
   }
@@ -237,6 +237,12 @@ export interface CommitCommitAllParams {
    * The environment slug.
    */
   environment: string;
+
+  /**
+   * When used with a single resource_type and resource_id, creates a new version
+   * with identical content and commits it if there are no unpublished changes.
+   */
+  allow_empty?: boolean;
 
   /**
    * The slug of a branch to use. This option can only be used when `environment` is

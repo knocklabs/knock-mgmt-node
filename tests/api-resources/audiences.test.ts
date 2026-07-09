@@ -107,6 +107,7 @@ describe('resource audiences', () => {
           },
         ],
       },
+      allow_empty: true,
       annotate: true,
       branch: 'feature-branch',
       commit: true,
