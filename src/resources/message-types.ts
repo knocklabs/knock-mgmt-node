@@ -203,56 +203,6 @@ export interface MessageType {
 }
 
 /**
- * A text field used in a message type.
- */
-export interface MessageTypeTextField {
-  /**
-   * The unique key of the field.
-   */
-  key: string;
-
-  /**
-   * The label of the field.
-   */
-  label: string | null;
-
-  /**
-   * The type of the field.
-   */
-  type: 'text';
-
-  /**
-   * Settings for the text field.
-   */
-  settings?: MessageTypeTextField.Settings;
-}
-
-export namespace MessageTypeTextField {
-  /**
-   * Settings for the text field.
-   */
-  export interface Settings {
-    /**
-     * The default value of the text field.
-     */
-    default?: string | null;
-
-    description?: string | null;
-
-    max_length?: number;
-
-    min_length?: number;
-
-    placeholder?: string | null;
-
-    /**
-     * Whether the field is required.
-     */
-    required?: boolean;
-  }
-}
-
-/**
  * A variant of a message type.
  */
 export interface MessageTypeVariant {
@@ -265,7 +215,7 @@ export interface MessageTypeVariant {
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
     | MessageTypeVariant.MessageTypeNumberField
-    | MessageTypeTextField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
     | MessageTypeVariant.MessageTypeColorField
     | Shared.MessageTypeURLField
@@ -664,7 +614,6 @@ export namespace MessageTypeValidateParams {
 export declare namespace MessageTypes {
   export {
     type MessageType as MessageType,
-    type MessageTypeTextField as MessageTypeTextField,
     type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,

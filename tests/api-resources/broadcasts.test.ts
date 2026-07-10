@@ -154,8 +154,8 @@ describe('resource broadcasts', () => {
               {
                 day: 'monday',
                 type: 'send',
-                from: '18:11:19.117Z',
-                until: '18:11:19.117Z',
+                from: '09:00',
+                until: '17:00',
               },
             ],
           },
@@ -229,8 +229,8 @@ describe('resource broadcasts', () => {
               {
                 day: 'monday',
                 type: 'send',
-                from: '18:11:19.117Z',
-                until: '18:11:19.117Z',
+                from: '09:00',
+                until: '17:00',
               },
             ],
           },

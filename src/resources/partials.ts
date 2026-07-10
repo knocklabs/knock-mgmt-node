@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as MessageTypesAPI from './message-types';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -17,13 +16,17 @@ export class Partials extends APIResource {
    *
    * @example
    * ```ts
-   * const partial = await client.partials.retrieve(
+   * const partialResource = await client.partials.retrieve(
    *   'partial_key',
    *   { environment: 'development' },
    * );
    * ```
    */
-  retrieve(partialKey: string, query: PartialRetrieveParams, options?: RequestOptions): APIPromise<Partial> {
+  retrieve(
+    partialKey: string,
+    query: PartialRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<PartialResource> {
     return this._client.get(path`/v1/partials/${partialKey}`, { query, ...options });
   }
 
@@ -33,15 +36,18 @@ export class Partials extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const partial of client.partials.list({
+   * for await (const partialResource of client.partials.list({
    *   environment: 'development',
    * })) {
    *   // ...
    * }
    * ```
    */
-  list(query: PartialListParams, options?: RequestOptions): PagePromise<PartialsEntriesCursor, Partial> {
-    return this._client.getAPIList('/v1/partials', EntriesCursor<Partial>, { query, ...options });
+  list(
+    query: PartialListParams,
+    options?: RequestOptions,
+  ): PagePromise<PartialResourcesEntriesCursor, PartialResource> {
+    return this._client.getAPIList('/v1/partials', EntriesCursor<PartialResource>, { query, ...options });
   }
 
   /**
@@ -111,12 +117,12 @@ export class Partials extends APIResource {
   }
 }
 
-export type PartialsEntriesCursor = EntriesCursor<Partial>;
+export type PartialResourcesEntriesCursor = EntriesCursor<PartialResource>;
 
 /**
  * A partial is a reusable piece of content that can be used in a template.
  */
-export interface Partial {
+export interface PartialResource {
   /**
    * The partial content.
    */
@@ -173,14 +179,14 @@ export interface Partial {
    * The field types available for the partial.
    */
   input_schema?: Array<
-    | Partial.MessageTypeListField
+    | PartialResource.MessageTypeListField
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | Partial.MessageTypeNumberField
-    | MessageTypesAPI.MessageTypeTextField
+    | PartialResource.MessageTypeNumberField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
-    | Partial.MessageTypeColorField
+    | PartialResource.MessageTypeColorField
     | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
@@ -195,7 +201,7 @@ export interface Partial {
   visual_block_enabled?: boolean;
 }
 
-export namespace Partial {
+export namespace PartialResource {
   /**
    * A list field used in a message type.
    */
@@ -365,7 +371,7 @@ export interface PartialUpsertResponse {
   /**
    * A partial is a reusable piece of content that can be used in a template.
    */
-  partial: Partial;
+  partial: PartialResource;
 }
 
 /**
@@ -375,7 +381,7 @@ export interface PartialValidateResponse {
   /**
    * A partial is a reusable piece of content that can be used in a template.
    */
-  partial: Partial;
+  partial: PartialResource;
 }
 
 export interface PartialRetrieveParams {
@@ -513,7 +519,7 @@ export namespace PartialUpsertParams {
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
       | Partial.MessageTypeNumberField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeTextField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
@@ -752,7 +758,7 @@ export namespace PartialValidateParams {
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
       | Partial.MessageTypeNumberField
-      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeTextField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
@@ -935,10 +941,10 @@ export namespace PartialValidateParams {
 
 export declare namespace Partials {
   export {
-    type Partial as Partial,
+    type PartialResource as PartialResource,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
-    type PartialsEntriesCursor as PartialsEntriesCursor,
+    type PartialResourcesEntriesCursor as PartialResourcesEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
     type PartialUpsertParams as PartialUpsertParams,

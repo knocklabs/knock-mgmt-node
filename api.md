@@ -9,6 +9,7 @@ Types:
 - <code><a href="./src/resources/shared.ts">MessageTypeMarkdownField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeMultiSelectField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeSelectField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeTextField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeTextareaField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeURLField</a></code>
 - <code><a href="./src/resources/shared.ts">PageInfo</a></code>
@@ -61,14 +62,14 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/partials.ts">Partial</a></code>
+- <code><a href="./src/resources/partials.ts">PartialResource</a></code>
 - <code><a href="./src/resources/partials.ts">PartialUpsertResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialValidateResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> Partial</code>
-- <code title="get /v1/partials">client.partials.<a href="./src/resources/partials.ts">list</a>({ ...params }) -> PartialsEntriesCursor</code>
+- <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> PartialResource</code>
+- <code title="get /v1/partials">client.partials.<a href="./src/resources/partials.ts">list</a>({ ...params }) -> PartialResourcesEntriesCursor</code>
 - <code title="put /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">upsert</a>(partialKey, { ...params }) -> PartialUpsertResponse</code>
 - <code title="put /v1/partials/{partial_key}/validate">client.partials.<a href="./src/resources/partials.ts">validate</a>(partialKey, { ...params }) -> PartialValidateResponse</code>
 
@@ -146,7 +147,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/message-types.ts">MessageType</a></code>
-- <code><a href="./src/resources/message-types.ts">MessageTypeTextField</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeVariant</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeUpsertResponse</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeValidateResponse</a></code>

@@ -148,7 +148,6 @@ export {
 export {
   MessageTypes,
   type MessageType,
-  type MessageTypeTextField,
   type MessageTypeVariant,
   type MessageTypeUpsertResponse,
   type MessageTypeValidateResponse,
@@ -160,14 +159,14 @@ export {
 } from './message-types';
 export {
   Partials,
-  type Partial,
+  type PartialResource,
   type PartialUpsertResponse,
   type PartialValidateResponse,
   type PartialRetrieveParams,
   type PartialListParams,
   type PartialUpsertParams,
   type PartialValidateParams,
-  type PartialsEntriesCursor,
+  type PartialResourcesEntriesCursor,
 } from './partials';
 export {
   Templates,

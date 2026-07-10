@@ -161,7 +161,6 @@ import {
   MessageType,
   MessageTypeListParams,
   MessageTypeRetrieveParams,
-  MessageTypeTextField,
   MessageTypeUpsertParams,
   MessageTypeUpsertResponse,
   MessageTypeValidateParams,
@@ -171,15 +170,15 @@ import {
   MessageTypesEntriesCursor,
 } from './resources/message-types';
 import {
-  Partial as PartialResource, // rename to PartialResource to avoid confusion with Partial<T> in TypeScript
   PartialListParams,
+  PartialResource,
+  PartialResourcesEntriesCursor,
   PartialRetrieveParams,
   PartialUpsertParams,
   PartialUpsertResponse,
   PartialValidateParams,
   PartialValidateResponse,
   Partials,
-  PartialsEntriesCursor,
 } from './resources/partials';
 import {
   ChatTemplate,
@@ -1107,10 +1106,10 @@ export declare namespace KnockMgmt {
 
   export {
     Partials as Partials,
-    type PartialResource as Partial,
+    type PartialResource as PartialResource,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
-    type PartialsEntriesCursor as PartialsEntriesCursor,
+    type PartialResourcesEntriesCursor as PartialResourcesEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
     type PartialUpsertParams as PartialUpsertParams,
@@ -1173,7 +1172,6 @@ export declare namespace KnockMgmt {
   export {
     MessageTypes as MessageTypes,
     type MessageType as MessageType,
-    type MessageTypeTextField as MessageTypeTextField,
     type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
@@ -1335,6 +1333,7 @@ export declare namespace KnockMgmt {
   export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
   export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
   export type MessageTypeSelectField = API.MessageTypeSelectField;
+  export type MessageTypeTextField = API.MessageTypeTextField;
   export type MessageTypeTextareaField = API.MessageTypeTextareaField;
   export type MessageTypeURLField = API.MessageTypeURLField;
   export type PageInfo = API.PageInfo;
