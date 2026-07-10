@@ -162,7 +162,7 @@ export type GuidesEntriesCursor = EntriesCursor<Guide>;
 
 /**
  * A guide defines an in-app guide that can be displayed to users based on priority
- * and other conditions.
+ * and other targeting conditions.
  */
 export interface Guide {
   /**
@@ -330,7 +330,7 @@ export interface GuideStep {
 export interface GuideActivateResponse {
   /**
    * A guide defines an in-app guide that can be displayed to users based on priority
-   * and other conditions.
+   * and other targeting conditions.
    */
   guide: Guide;
 }
@@ -351,7 +351,7 @@ export interface GuideArchiveResponse {
 export interface GuideUpsertResponse {
   /**
    * A guide defines an in-app guide that can be displayed to users based on priority
-   * and other conditions.
+   * and other targeting conditions.
    */
   guide: Guide;
 }
@@ -362,7 +362,7 @@ export interface GuideUpsertResponse {
 export interface GuideValidateResponse {
   /**
    * A guide defines an in-app guide that can be displayed to users based on priority
-   * and other conditions.
+   * and other targeting conditions.
    */
   guide: Guide;
 }
