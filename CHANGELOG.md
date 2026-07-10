@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.33.0 (2026-07-10)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* set publish release settings ([47a80e7](https://github.com/knocklabs/knock-mgmt-node/commit/47a80e7411310d1461d9fc3f89a12438f4dfabf2))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([b57297a](https://github.com/knocklabs/knock-mgmt-node/commit/b57297a5829caab67f208b904ea9833341434bf5))
+
+
+### Chores
+
+* set the same query_settings from api ([da75d5c](https://github.com/knocklabs/knock-mgmt-node/commit/da75d5c7218e3dbc9155009c9bdfb85da766338c))
+
 ## 0.32.0 (2026-07-09)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.31.0...v0.32.0)
