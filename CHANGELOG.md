@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.32.1 (2026-07-10)
+
+Full Changelog: [v0.32.0...v0.32.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.32.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([7aa6c63](https://github.com/knocklabs/knock-mgmt-node/commit/7aa6c63c65d9a568eb741a81cd711697889289b1))
+
 ## 0.32.0 (2026-07-09)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.31.0...v0.32.0)
