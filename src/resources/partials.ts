@@ -183,8 +183,8 @@ export interface PartialResource {
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | PartialResource.MessageTypeNumberField
-    | Shared.MessageTypeTextField
+    | PartialResource.MessageTypeTextField
+    | Shared.MessageTypeNumberField
     | Shared.MessageTypeImageField
     | PartialResource.MessageTypeColorField
     | Shared.MessageTypeURLField
@@ -518,8 +518,8 @@ export namespace PartialUpsertParams {
       | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
-      | Partial.MessageTypeNumberField
-      | Shared.MessageTypeTextField
+      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeNumberField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
@@ -757,8 +757,8 @@ export namespace PartialValidateParams {
       | Shared.MessageTypeSelectField
       | Shared.MessageTypeBooleanField
       | Shared.MessageTypeJsonField
-      | Partial.MessageTypeNumberField
-      | Shared.MessageTypeTextField
+      | MessageTypesAPI.MessageTypeTextField
+      | Shared.MessageTypeNumberField
       | Shared.MessageTypeImageField
       | Partial.MessageTypeColorField
       | Shared.MessageTypeURLField
