@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.33.0 (2026-07-15)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** api update ([cf9fb0d](https://github.com/knocklabs/knock-mgmt-node/commit/cf9fb0db002c5c0a26b45a3b90eebaf8487a8ed8))
+* set publish release settings ([47a80e7](https://github.com/knocklabs/knock-mgmt-node/commit/47a80e7411310d1461d9fc3f89a12438f4dfabf2))
+* update mapi spec to v0.1.1514 ([52f2e48](https://github.com/knocklabs/knock-mgmt-node/commit/52f2e48619f91cd2a972e2fd358971d6203f97f1))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([68f299b](https://github.com/knocklabs/knock-mgmt-node/commit/68f299b81e9aa22abdc6711ce29343b4d7307671))
+
+
+### Chores
+
+* set the same query_settings from api ([da75d5c](https://github.com/knocklabs/knock-mgmt-node/commit/da75d5c7218e3dbc9155009c9bdfb85da766338c))
+* trivial test changes ([0641a34](https://github.com/knocklabs/knock-mgmt-node/commit/0641a344bdc0efcc6c29a4f4b88baceb7881bf58))
+
 ## 0.32.0 (2026-07-09)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.31.0...v0.32.0)
