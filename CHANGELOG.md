@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.33.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.33.0) (2026-07-16)
+
+
+### Features
+
+* set publish release settings ([47a80e7](https://github.com/knocklabs/knock-mgmt-node/commit/47a80e7411310d1461d9fc3f89a12438f4dfabf2))
+* update mapi spec to v0.1.1514 ([52f2e48](https://github.com/knocklabs/knock-mgmt-node/commit/52f2e48619f91cd2a972e2fd358971d6203f97f1))
+* update mapi spec to v0.1.1524 ([ccf4a26](https://github.com/knocklabs/knock-mgmt-node/commit/ccf4a26588d455ef8a680705c62a6ab1bfcd7ca3))
+
+
+### Chores
+
+* set the same query_settings from api ([da75d5c](https://github.com/knocklabs/knock-mgmt-node/commit/da75d5c7218e3dbc9155009c9bdfb85da766338c))
+* stainless migration test changes ([df83ac7](https://github.com/knocklabs/knock-mgmt-node/commit/df83ac79c813a7559a5c6cc7415c6b7550f18bb0))
+* trivial test changes ([0641a34](https://github.com/knocklabs/knock-mgmt-node/commit/0641a344bdc0efcc6c29a4f4b88baceb7881bf58))
+
 ## 0.32.0 (2026-07-09)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.31.0...v0.32.0)
