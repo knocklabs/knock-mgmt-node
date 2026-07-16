@@ -1188,9 +1188,15 @@ export namespace WorkflowStep {
     ref: string;
 
     /**
-     * The settings for the wait for event step.
+     * The settings for the wait for event step. When `event.event_type` is `message`
+     * or `workflow`, `match_conditions` is required.
      */
-    settings: WorkflowWaitForEventStep.Settings;
+    settings:
+      | WorkflowWaitForEventStep.UnionMember0
+      | WorkflowWaitForEventStep.UnionMember1
+      | WorkflowWaitForEventStep.UnionMember2
+      | WorkflowWaitForEventStep.UnionMember3
+      | WorkflowWaitForEventStep.UnionMember4;
 
     /**
      * The type of the workflow step.
@@ -1216,13 +1222,13 @@ export namespace WorkflowStep {
 
   export namespace WorkflowWaitForEventStep {
     /**
-     * The settings for the wait for event step.
+     * Settings for waiting on an integration source event.
      */
-    export interface Settings {
+    export interface UnionMember0 {
       /**
        * An integration source event to wait for.
        */
-      event: Settings.Event;
+      event: UnionMember0.Event;
 
       /**
        * A duration of time, represented as a unit and a value.
@@ -1232,7 +1238,7 @@ export namespace WorkflowStep {
       /**
        * A list of condition groups the incoming event must match to resolve the wait.
        */
-      match_conditions?: Array<Settings.MatchCondition>;
+      match_conditions?: Array<UnionMember0.MatchCondition>;
 
       /**
        * The action to take when a matching event is received.
@@ -1245,7 +1251,7 @@ export namespace WorkflowStep {
       on_timeout?: 'continue' | 'halt';
     }
 
-    export namespace Settings {
+    export namespace UnionMember0 {
       /**
        * An integration source event to wait for.
        */
@@ -1264,6 +1270,284 @@ export namespace WorkflowStep {
          * The key of the integration source that emits the event to wait for.
          */
         integration_source_key: string;
+      }
+
+      export interface MatchCondition {
+        /**
+         * A list of conditions.
+         */
+        conditions?: Array<WorkflowsAPI.Condition>;
+
+        /**
+         * The operator used to join the conditions in the group.
+         */
+        operator?: 'and';
+      }
+    }
+
+    /**
+     * Settings for waiting on a message event.
+     */
+    export interface UnionMember1 {
+      /**
+       * A message event to wait for from a message source.
+       */
+      event: UnionMember1.Event;
+
+      /**
+       * Required when waiting for a message event. A list of condition groups the
+       * incoming event must match to resolve the wait.
+       */
+      match_conditions: Array<UnionMember1.MatchCondition>;
+
+      /**
+       * A duration of time, represented as a unit and a value.
+       */
+      expires_after?: WorkflowsAPI.Duration | null;
+
+      /**
+       * The action to take when a matching event is received.
+       */
+      on_match?: 'continue' | 'halt';
+
+      /**
+       * The action to take when the wait expires before a match.
+       */
+      on_timeout?: 'continue' | 'halt';
+    }
+
+    export namespace UnionMember1 {
+      /**
+       * A message event to wait for from a message source.
+       */
+      export interface Event {
+        /**
+         * The message lifecycle event to wait for.
+         */
+        event_key:
+          | 'created'
+          | 'queued'
+          | 'sent'
+          | 'not_sent'
+          | 'delivered'
+          | 'delivery_attempted'
+          | 'undelivered'
+          | 'bounced'
+          | 'read'
+          | 'unread'
+          | 'seen'
+          | 'unseen'
+          | 'archived'
+          | 'unarchived'
+          | 'interacted'
+          | 'link_clicked';
+
+        /**
+         * The type of event to wait for.
+         */
+        event_type: 'message';
+
+        /**
+         * The key of the message source to scope the wait to.
+         */
+        source_key: string;
+
+        /**
+         * The type of message source to scope the wait to.
+         */
+        source_type: 'workflow' | 'broadcast' | 'guide';
+      }
+
+      export interface MatchCondition {
+        /**
+         * A list of conditions.
+         */
+        conditions?: Array<WorkflowsAPI.Condition>;
+
+        /**
+         * The operator used to join the conditions in the group.
+         */
+        operator?: 'and';
+      }
+    }
+
+    /**
+     * Settings for waiting on a workflow event.
+     */
+    export interface UnionMember2 {
+      /**
+       * A workflow lifecycle event to wait for from a child workflow run for the same
+       * recipient.
+       */
+      event: UnionMember2.Event;
+
+      /**
+       * Required when waiting for a workflow event. A list of condition groups the
+       * incoming event must match to resolve the wait.
+       */
+      match_conditions: Array<UnionMember2.MatchCondition>;
+
+      /**
+       * A duration of time, represented as a unit and a value.
+       */
+      expires_after?: WorkflowsAPI.Duration | null;
+
+      /**
+       * The action to take when a matching event is received.
+       */
+      on_match?: 'continue' | 'halt';
+
+      /**
+       * The action to take when the wait expires before a match.
+       */
+      on_timeout?: 'continue' | 'halt';
+    }
+
+    export namespace UnionMember2 {
+      /**
+       * A workflow lifecycle event to wait for from a child workflow run for the same
+       * recipient.
+       */
+      export interface Event {
+        /**
+         * The workflow lifecycle event to wait for.
+         */
+        event_key: 'started' | 'completed';
+
+        /**
+         * The type of event to wait for.
+         */
+        event_type: 'workflow';
+
+        /**
+         * The key of the workflow whose lifecycle event should match this wait.
+         */
+        source_key: string;
+      }
+
+      export interface MatchCondition {
+        /**
+         * A list of conditions.
+         */
+        conditions?: Array<WorkflowsAPI.Condition>;
+
+        /**
+         * The operator used to join the conditions in the group.
+         */
+        operator?: 'and';
+      }
+    }
+
+    /**
+     * Settings for waiting on an audience membership event.
+     */
+    export interface UnionMember3 {
+      /**
+       * An audience membership event to wait for when a recipient enters or exits an
+       * audience.
+       */
+      event: UnionMember3.Event;
+
+      /**
+       * A duration of time, represented as a unit and a value.
+       */
+      expires_after?: WorkflowsAPI.Duration | null;
+
+      /**
+       * A list of condition groups the incoming event must match to resolve the wait.
+       */
+      match_conditions?: Array<UnionMember3.MatchCondition>;
+
+      /**
+       * The action to take when a matching event is received.
+       */
+      on_match?: 'continue' | 'halt';
+
+      /**
+       * The action to take when the wait expires before a match.
+       */
+      on_timeout?: 'continue' | 'halt';
+    }
+
+    export namespace UnionMember3 {
+      /**
+       * An audience membership event to wait for when a recipient enters or exits an
+       * audience.
+       */
+      export interface Event {
+        /**
+         * The key of the audience to wait for membership changes.
+         */
+        audience_key: string;
+
+        /**
+         * The audience membership transition to wait for.
+         */
+        event_key: 'enter' | 'exit';
+
+        /**
+         * The type of event to wait for.
+         */
+        event_type: 'audience';
+      }
+
+      export interface MatchCondition {
+        /**
+         * A list of conditions.
+         */
+        conditions?: Array<WorkflowsAPI.Condition>;
+
+        /**
+         * The operator used to join the conditions in the group.
+         */
+        operator?: 'and';
+      }
+    }
+
+    /**
+     * Settings for waiting on a recipient change event.
+     */
+    export interface UnionMember4 {
+      /**
+       * A recipient updated event to wait for from the workflow recipient.
+       */
+      event: UnionMember4.Event;
+
+      /**
+       * A duration of time, represented as a unit and a value.
+       */
+      expires_after?: WorkflowsAPI.Duration | null;
+
+      /**
+       * A list of condition groups the incoming event must match to resolve the wait.
+       */
+      match_conditions?: Array<UnionMember4.MatchCondition>;
+
+      /**
+       * The action to take when a matching event is received.
+       */
+      on_match?: 'continue' | 'halt';
+
+      /**
+       * The action to take when the wait expires before a match.
+       */
+      on_timeout?: 'continue' | 'halt';
+    }
+
+    export namespace UnionMember4 {
+      /**
+       * A recipient updated event to wait for from the workflow recipient.
+       */
+      export interface Event {
+        /**
+         * The type of event to wait for.
+         */
+        event_type: 'recipient';
+
+        /**
+         * Recipient lifecycle event to wait for. Always "updated" today.
+         */
+        event_key?: 'updated';
       }
 
       export interface MatchCondition {
