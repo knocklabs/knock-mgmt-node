@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.33.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.33.0...v0.33.1) (2026-07-22)
+
+
+### Chores
+
+* add CODEOWNERS with @knocklabs/product as default owner ([3566b81](https://github.com/knocklabs/knock-mgmt-node/commit/3566b8188897872cf3b852542c9e85e6f84c72bb))
+* forward SDK_WRITE_TOKEN to the back-sync workflow ([631dfe0](https://github.com/knocklabs/knock-mgmt-node/commit/631dfe031d493e5ba4023e0aacabce58b223d973))
+* reconcile orphaned sealed commit after release back-sync ([58dff7a](https://github.com/knocklabs/knock-mgmt-node/commit/58dff7a76a5fd2a17646886e4661ece0bb824e67))
+
 ## [0.33.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.33.0) (2026-07-16)
 
 
