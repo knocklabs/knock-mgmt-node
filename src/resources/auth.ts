@@ -54,10 +54,22 @@ export interface AuthVerifyResponse {
   service_token_name?: string | null;
 
   /**
+   * The email of the authenticated user if in OAuth context, null for service token
+   * contexts.
+   */
+  user_email?: string | null;
+
+  /**
    * The ID of the authenticated user if in OAuth context, null for service token
    * contexts.
    */
   user_id?: string | null;
+
+  /**
+   * The name of the authenticated user if in OAuth context, null for service token
+   * contexts.
+   */
+  user_name?: string | null;
 }
 
 export namespace AuthVerifyResponse {
