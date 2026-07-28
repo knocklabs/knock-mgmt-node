@@ -91,7 +91,10 @@ export class Workflows extends APIResource {
    * ```ts
    * const response = await client.workflows.run(
    *   'workflow_key',
-   *   { environment: 'development', recipients: ['dnedry'] },
+   *   {
+   *     environment: 'development',
+   *     recipients: [{ id: 'user_1' }],
+   *   },
    * );
    * ```
    */
@@ -2251,9 +2254,12 @@ export interface WorkflowRunParams {
   environment: string;
 
   /**
-   * Body param: A list of recipients to run the workflow for.
+   * Body param: A list of recipients to run the workflow for. Supports user IDs,
+   * object references, or inline identify user objects (id + optional email/name).
    */
-  recipients: Array<string | WorkflowRunParams.ObjectRecipientReference>;
+  recipients: Array<
+    string | WorkflowRunParams.ObjectRecipientReference | WorkflowRunParams.InlineIdentifyUserRequest
+  >;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -2262,10 +2268,13 @@ export interface WorkflowRunParams {
   branch?: string;
 
   /**
-   * Body param: A recipient reference, used when referencing a recipient by either
-   * their ID (for a user), or by a reference for an object.
+   * Body param: The actor to reference in the the workflow run.
    */
-  actor?: string | WorkflowRunParams.ObjectRecipientReference | null;
+  actor?:
+    | string
+    | WorkflowRunParams.ObjectRecipientReference
+    | WorkflowRunParams.InlineIdentifyUserRequest
+    | null;
 
   /**
    * Body param: A key to cancel the workflow run.
@@ -2304,6 +2313,28 @@ export namespace WorkflowRunParams {
   }
 
   /**
+   * A user recipient with optional identify properties. When email or name are
+   * provided, the user is created or updated as part of the workflow run. The
+   * collection is always `$users` and should not be sent.
+   */
+  export interface InlineIdentifyUserRequest {
+    /**
+     * The ID of the user.
+     */
+    id: string;
+
+    /**
+     * The email address to set on the user.
+     */
+    email?: string | null;
+
+    /**
+     * The display name to set on the user.
+     */
+    name?: string | null;
+  }
+
+  /**
    * An object reference.
    */
   export interface ObjectRecipientReference {
@@ -2316,6 +2347,28 @@ export namespace WorkflowRunParams {
      * The collection of the object.
      */
     collection: string;
+  }
+
+  /**
+   * A user recipient with optional identify properties. When email or name are
+   * provided, the user is created or updated as part of the workflow run. The
+   * collection is always `$users` and should not be sent.
+   */
+  export interface InlineIdentifyUserRequest {
+    /**
+     * The ID of the user.
+     */
+    id: string;
+
+    /**
+     * The email address to set on the user.
+     */
+    email?: string | null;
+
+    /**
+     * The display name to set on the user.
+     */
+    name?: string | null;
   }
 }
 

@@ -83,7 +83,7 @@ describe('resource workflows', () => {
   test.skip('run: only required params', async () => {
     const responsePromise = client.workflows.run('workflow_key', {
       environment: 'development',
-      recipients: ['dnedry'],
+      recipients: [{ id: 'user_1' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -98,9 +98,15 @@ describe('resource workflows', () => {
   test.skip('run: required and optional params', async () => {
     const response = await client.workflows.run('workflow_key', {
       environment: 'development',
-      recipients: ['dnedry'],
+      recipients: [
+        {
+          id: 'user_1',
+          email: 'jane@example.com',
+          name: 'Jane Doe',
+        },
+      ],
       branch: 'feature-branch',
-      actor: { id: 'project_1', collection: 'projects' },
+      actor: 'user_1',
       cancellation_key: 'cancellation_key',
       data: { park_id: 'bar' },
       tenant: 'tenant',
