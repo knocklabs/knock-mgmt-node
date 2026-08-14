@@ -141,6 +141,15 @@ describe('resource guides', () => {
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
+        guide_audience_conditions: {
+          all: [
+            {
+              operator: 'equal_to',
+              variable: 'recipient.property',
+              argument: 'some_property',
+            },
+          ],
+        },
         tags: ['string'],
         target_audience_key: 'target_audience_key',
         target_property_conditions: {
@@ -215,6 +224,15 @@ describe('resource guides', () => {
         archived_at: '2019-12-27T18:11:19.117Z',
         deleted_at: '2019-12-27T18:11:19.117Z',
         description: 'A guide to help users get started with the application',
+        guide_audience_conditions: {
+          all: [
+            {
+              operator: 'equal_to',
+              variable: 'recipient.property',
+              argument: 'some_property',
+            },
+          ],
+        },
         tags: ['string'],
         target_audience_key: 'target_audience_key',
         target_property_conditions: {

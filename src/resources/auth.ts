@@ -143,6 +143,11 @@ export namespace AuthVerifyResponse {
     new_relic_extension_allowed?: boolean;
 
     /**
+     * Whether custom permission groups can be created.
+     */
+    permission_groups_allowed?: boolean;
+
+    /**
      * Whether Segment integration extension is available.
      */
     segment_extension_allowed?: boolean;

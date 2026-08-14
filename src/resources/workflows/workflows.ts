@@ -1161,6 +1161,7 @@ export interface WorkflowSMSStep {
 export type WorkflowStep =
   | WorkflowWebhookStep
   | WorkflowInAppFeedStep
+  | WorkflowStep.WorkflowInAppGuideStep
   | WorkflowChatStep
   | WorkflowSMSStep
   | WorkflowPushStep
@@ -1180,6 +1181,70 @@ export type WorkflowStep =
   | WorkflowTriggerWorkflowStep;
 
 export namespace WorkflowStep {
+  /**
+   * An in-app guide step within a workflow. References a guide that will be shown to
+   * recipients who execute this step. Read more in the
+   * [docs](https://docs.knock.app/designing-workflows/channel-step).
+   */
+  export interface WorkflowInAppGuideStep {
+    /**
+     * The type of the channel step. Always `in_app_guide` for in-app guide steps.
+     */
+    channel_type: 'in_app_guide';
+
+    /**
+     * The reference key of the workflow step. Must be unique per workflow.
+     */
+    ref: string;
+
+    /**
+     * The type of the workflow step.
+     */
+    type: 'channel';
+
+    /**
+     * The key of the channel group to which the channel step will be sending a
+     * notification. Either `channel_key` or `channel_group_key` must be provided, but
+     * not both.
+     */
+    channel_group_key?: string | null;
+
+    /**
+     * The key of a specific configured channel instance (e.g., 'knock-email',
+     * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+     * `channel_key` or `channel_group_key` must be provided, but not both.
+     */
+    channel_key?: string | null;
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
+     * An arbitrary string attached to a workflow step. Useful for adding notes about
+     * the workflow for internal purposes.
+     */
+    description?: string | null;
+
+    /**
+     * The key of the guide to reference. When a recipient executes this step they are
+     * added to the managed audience that backs the guide's workflow-derived targeting.
+     */
+    guide_key?: string | null;
+
+    /**
+     * A name for the workflow step.
+     */
+    name?: string | null;
+
+    /**
+     * A list of send window objects. Must include one send window object per day of
+     * the week.
+     */
+    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
+  }
+
   /**
    * A wait for event function step that pauses a workflow until a matching event is
    * received.

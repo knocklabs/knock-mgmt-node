@@ -228,6 +228,11 @@ export interface Guide {
   description?: string | null;
 
   /**
+   * A group of conditions to be evaluated.
+   */
+  guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
+
+  /**
    * The semver of the guide.
    */
   semver?: string;
@@ -553,6 +558,11 @@ export namespace GuideUpsertParams {
     description?: string | null;
 
     /**
+     * A group of conditions to be evaluated.
+     */
+    guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
+
+    /**
      * Use tags to organize resources internally within your account. For example, by
      * team or product area.
      */
@@ -629,6 +639,11 @@ export namespace GuideValidateParams {
      * the guide for internal purposes. Maximum of 280 characters allowed.
      */
     description?: string | null;
+
+    /**
+     * A group of conditions to be evaluated.
+     */
+    guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
 
     /**
      * Use tags to organize resources internally within your account. For example, by
