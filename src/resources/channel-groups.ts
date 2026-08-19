@@ -174,12 +174,14 @@ export interface ChannelGroupRule {
   updated_at: string;
 
   /**
-   * For conditional rules, the value to compare against.
+   * For conditional rules, the value to compare against. For `is_in_random_cohort`,
+   * a 0–100 percentage with at most one decimal place.
    */
   argument?: string | null;
 
   /**
-   * For conditional rules, the operator to apply.
+   * For conditional rules, the operator to apply. For `is_in_random_cohort`,
+   * `variable` must be `recipient.id` and `argument` is a 0–100 percentage.
    */
   operator?:
     | 'equal_to'
@@ -205,10 +207,12 @@ export interface ChannelGroupRule {
     | 'is_timestamp_on_or_after_now'
     | 'is_audience_member'
     | 'is_not_audience_member'
+    | 'is_in_random_cohort'
     | null;
 
   /**
-   * For conditional rules, the variable to evaluate.
+   * For conditional rules, the variable to evaluate. For `is_in_random_cohort`, must
+   * be `recipient.id`.
    */
   variable?: string | null;
 }
@@ -284,7 +288,8 @@ export namespace ChannelGroupUpsertParams {
       rule_type: 'if' | 'unless' | 'always';
 
       /**
-       * For conditional rules, the value to compare against.
+       * For conditional rules, the value to compare against. For `is_in_random_cohort`,
+       * a 0–100 percentage with at most one decimal place.
        */
       argument?: string | null;
 
@@ -294,7 +299,8 @@ export namespace ChannelGroupUpsertParams {
       index?: number;
 
       /**
-       * For conditional rules, the operator to apply.
+       * For conditional rules, the operator to apply. For `is_in_random_cohort`,
+       * `variable` must be `recipient.id` and `argument` is a 0–100 percentage.
        */
       operator?:
         | 'equal_to'
@@ -320,10 +326,12 @@ export namespace ChannelGroupUpsertParams {
         | 'is_timestamp_on_or_after_now'
         | 'is_audience_member'
         | 'is_not_audience_member'
+        | 'is_in_random_cohort'
         | null;
 
       /**
-       * For conditional rules, the variable to evaluate.
+       * For conditional rules, the variable to evaluate. For `is_in_random_cohort`, must
+       * be `recipient.id`.
        */
       variable?: string | null;
     }
