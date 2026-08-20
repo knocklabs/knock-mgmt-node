@@ -255,6 +255,11 @@ export interface Broadcast {
   description?: string;
 
   /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: Broadcast.GoalAttachment | null;
+
+  /**
    * The timestamp of when the broadcast is scheduled to be sent.
    */
   scheduled_at?: string | null;
@@ -341,6 +346,22 @@ export namespace Broadcast {
   }
 
   /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  export interface GoalAttachment {
+    /**
+     * The key of the goal to attach.
+     */
+    goal_key: string;
+
+    /**
+     * The number of days to attribute conversions after the notification is sent. Must
+     * be between 1 and 30. Defaults to 7.
+     */
+    attribution_window_days?: number;
+  }
+
+  /**
    * A map of broadcast settings.
    */
   export interface Settings {
@@ -394,6 +415,11 @@ export interface BroadcastRequest {
    * about the broadcast for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
+
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: BroadcastRequest.GoalAttachment | null;
 
   /**
    * The timestamp of when the broadcast is scheduled to be sent.
@@ -474,6 +500,22 @@ export namespace BroadcastRequest {
      * the week.
      */
     send_windows?: Array<WorkflowsAPI.SendWindow> | null;
+  }
+
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  export interface GoalAttachment {
+    /**
+     * The key of the goal to attach.
+     */
+    goal_key: string;
+
+    /**
+     * The number of days to attribute conversions after the notification is sent. Must
+     * be between 1 and 30. Defaults to 7.
+     */
+    attribution_window_days?: number;
   }
 
   /**

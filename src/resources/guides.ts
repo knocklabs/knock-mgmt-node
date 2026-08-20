@@ -228,6 +228,11 @@ export interface Guide {
   description?: string | null;
 
   /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: Guide.GoalAttachment | null;
+
+  /**
    * A group of conditions to be evaluated.
    */
   guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -268,6 +273,24 @@ export interface Guide {
    * Whether the guide is valid.
    */
   valid?: boolean;
+}
+
+export namespace Guide {
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  export interface GoalAttachment {
+    /**
+     * The key of the goal to attach.
+     */
+    goal_key: string;
+
+    /**
+     * The number of days to attribute conversions after the notification is sent. Must
+     * be between 1 and 30. Defaults to 7.
+     */
+    attribution_window_days?: number;
+  }
 }
 
 /**
@@ -558,6 +581,11 @@ export namespace GuideUpsertParams {
     description?: string | null;
 
     /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    goal_attachment?: Guide.GoalAttachment | null;
+
+    /**
      * A group of conditions to be evaluated.
      */
     guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -578,6 +606,24 @@ export namespace GuideUpsertParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
+  }
+
+  export namespace Guide {
+    /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    export interface GoalAttachment {
+      /**
+       * The key of the goal to attach.
+       */
+      goal_key: string;
+
+      /**
+       * The number of days to attribute conversions after the notification is sent. Must
+       * be between 1 and 30. Defaults to 7.
+       */
+      attribution_window_days?: number;
+    }
   }
 }
 
@@ -641,6 +687,11 @@ export namespace GuideValidateParams {
     description?: string | null;
 
     /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    goal_attachment?: Guide.GoalAttachment | null;
+
+    /**
      * A group of conditions to be evaluated.
      */
     guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -661,6 +712,24 @@ export namespace GuideValidateParams {
      * A group of conditions to be evaluated.
      */
     target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
+  }
+
+  export namespace Guide {
+    /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    export interface GoalAttachment {
+      /**
+       * The key of the goal to attach.
+       */
+      goal_key: string;
+
+      /**
+       * The number of days to attribute conversions after the notification is sent. Must
+       * be between 1 and 30. Defaults to 7.
+       */
+      attribution_window_days?: number;
+    }
   }
 }
 

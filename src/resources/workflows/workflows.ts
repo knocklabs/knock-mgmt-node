@@ -401,6 +401,11 @@ export interface Workflow {
   description?: string;
 
   /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: Workflow.GoalAttachment | null;
+
+  /**
    * A map of workflow settings.
    */
   settings?: Workflow.Settings;
@@ -429,6 +434,22 @@ export interface Workflow {
 }
 
 export namespace Workflow {
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  export interface GoalAttachment {
+    /**
+     * The key of the goal to attach.
+     */
+    goal_key: string;
+
+    /**
+     * The number of days to attribute conversions after the notification is sent. Must
+     * be between 1 and 30. Defaults to 7.
+     */
+    attribution_window_days?: number;
+  }
+
   /**
    * A map of workflow settings.
    */
@@ -614,6 +635,15 @@ export namespace WorkflowBatchStep {
      * The type of the batch window used. One of: `fixed` or `sliding`.
      */
     batch_window_type?: 'fixed' | 'sliding' | null;
+
+    /**
+     * Whether the batch is pinned to the opening workflow version or continues on the
+     * latest compatible version. One of: `pinned` or `latest`. New batch steps default
+     * to `latest`. Configs that omit the field hydrate as `pinned`. When set to
+     * `latest`, compatible triggers share a cross-version batch and resume on the
+     * latest published workflow after close.
+     */
+    workflow_version_mode?: 'pinned' | 'latest' | null;
   }
 }
 
@@ -2150,6 +2180,11 @@ export interface WorkflowRetrieveResponse {
   description?: string;
 
   /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: WorkflowRetrieveResponse.GoalAttachment | null;
+
+  /**
    * A map of workflow settings.
    */
   settings?: WorkflowRetrieveResponse.Settings;
@@ -2184,6 +2219,22 @@ export interface WorkflowRetrieveResponse {
 }
 
 export namespace WorkflowRetrieveResponse {
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  export interface GoalAttachment {
+    /**
+     * The key of the goal to attach.
+     */
+    goal_key: string;
+
+    /**
+     * The number of days to attribute conversions after the notification is sent. Must
+     * be between 1 and 30. Defaults to 7.
+     */
+    attribution_window_days?: number;
+  }
+
   /**
    * A map of workflow settings.
    */
@@ -2518,6 +2569,11 @@ export namespace WorkflowUpsertParams {
     description?: string;
 
     /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    goal_attachment?: Workflow.GoalAttachment | null;
+
+    /**
      * A map of workflow settings.
      */
     settings?: Workflow.Settings;
@@ -2546,6 +2602,22 @@ export namespace WorkflowUpsertParams {
   }
 
   export namespace Workflow {
+    /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    export interface GoalAttachment {
+      /**
+       * The key of the goal to attach.
+       */
+      goal_key: string;
+
+      /**
+       * The number of days to attribute conversions after the notification is sent. Must
+       * be between 1 and 30. Defaults to 7.
+       */
+      attribution_window_days?: number;
+    }
+
     /**
      * A map of workflow settings.
      */
@@ -2617,6 +2689,11 @@ export namespace WorkflowValidateParams {
     description?: string;
 
     /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    goal_attachment?: Workflow.GoalAttachment | null;
+
+    /**
      * A map of workflow settings.
      */
     settings?: Workflow.Settings;
@@ -2645,6 +2722,22 @@ export namespace WorkflowValidateParams {
   }
 
   export namespace Workflow {
+    /**
+     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+     */
+    export interface GoalAttachment {
+      /**
+       * The key of the goal to attach.
+       */
+      goal_key: string;
+
+      /**
+       * The number of days to attribute conversions after the notification is sent. Must
+       * be between 1 and 30. Defaults to 7.
+       */
+      attribution_window_days?: number;
+    }
+
     /**
      * A map of workflow settings.
      */
