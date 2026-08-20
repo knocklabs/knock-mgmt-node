@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.34.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.33.0...v0.34.0) (2026-08-20)
+
+
+### Features
+
+* update mapi spec to v0.1.1545 ([d4c3ef1](https://github.com/knocklabs/knock-mgmt-node/commit/d4c3ef1e7e3c123f5a7614615e1f1969c37cbe5c))
+* update mapi spec to v0.1.1546 ([64da604](https://github.com/knocklabs/knock-mgmt-node/commit/64da60439737dc13ed2fbef4bd83df7ec7abb77b))
+* update mapi spec to v0.1.1548 ([6324be0](https://github.com/knocklabs/knock-mgmt-node/commit/6324be060f5eb874836acbd40e06ccafdc0d9ffb))
+* update mapi spec to v0.1.1551 ([41ba460](https://github.com/knocklabs/knock-mgmt-node/commit/41ba4601f2a7fb32713aeabd539a2f8af4d06c4a))
+* update mapi spec to v0.1.1581 ([255f0e8](https://github.com/knocklabs/knock-mgmt-node/commit/255f0e8b4829adeb2cc2af09ca0b7f2624a1a0fd))
+* update mapi spec to v0.1.1586 ([d1b3400](https://github.com/knocklabs/knock-mgmt-node/commit/d1b3400050e453b24efcf36939e0135ce7fd0d54))
+* update mapi spec to v0.1.1588 ([5fb7fc2](https://github.com/knocklabs/knock-mgmt-node/commit/5fb7fc2fe0ec7baa404a861ffebc0c770792b438))
+* update mapi spec to v0.1.1593 ([80f18f0](https://github.com/knocklabs/knock-mgmt-node/commit/80f18f0bf3dd74ab5de90f0b28612230ea13a308))
+
+
+### Chores
+
+* add CODEOWNERS with @knocklabs/product as default owner ([3566b81](https://github.com/knocklabs/knock-mgmt-node/commit/3566b8188897872cf3b852542c9e85e6f84c72bb))
+* forward SDK_WRITE_TOKEN to the back-sync workflow ([631dfe0](https://github.com/knocklabs/knock-mgmt-node/commit/631dfe031d493e5ba4023e0aacabce58b223d973))
+* reconcile orphaned sealed commit after release back-sync ([58dff7a](https://github.com/knocklabs/knock-mgmt-node/commit/58dff7a76a5fd2a17646886e4661ece0bb824e67))
+
 ## [0.33.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.32.0...v0.33.0) (2026-07-16)
 
 
