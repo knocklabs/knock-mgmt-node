@@ -275,6 +275,12 @@ export interface Broadcast {
   settings?: Broadcast.Settings;
 
   /**
+   * A list of resource tags attached to the broadcast. Tags must exist in the
+   * project's tag catalog.
+   */
+  tags?: Array<string>;
+
+  /**
    * The key of the audience to target for this broadcast.
    */
   target_audience_key?: string;
@@ -430,6 +436,12 @@ export interface BroadcastRequest {
    * A map of broadcast settings.
    */
   settings?: BroadcastRequest.Settings;
+
+  /**
+   * A list of resource tags attached to the broadcast. Tags must exist in the
+   * project's tag catalog.
+   */
+  tags?: Array<string>;
 
   /**
    * The key of the audience to target for this broadcast.
