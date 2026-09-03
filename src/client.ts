@@ -20,12 +20,14 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
+import { Asset, AssetListParams, Assets, AssetsEntriesCursor } from './resources/assets';
 import {
   Audience,
   AudienceArchiveParams,
   AudienceArchiveResponse,
   AudienceCondition,
   AudienceListParams,
+  AudienceRequest,
   AudienceRetrieveParams,
   AudienceUpsertParams,
   AudienceUpsertResponse,
@@ -37,11 +39,13 @@ import {
   StaticAudience,
 } from './resources/audiences';
 import { Auth, AuthVerifyResponse } from './resources/auth';
+import { Billing, BillingSummary } from './resources/billing';
 import {
   Branch,
   BranchCreateParams,
   BranchDeleteParams,
   BranchListParams,
+  BranchRebaseParams,
   BranchRetrieveParams,
   Branches,
   BranchesEntriesCursor,
@@ -124,8 +128,12 @@ import {
   SourcesResponse,
 } from './resources/data-sources';
 import {
+  BrandingOverrides,
   EmailLayout,
   EmailLayoutListParams,
+  EmailLayoutPreviewParams,
+  EmailLayoutPreviewResponse,
+  EmailLayoutRequest,
   EmailLayoutRetrieveParams,
   EmailLayoutUpsertParams,
   EmailLayoutUpsertResponse,
@@ -141,12 +149,30 @@ import {
   EnvironmentsEntriesCursor,
 } from './resources/environments';
 import {
+  Goal,
+  GoalArchiveParams,
+  GoalArchiveResponse,
+  GoalCloneParams,
+  GoalCloneResponse,
+  GoalCondition,
+  GoalListParams,
+  GoalRequest,
+  GoalRetrieveParams,
+  GoalUpsertParams,
+  GoalUpsertResponse,
+  GoalValidateParams,
+  GoalValidateResponse,
+  Goals,
+  GoalsEntriesCursor,
+} from './resources/goals';
+import {
   Guide,
   GuideActivateParams,
   GuideActivateResponse,
   GuideActivationURLPattern,
   GuideArchiveResponse,
   GuideListParams,
+  GuideRequest,
   GuideRetrieveParams,
   GuideStep,
   GuideUpsertParams,
@@ -160,6 +186,7 @@ import { Member, MemberListParams, MemberUser, Members, MembersEntriesCursor } f
 import {
   MessageType,
   MessageTypeListParams,
+  MessageTypeRequest,
   MessageTypeRetrieveParams,
   MessageTypeUpsertParams,
   MessageTypeUpsertResponse,
@@ -171,6 +198,9 @@ import {
 } from './resources/message-types';
 import {
   PartialListParams,
+  PartialPreviewParams,
+  PartialPreviewResponse,
+  PartialRequest,
   PartialResource,
   PartialResourcesEntriesCursor,
   PartialRetrieveParams,
@@ -181,18 +211,49 @@ import {
   Partials,
 } from './resources/partials';
 import {
+  PreferenceCategories,
+  PreferenceCategory,
+  PreferenceCategoryListResponse,
+  PreferenceCategoryUpsertResponse,
+} from './resources/preference-categories';
+import {
+  PreferenceCenter,
+  PreferenceCenterResetParams,
+  PreferenceCenterResetResponse,
+  PreferenceCenterRetrieveParams,
+  PreferenceCenterRetrieveResponse,
+  PreferenceCenterUpsertParams,
+  PreferenceCenterUpsertResponse,
+} from './resources/preference-center';
+import {
+  ItemSchema,
+  SchemaListParams,
+  SchemaListResponse,
+  SchemaRetrieveParams,
+  SchemaRetrieveResponse,
+  SchemaUpsertParams,
+  SchemaUpsertResponse,
+  SchemaValidateParams,
+  SchemaValidateResponse,
+  Schemas,
+} from './resources/schemas';
+import { Tag, TagListResponse, TagUpsertParams, TagUpsertResponse, Tags } from './resources/tags';
+import {
   ChatTemplate,
   EmailTemplate,
   InAppFeedTemplate,
   PushTemplate,
   RequestTemplate,
   SMSTemplate,
+  TemplatePreviewParams,
+  TemplatePreviewResponse,
   Templates,
   WebhookTemplate,
 } from './resources/templates';
 import {
   Translation,
   TranslationListParams,
+  TranslationRequest,
   TranslationRetrieveParams,
   TranslationRetrieveResponse,
   TranslationUpsertParams,
@@ -206,7 +267,9 @@ import { Variable, VariableListParams, Variables, VariablesEntriesCursor } from 
 import {
   Condition,
   ConditionGroup,
+  ConditionGroupAllMatch,
   Duration,
+  InlineIdentifyUserRequest,
   SendWindow,
   Workflow,
   WorkflowAIAgentStep,
@@ -219,9 +282,12 @@ import {
   WorkflowEmailStep,
   WorkflowFetchStep,
   WorkflowInAppFeedStep,
+  WorkflowInAppGuideStep,
   WorkflowListParams,
   WorkflowPushStep,
   WorkflowRandomCohortStep,
+  WorkflowRandomCohortStepBranch,
+  WorkflowRequest,
   WorkflowRetrieveParams,
   WorkflowRetrieveResponse,
   WorkflowRunParams,
@@ -1038,6 +1104,28 @@ export class KnockMgmt {
    * Audiences define sets of users that can be targeted for notifications.
    */
   audiences: API.Audiences = new API.Audiences(this);
+  /**
+   * Goals define event conditions that are tracked and attributed to messaging resources.
+   */
+  goals: API.Goals = new API.Goals(this);
+  /**
+   * Assets are uploaded files available to your Knock account.
+   */
+  assets: API.Assets = new API.Assets(this);
+  /**
+   * Tags are a project-level catalog of labels that can be applied to workflows, partials, guides, and broadcasts.
+   */
+  tags: API.Tags = new API.Tags(this);
+  schemas: API.Schemas = new API.Schemas(this);
+  preferenceCenter: API.PreferenceCenter = new API.PreferenceCenter(this);
+  /**
+   * Resources for managing your Knock account.
+   */
+  billing: API.Billing = new API.Billing(this);
+  /**
+   * Preference categories are a project-level catalog of categories that can be applied to workflows and broadcasts.
+   */
+  preferenceCategories: API.PreferenceCategories = new API.PreferenceCategories(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1059,6 +1147,13 @@ KnockMgmt.Guides = Guides;
 KnockMgmt.Branches = Branches;
 KnockMgmt.Broadcasts = Broadcasts;
 KnockMgmt.Audiences = Audiences;
+KnockMgmt.Goals = Goals;
+KnockMgmt.Assets = Assets;
+KnockMgmt.Tags = Tags;
+KnockMgmt.Schemas = Schemas;
+KnockMgmt.PreferenceCenter = PreferenceCenter;
+KnockMgmt.Billing = Billing;
+KnockMgmt.PreferenceCategories = PreferenceCategories;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1078,16 +1173,22 @@ export declare namespace KnockMgmt {
     type RequestTemplate as RequestTemplate,
     type SMSTemplate as SMSTemplate,
     type WebhookTemplate as WebhookTemplate,
+    type TemplatePreviewResponse as TemplatePreviewResponse,
+    type TemplatePreviewParams as TemplatePreviewParams,
   };
 
   export {
     EmailLayouts as EmailLayouts,
+    type BrandingOverrides as BrandingOverrides,
     type EmailLayout as EmailLayout,
+    type EmailLayoutRequest as EmailLayoutRequest,
+    type EmailLayoutPreviewResponse as EmailLayoutPreviewResponse,
     type EmailLayoutUpsertResponse as EmailLayoutUpsertResponse,
     type EmailLayoutValidateResponse as EmailLayoutValidateResponse,
     type EmailLayoutsEntriesCursor as EmailLayoutsEntriesCursor,
     type EmailLayoutRetrieveParams as EmailLayoutRetrieveParams,
     type EmailLayoutListParams as EmailLayoutListParams,
+    type EmailLayoutPreviewParams as EmailLayoutPreviewParams,
     type EmailLayoutUpsertParams as EmailLayoutUpsertParams,
     type EmailLayoutValidateParams as EmailLayoutValidateParams,
   };
@@ -1106,12 +1207,15 @@ export declare namespace KnockMgmt {
 
   export {
     Partials as Partials,
+    type PartialRequest as PartialRequest,
     type PartialResource as PartialResource,
+    type PartialPreviewResponse as PartialPreviewResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
     type PartialResourcesEntriesCursor as PartialResourcesEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
+    type PartialPreviewParams as PartialPreviewParams,
     type PartialUpsertParams as PartialUpsertParams,
     type PartialValidateParams as PartialValidateParams,
   };
@@ -1119,6 +1223,7 @@ export declare namespace KnockMgmt {
   export {
     Translations as Translations,
     type Translation as Translation,
+    type TranslationRequest as TranslationRequest,
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
     type TranslationUpsertResponse as TranslationUpsertResponse,
     type TranslationValidateResponse as TranslationValidateResponse,
@@ -1133,7 +1238,9 @@ export declare namespace KnockMgmt {
     Workflows as Workflows,
     type Condition as Condition,
     type ConditionGroup as ConditionGroup,
+    type ConditionGroupAllMatch as ConditionGroupAllMatch,
     type Duration as Duration,
+    type InlineIdentifyUserRequest as InlineIdentifyUserRequest,
     type SendWindow as SendWindow,
     type Workflow as Workflow,
     type WorkflowAIAgentStep as WorkflowAIAgentStep,
@@ -1144,8 +1251,11 @@ export declare namespace KnockMgmt {
     type WorkflowEmailStep as WorkflowEmailStep,
     type WorkflowFetchStep as WorkflowFetchStep,
     type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
+    type WorkflowInAppGuideStep as WorkflowInAppGuideStep,
     type WorkflowPushStep as WorkflowPushStep,
     type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
+    type WorkflowRandomCohortStepBranch as WorkflowRandomCohortStepBranch,
+    type WorkflowRequest as WorkflowRequest,
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
@@ -1172,6 +1282,7 @@ export declare namespace KnockMgmt {
   export {
     MessageTypes as MessageTypes,
     type MessageType as MessageType,
+    type MessageTypeRequest as MessageTypeRequest,
     type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,
@@ -1269,6 +1380,7 @@ export declare namespace KnockMgmt {
     Guides as Guides,
     type Guide as Guide,
     type GuideActivationURLPattern as GuideActivationURLPattern,
+    type GuideRequest as GuideRequest,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideArchiveResponse as GuideArchiveResponse,
@@ -1290,6 +1402,7 @@ export declare namespace KnockMgmt {
     type BranchRetrieveParams as BranchRetrieveParams,
     type BranchListParams as BranchListParams,
     type BranchDeleteParams as BranchDeleteParams,
+    type BranchRebaseParams as BranchRebaseParams,
   };
 
   export {
@@ -1313,6 +1426,7 @@ export declare namespace KnockMgmt {
     Audiences as Audiences,
     type Audience as Audience,
     type AudienceCondition as AudienceCondition,
+    type AudienceRequest as AudienceRequest,
     type DynamicAudience as DynamicAudience,
     type StaticAudience as StaticAudience,
     type AudienceArchiveResponse as AudienceArchiveResponse,
@@ -1326,15 +1440,85 @@ export declare namespace KnockMgmt {
     type AudienceValidateParams as AudienceValidateParams,
   };
 
+  export {
+    Goals as Goals,
+    type Goal as Goal,
+    type GoalCondition as GoalCondition,
+    type GoalRequest as GoalRequest,
+    type GoalArchiveResponse as GoalArchiveResponse,
+    type GoalCloneResponse as GoalCloneResponse,
+    type GoalUpsertResponse as GoalUpsertResponse,
+    type GoalValidateResponse as GoalValidateResponse,
+    type GoalsEntriesCursor as GoalsEntriesCursor,
+    type GoalRetrieveParams as GoalRetrieveParams,
+    type GoalListParams as GoalListParams,
+    type GoalArchiveParams as GoalArchiveParams,
+    type GoalCloneParams as GoalCloneParams,
+    type GoalUpsertParams as GoalUpsertParams,
+    type GoalValidateParams as GoalValidateParams,
+  };
+
+  export {
+    Assets as Assets,
+    type Asset as Asset,
+    type AssetsEntriesCursor as AssetsEntriesCursor,
+    type AssetListParams as AssetListParams,
+  };
+
+  export {
+    Tags as Tags,
+    type Tag as Tag,
+    type TagListResponse as TagListResponse,
+    type TagUpsertResponse as TagUpsertResponse,
+    type TagUpsertParams as TagUpsertParams,
+  };
+
+  export {
+    Schemas as Schemas,
+    type ItemSchema as ItemSchema,
+    type SchemaRetrieveResponse as SchemaRetrieveResponse,
+    type SchemaListResponse as SchemaListResponse,
+    type SchemaUpsertResponse as SchemaUpsertResponse,
+    type SchemaValidateResponse as SchemaValidateResponse,
+    type SchemaRetrieveParams as SchemaRetrieveParams,
+    type SchemaListParams as SchemaListParams,
+    type SchemaUpsertParams as SchemaUpsertParams,
+    type SchemaValidateParams as SchemaValidateParams,
+  };
+
+  export {
+    PreferenceCenter as PreferenceCenter,
+    type PreferenceCenterRetrieveResponse as PreferenceCenterRetrieveResponse,
+    type PreferenceCenterResetResponse as PreferenceCenterResetResponse,
+    type PreferenceCenterUpsertResponse as PreferenceCenterUpsertResponse,
+    type PreferenceCenterRetrieveParams as PreferenceCenterRetrieveParams,
+    type PreferenceCenterResetParams as PreferenceCenterResetParams,
+    type PreferenceCenterUpsertParams as PreferenceCenterUpsertParams,
+  };
+
+  export { Billing as Billing, type BillingSummary as BillingSummary };
+
+  export {
+    PreferenceCategories as PreferenceCategories,
+    type PreferenceCategory as PreferenceCategory,
+    type PreferenceCategoryListResponse as PreferenceCategoryListResponse,
+    type PreferenceCategoryUpsertResponse as PreferenceCategoryUpsertResponse,
+  };
+
+  export type GoalAttachment = API.GoalAttachment;
   export type MessageTypeBooleanField = API.MessageTypeBooleanField;
   export type MessageTypeButtonField = API.MessageTypeButtonField;
+  export type MessageTypeColorField = API.MessageTypeColorField;
   export type MessageTypeImageField = API.MessageTypeImageField;
   export type MessageTypeJsonField = API.MessageTypeJsonField;
+  export type MessageTypeListField = API.MessageTypeListField;
   export type MessageTypeMarkdownField = API.MessageTypeMarkdownField;
   export type MessageTypeMultiSelectField = API.MessageTypeMultiSelectField;
+  export type MessageTypeNumberField = API.MessageTypeNumberField;
   export type MessageTypeSelectField = API.MessageTypeSelectField;
   export type MessageTypeTextField = API.MessageTypeTextField;
   export type MessageTypeTextareaField = API.MessageTypeTextareaField;
   export type MessageTypeURLField = API.MessageTypeURLField;
   export type PageInfo = API.PageInfo;
+  export type RecipientReference = API.RecipientReference;
 }

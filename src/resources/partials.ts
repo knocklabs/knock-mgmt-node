@@ -51,6 +51,30 @@ export class Partials extends APIResource {
   }
 
   /**
+   * Renders a partial in isolation, without requiring the partial to be persisted in
+   * Knock.
+   *
+   * Useful for iterating on a partial locally and seeing how it renders against
+   * sample data.
+   *
+   * @example
+   * ```ts
+   * const response = await client.partials.preview({
+   *   environment: 'development',
+   *   partial: {
+   *     content: '<p>Hello, {{ name }}!</p>',
+   *     name: 'My Partial',
+   *     type: 'html',
+   *   },
+   * });
+   * ```
+   */
+  preview(params: PartialPreviewParams, options?: RequestOptions): APIPromise<PartialPreviewResponse> {
+    const { environment, branch, ...body } = params;
+    return this._client.post('/v1/partials/preview', { query: { environment, branch }, body, ...options });
+  }
+
+  /**
    * Updates a partial of a given key, or creates a new one if it does not yet exist.
    *
    * Note: this endpoint only operates on partials in the “development” environment.
@@ -120,6 +144,62 @@ export class Partials extends APIResource {
 export type PartialResourcesEntriesCursor = EntriesCursor<PartialResource>;
 
 /**
+ * A partial object with attributes to update or create a partial.
+ */
+export interface PartialRequest {
+  /**
+   * The partial content.
+   */
+  content: string;
+
+  /**
+   * A name for the partial. Must be at maximum 255 characters in length.
+   */
+  name: string;
+
+  /**
+   * The partial type. One of 'html', 'json', 'markdown', 'text'.
+   */
+  type: 'html' | 'text' | 'json' | 'markdown';
+
+  /**
+   * An arbitrary string attached to a partial object. Useful for adding notes about
+   * the partial for internal purposes. Maximum of 280 characters allowed.
+   */
+  description?: string;
+
+  /**
+   * The name of the icon to be used in the visual editor.
+   */
+  icon_name?: string;
+
+  /**
+   * The field types available for the partial.
+   */
+  input_schema?: Array<
+    | Shared.MessageTypeListField
+    | Shared.MessageTypeSelectField
+    | Shared.MessageTypeBooleanField
+    | Shared.MessageTypeJsonField
+    | Shared.MessageTypeNumberField
+    | Shared.MessageTypeTextField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeColorField
+    | Shared.MessageTypeURLField
+    | Shared.MessageTypeMarkdownField
+    | Shared.MessageTypeMultiSelectField
+    | Shared.MessageTypeButtonField
+    | Shared.MessageTypeTextareaField
+  >;
+
+  /**
+   * Indicates whether the partial can be used in the visual editor. Only applies to
+   * HTML partials.
+   */
+  visual_block_enabled?: boolean;
+}
+
+/**
  * A partial is a reusable piece of content that can be used in a template.
  */
 export interface PartialResource {
@@ -179,14 +259,14 @@ export interface PartialResource {
    * The field types available for the partial.
    */
   input_schema?: Array<
-    | PartialResource.MessageTypeListField
+    | Shared.MessageTypeListField
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | PartialResource.MessageTypeNumberField
+    | Shared.MessageTypeNumberField
     | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
-    | PartialResource.MessageTypeColorField
+    | Shared.MessageTypeColorField
     | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
@@ -201,166 +281,42 @@ export interface PartialResource {
   visual_block_enabled?: boolean;
 }
 
-export namespace PartialResource {
+/**
+ * A response to a partial preview request.
+ */
+export interface PartialPreviewResponse {
   /**
-   * A list field used in a message type.
+   * The result of the preview.
    */
-  export interface MessageTypeListField {
-    /**
-     * The unique key of the field.
-     */
-    key: string;
-
-    /**
-     * The label of the field.
-     */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'list';
-
-    /**
-     * Settings for the list field.
-     */
-    settings?: MessageTypeListField.Settings;
-  }
-
-  export namespace MessageTypeListField {
-    /**
-     * Settings for the list field.
-     */
-    export interface Settings {
-      /**
-       * The default value of the list field.
-       */
-      default?: Array<unknown> | null;
-
-      description?: string | null;
-
-      /**
-       * A JSON schema used to validate the structure of each item in the list. Must be a
-       * valid JSON schema.
-       */
-      item_schema?: unknown | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-    }
-  }
+  result: 'success' | 'error';
 
   /**
-   * A numeric field used in a message type or partial input schema, with optional
-   * min/max bounds and a unit label for display.
+   * The partial type that was rendered.
    */
-  export interface MessageTypeNumberField {
-    /**
-     * The unique key of the field.
-     */
-    key: string;
-
-    /**
-     * The label of the field.
-     */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'number';
-
-    /**
-     * Settings for the number field.
-     */
-    settings?: MessageTypeNumberField.Settings;
-  }
-
-  export namespace MessageTypeNumberField {
-    /**
-     * Settings for the number field.
-     */
-    export interface Settings {
-      /**
-       * The default numeric value.
-       */
-      default?: number | null;
-
-      description?: string | null;
-
-      /**
-       * Optional inclusive maximum allowed value.
-       */
-      max?: number | null;
-
-      /**
-       * Optional inclusive minimum allowed value.
-       */
-      min?: number | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-
-      /**
-       * Optional short label shown after the input (e.g. px, kg).
-       */
-      unit_label?: string | null;
-    }
-  }
+  type: 'html' | 'text' | 'json' | 'markdown';
 
   /**
-   * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
-   * schema.
+   * The rendered partial content. Present when result is `success`.
    */
-  export interface MessageTypeColorField {
+  content?: string | null;
+
+  /**
+   * A list of errors encountered during rendering. Present when result is `error`.
+   */
+  errors?: Array<PartialPreviewResponse.Error> | null;
+}
+
+export namespace PartialPreviewResponse {
+  export interface Error {
     /**
-     * The unique key of the field.
+     * A human-readable description of the error.
      */
-    key: string;
+    message: string;
 
     /**
-     * The label of the field.
+     * The partial field that caused the error, if available.
      */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'color';
-
-    /**
-     * Settings for the color field.
-     */
-    settings?: MessageTypeColorField.Settings;
-  }
-
-  export namespace MessageTypeColorField {
-    /**
-     * Settings for the color field.
-     */
-    export interface Settings {
-      /**
-       * The default hex color value.
-       */
-      default?: string | null;
-
-      description?: string | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-    }
+    field?: string | null;
   }
 }
 
@@ -432,6 +388,49 @@ export interface PartialListParams extends EntriesCursorParams {
   hide_uncommitted_changes?: boolean;
 }
 
+export interface PartialPreviewParams {
+  /**
+   * Query param: The environment slug.
+   */
+  environment: string;
+
+  /**
+   * Body param: A partial object with attributes to update or create a partial.
+   */
+  partial: PartialRequest;
+
+  /**
+   * Query param: The slug of a branch to use. This option can only be used when
+   * `environment` is `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * Body param: The data to pass to the partial when rendering. Top-level keys are
+   * exposed as variables in the partial template.
+   */
+  data?: { [key: string]: unknown };
+
+  /**
+   * Body param: Email layout configuration. Only applicable for `html` partials.
+   * When omitted, the rendered partial is returned unwrapped.
+   */
+  layout?: PartialPreviewParams.Layout | null;
+}
+
+export namespace PartialPreviewParams {
+  /**
+   * Email layout configuration. Only applicable for `html` partials. When omitted,
+   * the rendered partial is returned unwrapped.
+   */
+  export interface Layout {
+    /**
+     * The key of an existing email layout to use.
+     */
+    key?: string | null;
+  }
+}
+
 export interface PartialUpsertParams {
   /**
    * Query param: The environment slug.
@@ -441,7 +440,7 @@ export interface PartialUpsertParams {
   /**
    * Body param: A partial object with attributes to update or create a partial.
    */
-  partial: PartialUpsertParams.Partial;
+  partial: PartialRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -479,227 +478,6 @@ export interface PartialUpsertParams {
   force?: boolean;
 }
 
-export namespace PartialUpsertParams {
-  /**
-   * A partial object with attributes to update or create a partial.
-   */
-  export interface Partial {
-    /**
-     * The partial content.
-     */
-    content: string;
-
-    /**
-     * A name for the partial. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The partial type. One of 'html', 'json', 'markdown', 'text'.
-     */
-    type: 'html' | 'text' | 'json' | 'markdown';
-
-    /**
-     * An arbitrary string attached to a partial object. Useful for adding notes about
-     * the partial for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * The name of the icon to be used in the visual editor.
-     */
-    icon_name?: string;
-
-    /**
-     * The field types available for the partial.
-     */
-    input_schema?: Array<
-      | Partial.MessageTypeListField
-      | Shared.MessageTypeSelectField
-      | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeJsonField
-      | Partial.MessageTypeNumberField
-      | Shared.MessageTypeTextField
-      | Shared.MessageTypeImageField
-      | Partial.MessageTypeColorField
-      | Shared.MessageTypeURLField
-      | Shared.MessageTypeMarkdownField
-      | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeTextareaField
-    >;
-
-    /**
-     * Indicates whether the partial can be used in the visual editor. Only applies to
-     * HTML partials.
-     */
-    visual_block_enabled?: boolean;
-  }
-
-  export namespace Partial {
-    /**
-     * A list field used in a message type.
-     */
-    export interface MessageTypeListField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'list';
-
-      /**
-       * Settings for the list field.
-       */
-      settings?: MessageTypeListField.Settings;
-    }
-
-    export namespace MessageTypeListField {
-      /**
-       * Settings for the list field.
-       */
-      export interface Settings {
-        /**
-         * The default value of the list field.
-         */
-        default?: Array<unknown> | null;
-
-        description?: string | null;
-
-        /**
-         * A JSON schema used to validate the structure of each item in the list. Must be a
-         * valid JSON schema.
-         */
-        item_schema?: unknown | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-      }
-    }
-
-    /**
-     * A numeric field used in a message type or partial input schema, with optional
-     * min/max bounds and a unit label for display.
-     */
-    export interface MessageTypeNumberField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'number';
-
-      /**
-       * Settings for the number field.
-       */
-      settings?: MessageTypeNumberField.Settings;
-    }
-
-    export namespace MessageTypeNumberField {
-      /**
-       * Settings for the number field.
-       */
-      export interface Settings {
-        /**
-         * The default numeric value.
-         */
-        default?: number | null;
-
-        description?: string | null;
-
-        /**
-         * Optional inclusive maximum allowed value.
-         */
-        max?: number | null;
-
-        /**
-         * Optional inclusive minimum allowed value.
-         */
-        min?: number | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-
-        /**
-         * Optional short label shown after the input (e.g. px, kg).
-         */
-        unit_label?: string | null;
-      }
-    }
-
-    /**
-     * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
-     * schema.
-     */
-    export interface MessageTypeColorField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'color';
-
-      /**
-       * Settings for the color field.
-       */
-      settings?: MessageTypeColorField.Settings;
-    }
-
-    export namespace MessageTypeColorField {
-      /**
-       * Settings for the color field.
-       */
-      export interface Settings {
-        /**
-         * The default hex color value.
-         */
-        default?: string | null;
-
-        description?: string | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-      }
-    }
-  }
-}
-
 export interface PartialValidateParams {
   /**
    * Query param: The environment slug.
@@ -709,7 +487,7 @@ export interface PartialValidateParams {
   /**
    * Body param: A partial object with attributes to update or create a partial.
    */
-  partial: PartialValidateParams.Partial;
+  partial: PartialRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -718,235 +496,17 @@ export interface PartialValidateParams {
   branch?: string;
 }
 
-export namespace PartialValidateParams {
-  /**
-   * A partial object with attributes to update or create a partial.
-   */
-  export interface Partial {
-    /**
-     * The partial content.
-     */
-    content: string;
-
-    /**
-     * A name for the partial. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * The partial type. One of 'html', 'json', 'markdown', 'text'.
-     */
-    type: 'html' | 'text' | 'json' | 'markdown';
-
-    /**
-     * An arbitrary string attached to a partial object. Useful for adding notes about
-     * the partial for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * The name of the icon to be used in the visual editor.
-     */
-    icon_name?: string;
-
-    /**
-     * The field types available for the partial.
-     */
-    input_schema?: Array<
-      | Partial.MessageTypeListField
-      | Shared.MessageTypeSelectField
-      | Shared.MessageTypeBooleanField
-      | Shared.MessageTypeJsonField
-      | Partial.MessageTypeNumberField
-      | Shared.MessageTypeTextField
-      | Shared.MessageTypeImageField
-      | Partial.MessageTypeColorField
-      | Shared.MessageTypeURLField
-      | Shared.MessageTypeMarkdownField
-      | Shared.MessageTypeMultiSelectField
-      | Shared.MessageTypeButtonField
-      | Shared.MessageTypeTextareaField
-    >;
-
-    /**
-     * Indicates whether the partial can be used in the visual editor. Only applies to
-     * HTML partials.
-     */
-    visual_block_enabled?: boolean;
-  }
-
-  export namespace Partial {
-    /**
-     * A list field used in a message type.
-     */
-    export interface MessageTypeListField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'list';
-
-      /**
-       * Settings for the list field.
-       */
-      settings?: MessageTypeListField.Settings;
-    }
-
-    export namespace MessageTypeListField {
-      /**
-       * Settings for the list field.
-       */
-      export interface Settings {
-        /**
-         * The default value of the list field.
-         */
-        default?: Array<unknown> | null;
-
-        description?: string | null;
-
-        /**
-         * A JSON schema used to validate the structure of each item in the list. Must be a
-         * valid JSON schema.
-         */
-        item_schema?: unknown | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-      }
-    }
-
-    /**
-     * A numeric field used in a message type or partial input schema, with optional
-     * min/max bounds and a unit label for display.
-     */
-    export interface MessageTypeNumberField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'number';
-
-      /**
-       * Settings for the number field.
-       */
-      settings?: MessageTypeNumberField.Settings;
-    }
-
-    export namespace MessageTypeNumberField {
-      /**
-       * Settings for the number field.
-       */
-      export interface Settings {
-        /**
-         * The default numeric value.
-         */
-        default?: number | null;
-
-        description?: string | null;
-
-        /**
-         * Optional inclusive maximum allowed value.
-         */
-        max?: number | null;
-
-        /**
-         * Optional inclusive minimum allowed value.
-         */
-        min?: number | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-
-        /**
-         * Optional short label shown after the input (e.g. px, kg).
-         */
-        unit_label?: string | null;
-      }
-    }
-
-    /**
-     * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
-     * schema.
-     */
-    export interface MessageTypeColorField {
-      /**
-       * The unique key of the field.
-       */
-      key: string;
-
-      /**
-       * The label of the field.
-       */
-      label: string | null;
-
-      /**
-       * The type of the field.
-       */
-      type: 'color';
-
-      /**
-       * Settings for the color field.
-       */
-      settings?: MessageTypeColorField.Settings;
-    }
-
-    export namespace MessageTypeColorField {
-      /**
-       * Settings for the color field.
-       */
-      export interface Settings {
-        /**
-         * The default hex color value.
-         */
-        default?: string | null;
-
-        description?: string | null;
-
-        placeholder?: string | null;
-
-        /**
-         * Whether the field is required.
-         */
-        required?: boolean;
-      }
-    }
-  }
-}
-
 export declare namespace Partials {
   export {
+    type PartialRequest as PartialRequest,
     type PartialResource as PartialResource,
+    type PartialPreviewResponse as PartialPreviewResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
     type PartialResourcesEntriesCursor as PartialResourcesEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
+    type PartialPreviewParams as PartialPreviewParams,
     type PartialUpsertParams as PartialUpsertParams,
     type PartialValidateParams as PartialValidateParams,
   };

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as GuidesAPI from './guides';
+import * as Shared from './shared';
 import * as WorkflowsAPI from './workflows/workflows';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -230,7 +230,7 @@ export interface Guide {
   /**
    * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
    */
-  goal_attachment?: Guide.GoalAttachment | null;
+  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A group of conditions to be evaluated.
@@ -275,24 +275,6 @@ export interface Guide {
   valid?: boolean;
 }
 
-export namespace Guide {
-  /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-   */
-  export interface GoalAttachment {
-    /**
-     * The key of the goal to attach.
-     */
-    goal_key: string;
-
-    /**
-     * The number of days to attribute conversions after the notification is sent. Must
-     * be between 1 and 30. Defaults to 7.
-     */
-    attribution_window_days?: number;
-  }
-}
-
 /**
  * A rule that controls when a guide should be shown based on the user's location
  * in the application. At least one of `pathname` or `search` must be provided.
@@ -313,6 +295,74 @@ export interface GuideActivationURLPattern {
    * Supports URLPattern API syntax.
    */
   search?: string;
+}
+
+/**
+ * A request to create or update a guide.
+ */
+export interface GuideRequest {
+  /**
+   * The key of the channel in which the guide exists.
+   */
+  channel_key: string;
+
+  /**
+   * A name for the guide. Must be at maximum 255 characters in length.
+   */
+  name: string;
+
+  /**
+   * A list of guide step objects in the guide.
+   */
+  steps: Array<GuideStep>;
+
+  /**
+   * A list of activation url patterns that describe when the guide should be shown.
+   */
+  activation_url_patterns?: Array<GuideActivationURLPattern>;
+
+  /**
+   * The timestamp of when the guide was archived.
+   */
+  archived_at?: string | null;
+
+  /**
+   * The timestamp of when the guide was deleted.
+   */
+  deleted_at?: string | null;
+
+  /**
+   * An arbitrary string attached to a guide object. Useful for adding notes about
+   * the guide for internal purposes. Maximum of 280 characters allowed.
+   */
+  description?: string | null;
+
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: Shared.GoalAttachment | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
+
+  /**
+   * Use tags to organize resources internally within your account. For example, by
+   * team or product area.
+   */
+  tags?: Array<string>;
+
+  /**
+   * The key of the target audience for the guide. When not set, will default to
+   * targeting all users.
+   */
+  target_audience_key?: string | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
 }
 
 /**
@@ -501,7 +551,7 @@ export interface GuideUpsertParams {
   /**
    * Body param: A request to create or update a guide.
    */
-  guide: GuideUpsertParams.Guide;
+  guide: GuideRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -539,94 +589,6 @@ export interface GuideUpsertParams {
   force?: boolean;
 }
 
-export namespace GuideUpsertParams {
-  /**
-   * A request to create or update a guide.
-   */
-  export interface Guide {
-    /**
-     * The key of the channel in which the guide exists.
-     */
-    channel_key: string;
-
-    /**
-     * A name for the guide. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * A list of guide step objects in the guide.
-     */
-    steps: Array<GuidesAPI.GuideStep>;
-
-    /**
-     * A list of activation url patterns that describe when the guide should be shown.
-     */
-    activation_url_patterns?: Array<GuidesAPI.GuideActivationURLPattern>;
-
-    /**
-     * The timestamp of when the guide was archived.
-     */
-    archived_at?: string | null;
-
-    /**
-     * The timestamp of when the guide was deleted.
-     */
-    deleted_at?: string | null;
-
-    /**
-     * An arbitrary string attached to a guide object. Useful for adding notes about
-     * the guide for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string | null;
-
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    goal_attachment?: Guide.GoalAttachment | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * Use tags to organize resources internally within your account. For example, by
-     * team or product area.
-     */
-    tags?: Array<string>;
-
-    /**
-     * The key of the target audience for the guide. When not set, will default to
-     * targeting all users.
-     */
-    target_audience_key?: string | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
-  }
-
-  export namespace Guide {
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    export interface GoalAttachment {
-      /**
-       * The key of the goal to attach.
-       */
-      goal_key: string;
-
-      /**
-       * The number of days to attribute conversions after the notification is sent. Must
-       * be between 1 and 30. Defaults to 7.
-       */
-      attribution_window_days?: number;
-    }
-  }
-}
-
 export interface GuideValidateParams {
   /**
    * Query param: The environment slug.
@@ -636,7 +598,7 @@ export interface GuideValidateParams {
   /**
    * Body param: A request to create or update a guide.
    */
-  guide: GuideValidateParams.Guide;
+  guide: GuideRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -645,98 +607,11 @@ export interface GuideValidateParams {
   branch?: string;
 }
 
-export namespace GuideValidateParams {
-  /**
-   * A request to create or update a guide.
-   */
-  export interface Guide {
-    /**
-     * The key of the channel in which the guide exists.
-     */
-    channel_key: string;
-
-    /**
-     * A name for the guide. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * A list of guide step objects in the guide.
-     */
-    steps: Array<GuidesAPI.GuideStep>;
-
-    /**
-     * A list of activation url patterns that describe when the guide should be shown.
-     */
-    activation_url_patterns?: Array<GuidesAPI.GuideActivationURLPattern>;
-
-    /**
-     * The timestamp of when the guide was archived.
-     */
-    archived_at?: string | null;
-
-    /**
-     * The timestamp of when the guide was deleted.
-     */
-    deleted_at?: string | null;
-
-    /**
-     * An arbitrary string attached to a guide object. Useful for adding notes about
-     * the guide for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string | null;
-
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    goal_attachment?: Guide.GoalAttachment | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * Use tags to organize resources internally within your account. For example, by
-     * team or product area.
-     */
-    tags?: Array<string>;
-
-    /**
-     * The key of the target audience for the guide. When not set, will default to
-     * targeting all users.
-     */
-    target_audience_key?: string | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    target_property_conditions?: WorkflowsAPI.ConditionGroup | null;
-  }
-
-  export namespace Guide {
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    export interface GoalAttachment {
-      /**
-       * The key of the goal to attach.
-       */
-      goal_key: string;
-
-      /**
-       * The number of days to attribute conversions after the notification is sent. Must
-       * be between 1 and 30. Defaults to 7.
-       */
-      attribution_window_days?: number;
-    }
-  }
-}
-
 export declare namespace Guides {
   export {
     type Guide as Guide,
     type GuideActivationURLPattern as GuideActivationURLPattern,
+    type GuideRequest as GuideRequest,
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideArchiveResponse as GuideArchiveResponse,

@@ -2,10 +2,12 @@
 
 export * from './shared';
 export { APIKeys, type APIKeyExchangeResponse, type APIKeyExchangeParams } from './api-keys';
+export { Assets, type Asset, type AssetListParams, type AssetsEntriesCursor } from './assets';
 export {
   Audiences,
   type Audience,
   type AudienceCondition,
+  type AudienceRequest,
   type DynamicAudience,
   type StaticAudience,
   type AudienceArchiveResponse,
@@ -19,6 +21,7 @@ export {
   type AudiencesEntriesCursor,
 } from './audiences';
 export { Auth, type AuthVerifyResponse } from './auth';
+export { Billing, type BillingSummary } from './billing';
 export {
   Branches,
   type Branch,
@@ -26,6 +29,7 @@ export {
   type BranchRetrieveParams,
   type BranchListParams,
   type BranchDeleteParams,
+  type BranchRebaseParams,
   type BranchesEntriesCursor,
 } from './branches';
 export {
@@ -107,11 +111,15 @@ export {
 } from './data-sources';
 export {
   EmailLayouts,
+  type BrandingOverrides,
   type EmailLayout,
+  type EmailLayoutRequest,
+  type EmailLayoutPreviewResponse,
   type EmailLayoutUpsertResponse,
   type EmailLayoutValidateResponse,
   type EmailLayoutRetrieveParams,
   type EmailLayoutListParams,
+  type EmailLayoutPreviewParams,
   type EmailLayoutUpsertParams,
   type EmailLayoutValidateParams,
   type EmailLayoutsEntriesCursor,
@@ -123,9 +131,27 @@ export {
   type EnvironmentsEntriesCursor,
 } from './environments';
 export {
+  Goals,
+  type Goal,
+  type GoalCondition,
+  type GoalRequest,
+  type GoalArchiveResponse,
+  type GoalCloneResponse,
+  type GoalUpsertResponse,
+  type GoalValidateResponse,
+  type GoalRetrieveParams,
+  type GoalListParams,
+  type GoalArchiveParams,
+  type GoalCloneParams,
+  type GoalUpsertParams,
+  type GoalValidateParams,
+  type GoalsEntriesCursor,
+} from './goals';
+export {
   Guides,
   type Guide,
   type GuideActivationURLPattern,
+  type GuideRequest,
   type GuideStep,
   type GuideActivateResponse,
   type GuideArchiveResponse,
@@ -148,6 +174,7 @@ export {
 export {
   MessageTypes,
   type MessageType,
+  type MessageTypeRequest,
   type MessageTypeVariant,
   type MessageTypeUpsertResponse,
   type MessageTypeValidateResponse,
@@ -159,15 +186,46 @@ export {
 } from './message-types';
 export {
   Partials,
+  type PartialRequest,
   type PartialResource,
+  type PartialPreviewResponse,
   type PartialUpsertResponse,
   type PartialValidateResponse,
   type PartialRetrieveParams,
   type PartialListParams,
+  type PartialPreviewParams,
   type PartialUpsertParams,
   type PartialValidateParams,
   type PartialResourcesEntriesCursor,
 } from './partials';
+export {
+  PreferenceCategories,
+  type PreferenceCategory,
+  type PreferenceCategoryListResponse,
+  type PreferenceCategoryUpsertResponse,
+} from './preference-categories';
+export {
+  PreferenceCenter,
+  type PreferenceCenterRetrieveResponse,
+  type PreferenceCenterResetResponse,
+  type PreferenceCenterUpsertResponse,
+  type PreferenceCenterRetrieveParams,
+  type PreferenceCenterResetParams,
+  type PreferenceCenterUpsertParams,
+} from './preference-center';
+export {
+  Schemas,
+  type ItemSchema,
+  type SchemaRetrieveResponse,
+  type SchemaListResponse,
+  type SchemaUpsertResponse,
+  type SchemaValidateResponse,
+  type SchemaRetrieveParams,
+  type SchemaListParams,
+  type SchemaUpsertParams,
+  type SchemaValidateParams,
+} from './schemas';
+export { Tags, type Tag, type TagListResponse, type TagUpsertResponse, type TagUpsertParams } from './tags';
 export {
   Templates,
   type ChatTemplate,
@@ -177,10 +235,13 @@ export {
   type RequestTemplate,
   type SMSTemplate,
   type WebhookTemplate,
+  type TemplatePreviewResponse,
+  type TemplatePreviewParams,
 } from './templates';
 export {
   Translations,
   type Translation,
+  type TranslationRequest,
   type TranslationRetrieveResponse,
   type TranslationUpsertResponse,
   type TranslationValidateResponse,
@@ -195,7 +256,9 @@ export {
   Workflows,
   type Condition,
   type ConditionGroup,
+  type ConditionGroupAllMatch,
   type Duration,
+  type InlineIdentifyUserRequest,
   type SendWindow,
   type Workflow,
   type WorkflowAIAgentStep,
@@ -206,8 +269,11 @@ export {
   type WorkflowEmailStep,
   type WorkflowFetchStep,
   type WorkflowInAppFeedStep,
+  type WorkflowInAppGuideStep,
   type WorkflowPushStep,
   type WorkflowRandomCohortStep,
+  type WorkflowRandomCohortStepBranch,
+  type WorkflowRequest,
   type WorkflowSMSStep,
   type WorkflowStep,
   type WorkflowThrottleStep,

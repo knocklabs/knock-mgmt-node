@@ -56,6 +56,58 @@ describe('resource emailLayouts', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('preview: only required params', async () => {
+    const responsePromise = client.emailLayouts.preview({
+      environment: 'development',
+      email_layout: {
+        html_layout: '<html><body>Hello {{ recipient.name }}! {{ content }}</body></html>',
+        name: 'Transactional',
+        text_layout: 'Hello {{ recipient.name }}! {{ content }}',
+      },
+      recipient: 'user_123',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('preview: required and optional params', async () => {
+    const response = await client.emailLayouts.preview({
+      environment: 'development',
+      email_layout: {
+        html_layout: '<html><body>Hello {{ recipient.name }}! {{ content }}</body></html>',
+        name: 'Transactional',
+        text_layout: 'Hello {{ recipient.name }}! {{ content }}',
+        branding_overrides: {
+          dark_icon_url: 'https://cdn.example.com/icon-dark.png',
+          dark_logo_url: 'https://cdn.example.com/logo-dark.png',
+          dark_primary_color: '#1A1A2E',
+          dark_primary_color_contrast: '#FFFFFF',
+          icon_url: 'https://cdn.example.com/icon-light.png',
+          logo_url: 'https://cdn.example.com/logo-light.png',
+          primary_color: '#4F46E5',
+          primary_color_contrast: '#FFFFFF',
+          primary_text_color: '#111827',
+          secondary_text_color: '#6B7280',
+        },
+        footer_links: [{ text: 'Example', url: 'http://example.com' }],
+        is_mjml: true,
+      },
+      recipient: 'user_123',
+      branch: 'feature-branch',
+      actor: { id: 'project_1', collection: 'projects' },
+      data: { order_id: 'bar' },
+      tenant: 'tenant',
+      workflow: { key: 'key', categories: ['string'] },
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.emailLayouts.upsert('email_layout_key', {
       environment: 'development',

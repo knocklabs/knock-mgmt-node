@@ -2,17 +2,22 @@
 
 Types:
 
+- <code><a href="./src/resources/shared.ts">GoalAttachment</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeBooleanField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeButtonField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeColorField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeImageField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeJsonField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeListField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeMarkdownField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeMultiSelectField</a></code>
+- <code><a href="./src/resources/shared.ts">MessageTypeNumberField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeSelectField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeTextField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeTextareaField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeURLField</a></code>
 - <code><a href="./src/resources/shared.ts">PageInfo</a></code>
+- <code><a href="./src/resources/shared.ts">RecipientReference</a></code>
 
 # Templates
 
@@ -25,12 +30,20 @@ Types:
 - <code><a href="./src/resources/templates.ts">RequestTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">SMSTemplate</a></code>
 - <code><a href="./src/resources/templates.ts">WebhookTemplate</a></code>
+- <code><a href="./src/resources/templates.ts">TemplatePreviewResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/templates/preview">client.templates.<a href="./src/resources/templates.ts">preview</a>({ ...params }) -> TemplatePreviewResponse</code>
 
 # EmailLayouts
 
 Types:
 
+- <code><a href="./src/resources/email-layouts.ts">BrandingOverrides</a></code>
 - <code><a href="./src/resources/email-layouts.ts">EmailLayout</a></code>
+- <code><a href="./src/resources/email-layouts.ts">EmailLayoutRequest</a></code>
+- <code><a href="./src/resources/email-layouts.ts">EmailLayoutPreviewResponse</a></code>
 - <code><a href="./src/resources/email-layouts.ts">EmailLayoutUpsertResponse</a></code>
 - <code><a href="./src/resources/email-layouts.ts">EmailLayoutValidateResponse</a></code>
 
@@ -38,6 +51,7 @@ Methods:
 
 - <code title="get /v1/email_layouts/{email_layout_key}">client.emailLayouts.<a href="./src/resources/email-layouts.ts">retrieve</a>(emailLayoutKey, { ...params }) -> EmailLayout</code>
 - <code title="get /v1/email_layouts">client.emailLayouts.<a href="./src/resources/email-layouts.ts">list</a>({ ...params }) -> EmailLayoutsEntriesCursor</code>
+- <code title="post /v1/email_layouts/preview">client.emailLayouts.<a href="./src/resources/email-layouts.ts">preview</a>({ ...params }) -> EmailLayoutPreviewResponse</code>
 - <code title="put /v1/email_layouts/{email_layout_key}">client.emailLayouts.<a href="./src/resources/email-layouts.ts">upsert</a>(emailLayoutKey, { ...params }) -> EmailLayoutUpsertResponse</code>
 - <code title="put /v1/email_layouts/{email_layout_key}/validate">client.emailLayouts.<a href="./src/resources/email-layouts.ts">validate</a>(emailLayoutKey, { ...params }) -> EmailLayoutValidateResponse</code>
 
@@ -62,7 +76,9 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/partials.ts">PartialRequest</a></code>
 - <code><a href="./src/resources/partials.ts">PartialResource</a></code>
+- <code><a href="./src/resources/partials.ts">PartialPreviewResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialUpsertResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialValidateResponse</a></code>
 
@@ -70,6 +86,7 @@ Methods:
 
 - <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> PartialResource</code>
 - <code title="get /v1/partials">client.partials.<a href="./src/resources/partials.ts">list</a>({ ...params }) -> PartialResourcesEntriesCursor</code>
+- <code title="post /v1/partials/preview">client.partials.<a href="./src/resources/partials.ts">preview</a>({ ...params }) -> PartialPreviewResponse</code>
 - <code title="put /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">upsert</a>(partialKey, { ...params }) -> PartialUpsertResponse</code>
 - <code title="put /v1/partials/{partial_key}/validate">client.partials.<a href="./src/resources/partials.ts">validate</a>(partialKey, { ...params }) -> PartialValidateResponse</code>
 
@@ -78,6 +95,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/translations.ts">Translation</a></code>
+- <code><a href="./src/resources/translations.ts">TranslationRequest</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationRetrieveResponse</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationUpsertResponse</a></code>
 - <code><a href="./src/resources/translations.ts">TranslationValidateResponse</a></code>
@@ -95,7 +113,9 @@ Types:
 
 - <code><a href="./src/resources/workflows/workflows.ts">Condition</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">ConditionGroup</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">ConditionGroupAllMatch</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Duration</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">InlineIdentifyUserRequest</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">SendWindow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowAIAgentStep</a></code>
@@ -106,8 +126,11 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowEmailStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowFetchStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowInAppFeedStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowInAppGuideStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowPushStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRandomCohortStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRandomCohortStepBranch</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowRequest</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowSMSStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
@@ -147,6 +170,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/message-types.ts">MessageType</a></code>
+- <code><a href="./src/resources/message-types.ts">MessageTypeRequest</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeVariant</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeUpsertResponse</a></code>
 - <code><a href="./src/resources/message-types.ts">MessageTypeValidateResponse</a></code>
@@ -285,6 +309,7 @@ Types:
 
 - <code><a href="./src/resources/guides.ts">Guide</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivationURLPattern</a></code>
+- <code><a href="./src/resources/guides.ts">GuideRequest</a></code>
 - <code><a href="./src/resources/guides.ts">GuideStep</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideArchiveResponse</a></code>
@@ -312,6 +337,7 @@ Methods:
 - <code title="get /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">retrieve</a>(branchSlug, { ...params }) -> Branch</code>
 - <code title="get /v1/branches">client.branches.<a href="./src/resources/branches.ts">list</a>({ ...params }) -> BranchesEntriesCursor</code>
 - <code title="delete /v1/branches/{branch_slug}">client.branches.<a href="./src/resources/branches.ts">delete</a>(branchSlug, { ...params }) -> void</code>
+- <code title="put /v1/branches/{branch_slug}/rebase">client.branches.<a href="./src/resources/branches.ts">rebase</a>(branchSlug, { ...params }) -> Branch</code>
 
 # Broadcasts
 
@@ -339,6 +365,7 @@ Types:
 
 - <code><a href="./src/resources/audiences.ts">Audience</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceCondition</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceRequest</a></code>
 - <code><a href="./src/resources/audiences.ts">DynamicAudience</a></code>
 - <code><a href="./src/resources/audiences.ts">StaticAudience</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceArchiveResponse</a></code>
@@ -352,3 +379,103 @@ Methods:
 - <code title="delete /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">archive</a>(audienceKey, { ...params }) -> AudienceArchiveResponse</code>
 - <code title="put /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">upsert</a>(audienceKey, { ...params }) -> AudienceUpsertResponse</code>
 - <code title="put /v1/audiences/{audience_key}/validate">client.audiences.<a href="./src/resources/audiences.ts">validate</a>(audienceKey, { ...params }) -> AudienceValidateResponse</code>
+
+# Goals
+
+Types:
+
+- <code><a href="./src/resources/goals.ts">Goal</a></code>
+- <code><a href="./src/resources/goals.ts">GoalCondition</a></code>
+- <code><a href="./src/resources/goals.ts">GoalRequest</a></code>
+- <code><a href="./src/resources/goals.ts">GoalArchiveResponse</a></code>
+- <code><a href="./src/resources/goals.ts">GoalCloneResponse</a></code>
+- <code><a href="./src/resources/goals.ts">GoalUpsertResponse</a></code>
+- <code><a href="./src/resources/goals.ts">GoalValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">retrieve</a>(goalKey, { ...params }) -> Goal</code>
+- <code title="get /v1/goals">client.goals.<a href="./src/resources/goals.ts">list</a>({ ...params }) -> GoalsEntriesCursor</code>
+- <code title="delete /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">archive</a>(goalKey, { ...params }) -> GoalArchiveResponse</code>
+- <code title="post /v1/goals/{goal_key}/clone">client.goals.<a href="./src/resources/goals.ts">clone</a>(goalKey, { ...params }) -> GoalCloneResponse</code>
+- <code title="put /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">upsert</a>(goalKey, { ...params }) -> GoalUpsertResponse</code>
+- <code title="put /v1/goals/{goal_key}/validate">client.goals.<a href="./src/resources/goals.ts">validate</a>(goalKey, { ...params }) -> GoalValidateResponse</code>
+
+# Assets
+
+Types:
+
+- <code><a href="./src/resources/assets.ts">Asset</a></code>
+
+Methods:
+
+- <code title="get /v1/assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetsEntriesCursor</code>
+
+# Tags
+
+Types:
+
+- <code><a href="./src/resources/tags.ts">Tag</a></code>
+- <code><a href="./src/resources/tags.ts">TagListResponse</a></code>
+- <code><a href="./src/resources/tags.ts">TagUpsertResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/tags">client.tags.<a href="./src/resources/tags.ts">list</a>() -> TagListResponse</code>
+- <code title="delete /v1/tags/{name}">client.tags.<a href="./src/resources/tags.ts">delete</a>(name) -> void</code>
+- <code title="put /v1/tags/{name}">client.tags.<a href="./src/resources/tags.ts">upsert</a>(name, { ...params }) -> TagUpsertResponse</code>
+
+# Schemas
+
+Types:
+
+- <code><a href="./src/resources/schemas.ts">ItemSchema</a></code>
+- <code><a href="./src/resources/schemas.ts">SchemaRetrieveResponse</a></code>
+- <code><a href="./src/resources/schemas.ts">SchemaListResponse</a></code>
+- <code><a href="./src/resources/schemas.ts">SchemaUpsertResponse</a></code>
+- <code><a href="./src/resources/schemas.ts">SchemaValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/schemas/{item_type}">client.schemas.<a href="./src/resources/schemas.ts">retrieve</a>(itemType, { ...params }) -> unknown</code>
+- <code title="get /v1/schemas">client.schemas.<a href="./src/resources/schemas.ts">list</a>({ ...params }) -> SchemaListResponse</code>
+- <code title="put /v1/schemas/{item_type}">client.schemas.<a href="./src/resources/schemas.ts">upsert</a>(itemType, { ...params }) -> unknown</code>
+- <code title="put /v1/schemas/{item_type}/validate">client.schemas.<a href="./src/resources/schemas.ts">validate</a>(itemType, { ...params }) -> unknown</code>
+
+# PreferenceCenter
+
+Types:
+
+- <code><a href="./src/resources/preference-center.ts">PreferenceCenterRetrieveResponse</a></code>
+- <code><a href="./src/resources/preference-center.ts">PreferenceCenterResetResponse</a></code>
+- <code><a href="./src/resources/preference-center.ts">PreferenceCenterUpsertResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/preference_center">client.preferenceCenter.<a href="./src/resources/preference-center.ts">retrieve</a>({ ...params }) -> PreferenceCenterRetrieveResponse</code>
+- <code title="put /v1/preference_center/reset">client.preferenceCenter.<a href="./src/resources/preference-center.ts">reset</a>({ ...params }) -> PreferenceCenterResetResponse</code>
+- <code title="put /v1/preference_center">client.preferenceCenter.<a href="./src/resources/preference-center.ts">upsert</a>({ ...params }) -> PreferenceCenterUpsertResponse</code>
+
+# Billing
+
+Types:
+
+- <code><a href="./src/resources/billing.ts">BillingSummary</a></code>
+
+Methods:
+
+- <code title="get /v1/billing/summary">client.billing.<a href="./src/resources/billing.ts">retrieveSummary</a>() -> BillingSummary</code>
+
+# PreferenceCategories
+
+Types:
+
+- <code><a href="./src/resources/preference-categories.ts">PreferenceCategory</a></code>
+- <code><a href="./src/resources/preference-categories.ts">PreferenceCategoryListResponse</a></code>
+- <code><a href="./src/resources/preference-categories.ts">PreferenceCategoryUpsertResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/preference_categories">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">list</a>() -> PreferenceCategoryListResponse</code>
+- <code title="delete /v1/preference_categories/{name}">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">delete</a>(name) -> void</code>
+- <code title="put /v1/preference_categories/{name}">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">upsert</a>(name) -> PreferenceCategoryUpsertResponse</code>

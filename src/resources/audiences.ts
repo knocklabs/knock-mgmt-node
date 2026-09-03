@@ -178,6 +178,71 @@ export interface AudienceCondition {
 }
 
 /**
+ * An audience object with attributes to create or update an audience. Use
+ * `type: static` for audiences with explicitly managed members, or `type: dynamic`
+ * for audiences with segment-based membership.
+ */
+export type AudienceRequest = AudienceRequest.StaticAudienceRequest | AudienceRequest.DynamicAudienceRequest;
+
+export namespace AudienceRequest {
+  /**
+   * Request body for creating/updating a static audience.
+   */
+  export interface StaticAudienceRequest {
+    /**
+     * The name of the audience.
+     */
+    name: string;
+
+    /**
+     * The type of audience. Set to `static` for static audiences.
+     */
+    type: 'static';
+
+    /**
+     * A description of the audience.
+     */
+    description?: string | null;
+  }
+
+  /**
+   * Request body for creating/updating a dynamic audience.
+   */
+  export interface DynamicAudienceRequest {
+    /**
+     * The name of the audience.
+     */
+    name: string;
+
+    /**
+     * The type of audience. Set to `dynamic` for dynamic audiences.
+     */
+    type: 'dynamic';
+
+    /**
+     * A description of the audience.
+     */
+    description?: string | null;
+
+    /**
+     * A list of segments that define the dynamic audience membership criteria. Each
+     * segment contains one or more conditions joined by AND. Multiple segments are
+     * joined by OR.
+     */
+    segments?: Array<DynamicAudienceRequest.Segment>;
+  }
+
+  export namespace DynamicAudienceRequest {
+    export interface Segment {
+      /**
+       * A list of conditions within this segment, joined by AND.
+       */
+      conditions: Array<AudiencesAPI.AudienceCondition>;
+    }
+  }
+}
+
+/**
  * A dynamic audience where membership is determined by segment conditions
  * evaluated at runtime.
  */
@@ -384,7 +449,7 @@ export interface AudienceUpsertParams {
    * Use `type: static` for audiences with explicitly managed members, or
    * `type: dynamic` for audiences with segment-based membership.
    */
-  audience: AudienceUpsertParams.StaticAudienceRequest | AudienceUpsertParams.DynamicAudienceRequest;
+  audience: AudienceRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -422,64 +487,6 @@ export interface AudienceUpsertParams {
   force?: boolean;
 }
 
-export namespace AudienceUpsertParams {
-  /**
-   * Request body for creating/updating a static audience.
-   */
-  export interface StaticAudienceRequest {
-    /**
-     * The name of the audience.
-     */
-    name: string;
-
-    /**
-     * The type of audience. Set to `static` for static audiences.
-     */
-    type: 'static';
-
-    /**
-     * A description of the audience.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Request body for creating/updating a dynamic audience.
-   */
-  export interface DynamicAudienceRequest {
-    /**
-     * The name of the audience.
-     */
-    name: string;
-
-    /**
-     * The type of audience. Set to `dynamic` for dynamic audiences.
-     */
-    type: 'dynamic';
-
-    /**
-     * A description of the audience.
-     */
-    description?: string | null;
-
-    /**
-     * A list of segments that define the dynamic audience membership criteria. Each
-     * segment contains one or more conditions joined by AND. Multiple segments are
-     * joined by OR.
-     */
-    segments?: Array<DynamicAudienceRequest.Segment>;
-  }
-
-  export namespace DynamicAudienceRequest {
-    export interface Segment {
-      /**
-       * A list of conditions within this segment, joined by AND.
-       */
-      conditions: Array<AudiencesAPI.AudienceCondition>;
-    }
-  }
-}
-
 export interface AudienceValidateParams {
   /**
    * Query param: The environment slug.
@@ -491,7 +498,7 @@ export interface AudienceValidateParams {
    * Use `type: static` for audiences with explicitly managed members, or
    * `type: dynamic` for audiences with segment-based membership.
    */
-  audience: AudienceValidateParams.StaticAudienceRequest | AudienceValidateParams.DynamicAudienceRequest;
+  audience: AudienceRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -500,68 +507,11 @@ export interface AudienceValidateParams {
   branch?: string;
 }
 
-export namespace AudienceValidateParams {
-  /**
-   * Request body for creating/updating a static audience.
-   */
-  export interface StaticAudienceRequest {
-    /**
-     * The name of the audience.
-     */
-    name: string;
-
-    /**
-     * The type of audience. Set to `static` for static audiences.
-     */
-    type: 'static';
-
-    /**
-     * A description of the audience.
-     */
-    description?: string | null;
-  }
-
-  /**
-   * Request body for creating/updating a dynamic audience.
-   */
-  export interface DynamicAudienceRequest {
-    /**
-     * The name of the audience.
-     */
-    name: string;
-
-    /**
-     * The type of audience. Set to `dynamic` for dynamic audiences.
-     */
-    type: 'dynamic';
-
-    /**
-     * A description of the audience.
-     */
-    description?: string | null;
-
-    /**
-     * A list of segments that define the dynamic audience membership criteria. Each
-     * segment contains one or more conditions joined by AND. Multiple segments are
-     * joined by OR.
-     */
-    segments?: Array<DynamicAudienceRequest.Segment>;
-  }
-
-  export namespace DynamicAudienceRequest {
-    export interface Segment {
-      /**
-       * A list of conditions within this segment, joined by AND.
-       */
-      conditions: Array<AudiencesAPI.AudienceCondition>;
-    }
-  }
-}
-
 export declare namespace Audiences {
   export {
     type Audience as Audience,
     type AudienceCondition as AudienceCondition,
+    type AudienceRequest as AudienceRequest,
     type DynamicAudience as DynamicAudience,
     type StaticAudience as StaticAudience,
     type AudienceArchiveResponse as AudienceArchiveResponse,

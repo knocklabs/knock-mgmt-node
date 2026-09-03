@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import * as TemplatesAPI from '../templates';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -78,7 +79,7 @@ export interface StepPreviewTemplateParams {
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  recipient: string | StepPreviewTemplateParams.ObjectRecipientReference;
+  recipient: Shared.RecipientReference;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -90,7 +91,7 @@ export interface StepPreviewTemplateParams {
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
-  actor?: string | StepPreviewTemplateParams.ObjectRecipientReference | null;
+  actor?: Shared.RecipientReference | null;
 
   /**
    * Body param: The data to pass to the workflow template for rendering.
@@ -102,38 +103,6 @@ export interface StepPreviewTemplateParams {
    * whitespace.
    */
   tenant?: string | null;
-}
-
-export namespace StepPreviewTemplateParams {
-  /**
-   * An object reference.
-   */
-  export interface ObjectRecipientReference {
-    /**
-     * The ID of the object.
-     */
-    id: string;
-
-    /**
-     * The collection of the object.
-     */
-    collection: string;
-  }
-
-  /**
-   * An object reference.
-   */
-  export interface ObjectRecipientReference {
-    /**
-     * The ID of the object.
-     */
-    id: string;
-
-    /**
-     * The collection of the object.
-     */
-    collection: string;
-  }
 }
 
 export declare namespace Steps {

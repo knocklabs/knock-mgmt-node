@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as WorkflowsAPI from './workflows';
 import * as ChannelsAPI from '../channels';
 import * as MembersAPI from '../members';
+import * as Shared from '../shared';
 import * as TemplatesAPI from '../templates';
 import * as StepsAPI from './steps';
 import { StepPreviewTemplateParams, StepPreviewTemplateResponse, Steps } from './steps';
@@ -248,19 +249,9 @@ export interface Condition {
 /**
  * A group of conditions to be evaluated.
  */
-export type ConditionGroup = ConditionGroup.ConditionGroupAllMatch | ConditionGroup.ConditionGroupAnyMatch;
+export type ConditionGroup = ConditionGroupAllMatch | ConditionGroup.ConditionGroupAnyMatch;
 
 export namespace ConditionGroup {
-  /**
-   * A group of conditions that must all be met.
-   */
-  export interface ConditionGroupAllMatch {
-    /**
-     * A list of conditions.
-     */
-    all?: Array<WorkflowsAPI.Condition>;
-  }
-
   /**
    * A group of conditions that any must be met. Can contain nested alls.
    */
@@ -268,20 +259,18 @@ export namespace ConditionGroup {
     /**
      * An array of conditions or nested condition groups to evaluate.
      */
-    any?: Array<WorkflowsAPI.Condition | ConditionGroupAnyMatch.ConditionGroupAllMatch>;
+    any?: Array<WorkflowsAPI.Condition | WorkflowsAPI.ConditionGroupAllMatch>;
   }
+}
 
-  export namespace ConditionGroupAnyMatch {
-    /**
-     * A group of conditions that must all be met.
-     */
-    export interface ConditionGroupAllMatch {
-      /**
-       * A list of conditions.
-       */
-      all?: Array<WorkflowsAPI.Condition>;
-    }
-  }
+/**
+ * A group of conditions that must all be met.
+ */
+export interface ConditionGroupAllMatch {
+  /**
+   * A list of conditions.
+   */
+  all?: Array<Condition>;
 }
 
 /**
@@ -297,6 +286,28 @@ export interface Duration {
    * The value of the duration.
    */
   value: number;
+}
+
+/**
+ * A user recipient with optional identify properties. When email or name are
+ * provided, the user is created or updated as part of the workflow run. The
+ * collection is always `$users` and should not be sent.
+ */
+export interface InlineIdentifyUserRequest {
+  /**
+   * The ID of the user.
+   */
+  id: string;
+
+  /**
+   * The email address to set on the user.
+   */
+  email?: string | null;
+
+  /**
+   * The display name to set on the user.
+   */
+  name?: string | null;
 }
 
 /**
@@ -403,7 +414,7 @@ export interface Workflow {
   /**
    * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
    */
-  goal_attachment?: Workflow.GoalAttachment | null;
+  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A map of workflow settings.
@@ -434,22 +445,6 @@ export interface Workflow {
 }
 
 export namespace Workflow {
-  /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-   */
-  export interface GoalAttachment {
-    /**
-     * The key of the goal to attach.
-     */
-    goal_key: string;
-
-    /**
-     * The number of days to attribute conversions after the notification is sent. Must
-     * be between 1 and 30. Defaults to 7.
-     */
-    attribution_window_days?: number;
-  }
-
   /**
    * A map of workflow settings.
    */
@@ -1009,6 +1004,70 @@ export interface WorkflowInAppFeedStep {
 }
 
 /**
+ * An in-app guide step within a workflow. References a guide that will be shown to
+ * recipients who execute this step. Read more in the
+ * [docs](https://docs.knock.app/designing-workflows/channel-step).
+ */
+export interface WorkflowInAppGuideStep {
+  /**
+   * The type of the channel step. Always `in_app_guide` for in-app guide steps.
+   */
+  channel_type: 'in_app_guide';
+
+  /**
+   * The reference key of the workflow step. Must be unique per workflow.
+   */
+  ref: string;
+
+  /**
+   * The type of the workflow step.
+   */
+  type: 'channel';
+
+  /**
+   * The key of the channel group to which the channel step will be sending a
+   * notification. Either `channel_key` or `channel_group_key` must be provided, but
+   * not both.
+   */
+  channel_group_key?: string | null;
+
+  /**
+   * The key of a specific configured channel instance (e.g., 'knock-email',
+   * 'postmark', 'sendgrid-marketing') to send the notification through. Either
+   * `channel_key` or `channel_group_key` must be provided, but not both.
+   */
+  channel_key?: string | null;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow step. Useful for adding notes about
+   * the workflow for internal purposes.
+   */
+  description?: string | null;
+
+  /**
+   * The key of the guide to reference. When a recipient executes this step they are
+   * added to the managed audience that backs the guide's workflow-derived targeting.
+   */
+  guide_key?: string | null;
+
+  /**
+   * A name for the workflow step.
+   */
+  name?: string | null;
+
+  /**
+   * A list of send window objects. Must include one send window object per day of
+   * the week.
+   */
+  send_windows?: Array<SendWindow> | null;
+}
+
+/**
  * A push step within a workflow. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/channel-step).
  */
@@ -1085,7 +1144,7 @@ export interface WorkflowRandomCohortStep {
    * A list of cohort branches. Must have between 2 and 10 branches, and percentages
    * must sum to 100.
    */
-  cohort_branches: Array<unknown>;
+  cohort_branches: Array<WorkflowRandomCohortStepBranch>;
 
   /**
    * The reference key of the workflow step. Must be unique per workflow.
@@ -1113,6 +1172,119 @@ export interface WorkflowRandomCohortStep {
    * A name for the workflow step.
    */
   name?: string | null;
+}
+
+/**
+ * A cohort branch in an experiment step.
+ */
+export interface WorkflowRandomCohortStepBranch {
+  /**
+   * The percentage of recipients to assign to this cohort. Must be between 0 and 100
+   * with at most 1 decimal place. All branch percentages must sum to 100. Sent as a
+   * number in requests; returned as a decimal string in responses (e.g. "50",
+   * "33.3").
+   */
+  percentage: string;
+
+  /**
+   * The name of the cohort branch.
+   */
+  name?: string;
+
+  /**
+   * A list of steps that will be executed for recipients assigned to this cohort.
+   */
+  steps?: Array<WorkflowStep>;
+
+  /**
+   * If the workflow should halt at the end of the branch. Defaults to false if not
+   * provided.
+   */
+  terminates?: boolean;
+}
+
+/**
+ * A workflow request for upserting a workflow.
+ */
+export interface WorkflowRequest {
+  /**
+   * A name for the workflow. Must be at maximum 255 characters in length.
+   */
+  name: string;
+
+  /**
+   * A list of workflow step objects in the workflow.
+   */
+  steps: Array<WorkflowStep>;
+
+  /**
+   * A list of
+   * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
+   * the workflow belongs to.
+   */
+  categories?: Array<string>;
+
+  /**
+   * A group of conditions to be evaluated.
+   */
+  conditions?: ConditionGroup | null;
+
+  /**
+   * An arbitrary string attached to a workflow object. Useful for adding notes about
+   * the workflow for internal purposes. Maximum of 280 characters allowed.
+   */
+  description?: string;
+
+  /**
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   */
+  goal_attachment?: Shared.GoalAttachment | null;
+
+  /**
+   * A map of workflow settings.
+   */
+  settings?: WorkflowRequest.Settings;
+
+  /**
+   * Use tags to organize resources internally within your account. For example, by
+   * team or product area.
+   */
+  tags?: Array<string>;
+
+  /**
+   * A JSON schema for the expected structure of the workflow trigger's `data`
+   * payload (available in templates as `{{ data.field_name }}`). Used to validate
+   * trigger requests. Read more in the
+   * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
+   */
+  trigger_data_json_schema?: { [key: string]: unknown };
+
+  /**
+   * The frequency at which the workflow should be triggered. One of:
+   * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
+   * to `every_trigger`. Read more in
+   * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
+   */
+  trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
+}
+
+export namespace WorkflowRequest {
+  /**
+   * A map of workflow settings.
+   */
+  export interface Settings {
+    /**
+     * Whether the workflow is commercial. Defaults to false.
+     */
+    is_commercial?: boolean;
+
+    /**
+     * Whether to ignore recipient preferences for a given type of notification. If
+     * true, will send for every channel in the workflow even if the recipient has
+     * opted out of a certain kind. Defaults to false.
+     */
+    override_preferences?: boolean;
+  }
 }
 
 /**
@@ -1191,7 +1363,7 @@ export interface WorkflowSMSStep {
 export type WorkflowStep =
   | WorkflowWebhookStep
   | WorkflowInAppFeedStep
-  | WorkflowStep.WorkflowInAppGuideStep
+  | WorkflowInAppGuideStep
   | WorkflowChatStep
   | WorkflowSMSStep
   | WorkflowPushStep
@@ -1211,70 +1383,6 @@ export type WorkflowStep =
   | WorkflowTriggerWorkflowStep;
 
 export namespace WorkflowStep {
-  /**
-   * An in-app guide step within a workflow. References a guide that will be shown to
-   * recipients who execute this step. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowInAppGuideStep {
-    /**
-     * The type of the channel step. Always `in_app_guide` for in-app guide steps.
-     */
-    channel_type: 'in_app_guide';
-
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. Either `channel_key` or `channel_group_key` must be provided, but
-     * not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of a specific configured channel instance (e.g., 'knock-email',
-     * 'postmark', 'sendgrid-marketing') to send the notification through. Either
-     * `channel_key` or `channel_group_key` must be provided, but not both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * The key of the guide to reference. When a recipient executes this step they are
-     * added to the managed audience that backs the guide's workflow-derived targeting.
-     */
-    guide_key?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
   /**
    * A wait for event function step that pauses a workflow until a matching event is
    * received.
@@ -2182,7 +2290,7 @@ export interface WorkflowRetrieveResponse {
   /**
    * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
    */
-  goal_attachment?: WorkflowRetrieveResponse.GoalAttachment | null;
+  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A map of workflow settings.
@@ -2219,22 +2327,6 @@ export interface WorkflowRetrieveResponse {
 }
 
 export namespace WorkflowRetrieveResponse {
-  /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-   */
-  export interface GoalAttachment {
-    /**
-     * The key of the goal to attach.
-     */
-    goal_key: string;
-
-    /**
-     * The number of days to attribute conversions after the notification is sent. Must
-     * be between 1 and 30. Defaults to 7.
-     */
-    attribution_window_days?: number;
-  }
-
   /**
    * A map of workflow settings.
    */
@@ -2373,9 +2465,7 @@ export interface WorkflowRunParams {
    * Body param: A list of recipients to run the workflow for. Supports user IDs,
    * object references, or inline identify user objects (id + optional email/name).
    */
-  recipients: Array<
-    string | WorkflowRunParams.ObjectRecipientReference | WorkflowRunParams.InlineIdentifyUserRequest
-  >;
+  recipients: Array<string | WorkflowRunParams.ObjectRecipientReference | InlineIdentifyUserRequest>;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -2386,11 +2476,7 @@ export interface WorkflowRunParams {
   /**
    * Body param: The actor to reference in the the workflow run.
    */
-  actor?:
-    | string
-    | WorkflowRunParams.ObjectRecipientReference
-    | WorkflowRunParams.InlineIdentifyUserRequest
-    | null;
+  actor?: string | WorkflowRunParams.ObjectRecipientReference | InlineIdentifyUserRequest | null;
 
   /**
    * Body param: A key to cancel the workflow run.
@@ -2429,28 +2515,6 @@ export namespace WorkflowRunParams {
   }
 
   /**
-   * A user recipient with optional identify properties. When email or name are
-   * provided, the user is created or updated as part of the workflow run. The
-   * collection is always `$users` and should not be sent.
-   */
-  export interface InlineIdentifyUserRequest {
-    /**
-     * The ID of the user.
-     */
-    id: string;
-
-    /**
-     * The email address to set on the user.
-     */
-    email?: string | null;
-
-    /**
-     * The display name to set on the user.
-     */
-    name?: string | null;
-  }
-
-  /**
    * An object reference.
    */
   export interface ObjectRecipientReference {
@@ -2464,28 +2528,6 @@ export namespace WorkflowRunParams {
      */
     collection: string;
   }
-
-  /**
-   * A user recipient with optional identify properties. When email or name are
-   * provided, the user is created or updated as part of the workflow run. The
-   * collection is always `$users` and should not be sent.
-   */
-  export interface InlineIdentifyUserRequest {
-    /**
-     * The ID of the user.
-     */
-    id: string;
-
-    /**
-     * The email address to set on the user.
-     */
-    email?: string | null;
-
-    /**
-     * The display name to set on the user.
-     */
-    name?: string | null;
-  }
 }
 
 export interface WorkflowUpsertParams {
@@ -2497,7 +2539,7 @@ export interface WorkflowUpsertParams {
   /**
    * Body param: A workflow request for upserting a workflow.
    */
-  workflow: WorkflowUpsertParams.Workflow;
+  workflow: WorkflowRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -2535,108 +2577,6 @@ export interface WorkflowUpsertParams {
   force?: boolean;
 }
 
-export namespace WorkflowUpsertParams {
-  /**
-   * A workflow request for upserting a workflow.
-   */
-  export interface Workflow {
-    /**
-     * A name for the workflow. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * A list of workflow step objects in the workflow.
-     */
-    steps: Array<WorkflowsAPI.WorkflowStep>;
-
-    /**
-     * A list of
-     * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
-     * the workflow belongs to.
-     */
-    categories?: Array<string>;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow object. Useful for adding notes about
-     * the workflow for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    goal_attachment?: Workflow.GoalAttachment | null;
-
-    /**
-     * A map of workflow settings.
-     */
-    settings?: Workflow.Settings;
-
-    /**
-     * Use tags to organize resources internally within your account. For example, by
-     * team or product area.
-     */
-    tags?: Array<string>;
-
-    /**
-     * A JSON schema for the expected structure of the workflow trigger's `data`
-     * payload (available in templates as `{{ data.field_name }}`). Used to validate
-     * trigger requests. Read more in the
-     * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
-     */
-    trigger_data_json_schema?: { [key: string]: unknown };
-
-    /**
-     * The frequency at which the workflow should be triggered. One of:
-     * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
-     * to `every_trigger`. Read more in
-     * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
-     */
-    trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
-  }
-
-  export namespace Workflow {
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    export interface GoalAttachment {
-      /**
-       * The key of the goal to attach.
-       */
-      goal_key: string;
-
-      /**
-       * The number of days to attribute conversions after the notification is sent. Must
-       * be between 1 and 30. Defaults to 7.
-       */
-      attribution_window_days?: number;
-    }
-
-    /**
-     * A map of workflow settings.
-     */
-    export interface Settings {
-      /**
-       * Whether the workflow is commercial. Defaults to false.
-       */
-      is_commercial?: boolean;
-
-      /**
-       * Whether to ignore recipient preferences for a given type of notification. If
-       * true, will send for every channel in the workflow even if the recipient has
-       * opted out of a certain kind. Defaults to false.
-       */
-      override_preferences?: boolean;
-    }
-  }
-}
-
 export interface WorkflowValidateParams {
   /**
    * Query param: The environment slug.
@@ -2646,7 +2586,7 @@ export interface WorkflowValidateParams {
   /**
    * Body param: A workflow request for upserting a workflow.
    */
-  workflow: WorkflowValidateParams.Workflow;
+  workflow: WorkflowRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -2655,115 +2595,15 @@ export interface WorkflowValidateParams {
   branch?: string;
 }
 
-export namespace WorkflowValidateParams {
-  /**
-   * A workflow request for upserting a workflow.
-   */
-  export interface Workflow {
-    /**
-     * A name for the workflow. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * A list of workflow step objects in the workflow.
-     */
-    steps: Array<WorkflowsAPI.WorkflowStep>;
-
-    /**
-     * A list of
-     * [categories](https://docs.knock.app/concepts/workflows#workflow-categories) that
-     * the workflow belongs to.
-     */
-    categories?: Array<string>;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow object. Useful for adding notes about
-     * the workflow for internal purposes. Maximum of 280 characters allowed.
-     */
-    description?: string;
-
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    goal_attachment?: Workflow.GoalAttachment | null;
-
-    /**
-     * A map of workflow settings.
-     */
-    settings?: Workflow.Settings;
-
-    /**
-     * Use tags to organize resources internally within your account. For example, by
-     * team or product area.
-     */
-    tags?: Array<string>;
-
-    /**
-     * A JSON schema for the expected structure of the workflow trigger's `data`
-     * payload (available in templates as `{{ data.field_name }}`). Used to validate
-     * trigger requests. Read more in the
-     * [docs](https://docs.knock.app/developer-tools/validating-trigger-data).
-     */
-    trigger_data_json_schema?: { [key: string]: unknown };
-
-    /**
-     * The frequency at which the workflow should be triggered. One of:
-     * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
-     * to `every_trigger`. Read more in
-     * [docs](https://docs.knock.app/send-notifications/triggering-workflows/overview#controlling-workflow-trigger-frequency).
-     */
-    trigger_frequency?: 'every_trigger' | 'once_per_recipient' | 'once_per_recipient_per_tenant';
-  }
-
-  export namespace Workflow {
-    /**
-     * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-     */
-    export interface GoalAttachment {
-      /**
-       * The key of the goal to attach.
-       */
-      goal_key: string;
-
-      /**
-       * The number of days to attribute conversions after the notification is sent. Must
-       * be between 1 and 30. Defaults to 7.
-       */
-      attribution_window_days?: number;
-    }
-
-    /**
-     * A map of workflow settings.
-     */
-    export interface Settings {
-      /**
-       * Whether the workflow is commercial. Defaults to false.
-       */
-      is_commercial?: boolean;
-
-      /**
-       * Whether to ignore recipient preferences for a given type of notification. If
-       * true, will send for every channel in the workflow even if the recipient has
-       * opted out of a certain kind. Defaults to false.
-       */
-      override_preferences?: boolean;
-    }
-  }
-}
-
 Workflows.Steps = Steps;
 
 export declare namespace Workflows {
   export {
     type Condition as Condition,
     type ConditionGroup as ConditionGroup,
+    type ConditionGroupAllMatch as ConditionGroupAllMatch,
     type Duration as Duration,
+    type InlineIdentifyUserRequest as InlineIdentifyUserRequest,
     type SendWindow as SendWindow,
     type Workflow as Workflow,
     type WorkflowAIAgentStep as WorkflowAIAgentStep,
@@ -2774,8 +2614,11 @@ export declare namespace Workflows {
     type WorkflowEmailStep as WorkflowEmailStep,
     type WorkflowFetchStep as WorkflowFetchStep,
     type WorkflowInAppFeedStep as WorkflowInAppFeedStep,
+    type WorkflowInAppGuideStep as WorkflowInAppGuideStep,
     type WorkflowPushStep as WorkflowPushStep,
     type WorkflowRandomCohortStep as WorkflowRandomCohortStep,
+    type WorkflowRandomCohortStepBranch as WorkflowRandomCohortStepBranch,
+    type WorkflowRequest as WorkflowRequest,
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,

@@ -187,6 +187,24 @@ export interface Translation {
 }
 
 /**
+ * A translation object with a content attribute used to update or create a
+ * translation.
+ */
+export interface TranslationRequest {
+  /**
+   * A JSON encoded string containing the key-value pairs of translation references
+   * and translation strings.
+   */
+  content: string;
+
+  /**
+   * Indicates whether content is a JSON encoded object string or a string in the PO
+   * format.
+   */
+  format: 'json' | 'po';
+}
+
+/**
  * Wraps the Translation response under the `translation` key.
  */
 export interface TranslationRetrieveResponse {
@@ -316,7 +334,7 @@ export interface TranslationUpsertParams {
    * Body param: A translation object with a content attribute used to update or
    * create a translation.
    */
-  translation: TranslationUpsertParams.Translation;
+  translation: TranslationRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -365,26 +383,6 @@ export interface TranslationUpsertParams {
   tenant?: string;
 }
 
-export namespace TranslationUpsertParams {
-  /**
-   * A translation object with a content attribute used to update or create a
-   * translation.
-   */
-  export interface Translation {
-    /**
-     * A JSON encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-  }
-}
-
 export interface TranslationValidateParams {
   /**
    * Query param: The environment slug.
@@ -395,7 +393,7 @@ export interface TranslationValidateParams {
    * Body param: A translation object with a content attribute used to update or
    * create a translation.
    */
-  translation: TranslationValidateParams.Translation;
+  translation: TranslationRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -404,29 +402,10 @@ export interface TranslationValidateParams {
   branch?: string;
 }
 
-export namespace TranslationValidateParams {
-  /**
-   * A translation object with a content attribute used to update or create a
-   * translation.
-   */
-  export interface Translation {
-    /**
-     * A JSON encoded string containing the key-value pairs of translation references
-     * and translation strings.
-     */
-    content: string;
-
-    /**
-     * Indicates whether content is a JSON encoded object string or a string in the PO
-     * format.
-     */
-    format: 'json' | 'po';
-  }
-}
-
 export declare namespace Translations {
   export {
     type Translation as Translation,
+    type TranslationRequest as TranslationRequest,
     type TranslationRetrieveResponse as TranslationRetrieveResponse,
     type TranslationUpsertResponse as TranslationUpsertResponse,
     type TranslationValidateResponse as TranslationValidateResponse,

@@ -78,6 +78,23 @@ export class Branches extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Rebases a branch onto the development environment, bringing in new and updated
+   * resources while preserving commits made on the branch.
+   *
+   * @example
+   * ```ts
+   * const branch = await client.branches.rebase(
+   *   'feature-branch',
+   *   { environment: 'development' },
+   * );
+   * ```
+   */
+  rebase(branchSlug: string, params: BranchRebaseParams, options?: RequestOptions): APIPromise<Branch> {
+    const { environment } = params;
+    return this._client.put(path`/v1/branches/${branchSlug}/rebase`, { query: { environment }, ...options });
+  }
 }
 
 export type BranchesEntriesCursor = EntriesCursor<Branch>;
@@ -140,6 +157,13 @@ export interface BranchDeleteParams {
   environment: string;
 }
 
+export interface BranchRebaseParams {
+  /**
+   * The environment slug.
+   */
+  environment: string;
+}
+
 export declare namespace Branches {
   export {
     type Branch as Branch,
@@ -148,5 +172,6 @@ export declare namespace Branches {
     type BranchRetrieveParams as BranchRetrieveParams,
     type BranchListParams as BranchListParams,
     type BranchDeleteParams as BranchDeleteParams,
+    type BranchRebaseParams as BranchRebaseParams,
   };
 }

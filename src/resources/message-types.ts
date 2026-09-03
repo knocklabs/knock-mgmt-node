@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as MessageTypesAPI from './message-types';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -203,6 +202,42 @@ export interface MessageType {
 }
 
 /**
+ * A request to create a message type.
+ */
+export interface MessageTypeRequest {
+  /**
+   * An arbitrary string attached to a message type object. Useful for adding notes
+   * about the message type for internal purposes. Maximum of 280 characters allowed.
+   */
+  description: string | null;
+
+  /**
+   * A name for the message type. Must be at maximum 255 characters in length.
+   */
+  name: string;
+
+  /**
+   * An HTML/liquid template for the message type preview.
+   */
+  preview: string;
+
+  /**
+   * The icon name of the message type.
+   */
+  icon_name?: string;
+
+  /**
+   * The semantic version of the message type.
+   */
+  semver?: string;
+
+  /**
+   * The variants of the message type.
+   */
+  variants?: Array<MessageTypeVariant>;
+}
+
+/**
  * A variant of a message type.
  */
 export interface MessageTypeVariant {
@@ -210,14 +245,14 @@ export interface MessageTypeVariant {
    * The field types available for the variant.
    */
   fields: Array<
-    | MessageTypeVariant.MessageTypeListField
+    | Shared.MessageTypeListField
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | MessageTypeVariant.MessageTypeNumberField
+    | Shared.MessageTypeNumberField
     | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
-    | MessageTypeVariant.MessageTypeColorField
+    | Shared.MessageTypeColorField
     | Shared.MessageTypeURLField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
@@ -235,169 +270,6 @@ export interface MessageTypeVariant {
    * A name for the variant. Must be at maximum 255 characters in length.
    */
   name: string;
-}
-
-export namespace MessageTypeVariant {
-  /**
-   * A list field used in a message type.
-   */
-  export interface MessageTypeListField {
-    /**
-     * The unique key of the field.
-     */
-    key: string;
-
-    /**
-     * The label of the field.
-     */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'list';
-
-    /**
-     * Settings for the list field.
-     */
-    settings?: MessageTypeListField.Settings;
-  }
-
-  export namespace MessageTypeListField {
-    /**
-     * Settings for the list field.
-     */
-    export interface Settings {
-      /**
-       * The default value of the list field.
-       */
-      default?: Array<unknown> | null;
-
-      description?: string | null;
-
-      /**
-       * A JSON schema used to validate the structure of each item in the list. Must be a
-       * valid JSON schema.
-       */
-      item_schema?: unknown | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-    }
-  }
-
-  /**
-   * A numeric field used in a message type or partial input schema, with optional
-   * min/max bounds and a unit label for display.
-   */
-  export interface MessageTypeNumberField {
-    /**
-     * The unique key of the field.
-     */
-    key: string;
-
-    /**
-     * The label of the field.
-     */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'number';
-
-    /**
-     * Settings for the number field.
-     */
-    settings?: MessageTypeNumberField.Settings;
-  }
-
-  export namespace MessageTypeNumberField {
-    /**
-     * Settings for the number field.
-     */
-    export interface Settings {
-      /**
-       * The default numeric value.
-       */
-      default?: number | null;
-
-      description?: string | null;
-
-      /**
-       * Optional inclusive maximum allowed value.
-       */
-      max?: number | null;
-
-      /**
-       * Optional inclusive minimum allowed value.
-       */
-      min?: number | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-
-      /**
-       * Optional short label shown after the input (e.g. px, kg).
-       */
-      unit_label?: string | null;
-    }
-  }
-
-  /**
-   * A hex color field (#RGB or #RRGGBB) used in a message type or partial input
-   * schema.
-   */
-  export interface MessageTypeColorField {
-    /**
-     * The unique key of the field.
-     */
-    key: string;
-
-    /**
-     * The label of the field.
-     */
-    label: string | null;
-
-    /**
-     * The type of the field.
-     */
-    type: 'color';
-
-    /**
-     * Settings for the color field.
-     */
-    settings?: MessageTypeColorField.Settings;
-  }
-
-  export namespace MessageTypeColorField {
-    /**
-     * Settings for the color field.
-     */
-    export interface Settings {
-      /**
-       * The default hex color value.
-       */
-      default?: string | null;
-
-      description?: string | null;
-
-      placeholder?: string | null;
-
-      /**
-       * Whether the field is required.
-       */
-      required?: boolean;
-    }
-  }
 }
 
 /**
@@ -479,7 +351,7 @@ export interface MessageTypeUpsertParams {
   /**
    * Body param: A request to create a message type.
    */
-  message_type: MessageTypeUpsertParams.MessageType;
+  message_type: MessageTypeRequest;
 
   /**
    * Query param: When used with commit, creates a new version with identical content
@@ -517,44 +389,6 @@ export interface MessageTypeUpsertParams {
   force?: boolean;
 }
 
-export namespace MessageTypeUpsertParams {
-  /**
-   * A request to create a message type.
-   */
-  export interface MessageType {
-    /**
-     * An arbitrary string attached to a message type object. Useful for adding notes
-     * about the message type for internal purposes. Maximum of 280 characters allowed.
-     */
-    description: string | null;
-
-    /**
-     * A name for the message type. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * An HTML/liquid template for the message type preview.
-     */
-    preview: string;
-
-    /**
-     * The icon name of the message type.
-     */
-    icon_name?: string;
-
-    /**
-     * The semantic version of the message type.
-     */
-    semver?: string;
-
-    /**
-     * The variants of the message type.
-     */
-    variants?: Array<MessageTypesAPI.MessageTypeVariant>;
-  }
-}
-
 export interface MessageTypeValidateParams {
   /**
    * Query param: The environment slug.
@@ -564,7 +398,7 @@ export interface MessageTypeValidateParams {
   /**
    * Body param: A request to create a message type.
    */
-  message_type: MessageTypeValidateParams.MessageType;
+  message_type: MessageTypeRequest;
 
   /**
    * Query param: The slug of a branch to use. This option can only be used when
@@ -573,47 +407,10 @@ export interface MessageTypeValidateParams {
   branch?: string;
 }
 
-export namespace MessageTypeValidateParams {
-  /**
-   * A request to create a message type.
-   */
-  export interface MessageType {
-    /**
-     * An arbitrary string attached to a message type object. Useful for adding notes
-     * about the message type for internal purposes. Maximum of 280 characters allowed.
-     */
-    description: string | null;
-
-    /**
-     * A name for the message type. Must be at maximum 255 characters in length.
-     */
-    name: string;
-
-    /**
-     * An HTML/liquid template for the message type preview.
-     */
-    preview: string;
-
-    /**
-     * The icon name of the message type.
-     */
-    icon_name?: string;
-
-    /**
-     * The semantic version of the message type.
-     */
-    semver?: string;
-
-    /**
-     * The variants of the message type.
-     */
-    variants?: Array<MessageTypesAPI.MessageTypeVariant>;
-  }
-}
-
 export declare namespace MessageTypes {
   export {
     type MessageType as MessageType,
+    type MessageTypeRequest as MessageTypeRequest,
     type MessageTypeVariant as MessageTypeVariant,
     type MessageTypeUpsertResponse as MessageTypeUpsertResponse,
     type MessageTypeValidateResponse as MessageTypeValidateResponse,

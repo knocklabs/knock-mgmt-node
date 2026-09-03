@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import * as WorkflowsAPI from './workflows/workflows';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -218,7 +219,7 @@ export interface Broadcast {
   steps: Array<
     | WorkflowsAPI.WorkflowWebhookStep
     | WorkflowsAPI.WorkflowInAppFeedStep
-    | Broadcast.WorkflowInAppGuideStep
+    | WorkflowsAPI.WorkflowInAppGuideStep
     | WorkflowsAPI.WorkflowChatStep
     | WorkflowsAPI.WorkflowSMSStep
     | WorkflowsAPI.WorkflowPushStep
@@ -257,7 +258,7 @@ export interface Broadcast {
   /**
    * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
    */
-  goal_attachment?: Broadcast.GoalAttachment | null;
+  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * The timestamp of when the broadcast is scheduled to be sent.
@@ -287,86 +288,6 @@ export interface Broadcast {
 }
 
 export namespace Broadcast {
-  /**
-   * An in-app guide step within a workflow. References a guide that will be shown to
-   * recipients who execute this step. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowInAppGuideStep {
-    /**
-     * The type of the channel step. Always `in_app_guide` for in-app guide steps.
-     */
-    channel_type: 'in_app_guide';
-
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. Either `channel_key` or `channel_group_key` must be provided, but
-     * not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of a specific configured channel instance (e.g., 'knock-email',
-     * 'postmark', 'sendgrid-marketing') to send the notification through. Either
-     * `channel_key` or `channel_group_key` must be provided, but not both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * The key of the guide to reference. When a recipient executes this step they are
-     * added to the managed audience that backs the guide's workflow-derived targeting.
-     */
-    guide_key?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-   */
-  export interface GoalAttachment {
-    /**
-     * The key of the goal to attach.
-     */
-    goal_key: string;
-
-    /**
-     * The number of days to attribute conversions after the notification is sent. Must
-     * be between 1 and 30. Defaults to 7.
-     */
-    attribution_window_days?: number;
-  }
-
   /**
    * A map of broadcast settings.
    */
@@ -401,7 +322,7 @@ export interface BroadcastRequest {
   steps: Array<
     | WorkflowsAPI.WorkflowWebhookStep
     | WorkflowsAPI.WorkflowInAppFeedStep
-    | BroadcastRequest.WorkflowInAppGuideStep
+    | WorkflowsAPI.WorkflowInAppGuideStep
     | WorkflowsAPI.WorkflowChatStep
     | WorkflowsAPI.WorkflowSMSStep
     | WorkflowsAPI.WorkflowPushStep
@@ -425,7 +346,7 @@ export interface BroadcastRequest {
   /**
    * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
    */
-  goal_attachment?: BroadcastRequest.GoalAttachment | null;
+  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * The timestamp of when the broadcast is scheduled to be sent.
@@ -450,86 +371,6 @@ export interface BroadcastRequest {
 }
 
 export namespace BroadcastRequest {
-  /**
-   * An in-app guide step within a workflow. References a guide that will be shown to
-   * recipients who execute this step. Read more in the
-   * [docs](https://docs.knock.app/designing-workflows/channel-step).
-   */
-  export interface WorkflowInAppGuideStep {
-    /**
-     * The type of the channel step. Always `in_app_guide` for in-app guide steps.
-     */
-    channel_type: 'in_app_guide';
-
-    /**
-     * The reference key of the workflow step. Must be unique per workflow.
-     */
-    ref: string;
-
-    /**
-     * The type of the workflow step.
-     */
-    type: 'channel';
-
-    /**
-     * The key of the channel group to which the channel step will be sending a
-     * notification. Either `channel_key` or `channel_group_key` must be provided, but
-     * not both.
-     */
-    channel_group_key?: string | null;
-
-    /**
-     * The key of a specific configured channel instance (e.g., 'knock-email',
-     * 'postmark', 'sendgrid-marketing') to send the notification through. Either
-     * `channel_key` or `channel_group_key` must be provided, but not both.
-     */
-    channel_key?: string | null;
-
-    /**
-     * A group of conditions to be evaluated.
-     */
-    conditions?: WorkflowsAPI.ConditionGroup | null;
-
-    /**
-     * An arbitrary string attached to a workflow step. Useful for adding notes about
-     * the workflow for internal purposes.
-     */
-    description?: string | null;
-
-    /**
-     * The key of the guide to reference. When a recipient executes this step they are
-     * added to the managed audience that backs the guide's workflow-derived targeting.
-     */
-    guide_key?: string | null;
-
-    /**
-     * A name for the workflow step.
-     */
-    name?: string | null;
-
-    /**
-     * A list of send window objects. Must include one send window object per day of
-     * the week.
-     */
-    send_windows?: Array<WorkflowsAPI.SendWindow> | null;
-  }
-
-  /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
-   */
-  export interface GoalAttachment {
-    /**
-     * The key of the goal to attach.
-     */
-    goal_key: string;
-
-    /**
-     * The number of days to attribute conversions after the notification is sent. Must
-     * be between 1 and 30. Defaults to 7.
-     */
-    attribution_window_days?: number;
-  }
-
   /**
    * A map of broadcast settings.
    */
