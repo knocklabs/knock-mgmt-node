@@ -214,8 +214,8 @@ export interface MessageTypeVariant {
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | Shared.MessageTypeTextField
     | MessageTypeVariant.MessageTypeNumberField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
     | MessageTypeVariant.MessageTypeColorField
     | Shared.MessageTypeURLField
