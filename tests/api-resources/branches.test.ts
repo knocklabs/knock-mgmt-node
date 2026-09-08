@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource branches', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.branches.create('feature-branch', { environment: 'development' });
+  test.skip('create', async () => {
+    const responsePromise = client.branches.create('feature-branch');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,13 +21,20 @@ describe('resource branches', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.branches.create('feature-branch', { environment: 'development' });
+  test.skip('create: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.branches.create(
+        'feature-branch',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.branches.retrieve('feature-branch', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.branches.retrieve('feature-branch');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -38,13 +45,20 @@ describe('resource branches', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.branches.retrieve('feature-branch', { environment: 'development' });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.branches.retrieve(
+        'feature-branch',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.branches.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.branches.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -55,18 +69,24 @@ describe('resource branches', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.branches.list({
-      environment: 'development',
-      after: 'after',
-      before: 'before',
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.branches.list(
+        {
+          after: 'after',
+          before: 'before',
+          environment: 'development',
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.branches.delete('feature-branch', { environment: 'development' });
+  test.skip('delete', async () => {
+    const responsePromise = client.branches.delete('feature-branch');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -77,13 +97,20 @@ describe('resource branches', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.branches.delete('feature-branch', { environment: 'development' });
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.branches.delete(
+        'feature-branch',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('rebase: only required params', async () => {
-    const responsePromise = client.branches.rebase('feature-branch', { environment: 'development' });
+  test.skip('rebase', async () => {
+    const responsePromise = client.branches.rebase('feature-branch');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -94,7 +121,14 @@ describe('resource branches', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('rebase: required and optional params', async () => {
-    const response = await client.branches.rebase('feature-branch', { environment: 'development' });
+  test.skip('rebase: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.branches.rebase(
+        'feature-branch',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 });

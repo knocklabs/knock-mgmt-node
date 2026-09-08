@@ -16,12 +16,14 @@ export class Goals extends APIResource {
    *
    * @example
    * ```ts
-   * const goal = await client.goals.retrieve('goal_key', {
-   *   environment: 'development',
-   * });
+   * const goal = await client.goals.retrieve('goal_key');
    * ```
    */
-  retrieve(goalKey: string, query: GoalRetrieveParams, options?: RequestOptions): APIPromise<Goal> {
+  retrieve(
+    goalKey: string,
+    query: GoalRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Goal> {
     return this._client.get(path`/v1/goals/${goalKey}`, { query, ...options });
   }
 
@@ -31,14 +33,15 @@ export class Goals extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const goal of client.goals.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const goal of client.goals.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: GoalListParams, options?: RequestOptions): PagePromise<GoalsEntriesCursor, Goal> {
+  list(
+    query: GoalListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<GoalsEntriesCursor, Goal> {
     return this._client.getAPIList('/v1/goals', EntriesCursor<Goal>, { query, ...options });
   }
 
@@ -48,17 +51,15 @@ export class Goals extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.goals.archive('goal_key', {
-   *   environment: 'development',
-   * });
+   * const response = await client.goals.archive('goal_key');
    * ```
    */
   archive(
     goalKey: string,
-    params: GoalArchiveParams,
+    params: GoalArchiveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<GoalArchiveResponse> {
-    const { environment } = params;
+    const { environment } = params ?? {};
     return this._client.delete(path`/v1/goals/${goalKey}`, { query: { environment }, ...options });
   }
 
@@ -68,7 +69,6 @@ export class Goals extends APIResource {
    * @example
    * ```ts
    * const response = await client.goals.clone('goal_key', {
-   *   environment: 'development',
    *   clone: {
    *     environment: 'production',
    *     key: 'trial-conversion-copy',
@@ -90,7 +90,6 @@ export class Goals extends APIResource {
    * @example
    * ```ts
    * const response = await client.goals.upsert('goal_key', {
-   *   environment: 'development',
    *   goal: {
    *     condition: { event: { event_type: 'recipient' } },
    *     name: 'Trial Conversion',
@@ -103,9 +102,9 @@ export class Goals extends APIResource {
     params: GoalUpsertParams,
     options?: RequestOptions,
   ): APIPromise<GoalUpsertResponse> {
-    const { environment, annotate, ...body } = params;
+    const { annotate, environment, ...body } = params;
     return this._client.put(path`/v1/goals/${goalKey}`, {
-      query: { environment, annotate },
+      query: { annotate, environment },
       body,
       ...options,
     });
@@ -117,7 +116,6 @@ export class Goals extends APIResource {
    * @example
    * ```ts
    * const response = await client.goals.validate('goal_key', {
-   *   environment: 'development',
    *   goal: {
    *     condition: { event: { event_type: 'recipient' } },
    *     name: 'Trial Conversion',
@@ -130,9 +128,9 @@ export class Goals extends APIResource {
     params: GoalValidateParams,
     options?: RequestOptions,
   ): APIPromise<GoalValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/goals/${goalKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -336,57 +334,60 @@ export interface GoalValidateResponse {
 
 export interface GoalRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface GoalListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface GoalArchiveParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface GoalCloneParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: The destination key, name, and environment for the cloned goal.
    */
   clone: GoalCloneParams.Clone;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export namespace GoalCloneParams {
@@ -413,11 +414,6 @@ export namespace GoalCloneParams {
 
 export interface GoalUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A goal payload for upsert or validate.
    */
   goal: GoalRequest;
@@ -426,24 +422,32 @@ export interface GoalUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export interface GoalValidateParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A goal payload for upsert or validate.
    */
   goal: GoalRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Goals {

@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource guides', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.guides.retrieve('guide_key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.guides.retrieve('guide_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource guides', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.guides.retrieve('guide_key', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.guides.retrieve(
+        'guide_key',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.guides.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.guides.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,21 +50,27 @@ describe('resource guides', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.guides.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.guides.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('activate: only required params', async () => {
-    const responsePromise = client.guides.activate('guide_key', { environment: 'development', status: true });
+    const responsePromise = client.guides.activate('guide_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -70,10 +83,26 @@ describe('resource guides', () => {
   // Mock server tests are disabled
   test.skip('activate: required and optional params', async () => {
     const response = await client.guides.activate('guide_key', {
-      environment: 'development',
       status: true,
       branch: 'feature-branch',
+      environment: 'development',
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('activate: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.guides.activate(
+        'guide_key',
+        {
+          status: true,
+          branch: 'feature-branch',
+          environment: 'development',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -91,7 +120,6 @@ describe('resource guides', () => {
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.guides.upsert('guide_key', {
-      environment: 'development',
       guide: {
         channel_key: 'in-app-guide',
         name: 'Getting Started Guide',
@@ -117,7 +145,6 @@ describe('resource guides', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.guides.upsert('guide_key', {
-      environment: 'development',
       guide: {
         channel_key: 'in-app-guide',
         name: 'Getting Started Guide',
@@ -168,6 +195,7 @@ describe('resource guides', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      environment: 'development',
       force: true,
     });
   });
@@ -175,7 +203,6 @@ describe('resource guides', () => {
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.guides.validate('guide_key', {
-      environment: 'development',
       guide: {
         channel_key: 'in-app-guide',
         name: 'Getting Started Guide',
@@ -201,7 +228,6 @@ describe('resource guides', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.guides.validate('guide_key', {
-      environment: 'development',
       guide: {
         channel_key: 'in-app-guide',
         name: 'Getting Started Guide',
@@ -248,6 +274,7 @@ describe('resource guides', () => {
         },
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

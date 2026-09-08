@@ -17,13 +17,12 @@ export class Translations extends APIResource {
    * ```ts
    * const translation = await client.translations.retrieve(
    *   'locale_code',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     localeCode: string,
-    query: TranslationRetrieveParams,
+    query: TranslationRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<TranslationRetrieveResponse> {
     return this._client.get(path`/v1/translations/${localeCode}`, { query, ...options });
@@ -36,15 +35,13 @@ export class Translations extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const translation of client.translations.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const translation of client.translations.list()) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: TranslationListParams,
+    query: TranslationListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<TranslationsEntriesCursor, Translation> {
     return this._client.getAPIList('/v1/translations', EntriesCursor<Translation>, { query, ...options });
@@ -62,7 +59,6 @@ export class Translations extends APIResource {
    * const response = await client.translations.upsert(
    *   'locale_code',
    *   {
-   *     environment: 'development',
    *     namespace: 'namespace',
    *     translation: {
    *       content: '{"hello":"Hello, world!"}',
@@ -78,13 +74,13 @@ export class Translations extends APIResource {
     options?: RequestOptions,
   ): APIPromise<TranslationUpsertResponse> {
     const {
-      environment,
       namespace,
       allow_empty,
       annotate,
       branch,
       commit,
       commit_message,
+      environment,
       force,
       format,
       tenant,
@@ -92,13 +88,13 @@ export class Translations extends APIResource {
     } = params;
     return this._client.put(path`/v1/translations/${localeCode}`, {
       query: {
-        environment,
         namespace,
         allow_empty,
         annotate,
         branch,
         commit,
         commit_message,
+        environment,
         force,
         format,
         tenant,
@@ -119,7 +115,6 @@ export class Translations extends APIResource {
    * const response = await client.translations.validate(
    *   'locale_code',
    *   {
-   *     environment: 'development',
    *     translation: {
    *       content: '{"hello":"Hello, world!"}',
    *       format: 'json',
@@ -133,9 +128,9 @@ export class Translations extends APIResource {
     params: TranslationValidateParams,
     options?: RequestOptions,
   ): APIPromise<TranslationValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/translations/${localeCode}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -236,20 +231,21 @@ export interface TranslationValidateResponse {
 
 export interface TranslationRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -276,20 +272,21 @@ export interface TranslationRetrieveParams {
 
 export interface TranslationListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Optionally specify the returned content format. Supports 'json' and 'po'.
@@ -321,11 +318,6 @@ export interface TranslationListParams extends EntriesCursorParams {
 
 export interface TranslationUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Query param: An optional namespace that identifies the translation.
    */
   namespace: string;
@@ -348,8 +340,9 @@ export interface TranslationUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -363,6 +356,12 @@ export interface TranslationUpsertParams {
    * `true`.
    */
   commit_message?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Query param: When set to true, forces the upsert to override existing content
@@ -385,21 +384,23 @@ export interface TranslationUpsertParams {
 
 export interface TranslationValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A translation object with a content attribute used to update or
    * create a translation.
    */
   translation: TranslationRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Translations {

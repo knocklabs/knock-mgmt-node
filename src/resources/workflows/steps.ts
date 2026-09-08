@@ -19,7 +19,6 @@ export class Steps extends APIResource {
    * const response =
    *   await client.workflows.steps.previewTemplate('step_ref', {
    *     workflow_key: 'workflow_key',
-   *     environment: 'development',
    *     recipient: 'dnedry',
    *   });
    * ```
@@ -29,9 +28,9 @@ export class Steps extends APIResource {
     params: StepPreviewTemplateParams,
     options?: RequestOptions,
   ): APIPromise<StepPreviewTemplateResponse> {
-    const { workflow_key, environment, branch, ...body } = params;
+    const { workflow_key, branch, environment, ...body } = params;
     return this._client.post(path`/v1/workflows/${workflow_key}/steps/${stepRef}/preview_template`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -71,21 +70,23 @@ export interface StepPreviewTemplateParams {
   workflow_key: string;
 
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A recipient reference, used when referencing a recipient by either
    * their ID (for a user), or by a reference for an object.
    */
   recipient: Shared.RecipientReference;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either

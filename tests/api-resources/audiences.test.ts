@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource audiences', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.audiences.retrieve('audience_key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.audiences.retrieve('audience_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource audiences', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.audiences.retrieve('audience_key', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.audiences.retrieve(
+        'audience_key',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.audiences.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.audiences.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,21 +50,27 @@ describe('resource audiences', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.audiences.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.audiences.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('archive: only required params', async () => {
-    const responsePromise = client.audiences.archive('audience_key', { environment: 'development' });
+  test.skip('archive', async () => {
+    const responsePromise = client.audiences.archive('audience_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,14 +81,20 @@ describe('resource audiences', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('archive: required and optional params', async () => {
-    const response = await client.audiences.archive('audience_key', { environment: 'development' });
+  test.skip('archive: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.audiences.archive(
+        'audience_key',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.audiences.upsert('audience_key', {
-      environment: 'development',
       audience: { name: 'Premium users', type: 'dynamic' },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -90,7 +109,6 @@ describe('resource audiences', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.audiences.upsert('audience_key', {
-      environment: 'development',
       audience: {
         name: 'Premium users',
         type: 'dynamic',
@@ -112,6 +130,7 @@ describe('resource audiences', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      environment: 'development',
       force: true,
     });
   });
@@ -119,7 +138,6 @@ describe('resource audiences', () => {
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.audiences.validate('audience_key', {
-      environment: 'development',
       audience: { name: 'Premium users', type: 'dynamic' },
     });
     const rawResponse = await responsePromise.asResponse();
@@ -134,7 +152,6 @@ describe('resource audiences', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.audiences.validate('audience_key', {
-      environment: 'development',
       audience: {
         name: 'Premium users',
         type: 'dynamic',
@@ -152,6 +169,7 @@ describe('resource audiences', () => {
         ],
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

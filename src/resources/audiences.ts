@@ -18,13 +18,12 @@ export class Audiences extends APIResource {
    * ```ts
    * const audience = await client.audiences.retrieve(
    *   'audience_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     audienceKey: string,
-    query: AudienceRetrieveParams,
+    query: AudienceRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<Audience> {
     return this._client.get(path`/v1/audiences/${audienceKey}`, { query, ...options });
@@ -36,14 +35,15 @@ export class Audiences extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const audience of client.audiences.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const audience of client.audiences.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: AudienceListParams, options?: RequestOptions): PagePromise<AudiencesEntriesCursor, Audience> {
+  list(
+    query: AudienceListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<AudiencesEntriesCursor, Audience> {
     return this._client.getAPIList('/v1/audiences', EntriesCursor<Audience>, { query, ...options });
   }
 
@@ -54,16 +54,15 @@ export class Audiences extends APIResource {
    * ```ts
    * const response = await client.audiences.archive(
    *   'audience_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   archive(
     audienceKey: string,
-    params: AudienceArchiveParams,
+    params: AudienceArchiveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<AudienceArchiveResponse> {
-    const { environment } = params;
+    const { environment } = params ?? {};
     return this._client.delete(path`/v1/audiences/${audienceKey}`, { query: { environment }, ...options });
   }
 
@@ -75,10 +74,7 @@ export class Audiences extends APIResource {
    * ```ts
    * const response = await client.audiences.upsert(
    *   'audience_key',
-   *   {
-   *     environment: 'development',
-   *     audience: { name: 'Premium users', type: 'dynamic' },
-   *   },
+   *   { audience: { name: 'Premium users', type: 'dynamic' } },
    * );
    * ```
    */
@@ -87,9 +83,9 @@ export class Audiences extends APIResource {
     params: AudienceUpsertParams,
     options?: RequestOptions,
   ): APIPromise<AudienceUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/audiences/${audienceKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -102,10 +98,7 @@ export class Audiences extends APIResource {
    * ```ts
    * const response = await client.audiences.validate(
    *   'audience_key',
-   *   {
-   *     environment: 'development',
-   *     audience: { name: 'Premium users', type: 'dynamic' },
-   *   },
+   *   { audience: { name: 'Premium users', type: 'dynamic' } },
    * );
    * ```
    */
@@ -114,9 +107,9 @@ export class Audiences extends APIResource {
     params: AudienceValidateParams,
     options?: RequestOptions,
   ): APIPromise<AudienceValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/audiences/${audienceKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -385,20 +378,21 @@ export interface AudienceValidateResponse {
 
 export interface AudienceRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -409,20 +403,21 @@ export interface AudienceRetrieveParams {
 
 export interface AudienceListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -433,17 +428,12 @@ export interface AudienceListParams extends EntriesCursorParams {
 
 export interface AudienceArchiveParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface AudienceUpsertParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: An audience object with attributes to create or update an audience.
    * Use `type: static` for audiences with explicitly managed members, or
@@ -463,8 +453,9 @@ export interface AudienceUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -480,6 +471,12 @@ export interface AudienceUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -489,11 +486,6 @@ export interface AudienceUpsertParams {
 
 export interface AudienceValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: An audience object with attributes to create or update an audience.
    * Use `type: static` for audiences with explicitly managed members, or
    * `type: dynamic` for audiences with segment-based membership.
@@ -501,10 +493,17 @@ export interface AudienceValidateParams {
   audience: AudienceRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Audiences {

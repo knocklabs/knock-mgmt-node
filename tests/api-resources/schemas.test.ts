@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource schemas', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.schemas.retrieve('item_type', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.schemas.retrieve('item_type');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,17 +21,24 @@ describe('resource schemas', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.schemas.retrieve('item_type', {
-      environment: 'development',
-      branch: 'feature-branch',
-      collection: 'collection',
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.schemas.retrieve(
+        'item_type',
+        {
+          branch: 'feature-branch',
+          collection: 'collection',
+          environment: 'development',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.schemas.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.schemas.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,17 +49,23 @@ describe('resource schemas', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.schemas.list({
-      environment: 'development',
-      branch: 'feature-branch',
-      item_type: 'item_type',
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.schemas.list(
+        {
+          branch: 'feature-branch',
+          environment: 'development',
+          item_type: 'item_type',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('upsert: only required params', async () => {
-    const responsePromise = client.schemas.upsert('item_type', { environment: 'development' });
+  test.skip('upsert', async () => {
+    const responsePromise = client.schemas.upsert('item_type');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -63,18 +76,25 @@ describe('resource schemas', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('upsert: required and optional params', async () => {
-    const response = await client.schemas.upsert('item_type', {
-      environment: 'development',
-      branch: 'feature-branch',
-      collection: 'collection',
-      body: {},
-    });
+  test.skip('upsert: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.schemas.upsert(
+        'item_type',
+        {
+          branch: 'feature-branch',
+          collection: 'collection',
+          environment: 'development',
+          body: {},
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('validate: only required params', async () => {
-    const responsePromise = client.schemas.validate('item_type', { environment: 'development' });
+  test.skip('validate', async () => {
+    const responsePromise = client.schemas.validate('item_type');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -85,12 +105,19 @@ describe('resource schemas', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('validate: required and optional params', async () => {
-    const response = await client.schemas.validate('item_type', {
-      environment: 'development',
-      branch: 'feature-branch',
-      collection: 'collection',
-      body: {},
-    });
+  test.skip('validate: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.schemas.validate(
+        'item_type',
+        {
+          branch: 'feature-branch',
+          collection: 'collection',
+          environment: 'development',
+          body: {},
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 });

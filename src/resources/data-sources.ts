@@ -18,12 +18,14 @@ export class DataSources extends APIResource {
    *
    * @example
    * ```ts
-   * const source = await client.dataSources.retrieve('key', {
-   *   environment: 'development',
-   * });
+   * const source = await client.dataSources.retrieve('key');
    * ```
    */
-  retrieve(key: string, query: DataSourceRetrieveParams, options?: RequestOptions): APIPromise<Source> {
+  retrieve(
+    key: string,
+    query: DataSourceRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Source> {
     return this._client.get(path`/v1/sources/${key}`, { query, ...options });
   }
 
@@ -53,7 +55,6 @@ export class DataSources extends APIResource {
    * // Automatically fetches more pages as needed.
    * for await (const sourceLog of client.dataSources.listLogs(
    *   'key',
-   *   { environment: 'development' },
    * )) {
    *   // ...
    * }
@@ -61,7 +62,7 @@ export class DataSources extends APIResource {
    */
   listLogs(
     key: string,
-    query: DataSourceListLogsParams,
+    query: DataSourceListLogsParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<SourceLogsEntriesCursor, SourceLog> {
     return this._client.getAPIList(path`/v1/sources/${key}/logs`, EntriesCursor<SourceLog>, {
@@ -108,7 +109,6 @@ export class DataSources extends APIResource {
    * ```ts
    * const sourceRehearseResponse =
    *   await client.dataSources.rehearse('key', {
-   *     environment: 'development',
    *     payload: { body: 'bar', headers: 'bar' },
    *   });
    * ```
@@ -164,7 +164,6 @@ export class DataSources extends APIResource {
    * @example
    * ```ts
    * const response = await client.dataSources.upsert('key', {
-   *   environment: 'development',
    *   source: { name: 'Universal HTTP Source' },
    * });
    * ```
@@ -174,8 +173,8 @@ export class DataSources extends APIResource {
     params: DataSourceUpsertParams,
     options?: RequestOptions,
   ): APIPromise<DataSourceUpsertResponse> {
-    const { environment, annotate, ...body } = params;
-    return this._client.put(path`/v1/sources/${key}`, { query: { environment, annotate }, body, ...options });
+    const { annotate, environment, ...body } = params;
+    return this._client.put(path`/v1/sources/${key}`, { query: { annotate, environment }, body, ...options });
   }
 }
 
@@ -1030,29 +1029,24 @@ export interface DataSourceUpsertResponse {
 
 export interface DataSourceRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface DataSourceListEventsParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
   environment?: string;
 }
 
 export interface DataSourceListLogsParams extends EntriesCursorParams {
-  /**
-   * The environment slug.
-   */
-  environment: string;
-
   /**
    * The log ID to filter by.
    */
@@ -1067,6 +1061,11 @@ export interface DataSourceListLogsParams extends EntriesCursorParams {
    * Only return source logs at or before this timestamp.
    */
   ending_at?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * The event name to filter by.
@@ -1092,7 +1091,7 @@ export interface DataSourceListSourcesParams {
   annotate?: boolean;
 
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
   environment?: string;
 
@@ -1104,15 +1103,16 @@ export interface DataSourceListSourcesParams {
 
 export interface DataSourceRehearseParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: An arbitrary payload to send through the source's parse, preprocess,
    * and mapping pipeline.
    */
   payload: { [key: string]: unknown };
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export interface DataSourceRetrieveProviderParams {
@@ -1128,17 +1128,12 @@ export interface DataSourceRetrieveProviderParams {
 
 export interface DataSourceRetrieveStatusParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
   environment?: string;
 }
 
 export interface DataSourceUpsertParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A source request for setting a source and its environment-specific
    * configuration.
@@ -1149,6 +1144,12 @@ export interface DataSourceUpsertParams {
    * Query param: Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace DataSources {

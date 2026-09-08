@@ -16,13 +16,12 @@ export class Broadcasts extends APIResource {
    * ```ts
    * const broadcast = await client.broadcasts.retrieve(
    *   'broadcast_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     broadcastKey: string,
-    query: BroadcastRetrieveParams,
+    query: BroadcastRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<Broadcast> {
     return this._client.get(path`/v1/broadcasts/${broadcastKey}`, { query, ...options });
@@ -35,15 +34,13 @@ export class Broadcasts extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const broadcast of client.broadcasts.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const broadcast of client.broadcasts.list()) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: BroadcastListParams,
+    query: BroadcastListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<BroadcastsEntriesCursor, Broadcast> {
     return this._client.getAPIList('/v1/broadcasts', EntriesCursor<Broadcast>, { query, ...options });
@@ -57,18 +54,17 @@ export class Broadcasts extends APIResource {
    * ```ts
    * const response = await client.broadcasts.cancel(
    *   'broadcast_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   cancel(
     broadcastKey: string,
-    params: BroadcastCancelParams,
+    params: BroadcastCancelParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<BroadcastCancelResponse> {
-    const { environment, branch } = params;
+    const { branch, environment } = params ?? {};
     return this._client.put(path`/v1/broadcasts/${broadcastKey}/cancel`, {
-      query: { environment, branch },
+      query: { branch, environment },
       ...options,
     });
   }
@@ -80,18 +76,17 @@ export class Broadcasts extends APIResource {
    * ```ts
    * const response = await client.broadcasts.send(
    *   'broadcast_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   send(
     broadcastKey: string,
-    params: BroadcastSendParams,
+    params: BroadcastSendParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<BroadcastSendResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params ?? {};
     return this._client.put(path`/v1/broadcasts/${broadcastKey}/send`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -106,7 +101,6 @@ export class Broadcasts extends APIResource {
    * const response = await client.broadcasts.upsert(
    *   'broadcast_key',
    *   {
-   *     environment: 'development',
    *     broadcast: {
    *       name: 'My Broadcast',
    *       steps: [
@@ -128,9 +122,9 @@ export class Broadcasts extends APIResource {
     params: BroadcastUpsertParams,
     options?: RequestOptions,
   ): APIPromise<BroadcastUpsertResponse> {
-    const { environment, annotate, branch, ...body } = params;
+    const { annotate, branch, environment, ...body } = params;
     return this._client.put(path`/v1/broadcasts/${broadcastKey}`, {
-      query: { environment, annotate, branch },
+      query: { annotate, branch, environment },
       body,
       ...options,
     });
@@ -144,7 +138,6 @@ export class Broadcasts extends APIResource {
    * const response = await client.broadcasts.validate(
    *   'broadcast_key',
    *   {
-   *     environment: 'development',
    *     broadcast: {
    *       name: 'My Broadcast',
    *       steps: [
@@ -166,9 +159,9 @@ export class Broadcasts extends APIResource {
     params: BroadcastValidateParams,
     options?: RequestOptions,
   ): APIPromise<BroadcastValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/broadcasts/${broadcastKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -431,20 +424,21 @@ export interface BroadcastValidateResponse {
 
 export interface BroadcastRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -455,20 +449,21 @@ export interface BroadcastRetrieveParams {
 
 export interface BroadcastListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -479,28 +474,31 @@ export interface BroadcastListParams extends EntriesCursorParams {
 
 export interface BroadcastCancelParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface BroadcastSendParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: When to send the broadcast. If provided, the broadcast will be
@@ -512,11 +510,6 @@ export interface BroadcastSendParams {
 
 export interface BroadcastUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A broadcast request for upserting a broadcast.
    */
   broadcast: BroadcastRequest;
@@ -527,28 +520,37 @@ export interface BroadcastUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export interface BroadcastValidateParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A broadcast request for upserting a broadcast.
    */
   broadcast: BroadcastRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Broadcasts {

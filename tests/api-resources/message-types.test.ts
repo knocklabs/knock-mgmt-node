@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource messageTypes', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.messageTypes.retrieve('email', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.messageTypes.retrieve('email');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource messageTypes', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.messageTypes.retrieve('email', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.messageTypes.retrieve(
+        'email',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.messageTypes.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.messageTypes.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,22 +50,27 @@ describe('resource messageTypes', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.messageTypes.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.messageTypes.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.messageTypes.upsert('email', {
-      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -77,7 +89,6 @@ describe('resource messageTypes', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.messageTypes.upsert('email', {
-      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -111,6 +122,7 @@ describe('resource messageTypes', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      environment: 'development',
       force: true,
     });
   });
@@ -118,7 +130,6 @@ describe('resource messageTypes', () => {
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.messageTypes.validate('email', {
-      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -137,7 +148,6 @@ describe('resource messageTypes', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.messageTypes.validate('email', {
-      environment: 'development',
       message_type: {
         description: 'This is a message type',
         name: 'My Message Type',
@@ -167,6 +177,7 @@ describe('resource messageTypes', () => {
         ],
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

@@ -18,13 +18,12 @@ export class EmailLayouts extends APIResource {
    * ```ts
    * const emailLayout = await client.emailLayouts.retrieve(
    *   'email_layout_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     emailLayoutKey: string,
-    query: EmailLayoutRetrieveParams,
+    query: EmailLayoutRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<EmailLayout> {
     return this._client.get(path`/v1/email_layouts/${emailLayoutKey}`, { query, ...options });
@@ -36,15 +35,13 @@ export class EmailLayouts extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const emailLayout of client.emailLayouts.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const emailLayout of client.emailLayouts.list()) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: EmailLayoutListParams,
+    query: EmailLayoutListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<EmailLayoutsEntriesCursor, EmailLayout> {
     return this._client.getAPIList('/v1/email_layouts', EntriesCursor<EmailLayout>, { query, ...options });
@@ -58,7 +55,6 @@ export class EmailLayouts extends APIResource {
    * @example
    * ```ts
    * const response = await client.emailLayouts.preview({
-   *   environment: 'development',
    *   email_layout: {
    *     html_layout:
    *       '<html><body>Hello {{ recipient.name }}! {{ content }}</body></html>',
@@ -74,9 +70,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutPreviewParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutPreviewResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.post('/v1/email_layouts/preview', {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -92,7 +88,6 @@ export class EmailLayouts extends APIResource {
    * const response = await client.emailLayouts.upsert(
    *   'email_layout_key',
    *   {
-   *     environment: 'development',
    *     email_layout: {
    *       html_layout:
    *         '<html><body>Hello, world!</body></html>',
@@ -108,9 +103,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutUpsertParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -126,7 +121,6 @@ export class EmailLayouts extends APIResource {
    * const response = await client.emailLayouts.validate(
    *   'email_layout_key',
    *   {
-   *     environment: 'development',
    *     email_layout: {
    *       html_layout:
    *         '<html><body>Hello, world!</body></html>',
@@ -142,9 +136,9 @@ export class EmailLayouts extends APIResource {
     params: EmailLayoutValidateParams,
     options?: RequestOptions,
   ): APIPromise<EmailLayoutValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/email_layouts/${emailLayoutKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -415,20 +409,21 @@ export interface EmailLayoutValidateResponse {
 
 export interface EmailLayoutRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -439,20 +434,21 @@ export interface EmailLayoutRetrieveParams {
 
 export interface EmailLayoutListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -462,11 +458,6 @@ export interface EmailLayoutListParams extends EntriesCursorParams {
 }
 
 export interface EmailLayoutPreviewParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A request to update or create an email layout.
    */
@@ -479,10 +470,17 @@ export interface EmailLayoutPreviewParams {
   recipient: Shared.RecipientReference;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either
@@ -528,11 +526,6 @@ export namespace EmailLayoutPreviewParams {
 
 export interface EmailLayoutUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutRequest;
@@ -549,8 +542,9 @@ export interface EmailLayoutUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -566,6 +560,12 @@ export interface EmailLayoutUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -575,20 +575,22 @@ export interface EmailLayoutUpsertParams {
 
 export interface EmailLayoutValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A request to update or create an email layout.
    */
   email_layout: EmailLayoutRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace EmailLayouts {

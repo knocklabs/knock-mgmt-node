@@ -17,12 +17,14 @@ export class Guides extends APIResource {
    *
    * @example
    * ```ts
-   * const guide = await client.guides.retrieve('guide_key', {
-   *   environment: 'development',
-   * });
+   * const guide = await client.guides.retrieve('guide_key');
    * ```
    */
-  retrieve(guideKey: string, query: GuideRetrieveParams, options?: RequestOptions): APIPromise<Guide> {
+  retrieve(
+    guideKey: string,
+    query: GuideRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Guide> {
     return this._client.get(path`/v1/guides/${guideKey}`, { query, ...options });
   }
 
@@ -32,14 +34,15 @@ export class Guides extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const guide of client.guides.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const guide of client.guides.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: GuideListParams, options?: RequestOptions): PagePromise<GuidesEntriesCursor, Guide> {
+  list(
+    query: GuideListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<GuidesEntriesCursor, Guide> {
     return this._client.getAPIList('/v1/guides', EntriesCursor<Guide>, { query, ...options });
   }
 
@@ -53,19 +56,18 @@ export class Guides extends APIResource {
    * @example
    * ```ts
    * const response = await client.guides.activate('guide_key', {
-   *   environment: 'development',
    *   status: true,
    * });
    * ```
    */
   activate(
     guideKey: string,
-    params: GuideActivateParams,
+    params: GuideActivateParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<GuideActivateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params ?? {};
     return this._client.put(path`/v1/guides/${guideKey}/activate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -91,7 +93,6 @@ export class Guides extends APIResource {
    * @example
    * ```ts
    * const response = await client.guides.upsert('guide_key', {
-   *   environment: 'development',
    *   guide: {
    *     channel_key: 'in-app-guide',
    *     name: 'Getting Started Guide',
@@ -112,9 +113,9 @@ export class Guides extends APIResource {
     params: GuideUpsertParams,
     options?: RequestOptions,
   ): APIPromise<GuideUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/guides/${guideKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -128,7 +129,6 @@ export class Guides extends APIResource {
    * @example
    * ```ts
    * const response = await client.guides.validate('guide_key', {
-   *   environment: 'development',
    *   guide: {
    *     channel_key: 'in-app-guide',
    *     name: 'Getting Started Guide',
@@ -149,9 +149,9 @@ export class Guides extends APIResource {
     params: GuideValidateParams,
     options?: RequestOptions,
   ): APIPromise<GuideValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/guides/${guideKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -447,20 +447,21 @@ export interface GuideValidateResponse {
 
 export interface GuideRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -471,20 +472,21 @@ export interface GuideRetrieveParams {
 
 export interface GuideListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -500,33 +502,37 @@ export type GuideActivateParams =
 export declare namespace GuideActivateParams {
   export interface GuideBooleanActivationParams {
     /**
-     * Query param: The environment slug.
-     */
-    environment: string;
-
-    /**
      * Body param: Whether to activate or deactivate the guide.
      */
     status: boolean;
 
     /**
-     * Query param: The slug of a branch to use. This option can only be used when
-     * `environment` is `"development"`.
+     * Query param: The slug of a branch to use. When `environment` is omitted, the
+     * branch is resolved from Development after the account default is injected. When
+     * `environment` is supplied, it must be `"development"`.
      */
     branch?: string;
+
+    /**
+     * Query param: The environment slug. When omitted, the account's default
+     * environment is used.
+     */
+    environment?: string;
   }
 
   export interface GuideScheduledActivationParams {
     /**
-     * Query param: The environment slug.
-     */
-    environment: string;
-
-    /**
-     * Query param: The slug of a branch to use. This option can only be used when
-     * `environment` is `"development"`.
+     * Query param: The slug of a branch to use. When `environment` is omitted, the
+     * branch is resolved from Development after the account default is injected. When
+     * `environment` is supplied, it must be `"development"`.
      */
     branch?: string;
+
+    /**
+     * Query param: The environment slug. When omitted, the account's default
+     * environment is used.
+     */
+    environment?: string;
 
     /**
      * Body param: When to activate the guide. If provided, the guide will be scheduled
@@ -544,11 +550,6 @@ export declare namespace GuideActivateParams {
 
 export interface GuideUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A request to create or update a guide.
    */
   guide: GuideRequest;
@@ -565,8 +566,9 @@ export interface GuideUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -582,6 +584,12 @@ export interface GuideUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -591,20 +599,22 @@ export interface GuideUpsertParams {
 
 export interface GuideValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A request to create or update a guide.
    */
   guide: GuideRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Guides {

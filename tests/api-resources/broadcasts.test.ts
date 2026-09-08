@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource broadcasts', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.broadcasts.retrieve('broadcast_key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.broadcasts.retrieve('broadcast_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.broadcasts.retrieve('broadcast_key', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.retrieve(
+        'broadcast_key',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.broadcasts.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.broadcasts.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,21 +50,27 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.broadcasts.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('cancel: only required params', async () => {
-    const responsePromise = client.broadcasts.cancel('broadcast_key', { environment: 'development' });
+  test.skip('cancel', async () => {
+    const responsePromise = client.broadcasts.cancel('broadcast_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -68,16 +81,20 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('cancel: required and optional params', async () => {
-    const response = await client.broadcasts.cancel('broadcast_key', {
-      environment: 'development',
-      branch: 'feature-branch',
-    });
+  test.skip('cancel: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.cancel(
+        'broadcast_key',
+        { branch: 'feature-branch', environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('send: only required params', async () => {
-    const responsePromise = client.broadcasts.send('broadcast_key', { environment: 'development' });
+  test.skip('send', async () => {
+    const responsePromise = client.broadcasts.send('broadcast_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -88,18 +105,24 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('send: required and optional params', async () => {
-    const response = await client.broadcasts.send('broadcast_key', {
-      environment: 'development',
-      branch: 'feature-branch',
-      send_at: '2024-03-20T10:00:00Z',
-    });
+  test.skip('send: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.send(
+        'broadcast_key',
+        {
+          branch: 'feature-branch',
+          environment: 'development',
+          send_at: '2024-03-20T10:00:00Z',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.broadcasts.upsert('broadcast_key', {
-      environment: 'development',
       broadcast: {
         name: 'My Broadcast',
         steps: [
@@ -123,7 +146,6 @@ describe('resource broadcasts', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.broadcasts.upsert('broadcast_key', {
-      environment: 'development',
       broadcast: {
         name: 'My Broadcast',
         steps: [
@@ -170,13 +192,13 @@ describe('resource broadcasts', () => {
       },
       annotate: true,
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.broadcasts.validate('broadcast_key', {
-      environment: 'development',
       broadcast: {
         name: 'My Broadcast',
         steps: [
@@ -200,7 +222,6 @@ describe('resource broadcasts', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.broadcasts.validate('broadcast_key', {
-      environment: 'development',
       broadcast: {
         name: 'My Broadcast',
         steps: [
@@ -246,6 +267,7 @@ describe('resource broadcasts', () => {
         target_audience_key: 'all-users',
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

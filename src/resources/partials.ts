@@ -18,13 +18,12 @@ export class Partials extends APIResource {
    * ```ts
    * const partialResource = await client.partials.retrieve(
    *   'partial_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     partialKey: string,
-    query: PartialRetrieveParams,
+    query: PartialRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PartialResource> {
     return this._client.get(path`/v1/partials/${partialKey}`, { query, ...options });
@@ -36,15 +35,13 @@ export class Partials extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const partialResource of client.partials.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const partialResource of client.partials.list()) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: PartialListParams,
+    query: PartialListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<PartialResourcesEntriesCursor, PartialResource> {
     return this._client.getAPIList('/v1/partials', EntriesCursor<PartialResource>, { query, ...options });
@@ -60,7 +57,6 @@ export class Partials extends APIResource {
    * @example
    * ```ts
    * const response = await client.partials.preview({
-   *   environment: 'development',
    *   partial: {
    *     content: '<p>Hello, {{ name }}!</p>',
    *     name: 'My Partial',
@@ -70,8 +66,8 @@ export class Partials extends APIResource {
    * ```
    */
   preview(params: PartialPreviewParams, options?: RequestOptions): APIPromise<PartialPreviewResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.post('/v1/partials/preview', { query: { environment, branch }, body, ...options });
+    const { branch, environment, ...body } = params;
+    return this._client.post('/v1/partials/preview', { query: { branch, environment }, body, ...options });
   }
 
   /**
@@ -84,7 +80,6 @@ export class Partials extends APIResource {
    * const response = await client.partials.upsert(
    *   'partial_key',
    *   {
-   *     environment: 'development',
    *     partial: {
    *       content: '<p>Hello, world!</p>',
    *       name: 'My Partial',
@@ -99,9 +94,9 @@ export class Partials extends APIResource {
     params: PartialUpsertParams,
     options?: RequestOptions,
   ): APIPromise<PartialUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -117,7 +112,6 @@ export class Partials extends APIResource {
    * const response = await client.partials.validate(
    *   'partial_key',
    *   {
-   *     environment: 'development',
    *     partial: {
    *       content: '<p>Hello, world!</p>',
    *       name: 'My Partial',
@@ -132,9 +126,9 @@ export class Partials extends APIResource {
     params: PartialValidateParams,
     options?: RequestOptions,
   ): APIPromise<PartialValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/partials/${partialKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -342,20 +336,21 @@ export interface PartialValidateResponse {
 
 export interface PartialRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -366,20 +361,21 @@ export interface PartialRetrieveParams {
 
 export interface PartialListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -390,20 +386,22 @@ export interface PartialListParams extends EntriesCursorParams {
 
 export interface PartialPreviewParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A partial object with attributes to update or create a partial.
    */
   partial: PartialRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: The data to pass to the partial when rendering. Top-level keys are
@@ -433,11 +431,6 @@ export namespace PartialPreviewParams {
 
 export interface PartialUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A partial object with attributes to update or create a partial.
    */
   partial: PartialRequest;
@@ -454,8 +447,9 @@ export interface PartialUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -471,6 +465,12 @@ export interface PartialUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -480,20 +480,22 @@ export interface PartialUpsertParams {
 
 export interface PartialValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A partial object with attributes to update or create a partial.
    */
   partial: PartialRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace Partials {

@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource dataSources', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.dataSources.retrieve('key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.dataSources.retrieve('key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,15 @@ describe('resource dataSources', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.dataSources.retrieve('key', { environment: 'development', annotate: true });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.dataSources.retrieve(
+        'key',
+        { annotate: true, environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -50,8 +57,8 @@ describe('resource dataSources', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('listLogs: only required params', async () => {
-    const responsePromise = client.dataSources.listLogs('key', { environment: 'development' });
+  test.skip('listLogs', async () => {
+    const responsePromise = client.dataSources.listLogs('key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,19 +69,26 @@ describe('resource dataSources', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('listLogs: required and optional params', async () => {
-    const response = await client.dataSources.listLogs('key', {
-      environment: 'development',
-      id: 'id',
-      after: 'after',
-      before: 'before',
-      date: 'date',
-      ending_at: '2019-12-27T18:11:19.117Z',
-      event: 'event',
-      include: ['actions'],
-      limit: 0,
-      starting_at: '2019-12-27T18:11:19.117Z',
-    });
+  test.skip('listLogs: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.dataSources.listLogs(
+        'key',
+        {
+          id: 'id',
+          after: 'after',
+          before: 'before',
+          date: 'date',
+          ending_at: '2019-12-27T18:11:19.117Z',
+          environment: 'development',
+          event: 'event',
+          include: ['actions'],
+          limit: 0,
+          starting_at: '2019-12-27T18:11:19.117Z',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -118,10 +132,7 @@ describe('resource dataSources', () => {
 
   // Mock server tests are disabled
   test.skip('rehearse: only required params', async () => {
-    const responsePromise = client.dataSources.rehearse('key', {
-      environment: 'development',
-      payload: { body: 'bar', headers: 'bar' },
-    });
+    const responsePromise = client.dataSources.rehearse('key', { payload: { body: 'bar', headers: 'bar' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -134,8 +145,8 @@ describe('resource dataSources', () => {
   // Mock server tests are disabled
   test.skip('rehearse: required and optional params', async () => {
     const response = await client.dataSources.rehearse('key', {
-      environment: 'development',
       payload: { body: 'bar', headers: 'bar' },
+      environment: 'development',
     });
   });
 
@@ -189,10 +200,7 @@ describe('resource dataSources', () => {
 
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
-    const responsePromise = client.dataSources.upsert('key', {
-      environment: 'development',
-      source: { name: 'Universal HTTP Source' },
-    });
+    const responsePromise = client.dataSources.upsert('key', { source: { name: 'Universal HTTP Source' } });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -205,7 +213,6 @@ describe('resource dataSources', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.dataSources.upsert('key', {
-      environment: 'development',
       source: {
         name: 'Universal HTTP Source',
         custom_image_url: null,
@@ -233,6 +240,7 @@ describe('resource dataSources', () => {
         preconfigured_provider: 'preconfigured_provider',
       },
       annotate: true,
+      environment: 'development',
     });
   });
 });

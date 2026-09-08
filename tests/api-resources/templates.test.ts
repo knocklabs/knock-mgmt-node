@@ -11,7 +11,6 @@ describe('resource templates', () => {
   // Mock server tests are disabled
   test.skip('preview: only required params', async () => {
     const responsePromise = client.templates.preview({
-      environment: 'development',
       channel_type: 'email',
       recipient: 'user_123',
       template: {
@@ -31,7 +30,6 @@ describe('resource templates', () => {
   // Mock server tests are disabled
   test.skip('preview: required and optional params', async () => {
     const response = await client.templates.preview({
-      environment: 'development',
       channel_type: 'email',
       recipient: 'user_123',
       template: {
@@ -145,6 +143,7 @@ describe('resource templates', () => {
         ],
       },
       branch: 'feature-branch',
+      environment: 'development',
       actor: { id: 'project_1', collection: 'projects' },
       data: { order_id: 'bar' },
       layout: {

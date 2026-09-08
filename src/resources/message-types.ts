@@ -12,39 +12,38 @@ import { path } from '../internal/utils/path';
  */
 export class MessageTypes extends APIResource {
   /**
-   * Retrieve a message type by its key, in a given environment.
+   * Retrieve a message type by its key. When the environment is omitted, the account
+   * default is used. Root environments share the Development catalog.
    *
    * @example
    * ```ts
    * const messageType = await client.messageTypes.retrieve(
    *   'email',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     messageTypeKey: string,
-    query: MessageTypeRetrieveParams,
+    query: MessageTypeRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<MessageType> {
     return this._client.get(path`/v1/message_types/${messageTypeKey}`, { query, ...options });
   }
 
   /**
-   * Returns a paginated list of message types available in a given environment.
+   * Returns a paginated list of message types. When the environment is omitted, the
+   * account default is used. Root environments share the Development catalog.
    *
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const messageType of client.messageTypes.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const messageType of client.messageTypes.list()) {
    *   // ...
    * }
    * ```
    */
   list(
-    query: MessageTypeListParams,
+    query: MessageTypeListParams | null | undefined = {},
     options?: RequestOptions,
   ): PagePromise<MessageTypesEntriesCursor, MessageType> {
     return this._client.getAPIList('/v1/message_types', EntriesCursor<MessageType>, { query, ...options });
@@ -53,12 +52,13 @@ export class MessageTypes extends APIResource {
   /**
    * Updates a message type, or creates a new one if it does not yet exist.
    *
-   * Note: this endpoint only operates in the `development` environment.
+   * When the environment is omitted, the account default is used. Message types are
+   * an account-shared catalog stored in Development. Requests against other root
+   * environments read and write that same catalog.
    *
    * @example
    * ```ts
    * const response = await client.messageTypes.upsert('email', {
-   *   environment: 'development',
    *   message_type: {
    *     description: 'This is a message type',
    *     name: 'My Message Type',
@@ -72,9 +72,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeUpsertParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -83,15 +83,14 @@ export class MessageTypes extends APIResource {
   /**
    * Validates a message type payload without persisting it.
    *
-   * Note: this endpoint only operates on message types in the `development`
-   * environment.
+   * When the environment is omitted, the account default is used. Message types are
+   * an account-shared catalog stored in Development.
    *
    * @example
    * ```ts
    * const response = await client.messageTypes.validate(
    *   'email',
    *   {
-   *     environment: 'development',
    *     message_type: {
    *       description: 'This is a message type',
    *       name: 'My Message Type',
@@ -106,9 +105,9 @@ export class MessageTypes extends APIResource {
     params: MessageTypeValidateParams,
     options?: RequestOptions,
   ): APIPromise<MessageTypeValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/message_types/${messageTypeKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -296,20 +295,21 @@ export interface MessageTypeValidateResponse {
 
 export interface MessageTypeRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -320,20 +320,21 @@ export interface MessageTypeRetrieveParams {
 
 export interface MessageTypeListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -343,11 +344,6 @@ export interface MessageTypeListParams extends EntriesCursorParams {
 }
 
 export interface MessageTypeUpsertParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A request to create a message type.
    */
@@ -365,8 +361,9 @@ export interface MessageTypeUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -382,6 +379,12 @@ export interface MessageTypeUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -391,20 +394,22 @@ export interface MessageTypeUpsertParams {
 
 export interface MessageTypeValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A request to create a message type.
    */
   message_type: MessageTypeRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export declare namespace MessageTypes {

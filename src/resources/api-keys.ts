@@ -6,19 +6,19 @@ import { RequestOptions } from '../internal/request-options';
 
 export class APIKeys extends APIResource {
   /**
-   * Given an authenticated service token and an environment, will exchange the
-   * service token for a secret API key that can be used to make requests to the
-   * public API.
+   * Given an authenticated service token, exchanges it for a secret API key that can
+   * be used to make requests to the public API.
    *
    * @example
    * ```ts
-   * const response = await client.apiKeys.exchange({
-   *   environment: 'development',
-   * });
+   * const response = await client.apiKeys.exchange();
    * ```
    */
-  exchange(params: APIKeyExchangeParams, options?: RequestOptions): APIPromise<APIKeyExchangeResponse> {
-    const { environment } = params;
+  exchange(
+    params: APIKeyExchangeParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<APIKeyExchangeResponse> {
+    const { environment } = params ?? {};
     return this._client.post('/v1/api_keys/exchange', { query: { environment }, ...options });
   }
 }
@@ -35,9 +35,9 @@ export interface APIKeyExchangeResponse {
 
 export interface APIKeyExchangeParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export declare namespace APIKeys {

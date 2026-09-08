@@ -27,14 +27,15 @@ export class Variables extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const variable of client.variables.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const variable of client.variables.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: VariableListParams, options?: RequestOptions): PagePromise<VariablesEntriesCursor, Variable> {
+  list(
+    query: VariableListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<VariablesEntriesCursor, Variable> {
     return this._client.getAPIList('/v1/variables', EntriesCursor<Variable>, { query, ...options });
   }
 }
@@ -84,15 +85,17 @@ export interface Variable {
 
 export interface VariableListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used
+   * for authorization while the response remains project-scoped.
+   */
+  environment?: string;
 
   /**
    * Filter variables by type. Supports 'public' or 'secret'.

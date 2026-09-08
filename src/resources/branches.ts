@@ -18,12 +18,15 @@ export class Branches extends APIResource {
    * ```ts
    * const branch = await client.branches.create(
    *   'feature-branch',
-   *   { environment: 'development' },
    * );
    * ```
    */
-  create(branchSlug: string, params: BranchCreateParams, options?: RequestOptions): APIPromise<Branch> {
-    const { environment } = params;
+  create(
+    branchSlug: string,
+    params: BranchCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Branch> {
+    const { environment } = params ?? {};
     return this._client.post(path`/v1/branches/${branchSlug}`, { query: { environment }, ...options });
   }
 
@@ -34,11 +37,14 @@ export class Branches extends APIResource {
    * ```ts
    * const branch = await client.branches.retrieve(
    *   'feature-branch',
-   *   { environment: 'development' },
    * );
    * ```
    */
-  retrieve(branchSlug: string, query: BranchRetrieveParams, options?: RequestOptions): APIPromise<Branch> {
+  retrieve(
+    branchSlug: string,
+    query: BranchRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Branch> {
     return this._client.get(path`/v1/branches/${branchSlug}`, { query, ...options });
   }
 
@@ -49,14 +55,15 @@ export class Branches extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const branch of client.branches.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const branch of client.branches.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: BranchListParams, options?: RequestOptions): PagePromise<BranchesEntriesCursor, Branch> {
+  list(
+    query: BranchListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<BranchesEntriesCursor, Branch> {
     return this._client.getAPIList('/v1/branches', EntriesCursor<Branch>, { query, ...options });
   }
 
@@ -65,13 +72,15 @@ export class Branches extends APIResource {
    *
    * @example
    * ```ts
-   * await client.branches.delete('feature-branch', {
-   *   environment: 'development',
-   * });
+   * await client.branches.delete('feature-branch');
    * ```
    */
-  delete(branchSlug: string, params: BranchDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { environment } = params;
+  delete(
+    branchSlug: string,
+    params: BranchDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { environment } = params ?? {};
     return this._client.delete(path`/v1/branches/${branchSlug}`, {
       query: { environment },
       ...options,
@@ -87,12 +96,15 @@ export class Branches extends APIResource {
    * ```ts
    * const branch = await client.branches.rebase(
    *   'feature-branch',
-   *   { environment: 'development' },
    * );
    * ```
    */
-  rebase(branchSlug: string, params: BranchRebaseParams, options?: RequestOptions): APIPromise<Branch> {
-    const { environment } = params;
+  rebase(
+    branchSlug: string,
+    params: BranchRebaseParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Branch> {
+    const { environment } = params ?? {};
     return this._client.put(path`/v1/branches/${branchSlug}/rebase`, { query: { environment }, ...options });
   }
 }
@@ -131,37 +143,37 @@ export interface Branch {
 
 export interface BranchCreateParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface BranchRetrieveParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface BranchListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface BranchDeleteParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface BranchRebaseParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export declare namespace Branches {

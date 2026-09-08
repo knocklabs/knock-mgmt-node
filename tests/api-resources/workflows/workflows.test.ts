@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource workflows', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.workflows.retrieve('workflow_key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.workflows.retrieve('workflow_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource workflows', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.workflows.retrieve('workflow_key', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workflows.retrieve(
+        'workflow_key',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.workflows.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.workflows.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,24 +50,27 @@ describe('resource workflows', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.workflows.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workflows.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('activate: only required params', async () => {
-    const responsePromise = client.workflows.activate('workflow_key', {
-      environment: 'development',
-      status: true,
-    });
+    const responsePromise = client.workflows.activate('workflow_key', { status: true });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -73,18 +83,15 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('activate: required and optional params', async () => {
     const response = await client.workflows.activate('workflow_key', {
-      environment: 'development',
       status: true,
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 
   // Mock server tests are disabled
   test.skip('run: only required params', async () => {
-    const responsePromise = client.workflows.run('workflow_key', {
-      environment: 'development',
-      recipients: [{ id: 'user_1' }],
-    });
+    const responsePromise = client.workflows.run('workflow_key', { recipients: [{ id: 'user_1' }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -97,7 +104,6 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('run: required and optional params', async () => {
     const response = await client.workflows.run('workflow_key', {
-      environment: 'development',
       recipients: [
         {
           id: 'user_1',
@@ -106,6 +112,7 @@ describe('resource workflows', () => {
         },
       ],
       branch: 'feature-branch',
+      environment: 'development',
       actor: 'user_1',
       cancellation_key: 'cancellation_key',
       data: { park_id: 'bar' },
@@ -116,7 +123,6 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.workflows.upsert('workflow_key', {
-      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -140,7 +146,6 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.workflows.upsert('workflow_key', {
-      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -199,6 +204,7 @@ describe('resource workflows', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      environment: 'development',
       force: true,
     });
   });
@@ -206,7 +212,6 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.workflows.validate('workflow_key', {
-      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -230,7 +235,6 @@ describe('resource workflows', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.workflows.validate('workflow_key', {
-      environment: 'development',
       workflow: {
         name: 'My Workflow',
         steps: [
@@ -285,6 +289,7 @@ describe('resource workflows', () => {
         trigger_frequency: 'every_trigger',
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

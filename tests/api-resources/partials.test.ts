@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource partials', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.partials.retrieve('partial_key', { environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.partials.retrieve('partial_key');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,18 +21,25 @@ describe('resource partials', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.partials.retrieve('partial_key', {
-      environment: 'development',
-      annotate: true,
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.partials.retrieve(
+        'partial_key',
+        {
+          annotate: true,
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.partials.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.partials.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,22 +50,27 @@ describe('resource partials', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.partials.list({
-      environment: 'development',
-      after: 'after',
-      annotate: true,
-      before: 'before',
-      branch: 'feature-branch',
-      hide_uncommitted_changes: true,
-      limit: 0,
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.partials.list(
+        {
+          after: 'after',
+          annotate: true,
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          hide_uncommitted_changes: true,
+          limit: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('preview: only required params', async () => {
     const responsePromise = client.partials.preview({
-      environment: 'development',
       partial: {
         content: '<p>Hello, {{ name }}!</p>',
         name: 'My Partial',
@@ -77,7 +89,6 @@ describe('resource partials', () => {
   // Mock server tests are disabled
   test.skip('preview: required and optional params', async () => {
     const response = await client.partials.preview({
-      environment: 'development',
       partial: {
         content: '<p>Hello, {{ name }}!</p>',
         name: 'My Partial',
@@ -102,6 +113,7 @@ describe('resource partials', () => {
         visual_block_enabled: true,
       },
       branch: 'feature-branch',
+      environment: 'development',
       data: { name: 'bar' },
       layout: { key: 'key' },
     });
@@ -110,7 +122,6 @@ describe('resource partials', () => {
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.partials.upsert('partial_key', {
-      environment: 'development',
       partial: {
         content: '<p>Hello, world!</p>',
         name: 'My Partial',
@@ -129,7 +140,6 @@ describe('resource partials', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.partials.upsert('partial_key', {
-      environment: 'development',
       partial: {
         content: '<p>Hello, world!</p>',
         name: 'My Partial',
@@ -158,6 +168,7 @@ describe('resource partials', () => {
       branch: 'feature-branch',
       commit: true,
       commit_message: 'commit_message',
+      environment: 'development',
       force: true,
     });
   });
@@ -165,7 +176,6 @@ describe('resource partials', () => {
   // Mock server tests are disabled
   test.skip('validate: only required params', async () => {
     const responsePromise = client.partials.validate('partial_key', {
-      environment: 'development',
       partial: {
         content: '<p>Hello, world!</p>',
         name: 'My Partial',
@@ -184,7 +194,6 @@ describe('resource partials', () => {
   // Mock server tests are disabled
   test.skip('validate: required and optional params', async () => {
     const response = await client.partials.validate('partial_key', {
-      environment: 'development',
       partial: {
         content: '<p>Hello, world!</p>',
         name: 'My Partial',
@@ -209,6 +218,7 @@ describe('resource partials', () => {
         visual_block_enabled: true,
       },
       branch: 'feature-branch',
+      environment: 'development',
     });
   });
 });

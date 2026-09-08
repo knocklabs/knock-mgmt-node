@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource preferenceCenter', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.preferenceCenter.retrieve({ environment: 'development' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.preferenceCenter.retrieve();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,13 +21,16 @@ describe('resource preferenceCenter', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.preferenceCenter.retrieve({ environment: 'development' });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.preferenceCenter.retrieve({ environment: 'development' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('reset: only required params', async () => {
-    const responsePromise = client.preferenceCenter.reset({ environment: 'development' });
+  test.skip('reset', async () => {
+    const responsePromise = client.preferenceCenter.reset();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -38,14 +41,16 @@ describe('resource preferenceCenter', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('reset: required and optional params', async () => {
-    const response = await client.preferenceCenter.reset({ environment: 'development' });
+  test.skip('reset: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.preferenceCenter.reset({ environment: 'development' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.preferenceCenter.upsert({
-      environment: 'development',
       config: {
         body: 'Select which communications you’d like to receive from us.',
         rows: [
@@ -71,7 +76,6 @@ describe('resource preferenceCenter', () => {
   // Mock server tests are disabled
   test.skip('upsert: required and optional params', async () => {
     const response = await client.preferenceCenter.upsert({
-      environment: 'development',
       config: {
         body: 'Select which communications you’d like to receive from us.',
         rows: [
@@ -84,6 +88,7 @@ describe('resource preferenceCenter', () => {
         show_account_name: true,
         title: 'Manage preferences',
       },
+      environment: 'development',
       enabled: true,
     });
   });

@@ -31,14 +31,15 @@ export class Commits extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const commit of client.commits.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const commit of client.commits.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: CommitListParams, options?: RequestOptions): PagePromise<CommitsEntriesCursor, Commit> {
+  list(
+    query: CommitListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<CommitsEntriesCursor, Commit> {
     return this._client.getAPIList('/v1/commits', EntriesCursor<Commit>, { query, ...options });
   }
 
@@ -47,15 +48,16 @@ export class Commits extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.commits.commitAll({
-   *   environment: 'development',
-   * });
+   * const response = await client.commits.commitAll();
    * ```
    */
-  commitAll(params: CommitCommitAllParams, options?: RequestOptions): APIPromise<CommitCommitAllResponse> {
-    const { environment, allow_empty, branch, commit_message, resource_id, resource_type } = params;
+  commitAll(
+    params: CommitCommitAllParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CommitCommitAllResponse> {
+    const { allow_empty, branch, commit_message, environment, resource_id, resource_type } = params ?? {};
     return this._client.put('/v1/commits', {
-      query: { environment, allow_empty, branch, commit_message, resource_id, resource_type },
+      query: { allow_empty, branch, commit_message, environment, resource_id, resource_type },
       ...options,
     });
   }
@@ -193,15 +195,16 @@ export interface CommitPromoteOneResponse {
 
 export interface CommitListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to show commits in the given environment that have not been promoted to
@@ -234,19 +237,15 @@ export interface CommitListParams extends EntriesCursorParams {
 
 export interface CommitCommitAllParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * When used with a single resource_type and resource_id, creates a new version
    * with identical content and commits it if there are no unpublished changes.
    */
   allow_empty?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -254,6 +253,11 @@ export interface CommitCommitAllParams {
    * An optional message to include in a commit.
    */
   commit_message?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Filter changes to commit by resource identifier. Must be used together with

@@ -11,13 +11,11 @@ export class PreferenceCenter extends APIResource {
    * @example
    * ```ts
    * const preferenceCenter =
-   *   await client.preferenceCenter.retrieve({
-   *     environment: 'development',
-   *   });
+   *   await client.preferenceCenter.retrieve();
    * ```
    */
   retrieve(
-    query: PreferenceCenterRetrieveParams,
+    query: PreferenceCenterRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PreferenceCenterRetrieveResponse> {
     return this._client.get('/v1/preference_center', { query, ...options });
@@ -29,16 +27,14 @@ export class PreferenceCenter extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.preferenceCenter.reset({
-   *   environment: 'development',
-   * });
+   * const response = await client.preferenceCenter.reset();
    * ```
    */
   reset(
-    params: PreferenceCenterResetParams,
+    params: PreferenceCenterResetParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<PreferenceCenterResetResponse> {
-    const { environment } = params;
+    const { environment } = params ?? {};
     return this._client.put('/v1/preference_center/reset', { query: { environment }, ...options });
   }
 
@@ -49,7 +45,6 @@ export class PreferenceCenter extends APIResource {
    * @example
    * ```ts
    * const response = await client.preferenceCenter.upsert({
-   *   environment: 'development',
    *   config: {
    *     body: 'Select which communications you’d like to receive from us.',
    *     rows: [
@@ -122,28 +117,29 @@ export interface PreferenceCenterUpsertResponse {
 
 export interface PreferenceCenterRetrieveParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface PreferenceCenterResetParams {
   /**
-   * The environment slug.
+   * The environment slug. When omitted, the account's default environment is used.
    */
-  environment: string;
+  environment?: string;
 }
 
 export interface PreferenceCenterUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: The preference center configuration document.
    */
   config: unknown;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: Whether the preference center is enabled for recipients.

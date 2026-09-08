@@ -26,13 +26,12 @@ export class Workflows extends APIResource {
    * ```ts
    * const workflow = await client.workflows.retrieve(
    *   'workflow_key',
-   *   { environment: 'development' },
    * );
    * ```
    */
   retrieve(
     workflowKey: string,
-    query: WorkflowRetrieveParams,
+    query: WorkflowRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<WorkflowRetrieveResponse> {
     return this._client.get(path`/v1/workflows/${workflowKey}`, { query, ...options });
@@ -45,14 +44,15 @@ export class Workflows extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const workflow of client.workflows.list({
-   *   environment: 'development',
-   * })) {
+   * for await (const workflow of client.workflows.list()) {
    *   // ...
    * }
    * ```
    */
-  list(query: WorkflowListParams, options?: RequestOptions): PagePromise<WorkflowsEntriesCursor, Workflow> {
+  list(
+    query: WorkflowListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<WorkflowsEntriesCursor, Workflow> {
     return this._client.getAPIList('/v1/workflows', EntriesCursor<Workflow>, { query, ...options });
   }
 
@@ -67,7 +67,7 @@ export class Workflows extends APIResource {
    * ```ts
    * const response = await client.workflows.activate(
    *   'workflow_key',
-   *   { environment: 'development', status: true },
+   *   { status: true },
    * );
    * ```
    */
@@ -76,9 +76,9 @@ export class Workflows extends APIResource {
     params: WorkflowActivateParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowActivateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/activate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -92,10 +92,7 @@ export class Workflows extends APIResource {
    * ```ts
    * const response = await client.workflows.run(
    *   'workflow_key',
-   *   {
-   *     environment: 'development',
-   *     recipients: [{ id: 'user_1' }],
-   *   },
+   *   { recipients: [{ id: 'user_1' }] },
    * );
    * ```
    */
@@ -104,9 +101,9 @@ export class Workflows extends APIResource {
     params: WorkflowRunParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowRunResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/run`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -123,7 +120,6 @@ export class Workflows extends APIResource {
    * const response = await client.workflows.upsert(
    *   'workflow_key',
    *   {
-   *     environment: 'development',
    *     workflow: {
    *       name: 'My Workflow',
    *       steps: [
@@ -145,9 +141,9 @@ export class Workflows extends APIResource {
     params: WorkflowUpsertParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowUpsertResponse> {
-    const { environment, allow_empty, annotate, branch, commit, commit_message, force, ...body } = params;
+    const { allow_empty, annotate, branch, commit, commit_message, environment, force, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}`, {
-      query: { environment, allow_empty, annotate, branch, commit, commit_message, force },
+      query: { allow_empty, annotate, branch, commit, commit_message, environment, force },
       body,
       ...options,
     });
@@ -164,7 +160,6 @@ export class Workflows extends APIResource {
    * const response = await client.workflows.validate(
    *   'workflow_key',
    *   {
-   *     environment: 'development',
    *     workflow: {
    *       name: 'My Workflow',
    *       steps: [
@@ -186,9 +181,9 @@ export class Workflows extends APIResource {
     params: WorkflowValidateParams,
     options?: RequestOptions,
   ): APIPromise<WorkflowValidateResponse> {
-    const { environment, branch, ...body } = params;
+    const { branch, environment, ...body } = params;
     return this._client.put(path`/v1/workflows/${workflowKey}/validate`, {
-      query: { environment, branch },
+      query: { branch, environment },
       body,
       ...options,
     });
@@ -2390,20 +2385,21 @@ export interface WorkflowValidateResponse {
 
 export interface WorkflowRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -2414,20 +2410,21 @@ export interface WorkflowRetrieveParams {
 
 export interface WorkflowListParams extends EntriesCursorParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
    * Whether to annotate the resource. Only used in the Knock CLI.
    */
   annotate?: boolean;
 
   /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Whether to hide uncommitted changes. When true, only committed changes will be
@@ -2438,29 +2435,26 @@ export interface WorkflowListParams extends EntriesCursorParams {
 
 export interface WorkflowActivateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: Whether to activate or deactivate the workflow. Set to `true` by
    * default, which will activate the workflow.
    */
   status: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 export interface WorkflowRunParams {
-  /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
   /**
    * Body param: A list of recipients to run the workflow for. Supports user IDs,
    * object references, or inline identify user objects (id + optional email/name).
@@ -2468,10 +2462,17 @@ export interface WorkflowRunParams {
   recipients: Array<string | WorkflowRunParams.ObjectRecipientReference | InlineIdentifyUserRequest>;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: The actor to reference in the the workflow run.
@@ -2532,11 +2533,6 @@ export namespace WorkflowRunParams {
 
 export interface WorkflowUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A workflow request for upserting a workflow.
    */
   workflow: WorkflowRequest;
@@ -2553,8 +2549,9 @@ export interface WorkflowUpsertParams {
   annotate?: boolean;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -2570,6 +2567,12 @@ export interface WorkflowUpsertParams {
   commit_message?: string;
 
   /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
    * Query param: When set to true, forces the upsert to override existing content
    * regardless of environment restrictions. This bypasses the development-only
    * environment check and origin environment checks.
@@ -2579,20 +2582,22 @@ export interface WorkflowUpsertParams {
 
 export interface WorkflowValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: A workflow request for upserting a workflow.
    */
   workflow: WorkflowRequest;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 }
 
 Workflows.Steps = Steps;

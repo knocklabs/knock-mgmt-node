@@ -9,8 +9,8 @@ const client = new KnockMgmt({
 
 describe('resource apiKeys', () => {
   // Mock server tests are disabled
-  test.skip('exchange: only required params', async () => {
-    const responsePromise = client.apiKeys.exchange({ environment: 'development' });
+  test.skip('exchange', async () => {
+    const responsePromise = client.apiKeys.exchange();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,10 @@ describe('resource apiKeys', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('exchange: required and optional params', async () => {
-    const response = await client.apiKeys.exchange({ environment: 'development' });
+  test.skip('exchange: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.apiKeys.exchange({ environment: 'development' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 });

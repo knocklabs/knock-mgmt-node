@@ -21,8 +21,8 @@ describe('resource commits', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.commits.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.commits.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,22 +33,28 @@ describe('resource commits', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.commits.list({
-      environment: 'development',
-      after: 'after',
-      before: 'before',
-      branch: 'feature-branch',
-      limit: 0,
-      promoted: true,
-      resource_id: 'resource_id',
-      resource_type: 'audience',
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.commits.list(
+        {
+          after: 'after',
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          limit: 0,
+          promoted: true,
+          resource_id: 'resource_id',
+          resource_type: 'audience',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('commitAll: only required params', async () => {
-    const responsePromise = client.commits.commitAll({ environment: 'development' });
+  test.skip('commitAll', async () => {
+    const responsePromise = client.commits.commitAll();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -59,15 +65,21 @@ describe('resource commits', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('commitAll: required and optional params', async () => {
-    const response = await client.commits.commitAll({
-      environment: 'development',
-      allow_empty: true,
-      branch: 'feature-branch',
-      commit_message: 'commit_message',
-      resource_id: 'resource_id',
-      resource_type: 'audience',
-    });
+  test.skip('commitAll: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.commits.commitAll(
+        {
+          allow_empty: true,
+          branch: 'feature-branch',
+          commit_message: 'commit_message',
+          environment: 'development',
+          resource_id: 'resource_id',
+          resource_type: 'audience',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled

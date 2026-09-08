@@ -21,8 +21,8 @@ describe('resource variables', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.variables.list({ environment: 'development' });
+  test.skip('list', async () => {
+    const responsePromise = client.variables.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,14 +33,20 @@ describe('resource variables', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.variables.list({
-      environment: 'development',
-      after: 'after',
-      before: 'before',
-      branch: 'feature-branch',
-      limit: 0,
-      type: 'public',
-    });
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.variables.list(
+        {
+          after: 'after',
+          before: 'before',
+          branch: 'feature-branch',
+          environment: 'development',
+          limit: 0,
+          type: 'public',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 });

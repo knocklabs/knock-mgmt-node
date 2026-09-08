@@ -25,8 +25,7 @@ export class Environments extends APIResource {
   }
 
   /**
-   * Returns a paginated list of environments. The environments will be returned in
-   * order of their index, with the `development` environment first.
+   * Returns a paginated list of visible environments in catalog order.
    *
    * @example
    * ```ts
@@ -80,6 +79,11 @@ export interface Environment {
    * The timestamp of when the environment was last updated.
    */
   updated_at: string;
+
+  /**
+   * Whether the environment is part of the account catalog.
+   */
+  visibility: 'visible' | 'hidden';
 
   /**
    * The timestamp of when the environment was deleted.

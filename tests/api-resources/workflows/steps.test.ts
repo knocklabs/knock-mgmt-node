@@ -12,7 +12,6 @@ describe('resource steps', () => {
   test.skip('previewTemplate: only required params', async () => {
     const responsePromise = client.workflows.steps.previewTemplate('step_ref', {
       workflow_key: 'workflow_key',
-      environment: 'development',
       recipient: 'dnedry',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -28,9 +27,9 @@ describe('resource steps', () => {
   test.skip('previewTemplate: required and optional params', async () => {
     const response = await client.workflows.steps.previewTemplate('step_ref', {
       workflow_key: 'workflow_key',
-      environment: 'development',
       recipient: 'dnedry',
       branch: 'feature-branch',
+      environment: 'development',
       actor: 'dnedry',
       data: { park_id: 'bar' },
       tenant: 'acme-corp',

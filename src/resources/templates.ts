@@ -17,7 +17,6 @@ export class Templates extends APIResource {
    * @example
    * ```ts
    * const response = await client.templates.preview({
-   *   environment: 'development',
    *   channel_type: 'email',
    *   recipient: 'user_123',
    *   template: {
@@ -28,8 +27,8 @@ export class Templates extends APIResource {
    * ```
    */
   preview(params: TemplatePreviewParams, options?: RequestOptions): APIPromise<TemplatePreviewResponse> {
-    const { environment, branch, ...body } = params;
-    return this._client.post('/v1/templates/preview', { query: { environment, branch }, body, ...options });
+    const { branch, environment, ...body } = params;
+    return this._client.post('/v1/templates/preview', { query: { branch, environment }, body, ...options });
   }
 }
 
@@ -905,11 +904,6 @@ export namespace TemplatePreviewResponse {
 
 export interface TemplatePreviewParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
    * Body param: The channel type of the template to preview.
    */
   channel_type: 'email' | 'sms' | 'push' | 'chat' | 'in_app_feed';
@@ -926,10 +920,17 @@ export interface TemplatePreviewParams {
   template: EmailTemplate | SMSTemplate | PushTemplate | ChatTemplate | InAppFeedTemplate;
 
   /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param: A recipient reference, used when referencing a recipient by either

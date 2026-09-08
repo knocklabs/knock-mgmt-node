@@ -13,12 +13,14 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const schema = await client.schemas.retrieve('item_type', {
-   *   environment: 'development',
-   * });
+   * const schema = await client.schemas.retrieve('item_type');
    * ```
    */
-  retrieve(itemType: string, query: SchemaRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
+  retrieve(
+    itemType: string,
+    query: SchemaRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
     return this._client.get(path`/v1/schemas/${itemType}`, { query, ...options });
   }
 
@@ -29,12 +31,13 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const schemas = await client.schemas.list({
-   *   environment: 'development',
-   * });
+   * const schemas = await client.schemas.list();
    * ```
    */
-  list(query: SchemaListParams, options?: RequestOptions): APIPromise<SchemaListResponse> {
+  list(
+    query: SchemaListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SchemaListResponse> {
     return this._client.get('/v1/schemas', { query, ...options });
   }
 
@@ -49,15 +52,17 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.schemas.upsert('item_type', {
-   *   environment: 'development',
-   * });
+   * const response = await client.schemas.upsert('item_type');
    * ```
    */
-  upsert(itemType: string, params: SchemaUpsertParams, options?: RequestOptions): APIPromise<unknown> {
-    const { environment, branch, collection, body } = params;
+  upsert(
+    itemType: string,
+    params: SchemaUpsertParams | null | undefined = undefined,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { branch, collection, environment, body } = params ?? {};
     return this._client.put(path`/v1/schemas/${itemType}`, {
-      query: { environment, branch, collection },
+      query: { branch, collection, environment },
       body: body,
       ...options,
     });
@@ -69,16 +74,17 @@ export class Schemas extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.schemas.validate(
-   *   'item_type',
-   *   { environment: 'development' },
-   * );
+   * const response = await client.schemas.validate('item_type');
    * ```
    */
-  validate(itemType: string, params: SchemaValidateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { environment, branch, collection, body } = params;
+  validate(
+    itemType: string,
+    params: SchemaValidateParams | null | undefined = undefined,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { branch, collection, environment, body } = params ?? {};
     return this._client.put(path`/v1/schemas/${itemType}/validate`, {
-      query: { environment, branch, collection },
+      query: { branch, collection, environment },
       body: body,
       ...options,
     });
@@ -165,13 +171,9 @@ export type SchemaValidateResponse = unknown;
 
 export interface SchemaRetrieveParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -179,19 +181,25 @@ export interface SchemaRetrieveParams {
    * The object collection, required when `item_type` is `object`.
    */
   collection?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface SchemaListParams {
   /**
-   * The environment slug.
-   */
-  environment: string;
-
-  /**
-   * The slug of a branch to use. This option can only be used when `environment` is
-   * `"development"`.
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 
   /**
    * Filter schemas by item type (`user`, `tenant`, or `object`).
@@ -201,13 +209,9 @@ export interface SchemaListParams {
 
 export interface SchemaUpsertParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -215,6 +219,12 @@ export interface SchemaUpsertParams {
    * Query param: The object collection, required when `item_type` is `object`.
    */
   collection?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param
@@ -224,13 +234,9 @@ export interface SchemaUpsertParams {
 
 export interface SchemaValidateParams {
   /**
-   * Query param: The environment slug.
-   */
-  environment: string;
-
-  /**
-   * Query param: The slug of a branch to use. This option can only be used when
-   * `environment` is `"development"`.
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
    */
   branch?: string;
 
@@ -238,6 +244,12 @@ export interface SchemaValidateParams {
    * Query param: The object collection, required when `item_type` is `object`.
    */
   collection?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
 
   /**
    * Body param
