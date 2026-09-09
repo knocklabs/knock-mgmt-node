@@ -503,11 +503,22 @@ export namespace WorkflowAIAgentStep {
    */
   export interface Settings {
     /**
-     * The AI model to use in `provider:model` format (e.g.
-     * `anthropic:claude-haiku-4-5`, `openai:gpt-5.2-chat-latest`). See the
-     * documentation for a list of supported models.
+     * The AI model to use in `provider:model` format.
      */
-    model: string;
+    model:
+      | 'anthropic:claude-haiku-4-5'
+      | 'anthropic:claude-sonnet-5'
+      | 'anthropic:claude-opus-5'
+      | 'anthropic:claude-sonnet-4-5'
+      | 'anthropic:claude-sonnet-4-6'
+      | 'anthropic:claude-opus-4-5'
+      | 'anthropic:claude-opus-4-6'
+      | 'openai:gpt-5.6-sol'
+      | 'openai:gpt-5.6-terra'
+      | 'openai:gpt-5.6-luna'
+      | 'openai:gpt-5.2-chat-latest'
+      | 'openai:gpt-5.2'
+      | 'openai:gpt-5.2-pro';
 
     /**
      * The prompt template for the AI request. Supports Liquid templating.
