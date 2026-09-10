@@ -165,6 +165,13 @@ export interface ChatChannelSettings {
    * Whether to track link clicks on chat notifications.
    */
   link_tracking?: boolean;
+
+  /**
+   * Whether tracked chat links should use compact short URLs instead of long tracked
+   * links. Only applied when link tracking is enabled. Not used by WhatsApp, which
+   * already uses short links.
+   */
+  link_tracking_uses_short_links?: boolean;
 }
 
 /**

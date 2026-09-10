@@ -93,6 +93,29 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('run: only required params', async () => {
+    const responsePromise = client.broadcasts.run('broadcast_key', { recipient: { id: 'user_1' } });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('run: required and optional params', async () => {
+    const response = await client.broadcasts.run('broadcast_key', {
+      recipient: { id: 'user_1' },
+      branch: 'feature-branch',
+      environment: 'development',
+      settings: { sandbox_mode: true, skip_delay: true },
+      tenant: 'tenant_1',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('send', async () => {
     const responsePromise = client.broadcasts.send('broadcast_key');
     const rawResponse = await responsePromise.asResponse();

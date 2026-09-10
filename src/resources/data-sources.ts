@@ -378,7 +378,8 @@ export interface SourceLog {
   actions?: Array<SourceLogAction>;
 
   /**
-   * The data payload parsed by the source.
+   * The full event data sent from the source. For legacy sources, this is the
+   * properties or traits object.
    */
   data?: { [key: string]: unknown } | null;
 

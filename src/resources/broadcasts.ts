@@ -70,6 +70,31 @@ export class Broadcasts extends APIResource {
   }
 
   /**
+   * Runs the current version of a broadcast for the provided recipient without
+   * publishing the broadcast.
+   *
+   * @example
+   * ```ts
+   * const response = await client.broadcasts.run(
+   *   'broadcast_key',
+   *   { recipient: { id: 'user_1' } },
+   * );
+   * ```
+   */
+  run(
+    broadcastKey: string,
+    params: BroadcastRunParams,
+    options?: RequestOptions,
+  ): APIPromise<BroadcastRunResponse> {
+    const { branch, environment, ...body } = params;
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}/run`, {
+      query: { branch, environment },
+      body,
+      ...options,
+    });
+  }
+
+  /**
    * Sends a broadcast immediately or schedules it to send at a future time.
    *
    * @example
@@ -393,6 +418,21 @@ export interface BroadcastCancelResponse {
 }
 
 /**
+ * A response to a broadcast run request.
+ */
+export interface BroadcastRunResponse {
+  /**
+   * The ID of the broadcast run.
+   */
+  broadcast_run_id: string;
+
+  /**
+   * The ID of the run request.
+   */
+  request_id: string;
+}
+
+/**
  * Wraps the Broadcast response under the `broadcast` key.
  */
 export interface BroadcastSendResponse {
@@ -486,6 +526,64 @@ export interface BroadcastCancelParams {
   environment?: string;
 }
 
+export interface BroadcastRunParams {
+  /**
+   * Body param: The user to run the broadcast for.
+   */
+  recipient: BroadcastRunParams.Recipient;
+
+  /**
+   * Query param: The slug of a branch to use. When `environment` is omitted, the
+   * branch is resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
+   * Body param: Settings that control how the broadcast run executes.
+   */
+  settings?: BroadcastRunParams.Settings;
+
+  /**
+   * Body param: The tenant to associate the broadcast run with. Must not contain
+   * whitespace.
+   */
+  tenant?: string | null;
+}
+
+export namespace BroadcastRunParams {
+  /**
+   * The user to run the broadcast for.
+   */
+  export interface Recipient {
+    /**
+     * The ID of the user.
+     */
+    id: string;
+  }
+
+  /**
+   * Settings that control how the broadcast run executes.
+   */
+  export interface Settings {
+    /**
+     * Whether to generate messages without sending them to downstream providers.
+     */
+    sandbox_mode?: boolean;
+
+    /**
+     * Whether to skip delay steps during the run.
+     */
+    skip_delay?: boolean;
+  }
+}
+
 export interface BroadcastSendParams {
   /**
    * Query param: The slug of a branch to use. When `environment` is omitted, the
@@ -558,6 +656,7 @@ export declare namespace Broadcasts {
     type Broadcast as Broadcast,
     type BroadcastRequest as BroadcastRequest,
     type BroadcastCancelResponse as BroadcastCancelResponse,
+    type BroadcastRunResponse as BroadcastRunResponse,
     type BroadcastSendResponse as BroadcastSendResponse,
     type BroadcastUpsertResponse as BroadcastUpsertResponse,
     type BroadcastValidateResponse as BroadcastValidateResponse,
@@ -565,6 +664,7 @@ export declare namespace Broadcasts {
     type BroadcastRetrieveParams as BroadcastRetrieveParams,
     type BroadcastListParams as BroadcastListParams,
     type BroadcastCancelParams as BroadcastCancelParams,
+    type BroadcastRunParams as BroadcastRunParams,
     type BroadcastSendParams as BroadcastSendParams,
     type BroadcastUpsertParams as BroadcastUpsertParams,
     type BroadcastValidateParams as BroadcastValidateParams,
