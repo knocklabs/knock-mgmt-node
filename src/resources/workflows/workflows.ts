@@ -1482,6 +1482,12 @@ export namespace WorkflowStep {
          * The key of the integration source that emits the event to wait for.
          */
         integration_source_key: string;
+
+        /**
+         * JSON path into the source event that yields the recipient user ID. Use userId
+         * for Segment events, or a body./headers. path for HTTP events (e.g. body.userId).
+         */
+        recipient_path?: string | null;
       }
 
       export interface MatchCondition {
@@ -1545,6 +1551,7 @@ export namespace WorkflowStep {
           | 'delivery_attempted'
           | 'undelivered'
           | 'bounced'
+          | 'complaint'
           | 'read'
           | 'unread'
           | 'seen'
