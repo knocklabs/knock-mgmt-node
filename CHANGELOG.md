@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.36.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.35.0...v0.36.0) (2026-09-22)
+
+
+### Features
+
+* update mapi spec to v0.1.1626 ([31026c7](https://github.com/knocklabs/knock-mgmt-node/commit/31026c781dfe9341b8872ec9c8b20c9b9e2e81c6))
+* update mapi spec to v0.1.1628 ([4910aa3](https://github.com/knocklabs/knock-mgmt-node/commit/4910aa3ee1198faad4ed08814c09a5f77990c522))
+* update mapi spec to v0.1.1634 ([b193e51](https://github.com/knocklabs/knock-mgmt-node/commit/b193e513c863c8be382e46b472dbdca82770aa7c))
+* update mapi spec to v0.1.1636 ([61bf32a](https://github.com/knocklabs/knock-mgmt-node/commit/61bf32ab15d1dae25b6d3acbf6cdb1d92cfd9482))
+* update mapi spec to v0.1.1641 ([e3a22ee](https://github.com/knocklabs/knock-mgmt-node/commit/e3a22eec27ba0b8ed4a3963a84e62c9d5c597c68))
+* update mapi spec to v0.1.1645 ([b6b0c47](https://github.com/knocklabs/knock-mgmt-node/commit/b6b0c47836f831d1549dd052c585a4fad955877f))
+
 ## [0.35.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.34.0...v0.35.0) (2026-09-08)
 
 
