@@ -91,7 +91,13 @@ export class Goals extends APIResource {
    * ```ts
    * const response = await client.goals.upsert('goal_key', {
    *   goal: {
-   *     condition: { event: { event_type: 'recipient' } },
+   *     condition: {
+   *       event: {
+   *         event_key: 'order.completed',
+   *         event_type: 'integration_source',
+   *         integration_source_key: 'stripe',
+   *       },
+   *     },
    *     name: 'Trial Conversion',
    *   },
    * });
@@ -117,7 +123,13 @@ export class Goals extends APIResource {
    * ```ts
    * const response = await client.goals.validate('goal_key', {
    *   goal: {
-   *     condition: { event: { event_type: 'recipient' } },
+   *     condition: {
+   *       event: {
+   *         event_key: 'order.completed',
+   *         event_type: 'integration_source',
+   *         integration_source_key: 'stripe',
+   *       },
+   *     },
    *     name: 'Trial Conversion',
    *   },
    * });
@@ -194,37 +206,20 @@ export interface Goal {
  */
 export interface GoalCondition {
   /**
-   * The event to track. Supports recipient, integration_source, and audience event
-   * types.
+   * The event to track. Supports integration_source and audience event types.
    */
   event:
-    | GoalCondition.WorkflowWaitForEventRecipientEvent
     | GoalCondition.WorkflowWaitForEventIntegrationSourceEvent
     | GoalCondition.WorkflowWaitForEventAudienceEvent;
 
   /**
-   * A list of condition groups. Required for recipient events; each group uses an
-   * operator (and/or) with nested conditions.
+   * Optional list of condition groups; each group uses an operator (and/or) with
+   * nested conditions.
    */
   match_conditions?: Array<WorkflowsAPI.ConditionGroup>;
 }
 
 export namespace GoalCondition {
-  /**
-   * A recipient updated event to wait for from the workflow recipient.
-   */
-  export interface WorkflowWaitForEventRecipientEvent {
-    /**
-     * The type of event to wait for.
-     */
-    event_type: 'recipient';
-
-    /**
-     * Recipient lifecycle event to wait for. Always "updated" today.
-     */
-    event_key?: 'updated';
-  }
-
   /**
    * An integration source event to wait for.
    */

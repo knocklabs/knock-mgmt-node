@@ -175,8 +175,8 @@ export interface PartialRequest {
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | Shared.MessageTypeTextField
     | Shared.MessageTypeNumberField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
     | Shared.MessageTypeColorField
     | Shared.MessageTypeURLField
@@ -257,8 +257,8 @@ export interface PartialResource {
     | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
     | Shared.MessageTypeJsonField
-    | Shared.MessageTypeTextField
     | Shared.MessageTypeNumberField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeImageField
     | Shared.MessageTypeColorField
     | Shared.MessageTypeURLField

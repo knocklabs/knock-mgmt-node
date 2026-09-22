@@ -120,7 +120,13 @@ describe('resource goals', () => {
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.goals.upsert('goal_key', {
       goal: {
-        condition: { event: { event_type: 'recipient' } },
+        condition: {
+          event: {
+            event_key: 'order.completed',
+            event_type: 'integration_source',
+            integration_source_key: 'stripe',
+          },
+        },
         name: 'Trial Conversion',
       },
     });
@@ -138,7 +144,12 @@ describe('resource goals', () => {
     const response = await client.goals.upsert('goal_key', {
       goal: {
         condition: {
-          event: { event_type: 'recipient', event_key: 'updated' },
+          event: {
+            event_key: 'order.completed',
+            event_type: 'integration_source',
+            integration_source_key: 'stripe',
+            recipient_path: 'body.userId',
+          },
           match_conditions: [
             {
               all: [
@@ -163,7 +174,13 @@ describe('resource goals', () => {
   test.skip('validate: only required params', async () => {
     const responsePromise = client.goals.validate('goal_key', {
       goal: {
-        condition: { event: { event_type: 'recipient' } },
+        condition: {
+          event: {
+            event_key: 'order.completed',
+            event_type: 'integration_source',
+            integration_source_key: 'stripe',
+          },
+        },
         name: 'Trial Conversion',
       },
     });
@@ -181,7 +198,12 @@ describe('resource goals', () => {
     const response = await client.goals.validate('goal_key', {
       goal: {
         condition: {
-          event: { event_type: 'recipient', event_key: 'updated' },
+          event: {
+            event_key: 'order.completed',
+            event_type: 'integration_source',
+            integration_source_key: 'stripe',
+            recipient_path: 'body.userId',
+          },
           match_conditions: [
             {
               all: [
