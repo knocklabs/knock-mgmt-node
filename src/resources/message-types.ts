@@ -244,19 +244,19 @@ export interface MessageTypeVariant {
    * The field types available for the variant.
    */
   fields: Array<
-    | Shared.MessageTypeListField
-    | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeJsonField
-    | Shared.MessageTypeNumberField
-    | Shared.MessageTypeTextField
-    | Shared.MessageTypeImageField
+    | Shared.MessageTypeButtonField
     | Shared.MessageTypeColorField
-    | Shared.MessageTypeURLField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeJsonField
+    | Shared.MessageTypeListField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeButtonField
+    | Shared.MessageTypeNumberField
+    | Shared.MessageTypeSelectField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeTextareaField
+    | Shared.MessageTypeURLField
   >;
 
   /**

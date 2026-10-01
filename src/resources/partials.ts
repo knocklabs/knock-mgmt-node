@@ -171,19 +171,19 @@ export interface PartialRequest {
    * The field types available for the partial.
    */
   input_schema?: Array<
-    | Shared.MessageTypeListField
-    | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeJsonField
-    | Shared.MessageTypeNumberField
-    | Shared.MessageTypeTextField
-    | Shared.MessageTypeImageField
+    | Shared.MessageTypeButtonField
     | Shared.MessageTypeColorField
-    | Shared.MessageTypeURLField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeJsonField
+    | Shared.MessageTypeListField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeButtonField
+    | Shared.MessageTypeNumberField
+    | Shared.MessageTypeSelectField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeTextareaField
+    | Shared.MessageTypeURLField
   >;
 
   /**
@@ -253,19 +253,19 @@ export interface PartialResource {
    * The field types available for the partial.
    */
   input_schema?: Array<
-    | Shared.MessageTypeListField
-    | Shared.MessageTypeSelectField
     | Shared.MessageTypeBooleanField
-    | Shared.MessageTypeJsonField
-    | Shared.MessageTypeNumberField
-    | Shared.MessageTypeTextField
-    | Shared.MessageTypeImageField
+    | Shared.MessageTypeButtonField
     | Shared.MessageTypeColorField
-    | Shared.MessageTypeURLField
+    | Shared.MessageTypeImageField
+    | Shared.MessageTypeJsonField
+    | Shared.MessageTypeListField
     | Shared.MessageTypeMarkdownField
     | Shared.MessageTypeMultiSelectField
-    | Shared.MessageTypeButtonField
+    | Shared.MessageTypeNumberField
+    | Shared.MessageTypeSelectField
+    | Shared.MessageTypeTextField
     | Shared.MessageTypeTextareaField
+    | Shared.MessageTypeURLField
   >;
 
   /**
