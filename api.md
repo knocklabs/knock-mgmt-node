@@ -481,3 +481,22 @@ Methods:
 - <code title="get /v1/preference_categories">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">list</a>() -> PreferenceCategoryListResponse</code>
 - <code title="delete /v1/preference_categories/{name}">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">delete</a>(name) -> void</code>
 - <code title="put /v1/preference_categories/{name}">client.preferenceCategories.<a href="./src/resources/preference-categories.ts">upsert</a>(name) -> PreferenceCategoryUpsertResponse</code>
+
+# ReusableRequests
+
+Types:
+
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequest</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestRequest</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestSettings</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestArchiveResponse</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUpsertResponse</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">retrieve</a>(reusableRequestKey, { ...params }) -> ReusableRequest</code>
+- <code title="get /v1/reusable_requests">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">list</a>({ ...params }) -> ReusableRequestsEntriesCursor</code>
+- <code title="delete /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">archive</a>(reusableRequestKey, { ...params }) -> ReusableRequestArchiveResponse</code>
+- <code title="put /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">upsert</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpsertResponse</code>
+- <code title="put /v1/reusable_requests/{reusable_request_key}/validate">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">validate</a>(reusableRequestKey, { ...params }) -> ReusableRequestValidateResponse</code>

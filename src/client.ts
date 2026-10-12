@@ -228,6 +228,21 @@ import {
   PreferenceCenterUpsertResponse,
 } from './resources/preference-center';
 import {
+  ReusableRequest,
+  ReusableRequestArchiveParams,
+  ReusableRequestArchiveResponse,
+  ReusableRequestListParams,
+  ReusableRequestRequest,
+  ReusableRequestRetrieveParams,
+  ReusableRequestSettings,
+  ReusableRequestUpsertParams,
+  ReusableRequestUpsertResponse,
+  ReusableRequestValidateParams,
+  ReusableRequestValidateResponse,
+  ReusableRequests,
+  ReusableRequestsEntriesCursor,
+} from './resources/reusable-requests';
+import {
   ItemSchema,
   SchemaListParams,
   SchemaListResponse,
@@ -1128,6 +1143,10 @@ export class KnockMgmt {
    * Preference categories are a project-level catalog of categories that can be applied to workflows and broadcasts.
    */
   preferenceCategories: API.PreferenceCategories = new API.PreferenceCategories(this);
+  /**
+   * Reusable requests are HTTP steps that workflows can link to and share across an account.
+   */
+  reusableRequests: API.ReusableRequests = new API.ReusableRequests(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1156,6 +1175,7 @@ KnockMgmt.Schemas = Schemas;
 KnockMgmt.PreferenceCenter = PreferenceCenter;
 KnockMgmt.Billing = Billing;
 KnockMgmt.PreferenceCategories = PreferenceCategories;
+KnockMgmt.ReusableRequests = ReusableRequests;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1507,6 +1527,22 @@ export declare namespace KnockMgmt {
     type PreferenceCategory as PreferenceCategory,
     type PreferenceCategoryListResponse as PreferenceCategoryListResponse,
     type PreferenceCategoryUpsertResponse as PreferenceCategoryUpsertResponse,
+  };
+
+  export {
+    ReusableRequests as ReusableRequests,
+    type ReusableRequest as ReusableRequest,
+    type ReusableRequestRequest as ReusableRequestRequest,
+    type ReusableRequestSettings as ReusableRequestSettings,
+    type ReusableRequestArchiveResponse as ReusableRequestArchiveResponse,
+    type ReusableRequestUpsertResponse as ReusableRequestUpsertResponse,
+    type ReusableRequestValidateResponse as ReusableRequestValidateResponse,
+    type ReusableRequestsEntriesCursor as ReusableRequestsEntriesCursor,
+    type ReusableRequestRetrieveParams as ReusableRequestRetrieveParams,
+    type ReusableRequestListParams as ReusableRequestListParams,
+    type ReusableRequestArchiveParams as ReusableRequestArchiveParams,
+    type ReusableRequestUpsertParams as ReusableRequestUpsertParams,
+    type ReusableRequestValidateParams as ReusableRequestValidateParams,
   };
 
   export type GoalAttachment = API.GoalAttachment;

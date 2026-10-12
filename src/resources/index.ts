@@ -216,6 +216,21 @@ export {
   type PreferenceCenterUpsertParams,
 } from './preference-center';
 export {
+  ReusableRequests,
+  type ReusableRequest,
+  type ReusableRequestRequest,
+  type ReusableRequestSettings,
+  type ReusableRequestArchiveResponse,
+  type ReusableRequestUpsertResponse,
+  type ReusableRequestValidateResponse,
+  type ReusableRequestRetrieveParams,
+  type ReusableRequestListParams,
+  type ReusableRequestArchiveParams,
+  type ReusableRequestUpsertParams,
+  type ReusableRequestValidateParams,
+  type ReusableRequestsEntriesCursor,
+} from './reusable-requests';
+export {
   Schemas,
   type ItemSchema,
   type SchemaRetrieveResponse,
