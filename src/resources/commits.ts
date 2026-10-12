@@ -121,6 +121,19 @@ export interface Commit {
   environment: string;
 
   /**
+   * The identifier of the promote that created this commit, shared by every commit
+   * copied into the environment by the same promote. Null if the commit was not
+   * created by a promote.
+   */
+  promote_group_id: string | null;
+
+  /**
+   * The ID of the commit this commit was promoted from. Null if the commit was not
+   * created by a promote.
+   */
+  promoted_from_commit_id: string | null;
+
+  /**
    * The resource object associated with the commit.
    */
   resource: Commit.Resource;
@@ -164,6 +177,59 @@ export namespace Commit {
 }
 
 /**
+ * A summary of a promote. Every commit copied into the destination environment by
+ * the same promote shares the group's ID, which you can use to list them with the
+ * `promote_group_id` filter on the list commits endpoint.
+ */
+export interface PromoteGroup {
+  /**
+   * The unique identifier for the promote group.
+   */
+  id: string;
+
+  /**
+   * The number of commits copied into the destination environment.
+   */
+  commit_count: number;
+
+  /**
+   * The timestamp of when the promote happened.
+   */
+  created_at: string;
+
+  /**
+   * The slug of the environment or branch the commits were promoted from.
+   */
+  source: string;
+
+  /**
+   * Whether the source is an environment or a branch.
+   */
+  source_type: 'environment' | 'branch';
+
+  /**
+   * The slug of the environment the commits were promoted to.
+   */
+  to_environment: string;
+
+  /**
+   * The user who performed the promote.
+   */
+  actor?: PromoteGroup.Actor | null;
+}
+
+export namespace PromoteGroup {
+  /**
+   * The user who performed the promote.
+   */
+  export interface Actor {
+    email?: string;
+
+    name?: string | null;
+  }
+}
+
+/**
  * The response from committing all changes.
  */
 export interface CommitCommitAllResponse {
@@ -178,6 +244,13 @@ export interface CommitCommitAllResponse {
  */
 export interface CommitPromoteAllResponse {
   /**
+   * A summary of a promote. Every commit copied into the destination environment by
+   * the same promote shares the group's ID, which you can use to list them with the
+   * `promote_group_id` filter on the list commits endpoint.
+   */
+  promote_group: PromoteGroup | null;
+
+  /**
    * The result of the promote operation.
    */
   result: string;
@@ -191,6 +264,13 @@ export interface CommitPromoteOneResponse {
    * A commit is a change to a resource within an environment, made by an author.
    */
   commit: Commit;
+
+  /**
+   * A summary of a promote. Every commit copied into the destination environment by
+   * the same promote shares the group's ID, which you can use to list them with the
+   * `promote_group_id` filter on the list commits endpoint.
+   */
+  promote_group: PromoteGroup;
 }
 
 export interface CommitListParams extends EntriesCursorParams {
@@ -207,10 +287,22 @@ export interface CommitListParams extends EntriesCursorParams {
   environment?: string;
 
   /**
+   * Filter commits to those created by a single promote. Every commit copied into an
+   * environment by the same promote shares one `promote_group_id`.
+   */
+  promote_group_id?: string;
+
+  /**
    * Whether to show commits in the given environment that have not been promoted to
    * the subsequent environment (false) or commits which have been promoted (true).
    */
   promoted?: boolean;
+
+  /**
+   * Filter promoted commits by the slug of the environment or branch they were
+   * promoted from.
+   */
+  promoted_from_environment?: string;
 
   /**
    * Filter commits by resource identifier. Must be used together with resource_type.
@@ -233,6 +325,17 @@ export interface CommitListParams extends EntriesCursorParams {
     | 'translation'
     | 'workflow'
     | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+
+  /**
+   * Only return commits created at or after this RFC 3339 timestamp. Useful for
+   * catching up after missed webhooks.
+   */
+  since?: string;
+
+  /**
+   * Only return commits created at or before this RFC 3339 timestamp.
+   */
+  until?: string;
 }
 
 export interface CommitCommitAllParams {
@@ -323,6 +426,7 @@ export interface CommitPromoteAllParams {
 export declare namespace Commits {
   export {
     type Commit as Commit,
+    type PromoteGroup as PromoteGroup,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
     type CommitPromoteOneResponse as CommitPromoteOneResponse,

@@ -99,6 +99,7 @@ import {
   CommitPromoteOneResponse,
   Commits,
   CommitsEntriesCursor,
+  PromoteGroup,
 } from './resources/commits';
 import {
   DataSourceListEventsParams,
@@ -1218,6 +1219,7 @@ export declare namespace KnockMgmt {
   export {
     Commits as Commits,
     type Commit as Commit,
+    type PromoteGroup as PromoteGroup,
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
     type CommitPromoteOneResponse as CommitPromoteOneResponse,

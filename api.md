@@ -60,6 +60,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/commits.ts">Commit</a></code>
+- <code><a href="./src/resources/commits.ts">PromoteGroup</a></code>
 - <code><a href="./src/resources/commits.ts">CommitCommitAllResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitPromoteAllResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitPromoteOneResponse</a></code>

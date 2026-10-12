@@ -74,6 +74,7 @@ export {
 export {
   Commits,
   type Commit,
+  type PromoteGroup,
   type CommitCommitAllResponse,
   type CommitPromoteAllResponse,
   type CommitPromoteOneResponse,
