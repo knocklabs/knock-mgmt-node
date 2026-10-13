@@ -281,7 +281,14 @@ import {
   Translations,
   TranslationsEntriesCursor,
 } from './resources/translations';
-import { Variable, VariableListParams, Variables, VariablesEntriesCursor } from './resources/variables';
+import {
+  Variable,
+  VariableDeleteParams,
+  VariableListParams,
+  VariableUpsertParams,
+  Variables,
+  VariablesEntriesCursor,
+} from './resources/variables';
 import {
   Condition,
   ConditionGroup,
@@ -1398,6 +1405,8 @@ export declare namespace KnockMgmt {
     type Variable as Variable,
     type VariablesEntriesCursor as VariablesEntriesCursor,
     type VariableListParams as VariableListParams,
+    type VariableDeleteParams as VariableDeleteParams,
+    type VariableUpsertParams as VariableUpsertParams,
   };
 
   export {

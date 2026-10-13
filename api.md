@@ -303,6 +303,8 @@ Methods:
 
 - <code title="get /v1/variables/{key}">client.variables.<a href="./src/resources/variables.ts">retrieve</a>(key) -> Variable</code>
 - <code title="get /v1/variables">client.variables.<a href="./src/resources/variables.ts">list</a>({ ...params }) -> VariablesEntriesCursor</code>
+- <code title="delete /v1/variables/{key}">client.variables.<a href="./src/resources/variables.ts">delete</a>(key, { ...params }) -> void</code>
+- <code title="put /v1/variables/{key}">client.variables.<a href="./src/resources/variables.ts">upsert</a>(key, { ...params }) -> Variable</code>
 
 # Guides
 

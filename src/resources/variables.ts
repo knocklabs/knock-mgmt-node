@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -37,6 +38,46 @@ export class Variables extends APIResource {
     options?: RequestOptions,
   ): PagePromise<VariablesEntriesCursor, Variable> {
     return this._client.getAPIList('/v1/variables', EntriesCursor<Variable>, { query, ...options });
+  }
+
+  /**
+   * Deletes a variable and all of its environment overrides. When an environment is
+   * specified, only the override for that environment is cleared, so the default
+   * value applies there.
+   *
+   * @example
+   * ```ts
+   * await client.variables.delete('key');
+   * ```
+   */
+  delete(
+    key: string,
+    params: VariableDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { environment } = params ?? {};
+    return this._client.delete(path`/v1/variables/${key}`, {
+      query: { environment },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Creates or updates a variable by key, along with its per-environment overrides.
+   * On an update, any attribute or environment that is omitted or null is left
+   * unchanged, and an empty string unsets it. The response never includes the value
+   * of a secret variable.
+   *
+   * @example
+   * ```ts
+   * const variable = await client.variables.upsert('key', {
+   *   type: 'secret',
+   * });
+   * ```
+   */
+  upsert(key: string, body: VariableUpsertParams, options?: RequestOptions): APIPromise<Variable> {
+    return this._client.put(path`/v1/variables/${key}`, { body, ...options });
   }
 }
 
@@ -103,10 +144,49 @@ export interface VariableListParams extends EntriesCursorParams {
   type?: 'public' | 'secret';
 }
 
+export interface VariableDeleteParams {
+  /**
+   * The environment slug. When provided, only the variable's override for this
+   * environment is cleared. When omitted, the whole variable is deleted and the
+   * account's default environment is used for authorization.
+   */
+  environment?: string;
+}
+
+export interface VariableUpsertParams {
+  /**
+   * The type of the variable. Required, and it cannot be changed after the variable
+   * is created.
+   */
+  type: 'public' | 'secret';
+
+  /**
+   * The description of the variable. When omitted or null on an update, the existing
+   * description is kept. An empty string clears it.
+   */
+  description?: string | null;
+
+  /**
+   * A map of root environment slugs to override values. An environment that is
+   * omitted or null is left unchanged. An empty string clears the override, so the
+   * default value applies.
+   */
+  environment_values?: { [key: string]: string | null };
+
+  /**
+   * The default value of the variable. Required when creating a variable. When
+   * omitted or null on an update, the existing value is kept. An empty string clears
+   * the default value.
+   */
+  value?: string | null;
+}
+
 export declare namespace Variables {
   export {
     type Variable as Variable,
     type VariablesEntriesCursor as VariablesEntriesCursor,
     type VariableListParams as VariableListParams,
+    type VariableDeleteParams as VariableDeleteParams,
+    type VariableUpsertParams as VariableUpsertParams,
   };
 }

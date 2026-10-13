@@ -269,7 +269,14 @@ export {
   type TranslationValidateParams,
   type TranslationsEntriesCursor,
 } from './translations';
-export { Variables, type Variable, type VariableListParams, type VariablesEntriesCursor } from './variables';
+export {
+  Variables,
+  type Variable,
+  type VariableListParams,
+  type VariableDeleteParams,
+  type VariableUpsertParams,
+  type VariablesEntriesCursor,
+} from './variables';
 export {
   Workflows,
   type Condition,
