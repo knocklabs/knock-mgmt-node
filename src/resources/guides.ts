@@ -88,7 +88,11 @@ export class Guides extends APIResource {
   /**
    * Updates a guide of a given key, or creates a new one if it does not yet exist.
    *
-   * Note: this endpoint only operates on guides in the "development" environment.
+   * The write targets the environment in the request. Accounts that allow writes in
+   * every environment can create and update in that environment. Pass force to write
+   * outside the request's origin environment. When writes are limited to
+   * development, this endpoint accepts the development environment unless force is
+   * set.
    *
    * @example
    * ```ts
@@ -124,7 +128,9 @@ export class Guides extends APIResource {
   /**
    * Validates a guide payload without persisting it.
    *
-   * Note: Validating a guide is only done in the development environment context.
+   * Validation uses the environment in the request. Accounts that allow writes in
+   * every environment can validate in that environment. When writes are limited to
+   * development, this endpoint accepts the development environment.
    *
    * @example
    * ```ts

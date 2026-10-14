@@ -73,7 +73,11 @@ export class Partials extends APIResource {
   /**
    * Updates a partial of a given key, or creates a new one if it does not yet exist.
    *
-   * Note: this endpoint only operates on partials in the “development” environment.
+   * The write targets the environment in the request. Accounts that allow writes in
+   * every environment can create and update in that environment. Pass force to write
+   * outside the request's origin environment. When writes are limited to
+   * development, this endpoint accepts the development environment unless force is
+   * set.
    *
    * @example
    * ```ts
@@ -105,7 +109,9 @@ export class Partials extends APIResource {
   /**
    * Validates a partial payload without persisting it.
    *
-   * Note: this endpoint only operates on partials in the “development” environment.
+   * Validation uses the environment in the request. Accounts that allow writes in
+   * every environment can validate in that environment. When writes are limited to
+   * development, this endpoint accepts the development environment.
    *
    * @example
    * ```ts

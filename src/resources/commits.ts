@@ -44,7 +44,8 @@ export class Commits extends APIResource {
   }
 
   /**
-   * Commit all changes across all resources in the development environment.
+   * Commit all changes across all resources in the given environment. When writes
+   * are limited to development, this endpoint accepts the development environment.
    *
    * @example
    * ```ts
