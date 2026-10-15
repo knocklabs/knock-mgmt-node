@@ -793,8 +793,9 @@ export interface WorkflowDelayStep {
   ref: string;
 
   /**
-   * The settings for the delay step. Both fields can be set to compute a delay where
-   * `delay_for` is an offset from the `delay_until_field_path`.
+   * The settings for the delay step. Set `delay_for` for a fixed delay,
+   * `delay_until_field_path` for a dynamic delay, both for a relative delay, or
+   * `delay_until_time_windows` to wait until a weekly schedule is open.
    */
   settings: WorkflowDelayStep.Settings;
 
@@ -822,8 +823,9 @@ export interface WorkflowDelayStep {
 
 export namespace WorkflowDelayStep {
   /**
-   * The settings for the delay step. Both fields can be set to compute a delay where
-   * `delay_for` is an offset from the `delay_until_field_path`.
+   * The settings for the delay step. Set `delay_for` for a fixed delay,
+   * `delay_until_field_path` for a dynamic delay, both for a relative delay, or
+   * `delay_until_time_windows` to wait until a weekly schedule is open.
    */
   export interface Settings {
     /**
@@ -838,12 +840,49 @@ export namespace WorkflowDelayStep {
     delay_until_field_path?: string;
 
     /**
+     * A weekly schedule of when the delay can resume. Must include one window per day,
+     * and at least one day must be open. Cannot be combined with `delay_for` or
+     * `delay_until_field_path`.
+     */
+    delay_until_time_windows?: Array<Settings.DelayUntilTimeWindow> | null;
+
+    /**
      * Whether the delay is pinned to the opening workflow version or continues on the
      * latest compatible version when the delay elapses. One of: `pinned` or `latest`.
      * New delay steps default to `latest`. Configs that omit the field hydrate as
      * `pinned`.
      */
     workflow_version_mode?: 'pinned' | 'latest' | null;
+  }
+
+  export namespace Settings {
+    /**
+     * A time window for a delay step. Describes a single day and when the delay can
+     * resume on it.
+     */
+    export interface DelayUntilTimeWindow {
+      /**
+       * The day of the week.
+       */
+      day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+
+      /**
+       * Whether the delay can resume on this day. A `closed` day does not support `from`
+       * and `until`.
+       */
+      type: 'open' | 'closed';
+
+      /**
+       * The time the window opens. When blank, the window is open all day.
+       */
+      from?: string | null;
+
+      /**
+       * The time the window closes. When blank, the window is open until the end of the
+       * day.
+       */
+      until?: string | null;
+    }
   }
 }
 
