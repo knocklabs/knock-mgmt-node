@@ -173,7 +173,15 @@ export namespace Commit {
     /**
      * The type of the resource object.
      */
-    type: 'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow';
+    type:
+      | 'audience'
+      | 'email_layout'
+      | 'guide'
+      | 'message_type'
+      | 'partial'
+      | 'reusable_request'
+      | 'translation'
+      | 'workflow';
   }
 }
 
@@ -323,9 +331,19 @@ export interface CommitListParams extends EntriesCursorParams {
     | 'guide'
     | 'message_type'
     | 'partial'
+    | 'reusable_request'
     | 'translation'
     | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+    | Array<
+        | 'audience'
+        | 'email_layout'
+        | 'guide'
+        | 'message_type'
+        | 'partial'
+        | 'reusable_request'
+        | 'translation'
+        | 'workflow'
+      >;
 
   /**
    * Only return commits created at or after this RFC 3339 timestamp. Useful for
@@ -379,9 +397,19 @@ export interface CommitCommitAllParams {
     | 'guide'
     | 'message_type'
     | 'partial'
+    | 'reusable_request'
     | 'translation'
     | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+    | Array<
+        | 'audience'
+        | 'email_layout'
+        | 'guide'
+        | 'message_type'
+        | 'partial'
+        | 'reusable_request'
+        | 'translation'
+        | 'workflow'
+      >;
 }
 
 export interface CommitPromoteAllParams {
@@ -419,9 +447,19 @@ export interface CommitPromoteAllParams {
     | 'guide'
     | 'message_type'
     | 'partial'
+    | 'reusable_request'
     | 'translation'
     | 'workflow'
-    | Array<'audience' | 'email_layout' | 'guide' | 'message_type' | 'partial' | 'translation' | 'workflow'>;
+    | Array<
+        | 'audience'
+        | 'email_layout'
+        | 'guide'
+        | 'message_type'
+        | 'partial'
+        | 'reusable_request'
+        | 'translation'
+        | 'workflow'
+      >;
 }
 
 export declare namespace Commits {
