@@ -38,6 +38,12 @@ import {
   DynamicAudience,
   StaticAudience,
 } from './resources/audiences';
+import {
+  AuditLogListParams,
+  AuditLogListResponse,
+  AuditLogListResponsesEntriesCursor,
+  AuditLogs,
+} from './resources/audit-logs';
 import { Auth, AuthVerifyResponse } from './resources/auth';
 import { Billing, BillingSummary } from './resources/billing';
 import {
@@ -1155,6 +1161,7 @@ export class KnockMgmt {
    * Reusable requests are HTTP steps that workflows can link to and share across an account.
    */
   reusableRequests: API.ReusableRequests = new API.ReusableRequests(this);
+  auditLogs: API.AuditLogs = new API.AuditLogs(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1184,6 +1191,7 @@ KnockMgmt.PreferenceCenter = PreferenceCenter;
 KnockMgmt.Billing = Billing;
 KnockMgmt.PreferenceCategories = PreferenceCategories;
 KnockMgmt.ReusableRequests = ReusableRequests;
+KnockMgmt.AuditLogs = AuditLogs;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1554,6 +1562,13 @@ export declare namespace KnockMgmt {
     type ReusableRequestArchiveParams as ReusableRequestArchiveParams,
     type ReusableRequestUpsertParams as ReusableRequestUpsertParams,
     type ReusableRequestValidateParams as ReusableRequestValidateParams,
+  };
+
+  export {
+    AuditLogs as AuditLogs,
+    type AuditLogListResponse as AuditLogListResponse,
+    type AuditLogListResponsesEntriesCursor as AuditLogListResponsesEntriesCursor,
+    type AuditLogListParams as AuditLogListParams,
   };
 
   export type GoalAttachment = API.GoalAttachment;

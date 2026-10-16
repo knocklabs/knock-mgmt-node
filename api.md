@@ -503,3 +503,13 @@ Methods:
 - <code title="delete /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">archive</a>(reusableRequestKey, { ...params }) -> ReusableRequestArchiveResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">upsert</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpsertResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}/validate">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">validate</a>(reusableRequestKey, { ...params }) -> ReusableRequestValidateResponse</code>
+
+# AuditLogs
+
+Types:
+
+- <code><a href="./src/resources/audit-logs.ts">AuditLogListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/audit_logs">client.auditLogs.<a href="./src/resources/audit-logs.ts">list</a>({ ...params }) -> AuditLogListResponsesEntriesCursor</code>

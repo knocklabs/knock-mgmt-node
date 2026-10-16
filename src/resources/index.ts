@@ -20,6 +20,12 @@ export {
   type AudienceValidateParams,
   type AudiencesEntriesCursor,
 } from './audiences';
+export {
+  AuditLogs,
+  type AuditLogListResponse,
+  type AuditLogListParams,
+  type AuditLogListResponsesEntriesCursor,
+} from './audit-logs';
 export { Auth, type AuthVerifyResponse } from './auth';
 export { Billing, type BillingSummary } from './billing';
 export {
