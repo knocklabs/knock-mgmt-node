@@ -20,7 +20,16 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { APIKeyExchangeParams, APIKeyExchangeResponse, APIKeys } from './resources/api-keys';
-import { Asset, AssetListParams, Assets, AssetsEntriesCursor } from './resources/assets';
+import {
+  Asset,
+  AssetCreateParams,
+  AssetDeleteResponse,
+  AssetListParams,
+  AssetUploadsParams,
+  AssetUploadsResponse,
+  Assets,
+  AssetsEntriesCursor,
+} from './resources/assets';
 import {
   Audience,
   AudienceArchiveParams,
@@ -1504,8 +1513,12 @@ export declare namespace KnockMgmt {
   export {
     Assets as Assets,
     type Asset as Asset,
+    type AssetDeleteResponse as AssetDeleteResponse,
+    type AssetUploadsResponse as AssetUploadsResponse,
     type AssetsEntriesCursor as AssetsEntriesCursor,
+    type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetUploadsParams as AssetUploadsParams,
   };
 
   export {

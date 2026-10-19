@@ -2,7 +2,16 @@
 
 export * from './shared';
 export { APIKeys, type APIKeyExchangeResponse, type APIKeyExchangeParams } from './api-keys';
-export { Assets, type Asset, type AssetListParams, type AssetsEntriesCursor } from './assets';
+export {
+  Assets,
+  type Asset,
+  type AssetDeleteResponse,
+  type AssetUploadsResponse,
+  type AssetCreateParams,
+  type AssetListParams,
+  type AssetUploadsParams,
+  type AssetsEntriesCursor,
+} from './assets';
 export {
   Audiences,
   type Audience,

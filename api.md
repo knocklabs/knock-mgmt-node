@@ -411,10 +411,15 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/assets.ts">Asset</a></code>
+- <code><a href="./src/resources/assets.ts">AssetDeleteResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetUploadsResponse</a></code>
 
 Methods:
 
+- <code title="post /v1/assets">client.assets.<a href="./src/resources/assets.ts">create</a>({ ...params }) -> Asset</code>
 - <code title="get /v1/assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetsEntriesCursor</code>
+- <code title="delete /v1/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> AssetDeleteResponse</code>
+- <code title="post /v1/assets/uploads">client.assets.<a href="./src/resources/assets.ts">uploads</a>({ ...params }) -> AssetUploadsResponse</code>
 
 # Tags
 
