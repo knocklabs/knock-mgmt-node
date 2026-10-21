@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.43.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.42.0...v0.43.0) (2026-10-21)
+
+
+### Features
+
+* Add asset creation, upload requests, and archiving (v0.1.1711) ([fd72e3d](https://github.com/knocklabs/knock-mgmt-node/commit/fd72e3d8299fed1fd5478c0ce2fe2444e5e0eb18))
+* Add webhook management and workflow trigger events to the SDK (v0.1.1716) ([7519cc3](https://github.com/knocklabs/knock-mgmt-node/commit/7519cc324beaca6682ab1e35bbd8f85c93c5ef34))
+* update mapi spec to v0.1.1702 ([d7d2da1](https://github.com/knocklabs/knock-mgmt-node/commit/d7d2da171cbd372125b8301475d94f57d6c17718))
+
 ## [0.42.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.41.0...v0.42.0) (2026-10-15)
 
 
