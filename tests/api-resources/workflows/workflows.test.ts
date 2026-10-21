@@ -197,6 +197,13 @@ describe('resource workflows', () => {
         settings: { is_commercial: false, override_preferences: false },
         tags: ['string'],
         trigger_data_json_schema: { foo: 'bar' },
+        trigger_events: [
+          {
+            audience_action_type: 'member_added',
+            audience_key: 'pro-users',
+            type: 'audience',
+          },
+        ],
         trigger_frequency: 'every_trigger',
       },
       allow_empty: true,
@@ -286,6 +293,13 @@ describe('resource workflows', () => {
         settings: { is_commercial: false, override_preferences: false },
         tags: ['string'],
         trigger_data_json_schema: { foo: 'bar' },
+        trigger_events: [
+          {
+            audience_action_type: 'member_added',
+            audience_key: 'pro-users',
+            type: 'audience',
+          },
+        ],
         trigger_frequency: 'every_trigger',
       },
       branch: 'feature-branch',

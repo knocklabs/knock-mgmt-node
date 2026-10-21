@@ -135,6 +135,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowSMSStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowThrottleStep</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerEvents</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowTriggerWorkflowStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateDataStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateObjectStep</a></code>
@@ -498,6 +499,7 @@ Types:
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestRequest</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestSettings</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestArchiveResponse</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUpdateUnarchiveResponse</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUpsertResponse</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestValidateResponse</a></code>
 
@@ -506,6 +508,7 @@ Methods:
 - <code title="get /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">retrieve</a>(reusableRequestKey, { ...params }) -> ReusableRequest</code>
 - <code title="get /v1/reusable_requests">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">list</a>({ ...params }) -> ReusableRequestsEntriesCursor</code>
 - <code title="delete /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">archive</a>(reusableRequestKey, { ...params }) -> ReusableRequestArchiveResponse</code>
+- <code title="put /v1/reusable_requests/{reusable_request_key}/unarchive">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">updateUnarchive</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpdateUnarchiveResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">upsert</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpsertResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}/validate">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">validate</a>(reusableRequestKey, { ...params }) -> ReusableRequestValidateResponse</code>
 
@@ -518,3 +521,21 @@ Types:
 Methods:
 
 - <code title="get /v1/audit_logs">client.auditLogs.<a href="./src/resources/audit-logs.ts">list</a>({ ...params }) -> AuditLogListResponsesEntriesCursor</code>
+
+# Webhooks
+
+Types:
+
+- <code><a href="./src/resources/webhooks.ts">Webhook</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookRequest</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookCreateResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookUpdateResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
+- <code title="get /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">retrieve</a>(id, { ...params }) -> Webhook</code>
+- <code title="put /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(id, { ...params }) -> WebhookUpdateResponse</code>
+- <code title="get /v1/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>({ ...params }) -> WebhooksEntriesCursor</code>
+- <code title="delete /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(id, { ...params }) -> WebhookDeleteResponse</code>

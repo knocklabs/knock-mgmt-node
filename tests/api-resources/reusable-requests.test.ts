@@ -93,6 +93,30 @@ describe('resource reusableRequests', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('updateUnarchive', async () => {
+    const responsePromise = client.reusableRequests.updateUnarchive('fetch-user');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('updateUnarchive: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.reusableRequests.updateUnarchive(
+        'fetch-user',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('upsert: only required params', async () => {
     const responsePromise = client.reusableRequests.upsert('fetch-user', {
       reusable_request: {

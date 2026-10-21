@@ -72,6 +72,34 @@ export class ReusableRequests extends APIResource {
   }
 
   /**
+   * Unarchives a reusable request by key, with every copy archived alongside it in
+   * other environments.
+   *
+   * Returns a 404 when the key isn't archived, including when an earlier or
+   * concurrent request already restored it. Returns a 422 with the code `key_in_use`
+   * when a live reusable request uses the key.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.reusableRequests.updateUnarchive(
+   *     'fetch-user',
+   *   );
+   * ```
+   */
+  updateUnarchive(
+    reusableRequestKey: string,
+    params: ReusableRequestUpdateUnarchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ReusableRequestUpdateUnarchiveResponse> {
+    const { environment } = params ?? {};
+    return this._client.put(path`/v1/reusable_requests/${reusableRequestKey}/unarchive`, {
+      query: { environment },
+      ...options,
+    });
+  }
+
+  /**
    * Updates a reusable request of a given key, or creates a new one if it does not
    * yet exist.
    *
@@ -321,6 +349,16 @@ export interface ReusableRequestArchiveResponse {
 /**
  * Wraps the ReusableRequest response under the `reusable_request` key.
  */
+export interface ReusableRequestUpdateUnarchiveResponse {
+  /**
+   * A reusable HTTP request that workflows can link to.
+   */
+  reusable_request: ReusableRequest;
+}
+
+/**
+ * Wraps the ReusableRequest response under the `reusable_request` key.
+ */
 export interface ReusableRequestUpsertResponse {
   /**
    * A reusable HTTP request that workflows can link to.
@@ -389,6 +427,13 @@ export interface ReusableRequestListParams extends EntriesCursorParams {
 }
 
 export interface ReusableRequestArchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface ReusableRequestUpdateUnarchiveParams {
   /**
    * The environment slug. When omitted, the account's default environment is used.
    */
@@ -472,12 +517,14 @@ export declare namespace ReusableRequests {
     type ReusableRequestRequest as ReusableRequestRequest,
     type ReusableRequestSettings as ReusableRequestSettings,
     type ReusableRequestArchiveResponse as ReusableRequestArchiveResponse,
+    type ReusableRequestUpdateUnarchiveResponse as ReusableRequestUpdateUnarchiveResponse,
     type ReusableRequestUpsertResponse as ReusableRequestUpsertResponse,
     type ReusableRequestValidateResponse as ReusableRequestValidateResponse,
     type ReusableRequestsEntriesCursor as ReusableRequestsEntriesCursor,
     type ReusableRequestRetrieveParams as ReusableRequestRetrieveParams,
     type ReusableRequestListParams as ReusableRequestListParams,
     type ReusableRequestArchiveParams as ReusableRequestArchiveParams,
+    type ReusableRequestUpdateUnarchiveParams as ReusableRequestUpdateUnarchiveParams,
     type ReusableRequestUpsertParams as ReusableRequestUpsertParams,
     type ReusableRequestValidateParams as ReusableRequestValidateParams,
   };

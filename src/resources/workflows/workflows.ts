@@ -437,6 +437,14 @@ export interface Workflow {
   trigger_data_json_schema?: { [key: string]: unknown };
 
   /**
+   * Events that automatically trigger this workflow: audience triggers (a user
+   * enters an audience) or source event triggers (an event is received from an
+   * integration source). All entries must share the same `type`. Omit or pass an
+   * empty list for workflows triggered via the API.
+   */
+  trigger_events?: Array<WorkflowTriggerEvents>;
+
+  /**
    * The frequency at which the workflow should be triggered. One of:
    * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
    * to `every_trigger`. Read more in
@@ -1319,6 +1327,14 @@ export interface WorkflowRequest {
   trigger_data_json_schema?: { [key: string]: unknown };
 
   /**
+   * Events that automatically trigger this workflow: audience triggers (a user
+   * enters an audience) or source event triggers (an event is received from an
+   * integration source). All entries must share the same `type`. Omit or pass an
+   * empty list for workflows triggered via the API.
+   */
+  trigger_events?: Array<WorkflowTriggerEvents>;
+
+  /**
    * The frequency at which the workflow should be triggered. One of:
    * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
    * to `every_trigger`. Read more in
@@ -1906,6 +1922,103 @@ export namespace WorkflowThrottleStep {
 }
 
 /**
+ * A trigger event that can automatically trigger a workflow. Can be an audience
+ * trigger or a source event trigger.
+ */
+export type WorkflowTriggerEvents =
+  | WorkflowTriggerEvents.AudienceTrigger
+  | WorkflowTriggerEvents.SourceEventTrigger;
+
+export namespace WorkflowTriggerEvents {
+  /**
+   * An audience trigger that automatically triggers the workflow when a user enters
+   * an audience. Read more in the
+   * [docs](https://docs.knock.app/send-notifications/triggering-workflows/audiences).
+   */
+  export interface AudienceTrigger {
+    /**
+     * The action type that triggers the workflow.
+     */
+    audience_action_type: 'member_added';
+
+    /**
+     * The unique key of the audience that triggers the workflow.
+     */
+    audience_key: string;
+
+    /**
+     * The trigger event type.
+     */
+    type: 'audience';
+  }
+
+  /**
+   * A source event trigger that triggers the workflow when an event is received from
+   * an integration source. Read more in the
+   * [docs](https://docs.knock.app/integrations/sources/overview).
+   */
+  export interface SourceEventTrigger {
+    /**
+     * The name of the event that triggers the workflow.
+     */
+    event_name: string;
+
+    /**
+     * The type of event. Currently only 'track' is supported.
+     */
+    event_type: 'track';
+
+    /**
+     * The ID of the integration source that emits the event.
+     */
+    integration_source_id: string;
+
+    /**
+     * The trigger event type.
+     */
+    type: 'source_event';
+
+    /**
+     * Optional parameters to customize the triggered workflow run.
+     */
+    trigger_parameters?: SourceEventTrigger.TriggerParameters | null;
+  }
+
+  export namespace SourceEventTrigger {
+    /**
+     * Optional parameters to customize the triggered workflow run.
+     */
+    export interface TriggerParameters {
+      /**
+       * A liquid template string that will be evaluated to determine the actor.
+       */
+      actor?: string | null;
+
+      /**
+       * A liquid template string that will be evaluated to determine the cancellation
+       * key.
+       */
+      cancellation_key?: string | null;
+
+      /**
+       * A liquid template string that will be evaluated and passed as the data payload.
+       */
+      data?: string | null;
+
+      /**
+       * A liquid template string that will be evaluated to determine recipients.
+       */
+      recipients?: string | null;
+
+      /**
+       * A liquid template string that will be evaluated to determine the tenant.
+       */
+      tenant?: string | null;
+    }
+  }
+}
+
+/**
  * A workflow trigger function step. Read more in the
  * [docs](https://docs.knock.app/designing-workflows/trigger-workflow-function).
  */
@@ -2379,6 +2492,14 @@ export interface WorkflowRetrieveResponse {
   trigger_data_json_schema?: { [key: string]: unknown };
 
   /**
+   * Events that automatically trigger this workflow: audience triggers (a user
+   * enters an audience) or source event triggers (an event is received from an
+   * integration source). All entries must share the same `type`. Omit or pass an
+   * empty list for workflows triggered via the API.
+   */
+  trigger_events?: Array<WorkflowTriggerEvents>;
+
+  /**
    * The frequency at which the workflow should be triggered. One of:
    * `once_per_recipient`, `once_per_recipient_per_tenant`, `every_trigger`. Defaults
    * to `every_trigger`. Read more in
@@ -2699,6 +2820,7 @@ export declare namespace Workflows {
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
+    type WorkflowTriggerEvents as WorkflowTriggerEvents,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
     type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
     type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,

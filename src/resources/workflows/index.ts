@@ -26,6 +26,7 @@ export {
   type WorkflowSMSStep,
   type WorkflowStep,
   type WorkflowThrottleStep,
+  type WorkflowTriggerEvents,
   type WorkflowTriggerWorkflowStep,
   type WorkflowUpdateDataStep,
   type WorkflowUpdateObjectStep,

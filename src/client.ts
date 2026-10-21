@@ -251,6 +251,8 @@ import {
   ReusableRequestRequest,
   ReusableRequestRetrieveParams,
   ReusableRequestSettings,
+  ReusableRequestUpdateUnarchiveParams,
+  ReusableRequestUpdateUnarchiveResponse,
   ReusableRequestUpsertParams,
   ReusableRequestUpsertResponse,
   ReusableRequestValidateParams,
@@ -305,6 +307,20 @@ import {
   VariablesEntriesCursor,
 } from './resources/variables';
 import {
+  Webhook,
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookDeleteParams,
+  WebhookDeleteResponse,
+  WebhookListParams,
+  WebhookRequest,
+  WebhookRetrieveParams,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+  WebhooksEntriesCursor,
+} from './resources/webhooks';
+import {
   Condition,
   ConditionGroup,
   ConditionGroupAllMatch,
@@ -335,6 +351,7 @@ import {
   WorkflowSMSStep,
   WorkflowStep,
   WorkflowThrottleStep,
+  WorkflowTriggerEvents,
   WorkflowTriggerWorkflowStep,
   WorkflowUpdateDataStep,
   WorkflowUpdateObjectStep,
@@ -1171,6 +1188,7 @@ export class KnockMgmt {
    */
   reusableRequests: API.ReusableRequests = new API.ReusableRequests(this);
   auditLogs: API.AuditLogs = new API.AuditLogs(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1201,6 +1219,7 @@ KnockMgmt.Billing = Billing;
 KnockMgmt.PreferenceCategories = PreferenceCategories;
 KnockMgmt.ReusableRequests = ReusableRequests;
 KnockMgmt.AuditLogs = AuditLogs;
+KnockMgmt.Webhooks = Webhooks;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1307,6 +1326,7 @@ export declare namespace KnockMgmt {
     type WorkflowSMSStep as WorkflowSMSStep,
     type WorkflowStep as WorkflowStep,
     type WorkflowThrottleStep as WorkflowThrottleStep,
+    type WorkflowTriggerEvents as WorkflowTriggerEvents,
     type WorkflowTriggerWorkflowStep as WorkflowTriggerWorkflowStep,
     type WorkflowUpdateDataStep as WorkflowUpdateDataStep,
     type WorkflowUpdateObjectStep as WorkflowUpdateObjectStep,
@@ -1567,12 +1587,14 @@ export declare namespace KnockMgmt {
     type ReusableRequestRequest as ReusableRequestRequest,
     type ReusableRequestSettings as ReusableRequestSettings,
     type ReusableRequestArchiveResponse as ReusableRequestArchiveResponse,
+    type ReusableRequestUpdateUnarchiveResponse as ReusableRequestUpdateUnarchiveResponse,
     type ReusableRequestUpsertResponse as ReusableRequestUpsertResponse,
     type ReusableRequestValidateResponse as ReusableRequestValidateResponse,
     type ReusableRequestsEntriesCursor as ReusableRequestsEntriesCursor,
     type ReusableRequestRetrieveParams as ReusableRequestRetrieveParams,
     type ReusableRequestListParams as ReusableRequestListParams,
     type ReusableRequestArchiveParams as ReusableRequestArchiveParams,
+    type ReusableRequestUpdateUnarchiveParams as ReusableRequestUpdateUnarchiveParams,
     type ReusableRequestUpsertParams as ReusableRequestUpsertParams,
     type ReusableRequestValidateParams as ReusableRequestValidateParams,
   };
@@ -1582,6 +1604,21 @@ export declare namespace KnockMgmt {
     type AuditLogListResponse as AuditLogListResponse,
     type AuditLogListResponsesEntriesCursor as AuditLogListResponsesEntriesCursor,
     type AuditLogListParams as AuditLogListParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type Webhook as Webhook,
+    type WebhookRequest as WebhookRequest,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhooksEntriesCursor as WebhooksEntriesCursor,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookRetrieveParams as WebhookRetrieveParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListParams as WebhookListParams,
+    type WebhookDeleteParams as WebhookDeleteParams,
   };
 
   export type GoalAttachment = API.GoalAttachment;
