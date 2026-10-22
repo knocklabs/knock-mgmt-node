@@ -573,7 +573,9 @@ export namespace BroadcastRunParams {
    */
   export interface Settings {
     /**
-     * Whether to generate messages without sending them to downstream providers.
+     * Whether to generate messages without sending them to downstream providers. When
+     * omitted, each channel's sandbox mode setting in the environment applies. When
+     * false, messages are sent even through channels in sandbox mode.
      */
     sandbox_mode?: boolean;
 
