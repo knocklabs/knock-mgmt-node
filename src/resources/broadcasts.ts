@@ -551,6 +551,12 @@ export interface BroadcastRunParams {
   settings?: BroadcastRunParams.Settings;
 
   /**
+   * Body param: When set, runs only this message-sending channel step. Guide steps,
+   * legacy in-app steps, and unknown ids are rejected.
+   */
+  step_id?: string | null;
+
+  /**
    * Body param: The tenant to associate the broadcast run with. Must not contain
    * whitespace.
    */

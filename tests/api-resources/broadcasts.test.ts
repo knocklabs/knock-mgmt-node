@@ -111,6 +111,7 @@ describe('resource broadcasts', () => {
       branch: 'feature-branch',
       environment: 'development',
       settings: { sandbox_mode: true, skip_delay: true },
+      step_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       tenant: 'tenant_1',
     });
   });

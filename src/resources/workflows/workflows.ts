@@ -2686,6 +2686,12 @@ export interface WorkflowRunParams {
   data?: { [key: string]: unknown };
 
   /**
+   * Body param: When set, runs only this message-sending channel step. Guide steps,
+   * legacy in-app steps, and unknown ids are rejected.
+   */
+  step_id?: string | null;
+
+  /**
    * Body param: The tenant to associate the workflow run with. Must not contain
    * whitespace.
    */

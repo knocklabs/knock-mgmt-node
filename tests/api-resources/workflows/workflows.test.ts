@@ -116,6 +116,7 @@ describe('resource workflows', () => {
       actor: 'user_1',
       cancellation_key: 'cancellation_key',
       data: { park_id: 'bar' },
+      step_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       tenant: 'tenant',
     });
   });
