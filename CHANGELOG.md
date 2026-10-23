@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.44.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.43.0...v0.44.0) (2026-10-23)
+
+
+### Features
+
+* Run a broadcast or workflow for a single message-sending channel step (v0.1.1732) ([3924d65](https://github.com/knocklabs/knock-mgmt-node/commit/3924d65e3067403f2842994f5ace8563ed082dbe))
+* update mapi spec to v0.1.1727 ([c53491c](https://github.com/knocklabs/knock-mgmt-node/commit/c53491c22c6bad513cac60ace689b35fe03c3433))
+
 ## [0.43.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.42.0...v0.43.0) (2026-10-21)
 
 
