@@ -632,7 +632,7 @@ export namespace WorkflowBatchStep {
 
     /**
      * The data path to resolve the batch window. The resolved value must be an
-     * ISO-8601 timestamp.
+     * ISO-8601 timestamp 90 days or less from when the batch opens.
      */
     batch_until_field_path?: string | null;
 
@@ -843,7 +843,8 @@ export namespace WorkflowDelayStep {
 
     /**
      * When set will use the path to resolve the delay into a timestamp from the
-     * property referenced
+     * property referenced. The resolved timestamp must be 365 days or less from when
+     * the step runs.
      */
     delay_until_field_path?: string;
 
