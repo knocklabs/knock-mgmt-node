@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.44.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.43.0...v0.44.0) (2026-11-03)
+
+
+### Features
+
+* Attach goals to workflows, guides, and broadcasts, and list or detach them (v0.1.1758) ([6862eb4](https://github.com/knocklabs/knock-mgmt-node/commit/6862eb44fda1899078659993fa4caf76f7100641))
+* Run a broadcast or workflow for a single message-sending channel step (v0.1.1732) ([3924d65](https://github.com/knocklabs/knock-mgmt-node/commit/3924d65e3067403f2842994f5ace8563ed082dbe))
+* update mapi spec to v0.1.1727 ([c53491c](https://github.com/knocklabs/knock-mgmt-node/commit/c53491c22c6bad513cac60ace689b35fe03c3433))
+* update mapi spec to v0.1.1741 ([53647de](https://github.com/knocklabs/knock-mgmt-node/commit/53647de01cb36e4e9d8040fe289ac58bee1a88ea))
+* update mapi spec to v0.1.1743 ([ac8a7d6](https://github.com/knocklabs/knock-mgmt-node/commit/ac8a7d64b4bd4800865e3b7c311dfb35b17eacc5))
+
 ## [0.43.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.42.0...v0.43.0) (2026-10-21)
 
 
