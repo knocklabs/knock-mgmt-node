@@ -164,7 +164,7 @@ export {
   type GoalUpsertParams,
   type GoalValidateParams,
   type GoalsEntriesCursor,
-} from './goals';
+} from './goals/goals';
 export {
   Guides,
   type Guide,

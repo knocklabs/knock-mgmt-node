@@ -234,7 +234,11 @@ export interface Guide {
   description?: string | null;
 
   /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   * @deprecated Deprecated: attach goals with
+   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
+   * accounts on the new goal attachments, saves that include this field are rejected
+   * with a 422 and responses omit it.
    */
   goal_attachment?: Shared.GoalAttachment | null;
 
@@ -344,7 +348,11 @@ export interface GuideRequest {
   description?: string | null;
 
   /**
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking.
+   * @deprecated Deprecated: attach goals with
+   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
+   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
+   * accounts on the new goal attachments, saves that include this field are rejected
+   * with a 422 and responses omit it.
    */
   goal_attachment?: Shared.GoalAttachment | null;
 

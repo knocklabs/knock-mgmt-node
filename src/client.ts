@@ -167,23 +167,6 @@ import {
   EnvironmentsEntriesCursor,
 } from './resources/environments';
 import {
-  Goal,
-  GoalArchiveParams,
-  GoalArchiveResponse,
-  GoalCloneParams,
-  GoalCloneResponse,
-  GoalCondition,
-  GoalListParams,
-  GoalRequest,
-  GoalRetrieveParams,
-  GoalUpsertParams,
-  GoalUpsertResponse,
-  GoalValidateParams,
-  GoalValidateResponse,
-  Goals,
-  GoalsEntriesCursor,
-} from './resources/goals';
-import {
   Guide,
   GuideActivateParams,
   GuideActivateResponse,
@@ -320,6 +303,23 @@ import {
   Webhooks,
   WebhooksEntriesCursor,
 } from './resources/webhooks';
+import {
+  Goal,
+  GoalArchiveParams,
+  GoalArchiveResponse,
+  GoalCloneParams,
+  GoalCloneResponse,
+  GoalCondition,
+  GoalListParams,
+  GoalRequest,
+  GoalRetrieveParams,
+  GoalUpsertParams,
+  GoalUpsertResponse,
+  GoalValidateParams,
+  GoalValidateResponse,
+  Goals,
+  GoalsEntriesCursor,
+} from './resources/goals/goals';
 import {
   Condition,
   ConditionGroup,

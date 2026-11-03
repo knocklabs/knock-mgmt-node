@@ -390,22 +390,37 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/goals.ts">Goal</a></code>
-- <code><a href="./src/resources/goals.ts">GoalCondition</a></code>
-- <code><a href="./src/resources/goals.ts">GoalRequest</a></code>
-- <code><a href="./src/resources/goals.ts">GoalArchiveResponse</a></code>
-- <code><a href="./src/resources/goals.ts">GoalCloneResponse</a></code>
-- <code><a href="./src/resources/goals.ts">GoalUpsertResponse</a></code>
-- <code><a href="./src/resources/goals.ts">GoalValidateResponse</a></code>
+- <code><a href="./src/resources/goals/goals.ts">Goal</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalCondition</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalRequest</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalArchiveResponse</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalCloneResponse</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalUpsertResponse</a></code>
+- <code><a href="./src/resources/goals/goals.ts">GoalValidateResponse</a></code>
 
 Methods:
 
-- <code title="get /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">retrieve</a>(goalKey, { ...params }) -> Goal</code>
-- <code title="get /v1/goals">client.goals.<a href="./src/resources/goals.ts">list</a>({ ...params }) -> GoalsEntriesCursor</code>
-- <code title="delete /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">archive</a>(goalKey, { ...params }) -> GoalArchiveResponse</code>
-- <code title="post /v1/goals/{goal_key}/clone">client.goals.<a href="./src/resources/goals.ts">clone</a>(goalKey, { ...params }) -> GoalCloneResponse</code>
-- <code title="put /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals.ts">upsert</a>(goalKey, { ...params }) -> GoalUpsertResponse</code>
-- <code title="put /v1/goals/{goal_key}/validate">client.goals.<a href="./src/resources/goals.ts">validate</a>(goalKey, { ...params }) -> GoalValidateResponse</code>
+- <code title="get /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals/goals.ts">retrieve</a>(goalKey, { ...params }) -> Goal</code>
+- <code title="get /v1/goals">client.goals.<a href="./src/resources/goals/goals.ts">list</a>({ ...params }) -> GoalsEntriesCursor</code>
+- <code title="delete /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals/goals.ts">archive</a>(goalKey, { ...params }) -> GoalArchiveResponse</code>
+- <code title="post /v1/goals/{goal_key}/clone">client.goals.<a href="./src/resources/goals/goals.ts">clone</a>(goalKey, { ...params }) -> GoalCloneResponse</code>
+- <code title="put /v1/goals/{goal_key}">client.goals.<a href="./src/resources/goals/goals.ts">upsert</a>(goalKey, { ...params }) -> GoalUpsertResponse</code>
+- <code title="put /v1/goals/{goal_key}/validate">client.goals.<a href="./src/resources/goals/goals.ts">validate</a>(goalKey, { ...params }) -> GoalValidateResponse</code>
+
+## Attachments
+
+Types:
+
+- <code><a href="./src/resources/goals/attachments.ts">GoalResourceAttachment</a></code>
+- <code><a href="./src/resources/goals/attachments.ts">AttachmentUpdateResponse</a></code>
+- <code><a href="./src/resources/goals/attachments.ts">AttachmentListResponse</a></code>
+- <code><a href="./src/resources/goals/attachments.ts">AttachmentDeleteResponse</a></code>
+
+Methods:
+
+- <code title="put /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}">client.goals.attachments.<a href="./src/resources/goals/attachments.ts">update</a>(resourceKey, { ...params }) -> AttachmentUpdateResponse</code>
+- <code title="get /v1/goals/{goal_key}/attachments">client.goals.attachments.<a href="./src/resources/goals/attachments.ts">list</a>(goalKey, { ...params }) -> AttachmentListResponse</code>
+- <code title="delete /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}">client.goals.attachments.<a href="./src/resources/goals/attachments.ts">delete</a>(resourceKey, { ...params }) -> AttachmentDeleteResponse</code>
 
 # Assets
 
