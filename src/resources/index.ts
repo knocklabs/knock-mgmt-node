@@ -147,7 +147,7 @@ export {
   type Environment,
   type EnvironmentListParams,
   type EnvironmentsEntriesCursor,
-} from './environments';
+} from './environments/environments';
 export {
   Goals,
   type Goal,

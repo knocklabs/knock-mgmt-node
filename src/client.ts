@@ -161,12 +161,6 @@ import {
   EmailLayoutsEntriesCursor,
 } from './resources/email-layouts';
 import {
-  Environment,
-  EnvironmentListParams,
-  Environments,
-  EnvironmentsEntriesCursor,
-} from './resources/environments';
-import {
   Guide,
   GuideActivateParams,
   GuideActivateResponse,
@@ -303,6 +297,12 @@ import {
   Webhooks,
   WebhooksEntriesCursor,
 } from './resources/webhooks';
+import {
+  Environment,
+  EnvironmentListParams,
+  Environments,
+  EnvironmentsEntriesCursor,
+} from './resources/environments/environments';
 import {
   Goal,
   GoalArchiveParams,

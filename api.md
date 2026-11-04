@@ -287,12 +287,24 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/environments.ts">Environment</a></code>
+- <code><a href="./src/resources/environments/environments.ts">Environment</a></code>
 
 Methods:
 
-- <code title="get /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments.ts">retrieve</a>(environmentSlug) -> Environment</code>
-- <code title="get /v1/environments">client.environments.<a href="./src/resources/environments.ts">list</a>({ ...params }) -> EnvironmentsEntriesCursor</code>
+- <code title="get /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments/environments.ts">retrieve</a>(environmentSlug) -> Environment</code>
+- <code title="get /v1/environments">client.environments.<a href="./src/resources/environments/environments.ts">list</a>({ ...params }) -> EnvironmentsEntriesCursor</code>
+
+## Defaults
+
+Types:
+
+- <code><a href="./src/resources/environments/defaults.ts">EnvironmentDefaults</a></code>
+- <code><a href="./src/resources/environments/defaults.ts">EnvironmentDefaultsPreferenceSet</a></code>
+
+Methods:
+
+- <code title="put /v1/environments/{environment_slug}/defaults">client.environments.defaults.<a href="./src/resources/environments/defaults.ts">update</a>(environmentSlug, { ...params }) -> EnvironmentDefaults</code>
+- <code title="get /v1/environments/{environment_slug}/defaults">client.environments.defaults.<a href="./src/resources/environments/defaults.ts">list</a>(environmentSlug) -> EnvironmentDefaults</code>
 
 # Variables
 
