@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.45.0...v0.46.0) (2026-11-05)
+
+
+### Features
+
+* Exchange for API key accepts an optional type query parameter (v0.1.1768) ([a27c3a7](https://github.com/knocklabs/knock-mgmt-node/commit/a27c3a7c7bc8a4ebf7cfe1d0259cab2bcb668a36))
+
 ## [0.45.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.44.0...v0.45.0) (2026-11-04)
 
 
