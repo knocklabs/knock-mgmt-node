@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.46.0...v0.46.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* remove goal attachment from guides, broadcasts, and workflows (v0.1.1771) ([3acc623](https://github.com/knocklabs/knock-mgmt-node/commit/3acc623fe61f692b597f500aedd5ea8427e89bc2))
+
 ## [0.46.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.45.0...v0.46.0) (2026-11-05)
 
 
