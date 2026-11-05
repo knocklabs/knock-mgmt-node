@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.44.0...v0.45.0) (2026-11-04)
+
+
+### Features
+
+* add get and upsert environment defaults for environments (v0.1.1766) ([c245b1a](https://github.com/knocklabs/knock-mgmt-node/commit/c245b1a0f84c0dad378599dc040f41982a6db448))
+
 ## [0.44.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.43.0...v0.44.0) (2026-11-03)
 
 
