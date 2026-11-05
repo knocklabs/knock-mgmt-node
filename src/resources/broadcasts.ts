@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import * as WorkflowsAPI from './workflows/workflows';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -274,15 +273,6 @@ export interface Broadcast {
   description?: string;
 
   /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
-
-  /**
    * The timestamp of when the broadcast is scheduled to be sent.
    */
   scheduled_at?: string | null;
@@ -364,15 +354,6 @@ export interface BroadcastRequest {
    * about the broadcast for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
-
-  /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * The timestamp of when the broadcast is scheduled to be sent.

@@ -1621,7 +1621,6 @@ export declare namespace KnockMgmt {
     type WebhookDeleteParams as WebhookDeleteParams,
   };
 
-  export type GoalAttachment = API.GoalAttachment;
   export type MessageTypeBooleanField = API.MessageTypeBooleanField;
   export type MessageTypeButtonField = API.MessageTypeButtonField;
   export type MessageTypeColorField = API.MessageTypeColorField;

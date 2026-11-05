@@ -2,7 +2,6 @@
 
 Types:
 
-- <code><a href="./src/resources/shared.ts">GoalAttachment</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeBooleanField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeButtonField</a></code>
 - <code><a href="./src/resources/shared.ts">MessageTypeColorField</a></code>

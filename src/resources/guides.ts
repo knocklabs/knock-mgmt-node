@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as Shared from './shared';
 import * as WorkflowsAPI from './workflows/workflows';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
@@ -234,15 +233,6 @@ export interface Guide {
   description?: string | null;
 
   /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
-
-  /**
    * A group of conditions to be evaluated.
    */
   guide_audience_conditions?: WorkflowsAPI.ConditionGroup | null;
@@ -346,15 +336,6 @@ export interface GuideRequest {
    * the guide for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string | null;
-
-  /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A group of conditions to be evaluated.

@@ -4,7 +4,6 @@ import { APIResource } from '../../core/resource';
 import * as WorkflowsAPI from './workflows';
 import * as ChannelsAPI from '../channels';
 import * as MembersAPI from '../members';
-import * as Shared from '../shared';
 import * as TemplatesAPI from '../templates';
 import * as StepsAPI from './steps';
 import { StepPreviewTemplateParams, StepPreviewTemplateResponse, Steps } from './steps';
@@ -411,15 +410,6 @@ export interface Workflow {
    * the workflow for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
-
-  /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A map of workflow settings.
@@ -1306,15 +1296,6 @@ export interface WorkflowRequest {
    * the workflow for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
-
-  /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A map of workflow settings.
@@ -2475,15 +2456,6 @@ export interface WorkflowRetrieveResponse {
    * the workflow for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
-
-  /**
-   * @deprecated Deprecated: attach goals with
-   * `PUT /v1/goals/{goal_key}/attachments/{resource_type}/{resource_key}` instead.
-   * Attaches a goal to a workflow, guide, or broadcast for attribution tracking. For
-   * accounts on the new goal attachments, saves that include this field are rejected
-   * with a 422 and responses omit it.
-   */
-  goal_attachment?: Shared.GoalAttachment | null;
 
   /**
    * A map of workflow settings.
