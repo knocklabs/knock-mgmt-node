@@ -1945,7 +1945,7 @@ export namespace WorkflowTriggerEvents {
   /**
    * A source event trigger that triggers the workflow when an event is received from
    * an integration source. Read more in the
-   * [docs](https://docs.knock.app/integrations/sources/overview).
+   * [docs](https://docs.knock.app/integrations/sources/streams).
    */
   export interface SourceEventTrigger {
     /**

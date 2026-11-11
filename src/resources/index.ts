@@ -183,6 +183,13 @@ export {
   type GuidesEntriesCursor,
 } from './guides';
 export {
+  HeadlessAccounts,
+  type HeadlessAccountCreateResponse,
+  type HeadlessAccountClaimResponse,
+  type HeadlessAccountRetrieveStatusResponse,
+  type HeadlessAccountClaimParams,
+} from './headless-accounts';
+export {
   Members,
   type Member,
   type MemberUser,
@@ -294,6 +301,35 @@ export {
   type VariableUpsertParams,
   type VariablesEntriesCursor,
 } from './variables';
+export {
+  WarehouseSyncs,
+  type WarehouseSync,
+  type WarehouseSyncChangeTracking,
+  type WarehouseSyncMapping,
+  type WarehouseSyncRequest,
+  type WarehouseSyncSource,
+  type WarehouseSyncTarget,
+  type WarehouseSyncUpdateResponse,
+  type WarehouseSyncRetrieveRunsResponse,
+  type WarehouseSyncUpdateRunResponse,
+  type WarehouseSyncUpdateSettingsResponse,
+  type WarehouseSyncUpdateValidateResponse,
+  type WarehouseSyncRetrieveParams,
+  type WarehouseSyncUpdateParams,
+  type WarehouseSyncListParams,
+  type WarehouseSyncRetrieveRunsParams,
+  type WarehouseSyncUpdateRunParams,
+  type WarehouseSyncUpdateSettingsParams,
+  type WarehouseSyncUpdateValidateParams,
+  type WarehouseSyncsEntriesCursor,
+} from './warehouse-syncs';
+export {
+  Warehouses,
+  type Warehouse,
+  type WarehouseRetrieveParams,
+  type WarehouseListParams,
+  type WarehousesEntriesCursor,
+} from './warehouses';
 export {
   Webhooks,
   type Webhook,

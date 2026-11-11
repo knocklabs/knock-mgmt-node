@@ -175,9 +175,10 @@ export interface VariableUpsertParams {
   environment_values?: { [key: string]: string | null };
 
   /**
-   * The default value of the variable. Required when creating a variable. When
-   * omitted or null on an update, the existing value is kept. An empty string clears
-   * the default value.
+   * The default value of the variable. Required when creating a variable, unless
+   * `environment_values` sets a value for at least one environment. When omitted or
+   * null on an update, the existing value is kept. An empty string clears the
+   * default value.
    */
   value?: string | null;
 }

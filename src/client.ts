@@ -177,6 +177,13 @@ import {
   Guides,
   GuidesEntriesCursor,
 } from './resources/guides';
+import {
+  HeadlessAccountClaimParams,
+  HeadlessAccountClaimResponse,
+  HeadlessAccountCreateResponse,
+  HeadlessAccountRetrieveStatusResponse,
+  HeadlessAccounts,
+} from './resources/headless-accounts';
 import { Member, MemberListParams, MemberUser, Members, MembersEntriesCursor } from './resources/members';
 import {
   MessageType,
@@ -283,6 +290,35 @@ import {
   Variables,
   VariablesEntriesCursor,
 } from './resources/variables';
+import {
+  WarehouseSync,
+  WarehouseSyncChangeTracking,
+  WarehouseSyncListParams,
+  WarehouseSyncMapping,
+  WarehouseSyncRequest,
+  WarehouseSyncRetrieveParams,
+  WarehouseSyncRetrieveRunsParams,
+  WarehouseSyncRetrieveRunsResponse,
+  WarehouseSyncSource,
+  WarehouseSyncTarget,
+  WarehouseSyncUpdateParams,
+  WarehouseSyncUpdateResponse,
+  WarehouseSyncUpdateRunParams,
+  WarehouseSyncUpdateRunResponse,
+  WarehouseSyncUpdateSettingsParams,
+  WarehouseSyncUpdateSettingsResponse,
+  WarehouseSyncUpdateValidateParams,
+  WarehouseSyncUpdateValidateResponse,
+  WarehouseSyncs,
+  WarehouseSyncsEntriesCursor,
+} from './resources/warehouse-syncs';
+import {
+  Warehouse,
+  WarehouseListParams,
+  WarehouseRetrieveParams,
+  Warehouses,
+  WarehousesEntriesCursor,
+} from './resources/warehouses';
 import {
   Webhook,
   WebhookCreateParams,
@@ -1189,6 +1225,18 @@ export class KnockMgmt {
   reusableRequests: API.ReusableRequests = new API.ReusableRequests(this);
   auditLogs: API.AuditLogs = new API.AuditLogs(this);
   webhooks: API.Webhooks = new API.Webhooks(this);
+  /**
+   * Warehouse syncs read rows from a warehouse on a schedule and write them to Knock.
+   */
+  warehouseSyncs: API.WarehouseSyncs = new API.WarehouseSyncs(this);
+  /**
+   * Headless accounts let an agent create a Knock account on its own and hand it to a person to claim.
+   */
+  headlessAccounts: API.HeadlessAccounts = new API.HeadlessAccounts(this);
+  /**
+   * Warehouses are the databases in your data warehouse that Knock reads from.
+   */
+  warehouses: API.Warehouses = new API.Warehouses(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1220,6 +1268,9 @@ KnockMgmt.PreferenceCategories = PreferenceCategories;
 KnockMgmt.ReusableRequests = ReusableRequests;
 KnockMgmt.AuditLogs = AuditLogs;
 KnockMgmt.Webhooks = Webhooks;
+KnockMgmt.WarehouseSyncs = WarehouseSyncs;
+KnockMgmt.HeadlessAccounts = HeadlessAccounts;
+KnockMgmt.Warehouses = Warehouses;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1619,6 +1670,45 @@ export declare namespace KnockMgmt {
     type WebhookUpdateParams as WebhookUpdateParams,
     type WebhookListParams as WebhookListParams,
     type WebhookDeleteParams as WebhookDeleteParams,
+  };
+
+  export {
+    WarehouseSyncs as WarehouseSyncs,
+    type WarehouseSync as WarehouseSync,
+    type WarehouseSyncChangeTracking as WarehouseSyncChangeTracking,
+    type WarehouseSyncMapping as WarehouseSyncMapping,
+    type WarehouseSyncRequest as WarehouseSyncRequest,
+    type WarehouseSyncSource as WarehouseSyncSource,
+    type WarehouseSyncTarget as WarehouseSyncTarget,
+    type WarehouseSyncUpdateResponse as WarehouseSyncUpdateResponse,
+    type WarehouseSyncRetrieveRunsResponse as WarehouseSyncRetrieveRunsResponse,
+    type WarehouseSyncUpdateRunResponse as WarehouseSyncUpdateRunResponse,
+    type WarehouseSyncUpdateSettingsResponse as WarehouseSyncUpdateSettingsResponse,
+    type WarehouseSyncUpdateValidateResponse as WarehouseSyncUpdateValidateResponse,
+    type WarehouseSyncsEntriesCursor as WarehouseSyncsEntriesCursor,
+    type WarehouseSyncRetrieveParams as WarehouseSyncRetrieveParams,
+    type WarehouseSyncUpdateParams as WarehouseSyncUpdateParams,
+    type WarehouseSyncListParams as WarehouseSyncListParams,
+    type WarehouseSyncRetrieveRunsParams as WarehouseSyncRetrieveRunsParams,
+    type WarehouseSyncUpdateRunParams as WarehouseSyncUpdateRunParams,
+    type WarehouseSyncUpdateSettingsParams as WarehouseSyncUpdateSettingsParams,
+    type WarehouseSyncUpdateValidateParams as WarehouseSyncUpdateValidateParams,
+  };
+
+  export {
+    HeadlessAccounts as HeadlessAccounts,
+    type HeadlessAccountCreateResponse as HeadlessAccountCreateResponse,
+    type HeadlessAccountClaimResponse as HeadlessAccountClaimResponse,
+    type HeadlessAccountRetrieveStatusResponse as HeadlessAccountRetrieveStatusResponse,
+    type HeadlessAccountClaimParams as HeadlessAccountClaimParams,
+  };
+
+  export {
+    Warehouses as Warehouses,
+    type Warehouse as Warehouse,
+    type WarehousesEntriesCursor as WarehousesEntriesCursor,
+    type WarehouseRetrieveParams as WarehouseRetrieveParams,
+    type WarehouseListParams as WarehouseListParams,
   };
 
   export type MessageTypeBooleanField = API.MessageTypeBooleanField;

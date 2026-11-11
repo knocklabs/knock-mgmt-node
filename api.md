@@ -565,3 +565,54 @@ Methods:
 - <code title="put /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>(id, { ...params }) -> WebhookUpdateResponse</code>
 - <code title="get /v1/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>({ ...params }) -> WebhooksEntriesCursor</code>
 - <code title="delete /v1/webhooks/{id}">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>(id, { ...params }) -> WebhookDeleteResponse</code>
+
+# WarehouseSyncs
+
+Types:
+
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSync</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncChangeTracking</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncMapping</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncRequest</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncSource</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncTarget</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncRetrieveRunsResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateRunResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateSettingsResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateValidateResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/warehouse_syncs/{warehouse_sync_key}">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">retrieve</a>(warehouseSyncKey, { ...params }) -> WarehouseSync</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">update</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateResponse</code>
+- <code title="get /v1/warehouse_syncs">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">list</a>({ ...params }) -> WarehouseSyncsEntriesCursor</code>
+- <code title="get /v1/warehouse_syncs/{warehouse_sync_key}/runs">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">retrieveRuns</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncRetrieveRunsResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/run">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateRun</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateRunResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/settings">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateSettings</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateSettingsResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/validate">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateValidate</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateValidateResponse</code>
+
+# HeadlessAccounts
+
+Types:
+
+- <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountCreateResponse</a></code>
+- <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountClaimResponse</a></code>
+- <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountRetrieveStatusResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/headless_accounts">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">create</a>() -> HeadlessAccountCreateResponse</code>
+- <code title="post /v1/headless_accounts/claim">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">claim</a>({ ...params }) -> HeadlessAccountClaimResponse</code>
+- <code title="get /v1/headless_accounts/status">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">retrieveStatus</a>() -> HeadlessAccountRetrieveStatusResponse</code>
+
+# Warehouses
+
+Types:
+
+- <code><a href="./src/resources/warehouses.ts">Warehouse</a></code>
+
+Methods:
+
+- <code title="get /v1/warehouses/{warehouse_key}">client.warehouses.<a href="./src/resources/warehouses.ts">retrieve</a>(warehouseKey, { ...params }) -> Warehouse</code>
+- <code title="get /v1/warehouses">client.warehouses.<a href="./src/resources/warehouses.ts">list</a>({ ...params }) -> WarehousesEntriesCursor</code>
