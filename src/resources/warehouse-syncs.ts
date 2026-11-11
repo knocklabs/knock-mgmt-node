@@ -30,32 +30,6 @@ export class WarehouseSyncs extends APIResource {
   }
 
   /**
-   * Creates a warehouse sync, or saves a new draft of it if it exists. Fields left
-   * out keep their current values. Pass `commit=true` to publish the draft. A draft
-   * that fails to publish stays saved.
-   *
-   * @example
-   * ```ts
-   * const warehouseSync = await client.warehouseSyncs.update(
-   *   'warehouse_sync_key',
-   *   { warehouse_sync: {} },
-   * );
-   * ```
-   */
-  update(
-    warehouseSyncKey: string,
-    params: WarehouseSyncUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<WarehouseSyncUpdateResponse> {
-    const { commit, commit_message, environment, ...body } = params;
-    return this._client.put(path`/v1/warehouse_syncs/${warehouseSyncKey}`, {
-      query: { commit, commit_message, environment },
-      body,
-      ...options,
-    });
-  }
-
-  /**
    * Returns a paginated list of warehouse syncs for the given environment.
    *
    * @example
@@ -81,16 +55,16 @@ export class WarehouseSyncs extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.warehouseSyncs.retrieveRuns(
+   * const response = await client.warehouseSyncs.listRuns(
    *   'warehouse_sync_key',
    * );
    * ```
    */
-  retrieveRuns(
+  listRuns(
     warehouseSyncKey: string,
-    query: WarehouseSyncRetrieveRunsParams | null | undefined = {},
+    query: WarehouseSyncListRunsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<WarehouseSyncRetrieveRunsResponse> {
+  ): APIPromise<WarehouseSyncListRunsResponse> {
     return this._client.get(path`/v1/warehouse_syncs/${warehouseSyncKey}/runs`, { query, ...options });
   }
 
@@ -100,16 +74,16 @@ export class WarehouseSyncs extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.warehouseSyncs.updateRun(
+   * const response = await client.warehouseSyncs.run(
    *   'warehouse_sync_key',
    * );
    * ```
    */
-  updateRun(
+  run(
     warehouseSyncKey: string,
-    params: WarehouseSyncUpdateRunParams | null | undefined = {},
+    params: WarehouseSyncRunParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<WarehouseSyncUpdateRunResponse> {
+  ): APIPromise<WarehouseSyncRunResponse> {
     const { environment } = params ?? {};
     return this._client.put(path`/v1/warehouse_syncs/${warehouseSyncKey}/run`, {
       query: { environment },
@@ -142,22 +116,48 @@ export class WarehouseSyncs extends APIResource {
   }
 
   /**
-   * Checks a warehouse sync payload the way an upsert would, without saving it.
-   * Returns the payload as sent.
+   * Creates a warehouse sync, or saves a new draft of it if it exists. Fields left
+   * out keep their current values. Pass `commit=true` to publish the draft. A draft
+   * that fails to publish stays saved.
    *
    * @example
    * ```ts
-   * const response = await client.warehouseSyncs.updateValidate(
+   * const response = await client.warehouseSyncs.upsert(
    *   'warehouse_sync_key',
    *   { warehouse_sync: {} },
    * );
    * ```
    */
-  updateValidate(
+  upsert(
     warehouseSyncKey: string,
-    params: WarehouseSyncUpdateValidateParams,
+    params: WarehouseSyncUpsertParams,
     options?: RequestOptions,
-  ): APIPromise<WarehouseSyncUpdateValidateResponse> {
+  ): APIPromise<WarehouseSyncUpsertResponse> {
+    const { commit, commit_message, environment, ...body } = params;
+    return this._client.put(path`/v1/warehouse_syncs/${warehouseSyncKey}`, {
+      query: { commit, commit_message, environment },
+      body,
+      ...options,
+    });
+  }
+
+  /**
+   * Checks a warehouse sync payload the way an upsert would, without saving it.
+   * Returns the payload as sent.
+   *
+   * @example
+   * ```ts
+   * const response = await client.warehouseSyncs.validate(
+   *   'warehouse_sync_key',
+   *   { warehouse_sync: {} },
+   * );
+   * ```
+   */
+  validate(
+    warehouseSyncKey: string,
+    params: WarehouseSyncValidateParams,
+    options?: RequestOptions,
+  ): APIPromise<WarehouseSyncValidateResponse> {
     const { environment, ...body } = params;
     return this._client.put(path`/v1/warehouse_syncs/${warehouseSyncKey}/validate`, {
       query: { environment },
@@ -453,25 +453,14 @@ export interface WarehouseSyncTarget {
 }
 
 /**
- * Wraps the WarehouseSync response under the `warehouse_sync` key.
- */
-export interface WarehouseSyncUpdateResponse {
-  /**
-   * A warehouse sync reads rows from a warehouse on a schedule and writes them to
-   * Knock as users, tenants, objects, audience members, or subscriptions.
-   */
-  warehouse_sync: WarehouseSync;
-}
-
-/**
  * A paginated list of WarehouseSyncRun. Contains a list of entries and page
  * information.
  */
-export interface WarehouseSyncRetrieveRunsResponse {
+export interface WarehouseSyncListRunsResponse {
   /**
    * A list of entries.
    */
-  entries: Array<WarehouseSyncRetrieveRunsResponse.Entry>;
+  entries: Array<WarehouseSyncListRunsResponse.Entry>;
 
   /**
    * The information about a paginated result.
@@ -479,7 +468,7 @@ export interface WarehouseSyncRetrieveRunsResponse {
   page_info: Shared.PageInfo;
 }
 
-export namespace WarehouseSyncRetrieveRunsResponse {
+export namespace WarehouseSyncListRunsResponse {
   /**
    * One run of a warehouse sync: reading changed rows from the warehouse, then
    * applying them in Knock.
@@ -563,7 +552,7 @@ export namespace WarehouseSyncRetrieveRunsResponse {
 /**
  * Wraps the WarehouseSync response under the `warehouse_sync` key.
  */
-export interface WarehouseSyncUpdateRunResponse {
+export interface WarehouseSyncRunResponse {
   /**
    * A warehouse sync reads rows from a warehouse on a schedule and writes them to
    * Knock as users, tenants, objects, audience members, or subscriptions.
@@ -583,9 +572,20 @@ export interface WarehouseSyncUpdateSettingsResponse {
 }
 
 /**
+ * Wraps the WarehouseSync response under the `warehouse_sync` key.
+ */
+export interface WarehouseSyncUpsertResponse {
+  /**
+   * A warehouse sync reads rows from a warehouse on a schedule and writes them to
+   * Knock as users, tenants, objects, audience members, or subscriptions.
+   */
+  warehouse_sync: WarehouseSync;
+}
+
+/**
  * Wraps the WarehouseSyncRequest response under the `warehouse_sync` key.
  */
-export interface WarehouseSyncUpdateValidateResponse {
+export interface WarehouseSyncValidateResponse {
   /**
    * A warehouse sync payload for upsert or validate. Fields left out keep their
    * current values. `warehouse_key`, `target_type`, and `target` are required to
@@ -608,7 +608,52 @@ export interface WarehouseSyncRetrieveParams {
   hide_uncommitted_changes?: boolean;
 }
 
-export interface WarehouseSyncUpdateParams {
+export interface WarehouseSyncListParams extends EntriesCursorParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+
+  /**
+   * Whether to hide uncommitted changes. When true, only committed changes will be
+   * returned. When false, both committed and uncommitted changes will be returned.
+   */
+  hide_uncommitted_changes?: boolean;
+}
+
+export interface WarehouseSyncListRunsParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface WarehouseSyncRunParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface WarehouseSyncUpdateSettingsParams {
+  /**
+   * Query param: The environment slug. When omitted, the account's default
+   * environment is used.
+   */
+  environment?: string;
+
+  /**
+   * Body param: Whether the sync runs on its schedule.
+   */
+  enabled?: boolean;
+
+  /**
+   * Body param: How often the sync runs, in minutes.
+   */
+  frequency_minutes?: 10 | 15 | 60 | 360 | 720 | 1440;
+}
+
+export interface WarehouseSyncUpsertParams {
   /**
    * Body param: A warehouse sync payload for upsert or validate. Fields left out
    * keep their current values. `warehouse_key`, `target_type`, and `target` are
@@ -635,52 +680,7 @@ export interface WarehouseSyncUpdateParams {
   environment?: string;
 }
 
-export interface WarehouseSyncListParams extends EntriesCursorParams {
-  /**
-   * The environment slug. When omitted, the account's default environment is used.
-   */
-  environment?: string;
-
-  /**
-   * Whether to hide uncommitted changes. When true, only committed changes will be
-   * returned. When false, both committed and uncommitted changes will be returned.
-   */
-  hide_uncommitted_changes?: boolean;
-}
-
-export interface WarehouseSyncRetrieveRunsParams {
-  /**
-   * The environment slug. When omitted, the account's default environment is used.
-   */
-  environment?: string;
-}
-
-export interface WarehouseSyncUpdateRunParams {
-  /**
-   * The environment slug. When omitted, the account's default environment is used.
-   */
-  environment?: string;
-}
-
-export interface WarehouseSyncUpdateSettingsParams {
-  /**
-   * Query param: The environment slug. When omitted, the account's default
-   * environment is used.
-   */
-  environment?: string;
-
-  /**
-   * Body param: Whether the sync runs on its schedule.
-   */
-  enabled?: boolean;
-
-  /**
-   * Body param: How often the sync runs, in minutes.
-   */
-  frequency_minutes?: 10 | 15 | 60 | 360 | 720 | 1440;
-}
-
-export interface WarehouseSyncUpdateValidateParams {
+export interface WarehouseSyncValidateParams {
   /**
    * Body param: A warehouse sync payload for upsert or validate. Fields left out
    * keep their current values. `warehouse_key`, `target_type`, and `target` are
@@ -704,18 +704,18 @@ export declare namespace WarehouseSyncs {
     type WarehouseSyncRequest as WarehouseSyncRequest,
     type WarehouseSyncSource as WarehouseSyncSource,
     type WarehouseSyncTarget as WarehouseSyncTarget,
-    type WarehouseSyncUpdateResponse as WarehouseSyncUpdateResponse,
-    type WarehouseSyncRetrieveRunsResponse as WarehouseSyncRetrieveRunsResponse,
-    type WarehouseSyncUpdateRunResponse as WarehouseSyncUpdateRunResponse,
+    type WarehouseSyncListRunsResponse as WarehouseSyncListRunsResponse,
+    type WarehouseSyncRunResponse as WarehouseSyncRunResponse,
     type WarehouseSyncUpdateSettingsResponse as WarehouseSyncUpdateSettingsResponse,
-    type WarehouseSyncUpdateValidateResponse as WarehouseSyncUpdateValidateResponse,
+    type WarehouseSyncUpsertResponse as WarehouseSyncUpsertResponse,
+    type WarehouseSyncValidateResponse as WarehouseSyncValidateResponse,
     type WarehouseSyncsEntriesCursor as WarehouseSyncsEntriesCursor,
     type WarehouseSyncRetrieveParams as WarehouseSyncRetrieveParams,
-    type WarehouseSyncUpdateParams as WarehouseSyncUpdateParams,
     type WarehouseSyncListParams as WarehouseSyncListParams,
-    type WarehouseSyncRetrieveRunsParams as WarehouseSyncRetrieveRunsParams,
-    type WarehouseSyncUpdateRunParams as WarehouseSyncUpdateRunParams,
+    type WarehouseSyncListRunsParams as WarehouseSyncListRunsParams,
+    type WarehouseSyncRunParams as WarehouseSyncRunParams,
     type WarehouseSyncUpdateSettingsParams as WarehouseSyncUpdateSettingsParams,
-    type WarehouseSyncUpdateValidateParams as WarehouseSyncUpdateValidateParams,
+    type WarehouseSyncUpsertParams as WarehouseSyncUpsertParams,
+    type WarehouseSyncValidateParams as WarehouseSyncValidateParams,
   };
 }

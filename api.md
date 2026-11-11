@@ -576,21 +576,21 @@ Types:
 - <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncRequest</a></code>
 - <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncSource</a></code>
 - <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncTarget</a></code>
-- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateResponse</a></code>
-- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncRetrieveRunsResponse</a></code>
-- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateRunResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncListRunsResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncRunResponse</a></code>
 - <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateSettingsResponse</a></code>
-- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpdateValidateResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncUpsertResponse</a></code>
+- <code><a href="./src/resources/warehouse-syncs.ts">WarehouseSyncValidateResponse</a></code>
 
 Methods:
 
 - <code title="get /v1/warehouse_syncs/{warehouse_sync_key}">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">retrieve</a>(warehouseSyncKey, { ...params }) -> WarehouseSync</code>
-- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">update</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateResponse</code>
 - <code title="get /v1/warehouse_syncs">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">list</a>({ ...params }) -> WarehouseSyncsEntriesCursor</code>
-- <code title="get /v1/warehouse_syncs/{warehouse_sync_key}/runs">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">retrieveRuns</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncRetrieveRunsResponse</code>
-- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/run">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateRun</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateRunResponse</code>
+- <code title="get /v1/warehouse_syncs/{warehouse_sync_key}/runs">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">listRuns</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncListRunsResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/run">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">run</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncRunResponse</code>
 - <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/settings">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateSettings</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateSettingsResponse</code>
-- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/validate">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">updateValidate</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpdateValidateResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">upsert</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncUpsertResponse</code>
+- <code title="put /v1/warehouse_syncs/{warehouse_sync_key}/validate">client.warehouseSyncs.<a href="./src/resources/warehouse-syncs.ts">validate</a>(warehouseSyncKey, { ...params }) -> WarehouseSyncValidateResponse</code>
 
 # HeadlessAccounts
 
