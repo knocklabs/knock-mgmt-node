@@ -78,7 +78,10 @@ Types:
 
 - <code><a href="./src/resources/partials.ts">PartialRequest</a></code>
 - <code><a href="./src/resources/partials.ts">PartialResource</a></code>
+- <code><a href="./src/resources/partials.ts">PartialDeleteResponse</a></code>
+- <code><a href="./src/resources/partials.ts">PartialDiscardResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialPreviewResponse</a></code>
+- <code><a href="./src/resources/partials.ts">PartialUnarchiveResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialUpsertResponse</a></code>
 - <code><a href="./src/resources/partials.ts">PartialValidateResponse</a></code>
 
@@ -86,7 +89,10 @@ Methods:
 
 - <code title="get /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">retrieve</a>(partialKey, { ...params }) -> PartialResource</code>
 - <code title="get /v1/partials">client.partials.<a href="./src/resources/partials.ts">list</a>({ ...params }) -> PartialResourcesEntriesCursor</code>
+- <code title="delete /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">delete</a>(partialKey, { ...params }) -> PartialDeleteResponse</code>
+- <code title="put /v1/partials/{partial_key}/discard">client.partials.<a href="./src/resources/partials.ts">discard</a>(partialKey, { ...params }) -> PartialDiscardResponse</code>
 - <code title="post /v1/partials/preview">client.partials.<a href="./src/resources/partials.ts">preview</a>({ ...params }) -> PartialPreviewResponse</code>
+- <code title="put /v1/partials/{partial_key}/unarchive">client.partials.<a href="./src/resources/partials.ts">unarchive</a>(partialKey, { ...params }) -> PartialUnarchiveResponse</code>
 - <code title="put /v1/partials/{partial_key}">client.partials.<a href="./src/resources/partials.ts">upsert</a>(partialKey, { ...params }) -> PartialUpsertResponse</code>
 - <code title="put /v1/partials/{partial_key}/validate">client.partials.<a href="./src/resources/partials.ts">validate</a>(partialKey, { ...params }) -> PartialValidateResponse</code>
 

@@ -48,6 +48,62 @@ export class Partials extends APIResource {
   }
 
   /**
+   * Archives a partial by key across all environments, not only the one in the
+   * request. The token needs the `partials:manage` permission in every environment
+   * that holds a copy of the partial.
+   *
+   * Archiving renames the partial's key in every environment, so a new partial can
+   * use the key. Templates that reference the archived partial keep using it until
+   * their workflow is next committed, and it can't be added to new templates.
+   * Restore it with the unarchive endpoint, using its original key.
+   *
+   * Returns a 422 with the code `partial_in_use` while a workflow or an unsent
+   * broadcast in any environment uses the partial. Remove it from them first.
+   * Returns a 404 when no live partial has the key, including when it's already
+   * archived.
+   *
+   * @example
+   * ```ts
+   * const partial = await client.partials.delete('partial_key');
+   * ```
+   */
+  delete(
+    partialKey: string,
+    params: PartialDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PartialDeleteResponse> {
+    const { environment } = params ?? {};
+    return this._client.delete(path`/v1/partials/${partialKey}`, { query: { environment }, ...options });
+  }
+
+  /**
+   * Discards the uncommitted changes to a partial in a given environment, returning
+   * it to its last committed version. Other environments aren't changed.
+   *
+   * Returns the partial unchanged when it has no uncommitted changes. Returns a 422
+   * when the partial has never been committed, or can't be changed in the
+   * environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.partials.discard(
+   *   'partial_key',
+   * );
+   * ```
+   */
+  discard(
+    partialKey: string,
+    params: PartialDiscardParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PartialDiscardResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/partials/${partialKey}/discard`, {
+      query: { branch, environment },
+      ...options,
+    });
+  }
+
+  /**
    * Renders a partial in isolation, without requiring the partial to be persisted in
    * Knock.
    *
@@ -68,6 +124,37 @@ export class Partials extends APIResource {
   preview(params: PartialPreviewParams, options?: RequestOptions): APIPromise<PartialPreviewResponse> {
     const { branch, environment, ...body } = params;
     return this._client.post('/v1/partials/preview', { query: { branch, environment }, body, ...options });
+  }
+
+  /**
+   * Restores an archived partial by its original key, with every copy archived
+   * alongside it in other environments. The token needs the `partials:manage`
+   * permission in every environment that holds a copy of the archived partial.
+   *
+   * When the key was archived more than once, the most recent archive in the
+   * environment is restored.
+   *
+   * Returns a 404 when the key isn't archived in the environment, including when an
+   * earlier or concurrent request already restored it. Returns a 422 with the code
+   * `key_in_use` when a live partial uses the key.
+   *
+   * @example
+   * ```ts
+   * const response = await client.partials.unarchive(
+   *   'partial_key',
+   * );
+   * ```
+   */
+  unarchive(
+    partialKey: string,
+    params: PartialUnarchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PartialUnarchiveResponse> {
+    const { environment } = params ?? {};
+    return this._client.put(path`/v1/partials/${partialKey}/unarchive`, {
+      query: { environment },
+      ...options,
+    });
   }
 
   /**
@@ -282,6 +369,26 @@ export interface PartialResource {
 }
 
 /**
+ * The response from archiving a partial.
+ */
+export interface PartialDeleteResponse {
+  /**
+   * The result of the archive operation.
+   */
+  result: string;
+}
+
+/**
+ * Wraps the Partial response under the `partial` key.
+ */
+export interface PartialDiscardResponse {
+  /**
+   * A partial is a reusable piece of content that can be used in a template.
+   */
+  partial: PartialResource;
+}
+
+/**
  * A response to a partial preview request.
  */
 export interface PartialPreviewResponse {
@@ -318,6 +425,16 @@ export namespace PartialPreviewResponse {
      */
     field?: string | null;
   }
+}
+
+/**
+ * Wraps the Partial response under the `partial` key.
+ */
+export interface PartialUnarchiveResponse {
+  /**
+   * A partial is a reusable piece of content that can be used in a template.
+   */
+  partial: PartialResource;
 }
 
 /**
@@ -390,6 +507,27 @@ export interface PartialListParams extends EntriesCursorParams {
   hide_uncommitted_changes?: boolean;
 }
 
+export interface PartialDeleteParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface PartialDiscardParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface PartialPreviewParams {
   /**
    * Body param: A partial object with attributes to update or create a partial.
@@ -433,6 +571,13 @@ export namespace PartialPreviewParams {
      */
     key?: string | null;
   }
+}
+
+export interface PartialUnarchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface PartialUpsertParams {
@@ -508,13 +653,19 @@ export declare namespace Partials {
   export {
     type PartialRequest as PartialRequest,
     type PartialResource as PartialResource,
+    type PartialDeleteResponse as PartialDeleteResponse,
+    type PartialDiscardResponse as PartialDiscardResponse,
     type PartialPreviewResponse as PartialPreviewResponse,
+    type PartialUnarchiveResponse as PartialUnarchiveResponse,
     type PartialUpsertResponse as PartialUpsertResponse,
     type PartialValidateResponse as PartialValidateResponse,
     type PartialResourcesEntriesCursor as PartialResourcesEntriesCursor,
     type PartialRetrieveParams as PartialRetrieveParams,
     type PartialListParams as PartialListParams,
+    type PartialDeleteParams as PartialDeleteParams,
+    type PartialDiscardParams as PartialDiscardParams,
     type PartialPreviewParams as PartialPreviewParams,
+    type PartialUnarchiveParams as PartialUnarchiveParams,
     type PartialUpsertParams as PartialUpsertParams,
     type PartialValidateParams as PartialValidateParams,
   };
