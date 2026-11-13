@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.47.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.46.1...v0.47.0) (2026-11-13)
+
+
+### Features
+
+* Add archive, unarchive, and discard changes for partials (v0.1.1793) ([c5e7f5d](https://github.com/knocklabs/knock-mgmt-node/commit/c5e7f5d627beec04ed151904ba0af0b3814a2374))
+* Add headless account creation and warehouse sync management (v0.1.1788) ([ac565fa](https://github.com/knocklabs/knock-mgmt-node/commit/ac565fa391e80fc7309db57e5713424465087a88))
+* Archive, unarchive, and discard changes for workflows and guides, plus exit criteria on workflows (v0.1.1792) ([e6f1088](https://github.com/knocklabs/knock-mgmt-node/commit/e6f1088d27aa68b23b94aa690a71cac9a7109cdb))
+
+
+### Chores
+
+* rename warehouse sync SDK methods to match other resources ([9d52322](https://github.com/knocklabs/knock-mgmt-node/commit/9d523222810f468bc8ca1f47879fbc119b910204))
+
 ## [0.46.1](https://github.com/knocklabs/knock-mgmt-node/compare/v0.46.0...v0.46.1) (2026-11-09)
 
 
