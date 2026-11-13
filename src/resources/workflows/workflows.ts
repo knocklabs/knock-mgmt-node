@@ -5,6 +5,7 @@ import * as WorkflowsAPI from './workflows';
 import * as ChannelsAPI from '../channels';
 import * as MembersAPI from '../members';
 import * as TemplatesAPI from '../templates';
+import * as GoalsAPI from '../goals/goals';
 import * as StepsAPI from './steps';
 import { StepPreviewTemplateParams, StepPreviewTemplateResponse, Steps } from './steps';
 import { APIPromise } from '../../core/api-promise';
@@ -56,6 +57,35 @@ export class Workflows extends APIResource {
   }
 
   /**
+   * Archives a workflow by key across all environments, not only the one in the
+   * request. The token needs the `workflows:manage` permission in every environment
+   * that holds a copy of the workflow.
+   *
+   * Archiving renames the workflow's key in every environment, so a new workflow can
+   * use the key. The archived workflow is deactivated and read-only, and the
+   * response returns it with its archived key. Restore it with the unarchive
+   * endpoint, using its original key.
+   *
+   * Returns a 404 when no live workflow has the key, including when it's already
+   * archived.
+   *
+   * @example
+   * ```ts
+   * const workflow = await client.workflows.delete(
+   *   'workflow_key',
+   * );
+   * ```
+   */
+  delete(
+    workflowKey: string,
+    params: WorkflowDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<WorkflowDeleteResponse> {
+    const { environment } = params ?? {};
+    return this._client.delete(path`/v1/workflows/${workflowKey}`, { query: { environment }, ...options });
+  }
+
+  /**
    * Activates (or deactivates) a workflow in a given environment. Read more in the
    * [docs](https://docs.knock.app/concepts/workflows#workflow-status).
    *
@@ -84,6 +114,33 @@ export class Workflows extends APIResource {
   }
 
   /**
+   * Discards the uncommitted changes to a workflow in a given environment, returning
+   * it to its last committed version. Other environments aren't changed.
+   *
+   * Returns the workflow unchanged when it has no uncommitted changes. Returns a 422
+   * when the workflow has never been committed, or can't be changed in the
+   * environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.workflows.discard(
+   *   'workflow_key',
+   * );
+   * ```
+   */
+  discard(
+    workflowKey: string,
+    params: WorkflowDiscardParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<WorkflowDiscardResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/workflows/${workflowKey}/discard`, {
+      query: { branch, environment },
+      ...options,
+    });
+  }
+
+  /**
    * Runs the latest version of a committed workflow in a given environment using the
    * params provided.
    *
@@ -104,6 +161,38 @@ export class Workflows extends APIResource {
     return this._client.put(path`/v1/workflows/${workflowKey}/run`, {
       query: { branch, environment },
       body,
+      ...options,
+    });
+  }
+
+  /**
+   * Restores an archived workflow by its original key, with every copy archived
+   * alongside it in other environments. The token needs the `workflows:manage`
+   * permission in every environment that holds a copy of the archived workflow.
+   *
+   * The workflow comes back inactive with its original key, so activate it to run it
+   * again. When the key was archived more than once, the most recent archive in the
+   * environment is restored.
+   *
+   * Returns a 404 when the key isn't archived in the environment, including when an
+   * earlier or concurrent request already restored it. Returns a 422 with the code
+   * `key_in_use` when a live workflow uses the key.
+   *
+   * @example
+   * ```ts
+   * const response = await client.workflows.unarchive(
+   *   'workflow_key',
+   * );
+   * ```
+   */
+  unarchive(
+    workflowKey: string,
+    params: WorkflowUnarchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<WorkflowUnarchiveResponse> {
+    const { environment } = params ?? {};
+    return this._client.put(path`/v1/workflows/${workflowKey}/unarchive`, {
+      query: { environment },
       ...options,
     });
   }
@@ -289,6 +378,64 @@ export interface Duration {
 }
 
 /**
+ * A goal condition: an event plus optional match conditions.
+ */
+export interface ExitCriteriaItems {
+  /**
+   * The event to track. Supports goal_completed, integration_source, and audience.
+   */
+  event:
+    | ExitCriteriaItems.GoalCompletedEvent
+    | ExitCriteriaItems.ExitCriteriaIntegrationSourceEvent
+    | GoalsAPI.WorkflowWaitForEventAudienceEvent;
+
+  /**
+   * Optional list of condition groups. The rule matches when any group matches, and
+   * a group matches when all of its conditions match. Must be empty for
+   * goal_completed.
+   */
+  match_conditions?: Array<ConditionGroup>;
+}
+
+export namespace ExitCriteriaItems {
+  /**
+   * The workflow's attached goal completed.
+   */
+  export interface GoalCompletedEvent {
+    /**
+     * The type of event.
+     */
+    event_type: 'goal_completed';
+  }
+
+  /**
+   * An integration source event that exits the run.
+   */
+  export interface ExitCriteriaIntegrationSourceEvent {
+    /**
+     * The name of the event.
+     */
+    event_key: string;
+
+    /**
+     * The type of event.
+     */
+    event_type: 'integration_source';
+
+    /**
+     * The key of the integration source that emits the event.
+     */
+    integration_source_key: string;
+
+    /**
+     * JSON path into the source event that yields the recipient user ID, for example,
+     * body.userId. For legacy sources, use the field name without prefixing body.
+     */
+    recipient_path: string;
+  }
+}
+
+/**
  * A user recipient with optional identify properties. When email or name are
  * provided, the user is created or updated as part of the workflow run. The
  * collection is always `$users` and should not be sent.
@@ -410,6 +557,12 @@ export interface Workflow {
    * the workflow for internal purposes. Maximum of 280 characters allowed.
    */
   description?: string;
+
+  /**
+   * Exits in-flight workflow runs when any entry matches. Each entry is a goal
+   * condition. At most five entries.
+   */
+  exit_criteria?: Array<ExitCriteriaItems> | null;
 
   /**
    * A map of workflow settings.
@@ -1298,6 +1451,12 @@ export interface WorkflowRequest {
   description?: string;
 
   /**
+   * Exits in-flight workflow runs when any entry matches. Each entry is a goal
+   * condition. At most five entries.
+   */
+  exit_criteria?: Array<ExitCriteriaItems> | null;
+
+  /**
    * A map of workflow settings.
    */
   settings?: WorkflowRequest.Settings;
@@ -1725,7 +1884,7 @@ export namespace WorkflowStep {
        * An audience membership event to wait for when a recipient enters or exits an
        * audience.
        */
-      event: UnionMember3.Event;
+      event: GoalsAPI.WorkflowWaitForEventAudienceEvent;
 
       /**
        * A duration of time, represented as a unit and a value.
@@ -1749,27 +1908,6 @@ export namespace WorkflowStep {
     }
 
     export namespace UnionMember3 {
-      /**
-       * An audience membership event to wait for when a recipient enters or exits an
-       * audience.
-       */
-      export interface Event {
-        /**
-         * The key of the audience to wait for membership changes.
-         */
-        audience_key: string;
-
-        /**
-         * The audience membership transition to wait for.
-         */
-        event_key: 'enter' | 'exit';
-
-        /**
-         * The type of event to wait for.
-         */
-        event_type: 'audience';
-      }
-
       export interface MatchCondition {
         /**
          * A list of conditions.
@@ -2458,6 +2596,12 @@ export interface WorkflowRetrieveResponse {
   description?: string;
 
   /**
+   * Exits in-flight workflow runs when any entry matches. Each entry is a goal
+   * condition. At most five entries.
+   */
+  exit_criteria?: Array<ExitCriteriaItems> | null;
+
+  /**
    * A map of workflow settings.
    */
   settings?: WorkflowRetrieveResponse.Settings;
@@ -2521,7 +2665,29 @@ export namespace WorkflowRetrieveResponse {
 /**
  * Wraps the Workflow response under the `workflow` key.
  */
+export interface WorkflowDeleteResponse {
+  /**
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
+   */
+  workflow: Workflow;
+}
+
+/**
+ * Wraps the Workflow response under the `workflow` key.
+ */
 export interface WorkflowActivateResponse {
+  /**
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
+   */
+  workflow: Workflow;
+}
+
+/**
+ * Wraps the Workflow response under the `workflow` key.
+ */
+export interface WorkflowDiscardResponse {
   /**
    * A workflow object. Read more in the
    * [docs](https://docs.knock.app/concepts/workflows).
@@ -2537,6 +2703,17 @@ export interface WorkflowRunResponse {
    * The ID of the workflow run.
    */
   workflow_run_id: string;
+}
+
+/**
+ * Wraps the Workflow response under the `workflow` key.
+ */
+export interface WorkflowUnarchiveResponse {
+  /**
+   * A workflow object. Read more in the
+   * [docs](https://docs.knock.app/concepts/workflows).
+   */
+  workflow: Workflow;
 }
 
 /**
@@ -2611,6 +2788,13 @@ export interface WorkflowListParams extends EntriesCursorParams {
   hide_uncommitted_changes?: boolean;
 }
 
+export interface WorkflowDeleteParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface WorkflowActivateParams {
   /**
    * Body param: Whether to activate or deactivate the workflow. Set to `true` by
@@ -2628,6 +2812,20 @@ export interface WorkflowActivateParams {
   /**
    * Query param: The environment slug. When omitted, the account's default
    * environment is used.
+   */
+  environment?: string;
+}
+
+export interface WorkflowDiscardParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
    */
   environment?: string;
 }
@@ -2715,6 +2913,13 @@ export namespace WorkflowRunParams {
   }
 }
 
+export interface WorkflowUnarchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface WorkflowUpsertParams {
   /**
    * Body param: A workflow request for upserting a workflow.
@@ -2792,6 +2997,7 @@ export declare namespace Workflows {
     type ConditionGroup as ConditionGroup,
     type ConditionGroupAllMatch as ConditionGroupAllMatch,
     type Duration as Duration,
+    type ExitCriteriaItems as ExitCriteriaItems,
     type InlineIdentifyUserRequest as InlineIdentifyUserRequest,
     type SendWindow as SendWindow,
     type Workflow as Workflow,
@@ -2819,15 +3025,21 @@ export declare namespace Workflows {
     type WorkflowUpdateUserStep as WorkflowUpdateUserStep,
     type WorkflowWebhookStep as WorkflowWebhookStep,
     type WorkflowRetrieveResponse as WorkflowRetrieveResponse,
+    type WorkflowDeleteResponse as WorkflowDeleteResponse,
     type WorkflowActivateResponse as WorkflowActivateResponse,
+    type WorkflowDiscardResponse as WorkflowDiscardResponse,
     type WorkflowRunResponse as WorkflowRunResponse,
+    type WorkflowUnarchiveResponse as WorkflowUnarchiveResponse,
     type WorkflowUpsertResponse as WorkflowUpsertResponse,
     type WorkflowValidateResponse as WorkflowValidateResponse,
     type WorkflowsEntriesCursor as WorkflowsEntriesCursor,
     type WorkflowRetrieveParams as WorkflowRetrieveParams,
     type WorkflowListParams as WorkflowListParams,
+    type WorkflowDeleteParams as WorkflowDeleteParams,
     type WorkflowActivateParams as WorkflowActivateParams,
+    type WorkflowDiscardParams as WorkflowDiscardParams,
     type WorkflowRunParams as WorkflowRunParams,
+    type WorkflowUnarchiveParams as WorkflowUnarchiveParams,
     type WorkflowUpsertParams as WorkflowUpsertParams,
     type WorkflowValidateParams as WorkflowValidateParams,
   };

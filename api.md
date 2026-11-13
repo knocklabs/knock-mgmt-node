@@ -115,6 +115,7 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">ConditionGroup</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">ConditionGroupAllMatch</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Duration</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">ExitCriteriaItems</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">InlineIdentifyUserRequest</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">SendWindow</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">Workflow</a></code>
@@ -142,8 +143,11 @@ Types:
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpdateUserStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowWebhookStep</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRetrieveResponse</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowDeleteResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowActivateResponse</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowDiscardResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowRunResponse</a></code>
+- <code><a href="./src/resources/workflows/workflows.ts">WorkflowUnarchiveResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowUpsertResponse</a></code>
 - <code><a href="./src/resources/workflows/workflows.ts">WorkflowValidateResponse</a></code>
 
@@ -151,8 +155,11 @@ Methods:
 
 - <code title="get /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">retrieve</a>(workflowKey, { ...params }) -> WorkflowRetrieveResponse</code>
 - <code title="get /v1/workflows">client.workflows.<a href="./src/resources/workflows/workflows.ts">list</a>({ ...params }) -> WorkflowsEntriesCursor</code>
+- <code title="delete /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">delete</a>(workflowKey, { ...params }) -> WorkflowDeleteResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/activate">client.workflows.<a href="./src/resources/workflows/workflows.ts">activate</a>(workflowKey, { ...params }) -> WorkflowActivateResponse</code>
+- <code title="put /v1/workflows/{workflow_key}/discard">client.workflows.<a href="./src/resources/workflows/workflows.ts">discard</a>(workflowKey, { ...params }) -> WorkflowDiscardResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/run">client.workflows.<a href="./src/resources/workflows/workflows.ts">run</a>(workflowKey, { ...params }) -> WorkflowRunResponse</code>
+- <code title="put /v1/workflows/{workflow_key}/unarchive">client.workflows.<a href="./src/resources/workflows/workflows.ts">unarchive</a>(workflowKey, { ...params }) -> WorkflowUnarchiveResponse</code>
 - <code title="put /v1/workflows/{workflow_key}">client.workflows.<a href="./src/resources/workflows/workflows.ts">upsert</a>(workflowKey, { ...params }) -> WorkflowUpsertResponse</code>
 - <code title="put /v1/workflows/{workflow_key}/validate">client.workflows.<a href="./src/resources/workflows/workflows.ts">validate</a>(workflowKey, { ...params }) -> WorkflowValidateResponse</code>
 
@@ -328,6 +335,7 @@ Types:
 - <code><a href="./src/resources/guides.ts">GuideStep</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideArchiveResponse</a></code>
+- <code><a href="./src/resources/guides.ts">GuideUnarchiveResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideUpsertResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideValidateResponse</a></code>
 
@@ -337,6 +345,7 @@ Methods:
 - <code title="get /v1/guides">client.guides.<a href="./src/resources/guides.ts">list</a>({ ...params }) -> GuidesEntriesCursor</code>
 - <code title="put /v1/guides/{guide_key}/activate">client.guides.<a href="./src/resources/guides.ts">activate</a>(guideKey, { ...params }) -> GuideActivateResponse</code>
 - <code title="delete /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">archive</a>(guideKey) -> GuideArchiveResponse</code>
+- <code title="put /v1/guides/{guide_key}/unarchive">client.guides.<a href="./src/resources/guides.ts">unarchive</a>(guideKey, { ...params }) -> GuideUnarchiveResponse</code>
 - <code title="put /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">upsert</a>(guideKey, { ...params }) -> GuideUpsertResponse</code>
 - <code title="put /v1/guides/{guide_key}/validate">client.guides.<a href="./src/resources/guides.ts">validate</a>(guideKey, { ...params }) -> GuideValidateResponse</code>
 
@@ -404,6 +413,7 @@ Types:
 - <code><a href="./src/resources/goals/goals.ts">Goal</a></code>
 - <code><a href="./src/resources/goals/goals.ts">GoalCondition</a></code>
 - <code><a href="./src/resources/goals/goals.ts">GoalRequest</a></code>
+- <code><a href="./src/resources/goals/goals.ts">WorkflowWaitForEventAudienceEvent</a></code>
 - <code><a href="./src/resources/goals/goals.ts">GoalArchiveResponse</a></code>
 - <code><a href="./src/resources/goals/goals.ts">GoalCloneResponse</a></code>
 - <code><a href="./src/resources/goals/goals.ts">GoalUpsertResponse</a></code>

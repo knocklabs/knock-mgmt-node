@@ -85,6 +85,28 @@ export class Guides extends APIResource {
   }
 
   /**
+   * Unarchives the newest archive of a guide by key, with every copy archived
+   * alongside it in other environments. Each restored copy comes back inactive.
+   *
+   * Returns a 404 when the key isn't archived, including when an earlier or
+   * concurrent request already restored it. Returns a 422 with the code `key_in_use`
+   * when a live guide uses the key.
+   *
+   * @example
+   * ```ts
+   * const response = await client.guides.unarchive('guide_key');
+   * ```
+   */
+  unarchive(
+    guideKey: string,
+    params: GuideUnarchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<GuideUnarchiveResponse> {
+    const { environment } = params ?? {};
+    return this._client.put(path`/v1/guides/${guideKey}/unarchive`, { query: { environment }, ...options });
+  }
+
+  /**
    * Updates a guide of a given key, or creates a new one if it does not yet exist.
    *
    * The write targets the environment in the request. Accounts that allow writes in
@@ -421,6 +443,17 @@ export interface GuideArchiveResponse {
 /**
  * Wraps the Guide response under the `guide` key.
  */
+export interface GuideUnarchiveResponse {
+  /**
+   * A guide defines an in-app guide that can be displayed to users based on priority
+   * and other conditions.
+   */
+  guide: Guide;
+}
+
+/**
+ * Wraps the Guide response under the `guide` key.
+ */
 export interface GuideUpsertResponse {
   /**
    * A guide defines an in-app guide that can be displayed to users based on priority
@@ -543,6 +576,13 @@ export declare namespace GuideActivateParams {
   }
 }
 
+export interface GuideUnarchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface GuideUpsertParams {
   /**
    * Body param: A request to create or update a guide.
@@ -620,12 +660,14 @@ export declare namespace Guides {
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideArchiveResponse as GuideArchiveResponse,
+    type GuideUnarchiveResponse as GuideUnarchiveResponse,
     type GuideUpsertResponse as GuideUpsertResponse,
     type GuideValidateResponse as GuideValidateResponse,
     type GuidesEntriesCursor as GuidesEntriesCursor,
     type GuideRetrieveParams as GuideRetrieveParams,
     type GuideListParams as GuideListParams,
     type GuideActivateParams as GuideActivateParams,
+    type GuideUnarchiveParams as GuideUnarchiveParams,
     type GuideUpsertParams as GuideUpsertParams,
     type GuideValidateParams as GuideValidateParams,
   };

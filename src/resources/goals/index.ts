@@ -15,6 +15,7 @@ export {
   type Goal,
   type GoalCondition,
   type GoalRequest,
+  type WorkflowWaitForEventAudienceEvent,
   type GoalArchiveResponse,
   type GoalCloneResponse,
   type GoalUpsertResponse,

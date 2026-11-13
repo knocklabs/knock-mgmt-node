@@ -221,9 +221,7 @@ export interface GoalCondition {
   /**
    * The event to track. Supports integration_source and audience event types.
    */
-  event:
-    | GoalCondition.WorkflowWaitForEventIntegrationSourceEvent
-    | GoalCondition.WorkflowWaitForEventAudienceEvent;
+  event: GoalCondition.WorkflowWaitForEventIntegrationSourceEvent | WorkflowWaitForEventAudienceEvent;
 
   /**
    * Optional list of condition groups; each group uses an operator (and/or) with
@@ -259,27 +257,6 @@ export namespace GoalCondition {
      */
     recipient_path?: string | null;
   }
-
-  /**
-   * An audience membership event to wait for when a recipient enters or exits an
-   * audience.
-   */
-  export interface WorkflowWaitForEventAudienceEvent {
-    /**
-     * The key of the audience to wait for membership changes.
-     */
-    audience_key: string;
-
-    /**
-     * The audience membership transition to wait for.
-     */
-    event_key: 'enter' | 'exit';
-
-    /**
-     * The type of event to wait for.
-     */
-    event_type: 'audience';
-  }
 }
 
 /**
@@ -302,6 +279,27 @@ export interface GoalRequest {
    * An optional description for the goal. Maximum of 280 characters allowed.
    */
   description?: string | null;
+}
+
+/**
+ * An audience membership event to wait for when a recipient enters or exits an
+ * audience.
+ */
+export interface WorkflowWaitForEventAudienceEvent {
+  /**
+   * The key of the audience to wait for membership changes.
+   */
+  audience_key: string;
+
+  /**
+   * The audience membership transition to wait for.
+   */
+  event_key: 'enter' | 'exit';
+
+  /**
+   * The type of event to wait for.
+   */
+  event_type: 'audience';
 }
 
 /**
@@ -472,6 +470,7 @@ export declare namespace Goals {
     type Goal as Goal,
     type GoalCondition as GoalCondition,
     type GoalRequest as GoalRequest,
+    type WorkflowWaitForEventAudienceEvent as WorkflowWaitForEventAudienceEvent,
     type GoalArchiveResponse as GoalArchiveResponse,
     type GoalCloneResponse as GoalCloneResponse,
     type GoalUpsertResponse as GoalUpsertResponse,

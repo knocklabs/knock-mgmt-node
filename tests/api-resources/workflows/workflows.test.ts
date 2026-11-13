@@ -69,6 +69,30 @@ describe('resource workflows', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.workflows.delete('workflow_key');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workflows.delete(
+        'workflow_key',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('activate: only required params', async () => {
     const responsePromise = client.workflows.activate('workflow_key', { status: true });
     const rawResponse = await responsePromise.asResponse();
@@ -87,6 +111,30 @@ describe('resource workflows', () => {
       branch: 'feature-branch',
       environment: 'development',
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('discard', async () => {
+    const responsePromise = client.workflows.discard('workflow_key');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('discard: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workflows.discard(
+        'workflow_key',
+        { branch: 'feature-branch', environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -119,6 +167,30 @@ describe('resource workflows', () => {
       step_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       tenant: 'tenant',
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('unarchive', async () => {
+    const responsePromise = client.workflows.unarchive('workflow_key');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('unarchive: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.workflows.unarchive(
+        'workflow_key',
+        { environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -194,6 +266,41 @@ describe('resource workflows', () => {
           ],
         },
         description: 'description',
+        exit_criteria: [
+          {
+            event: { event_type: 'goal_completed' },
+            match_conditions: [
+              {
+                all: [
+                  {
+                    operator: 'equal_to',
+                    variable: 'recipient.property',
+                    argument: 'some_property',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            event: {
+              event_key: 'payment.failed',
+              event_type: 'integration_source',
+              integration_source_key: 'shopify',
+              recipient_path: 'body.userId',
+            },
+            match_conditions: [
+              {
+                all: [
+                  {
+                    operator: 'equal_to',
+                    variable: 'recipient.property',
+                    argument: 'some_property',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         settings: { is_commercial: false, override_preferences: false },
         tags: ['string'],
         trigger_data_json_schema: { foo: 'bar' },
@@ -289,6 +396,41 @@ describe('resource workflows', () => {
           ],
         },
         description: 'description',
+        exit_criteria: [
+          {
+            event: { event_type: 'goal_completed' },
+            match_conditions: [
+              {
+                all: [
+                  {
+                    operator: 'equal_to',
+                    variable: 'recipient.property',
+                    argument: 'some_property',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            event: {
+              event_key: 'payment.failed',
+              event_type: 'integration_source',
+              integration_source_key: 'shopify',
+              recipient_path: 'body.userId',
+            },
+            match_conditions: [
+              {
+                all: [
+                  {
+                    operator: 'equal_to',
+                    variable: 'recipient.property',
+                    argument: 'some_property',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         settings: { is_commercial: false, override_preferences: false },
         tags: ['string'],
         trigger_data_json_schema: { foo: 'bar' },
