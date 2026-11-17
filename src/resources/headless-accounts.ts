@@ -45,8 +45,9 @@ export class HeadlessAccounts extends APIResource {
 
   /**
    * Returns whether the headless account is still being set up, waiting to be
-   * claimed, claimed by a person, or past its claim window. Agents poll this
-   * endpoint to find out when a person has claimed the account.
+   * claimed, claimed by a person, or past its claim window, and the monthly usage
+   * limits it has until it is claimed. Agents poll this endpoint to find out when a
+   * person has claimed the account.
    *
    * @example
    * ```ts
@@ -118,6 +119,32 @@ export interface HeadlessAccountRetrieveStatusResponse {
    * person, or expired because its claim window closed or its setup never finished.
    */
   status: 'provisioning' | 'unclaimed' | 'claimed' | 'expired';
+
+  /**
+   * How much the account can use per UTC calendar month until a person claims it.
+   * Each limit is null when there is none, which is always the case once the account
+   * is claimed.
+   */
+  usage_limits: HeadlessAccountRetrieveStatusResponse.UsageLimits;
+}
+
+export namespace HeadlessAccountRetrieveStatusResponse {
+  /**
+   * How much the account can use per UTC calendar month until a person claims it.
+   * Each limit is null when there is none, which is always the case once the account
+   * is claimed.
+   */
+  export interface UsageLimits {
+    /**
+     * How many messages the account can send.
+     */
+    message_limit: number | null;
+
+    /**
+     * How many workflow runs, one per recipient, the account can trigger.
+     */
+    workflow_run_limit: number | null;
+  }
 }
 
 export interface HeadlessAccountClaimParams {

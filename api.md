@@ -632,3 +632,13 @@ Methods:
 
 - <code title="get /v1/warehouses/{warehouse_key}">client.warehouses.<a href="./src/resources/warehouses.ts">retrieve</a>(warehouseKey, { ...params }) -> Warehouse</code>
 - <code title="get /v1/warehouses">client.warehouses.<a href="./src/resources/warehouses.ts">list</a>({ ...params }) -> WarehousesEntriesCursor</code>
+
+# Feedback
+
+Types:
+
+- <code><a href="./src/resources/feedback.ts">FeedbackCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/feedback">client.feedback.<a href="./src/resources/feedback.ts">create</a>({ ...params }) -> FeedbackCreateResponse</code>

@@ -148,6 +148,7 @@ export {
   type EnvironmentListParams,
   type EnvironmentsEntriesCursor,
 } from './environments/environments';
+export { Feedback, type FeedbackCreateResponse, type FeedbackCreateParams } from './feedback';
 export {
   Goals,
   type Goal,

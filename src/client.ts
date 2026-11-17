@@ -160,6 +160,7 @@ import {
   EmailLayouts,
   EmailLayoutsEntriesCursor,
 } from './resources/email-layouts';
+import { Feedback, FeedbackCreateParams, FeedbackCreateResponse } from './resources/feedback';
 import {
   Guide,
   GuideActivateParams,
@@ -1253,6 +1254,10 @@ export class KnockMgmt {
    * Warehouses are the databases in your data warehouse that Knock reads from.
    */
   warehouses: API.Warehouses = new API.Warehouses(this);
+  /**
+   * Feedback lets you report bugs, friction, and feature requests to Knock.
+   */
+  feedback: API.Feedback = new API.Feedback(this);
 }
 
 KnockMgmt.Templates = Templates;
@@ -1287,6 +1292,7 @@ KnockMgmt.Webhooks = Webhooks;
 KnockMgmt.WarehouseSyncs = WarehouseSyncs;
 KnockMgmt.HeadlessAccounts = HeadlessAccounts;
 KnockMgmt.Warehouses = Warehouses;
+KnockMgmt.Feedback = Feedback;
 
 export declare namespace KnockMgmt {
   export type RequestOptions = Opts.RequestOptions;
@@ -1741,6 +1747,12 @@ export declare namespace KnockMgmt {
     type WarehousesEntriesCursor as WarehousesEntriesCursor,
     type WarehouseRetrieveParams as WarehouseRetrieveParams,
     type WarehouseListParams as WarehouseListParams,
+  };
+
+  export {
+    Feedback as Feedback,
+    type FeedbackCreateResponse as FeedbackCreateResponse,
+    type FeedbackCreateParams as FeedbackCreateParams,
   };
 
   export type MessageTypeBooleanField = API.MessageTypeBooleanField;
