@@ -9,6 +9,8 @@ export {
 export {
   Environments,
   type Environment,
+  type EnvironmentCreateParams,
+  type EnvironmentUpdateParams,
   type EnvironmentListParams,
   type EnvironmentsEntriesCursor,
 } from './environments';

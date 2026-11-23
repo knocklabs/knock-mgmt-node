@@ -126,6 +126,7 @@ export {
   type SourcesResponse,
   type DataSourceUpsertResponse,
   type DataSourceRetrieveParams,
+  type DataSourceDeleteParams,
   type DataSourceListEventsParams,
   type DataSourceListLogsParams,
   type DataSourceListSourcesParams,
@@ -153,6 +154,8 @@ export {
 export {
   Environments,
   type Environment,
+  type EnvironmentCreateParams,
+  type EnvironmentUpdateParams,
   type EnvironmentListParams,
   type EnvironmentsEntriesCursor,
 } from './environments/environments';

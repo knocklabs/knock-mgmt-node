@@ -125,6 +125,7 @@ import {
   PromoteGroup,
 } from './resources/commits';
 import {
+  DataSourceDeleteParams,
   DataSourceListEventsParams,
   DataSourceListLogsParams,
   DataSourceListSourcesParams,
@@ -359,7 +360,9 @@ import {
 } from './resources/webhooks';
 import {
   Environment,
+  EnvironmentCreateParams,
   EnvironmentListParams,
+  EnvironmentUpdateParams,
   Environments,
   EnvironmentsEntriesCursor,
 } from './resources/environments/environments';
@@ -1524,6 +1527,7 @@ export declare namespace KnockMgmt {
     type DataSourceUpsertResponse as DataSourceUpsertResponse,
     type SourceLogsEntriesCursor as SourceLogsEntriesCursor,
     type DataSourceRetrieveParams as DataSourceRetrieveParams,
+    type DataSourceDeleteParams as DataSourceDeleteParams,
     type DataSourceListEventsParams as DataSourceListEventsParams,
     type DataSourceListLogsParams as DataSourceListLogsParams,
     type DataSourceListSourcesParams as DataSourceListSourcesParams,
@@ -1537,6 +1541,8 @@ export declare namespace KnockMgmt {
     Environments as Environments,
     type Environment as Environment,
     type EnvironmentsEntriesCursor as EnvironmentsEntriesCursor,
+    type EnvironmentCreateParams as EnvironmentCreateParams,
+    type EnvironmentUpdateParams as EnvironmentUpdateParams,
     type EnvironmentListParams as EnvironmentListParams,
   };
 

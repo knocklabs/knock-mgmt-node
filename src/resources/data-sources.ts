@@ -5,6 +5,7 @@ import * as DataSourcesAPI from './data-sources';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { EntriesCursor, type EntriesCursorParams, PagePromise } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -27,6 +28,38 @@ export class DataSources extends APIResource {
     options?: RequestOptions,
   ): APIPromise<Source> {
     return this._client.get(path`/v1/sources/${key}`, { query, ...options });
+  }
+
+  /**
+   * Deletes a source by key from every environment in the project, not only the one
+   * in the request. The token needs the `sources:manage` permission in every
+   * environment. Sources aren't branched, so the `branch` parameter isn't accepted.
+   *
+   * Deleting removes the source's settings in every environment and deactivates its
+   * event mappings, so its events stop triggering workflows. The workflows
+   * themselves are kept. The key is freed for a new source. A deleted source can't
+   * be restored.
+   *
+   * Returns a 422 with the code `source_in_use` while a goal, or a workflow's exit
+   * criteria, references the source in any environment. Archive those goals or
+   * remove those exit criteria first. Returns a 404 when no source has the key.
+   *
+   * @example
+   * ```ts
+   * await client.dataSources.delete('key');
+   * ```
+   */
+  delete(
+    key: string,
+    params: DataSourceDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { environment } = params ?? {};
+    return this._client.delete(path`/v1/sources/${key}`, {
+      query: { environment },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -1040,6 +1073,13 @@ export interface DataSourceRetrieveParams {
   environment?: string;
 }
 
+export interface DataSourceDeleteParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface DataSourceListEventsParams {
   /**
    * The environment slug. When omitted, the account's default environment is used.
@@ -1174,6 +1214,7 @@ export declare namespace DataSources {
     type DataSourceUpsertResponse as DataSourceUpsertResponse,
     type SourceLogsEntriesCursor as SourceLogsEntriesCursor,
     type DataSourceRetrieveParams as DataSourceRetrieveParams,
+    type DataSourceDeleteParams as DataSourceDeleteParams,
     type DataSourceListEventsParams as DataSourceListEventsParams,
     type DataSourceListLogsParams as DataSourceListLogsParams,
     type DataSourceListSourcesParams as DataSourceListSourcesParams,

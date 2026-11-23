@@ -288,6 +288,7 @@ Types:
 Methods:
 
 - <code title="get /v1/sources/{key}">client.dataSources.<a href="./src/resources/data-sources.ts">retrieve</a>(key, { ...params }) -> Source</code>
+- <code title="delete /v1/sources/{key}">client.dataSources.<a href="./src/resources/data-sources.ts">delete</a>(key, { ...params }) -> void</code>
 - <code title="get /v1/sources/{key}/events">client.dataSources.<a href="./src/resources/data-sources.ts">listEvents</a>(key, { ...params }) -> SourceEventsResponse</code>
 - <code title="get /v1/sources/{key}/logs">client.dataSources.<a href="./src/resources/data-sources.ts">listLogs</a>(key, { ...params }) -> SourceLogsEntriesCursor</code>
 - <code title="get /v1/source_providers">client.dataSources.<a href="./src/resources/data-sources.ts">listProviders</a>() -> SourceProvidersResponse</code>
@@ -305,8 +306,11 @@ Types:
 
 Methods:
 
+- <code title="post /v1/environments">client.environments.<a href="./src/resources/environments/environments.ts">create</a>({ ...params }) -> Environment</code>
 - <code title="get /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments/environments.ts">retrieve</a>(environmentSlug) -> Environment</code>
+- <code title="put /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments/environments.ts">update</a>(environmentSlug, { ...params }) -> Environment</code>
 - <code title="get /v1/environments">client.environments.<a href="./src/resources/environments/environments.ts">list</a>({ ...params }) -> EnvironmentsEntriesCursor</code>
+- <code title="delete /v1/environments/{environment_slug}">client.environments.<a href="./src/resources/environments/environments.ts">delete</a>(environmentSlug) -> void</code>
 
 ## Defaults
 
