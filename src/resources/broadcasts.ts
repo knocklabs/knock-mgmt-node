@@ -46,6 +46,37 @@ export class Broadcasts extends APIResource {
   }
 
   /**
+   * Archives a broadcast in a given environment. A broadcast lives in one
+   * environment, so no other environment is changed.
+   *
+   * Archiving renames the broadcast's key, so a new broadcast can use the key. It
+   * also cancels a scheduled send, returning the broadcast to draft, and detaches
+   * its goal. A sent broadcast can be archived too. Restore it with the unarchive
+   * endpoint, using its original key.
+   *
+   * Returns a 404 when no live broadcast has the key, including when it's already
+   * archived.
+   *
+   * @example
+   * ```ts
+   * const broadcast = await client.broadcasts.delete(
+   *   'broadcast_key',
+   * );
+   * ```
+   */
+  delete(
+    broadcastKey: string,
+    params: BroadcastDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BroadcastDeleteResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.delete(path`/v1/broadcasts/${broadcastKey}`, {
+      query: { branch, environment },
+      ...options,
+    });
+  }
+
+  /**
    * Cancels sending a scheduled broadcast. The broadcast will return to draft
    * status.
    *
@@ -112,6 +143,36 @@ export class Broadcasts extends APIResource {
     return this._client.put(path`/v1/broadcasts/${broadcastKey}/send`, {
       query: { branch, environment },
       body,
+      ...options,
+    });
+  }
+
+  /**
+   * Restores an archived broadcast in a given environment by its original key. When
+   * the key was archived more than once, the most recent archive is restored.
+   *
+   * A broadcast that was scheduled when it was archived comes back as a draft, and a
+   * sent broadcast stays sent.
+   *
+   * Returns a 404 when the key isn't archived in the environment, including when an
+   * earlier or concurrent request already restored it. Returns a 422 with the code
+   * `key_in_use` when a live broadcast uses the key.
+   *
+   * @example
+   * ```ts
+   * const response = await client.broadcasts.unarchive(
+   *   'broadcast_key',
+   * );
+   * ```
+   */
+  unarchive(
+    broadcastKey: string,
+    params: BroadcastUnarchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BroadcastUnarchiveResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/broadcasts/${broadcastKey}/unarchive`, {
+      query: { branch, environment },
       ...options,
     });
   }
@@ -397,6 +458,16 @@ export namespace BroadcastRequest {
 }
 
 /**
+ * The response from archiving a broadcast.
+ */
+export interface BroadcastDeleteResponse {
+  /**
+   * The result of the archive operation.
+   */
+  result: string;
+}
+
+/**
  * Wraps the Broadcast response under the `broadcast` key.
  */
 export interface BroadcastCancelResponse {
@@ -425,6 +496,16 @@ export interface BroadcastRunResponse {
  * Wraps the Broadcast response under the `broadcast` key.
  */
 export interface BroadcastSendResponse {
+  /**
+   * A broadcast object.
+   */
+  broadcast: Broadcast;
+}
+
+/**
+ * Wraps the Broadcast response under the `broadcast` key.
+ */
+export interface BroadcastUnarchiveResponse {
   /**
    * A broadcast object.
    */
@@ -499,6 +580,20 @@ export interface BroadcastListParams extends EntriesCursorParams {
    * returned. When false, both committed and uncommitted changes will be returned.
    */
   hide_uncommitted_changes?: boolean;
+}
+
+export interface BroadcastDeleteParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
 }
 
 export interface BroadcastCancelParams {
@@ -603,6 +698,20 @@ export interface BroadcastSendParams {
   send_at?: string;
 }
 
+export interface BroadcastUnarchiveParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface BroadcastUpsertParams {
   /**
    * Body param: A broadcast request for upserting a broadcast.
@@ -652,17 +761,21 @@ export declare namespace Broadcasts {
   export {
     type Broadcast as Broadcast,
     type BroadcastRequest as BroadcastRequest,
+    type BroadcastDeleteResponse as BroadcastDeleteResponse,
     type BroadcastCancelResponse as BroadcastCancelResponse,
     type BroadcastRunResponse as BroadcastRunResponse,
     type BroadcastSendResponse as BroadcastSendResponse,
+    type BroadcastUnarchiveResponse as BroadcastUnarchiveResponse,
     type BroadcastUpsertResponse as BroadcastUpsertResponse,
     type BroadcastValidateResponse as BroadcastValidateResponse,
     type BroadcastsEntriesCursor as BroadcastsEntriesCursor,
     type BroadcastRetrieveParams as BroadcastRetrieveParams,
     type BroadcastListParams as BroadcastListParams,
+    type BroadcastDeleteParams as BroadcastDeleteParams,
     type BroadcastCancelParams as BroadcastCancelParams,
     type BroadcastRunParams as BroadcastRunParams,
     type BroadcastSendParams as BroadcastSendParams,
+    type BroadcastUnarchiveParams as BroadcastUnarchiveParams,
     type BroadcastUpsertParams as BroadcastUpsertParams,
     type BroadcastValidateParams as BroadcastValidateParams,
   };

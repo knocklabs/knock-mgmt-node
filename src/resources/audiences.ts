@@ -67,6 +67,33 @@ export class Audiences extends APIResource {
   }
 
   /**
+   * Discards the uncommitted changes to an audience in a given environment,
+   * returning it to its last committed version. Other environments aren't changed.
+   *
+   * Returns the audience unchanged when it has no uncommitted changes. Returns a 422
+   * when the audience has never been committed, or can't be changed in the
+   * environment. Audiences aren't branched, so passing a `branch` returns a 422.
+   *
+   * @example
+   * ```ts
+   * const response = await client.audiences.discard(
+   *   'audience_key',
+   * );
+   * ```
+   */
+  discard(
+    audienceKey: string,
+    params: AudienceDiscardParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AudienceDiscardResponse> {
+    const { environment } = params ?? {};
+    return this._client.put(path`/v1/audiences/${audienceKey}/discard`, {
+      query: { environment },
+      ...options,
+    });
+  }
+
+  /**
    * Updates an audience of a given key, or creates a new one if it does not yet
    * exist.
    *
@@ -355,6 +382,18 @@ export interface AudienceArchiveResponse {
 /**
  * Wraps the Audience response under the `audience` key.
  */
+export interface AudienceDiscardResponse {
+  /**
+   * An audience defines a set of users that can be targeted for notifications. Can
+   * be either a `StaticAudience` (members explicitly added/removed) or a
+   * `DynamicAudience` (members determined by segment conditions).
+   */
+  audience: Audience;
+}
+
+/**
+ * Wraps the Audience response under the `audience` key.
+ */
 export interface AudienceUpsertResponse {
   /**
    * An audience defines a set of users that can be targeted for notifications. Can
@@ -427,6 +466,13 @@ export interface AudienceListParams extends EntriesCursorParams {
 }
 
 export interface AudienceArchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface AudienceDiscardParams {
   /**
    * The environment slug. When omitted, the account's default environment is used.
    */
@@ -514,12 +560,14 @@ export declare namespace Audiences {
     type DynamicAudience as DynamicAudience,
     type StaticAudience as StaticAudience,
     type AudienceArchiveResponse as AudienceArchiveResponse,
+    type AudienceDiscardResponse as AudienceDiscardResponse,
     type AudienceUpsertResponse as AudienceUpsertResponse,
     type AudienceValidateResponse as AudienceValidateResponse,
     type AudiencesEntriesCursor as AudiencesEntriesCursor,
     type AudienceRetrieveParams as AudienceRetrieveParams,
     type AudienceListParams as AudienceListParams,
     type AudienceArchiveParams as AudienceArchiveParams,
+    type AudienceDiscardParams as AudienceDiscardParams,
     type AudienceUpsertParams as AudienceUpsertParams,
     type AudienceValidateParams as AudienceValidateParams,
   };

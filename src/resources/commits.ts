@@ -93,6 +93,30 @@ export class Commits extends APIResource {
   promoteOne(id: string, options?: RequestOptions): APIPromise<CommitPromoteOneResponse> {
     return this._client.put(path`/v1/commits/${id}/promote`, options);
   }
+
+  /**
+   * Reverts a commit in the given environment. Creates and commits a new version of
+   * the resource that matches its version before the commit, and returns that new
+   * commit. Uncommitted changes to the resource are discarded.
+   *
+   * Most resources can only be reverted in the development environment or a branch,
+   * unless writes are allowed in every environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.commits.revert(
+   *   '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+   * );
+   * ```
+   */
+  revert(
+    id: string,
+    params: CommitRevertParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CommitRevertResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/commits/${id}/revert`, { query: { branch, environment }, ...options });
+  }
 }
 
 export type CommitsEntriesCursor = EntriesCursor<Commit>;
@@ -182,6 +206,33 @@ export namespace Commit {
       | 'reusable_request'
       | 'translation'
       | 'workflow';
+
+    /**
+     * Details about the translation a commit changed.
+     */
+    metadata?: Resource.Metadata | null;
+  }
+
+  export namespace Resource {
+    /**
+     * Details about the translation a commit changed.
+     */
+    export interface Metadata {
+      /**
+       * The locale code of the translation.
+       */
+      locale_code: string;
+
+      /**
+       * The namespace of the translation, or null if it has none.
+       */
+      namespace: string | null;
+
+      /**
+       * The tenant the translation is scoped to, or null if it isn't tenant-scoped.
+       */
+      tenant: string | null;
+    }
   }
 }
 
@@ -280,6 +331,16 @@ export interface CommitPromoteOneResponse {
    * `promote_group_id` filter on the list commits endpoint.
    */
   promote_group: PromoteGroup;
+}
+
+/**
+ * The response from reverting a commit, with the new commit under `commit`.
+ */
+export interface CommitRevertResponse {
+  /**
+   * A commit is a change to a resource within an environment, made by an author.
+   */
+  commit: Commit;
 }
 
 export interface CommitListParams extends EntriesCursorParams {
@@ -462,6 +523,20 @@ export interface CommitPromoteAllParams {
       >;
 }
 
+export interface CommitRevertParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export declare namespace Commits {
   export {
     type Commit as Commit,
@@ -469,9 +544,11 @@ export declare namespace Commits {
     type CommitCommitAllResponse as CommitCommitAllResponse,
     type CommitPromoteAllResponse as CommitPromoteAllResponse,
     type CommitPromoteOneResponse as CommitPromoteOneResponse,
+    type CommitRevertResponse as CommitRevertResponse,
     type CommitsEntriesCursor as CommitsEntriesCursor,
     type CommitListParams as CommitListParams,
     type CommitCommitAllParams as CommitCommitAllParams,
     type CommitPromoteAllParams as CommitPromoteAllParams,
+    type CommitRevertParams as CommitRevertParams,
   };
 }

@@ -72,6 +72,33 @@ export class ReusableRequests extends APIResource {
   }
 
   /**
+   * Discards the uncommitted changes to a reusable request in a given environment,
+   * returning it to its last committed version. Other environments aren't changed.
+   *
+   * Returns the reusable request unchanged when it has no uncommitted changes.
+   * Returns a 422 when the reusable request has never been committed, or can't be
+   * changed in the environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.reusableRequests.discard(
+   *   'fetch-user',
+   * );
+   * ```
+   */
+  discard(
+    reusableRequestKey: string,
+    params: ReusableRequestDiscardParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ReusableRequestDiscardResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/reusable_requests/${reusableRequestKey}/discard`, {
+      query: { branch, environment },
+      ...options,
+    });
+  }
+
+  /**
    * Unarchives a reusable request by key, with every copy archived alongside it in
    * other environments.
    *
@@ -81,17 +108,16 @@ export class ReusableRequests extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.reusableRequests.updateUnarchive(
-   *     'fetch-user',
-   *   );
+   * const response = await client.reusableRequests.unarchive(
+   *   'fetch-user',
+   * );
    * ```
    */
-  updateUnarchive(
+  unarchive(
     reusableRequestKey: string,
-    params: ReusableRequestUpdateUnarchiveParams | null | undefined = {},
+    params: ReusableRequestUnarchiveParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ReusableRequestUpdateUnarchiveResponse> {
+  ): APIPromise<ReusableRequestUnarchiveResponse> {
     const { environment } = params ?? {};
     return this._client.put(path`/v1/reusable_requests/${reusableRequestKey}/unarchive`, {
       query: { environment },
@@ -349,7 +375,17 @@ export interface ReusableRequestArchiveResponse {
 /**
  * Wraps the ReusableRequest response under the `reusable_request` key.
  */
-export interface ReusableRequestUpdateUnarchiveResponse {
+export interface ReusableRequestDiscardResponse {
+  /**
+   * A reusable HTTP request that workflows can link to.
+   */
+  reusable_request: ReusableRequest;
+}
+
+/**
+ * Wraps the ReusableRequest response under the `reusable_request` key.
+ */
+export interface ReusableRequestUnarchiveResponse {
   /**
    * A reusable HTTP request that workflows can link to.
    */
@@ -433,7 +469,21 @@ export interface ReusableRequestArchiveParams {
   environment?: string;
 }
 
-export interface ReusableRequestUpdateUnarchiveParams {
+export interface ReusableRequestDiscardParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface ReusableRequestUnarchiveParams {
   /**
    * The environment slug. When omitted, the account's default environment is used.
    */
@@ -517,14 +567,16 @@ export declare namespace ReusableRequests {
     type ReusableRequestRequest as ReusableRequestRequest,
     type ReusableRequestSettings as ReusableRequestSettings,
     type ReusableRequestArchiveResponse as ReusableRequestArchiveResponse,
-    type ReusableRequestUpdateUnarchiveResponse as ReusableRequestUpdateUnarchiveResponse,
+    type ReusableRequestDiscardResponse as ReusableRequestDiscardResponse,
+    type ReusableRequestUnarchiveResponse as ReusableRequestUnarchiveResponse,
     type ReusableRequestUpsertResponse as ReusableRequestUpsertResponse,
     type ReusableRequestValidateResponse as ReusableRequestValidateResponse,
     type ReusableRequestsEntriesCursor as ReusableRequestsEntriesCursor,
     type ReusableRequestRetrieveParams as ReusableRequestRetrieveParams,
     type ReusableRequestListParams as ReusableRequestListParams,
     type ReusableRequestArchiveParams as ReusableRequestArchiveParams,
-    type ReusableRequestUpdateUnarchiveParams as ReusableRequestUpdateUnarchiveParams,
+    type ReusableRequestDiscardParams as ReusableRequestDiscardParams,
+    type ReusableRequestUnarchiveParams as ReusableRequestUnarchiveParams,
     type ReusableRequestUpsertParams as ReusableRequestUpsertParams,
     type ReusableRequestValidateParams as ReusableRequestValidateParams,
   };

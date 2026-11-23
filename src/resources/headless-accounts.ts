@@ -11,7 +11,9 @@ export class HeadlessAccounts extends APIResource {
   /**
    * Creates an account that has no owner yet, and returns a service token the agent
    * uses to work in it. The account is deleted after 24 hours unless a person claims
-   * it. This endpoint needs no authentication and is rate limited.
+   * it. This endpoint needs no authentication and is rate limited. It can require a
+   * solved proof-of-work challenge; when it does and none is sent, the 400 response
+   * carries a challenge to solve.
    *
    * @example
    * ```ts
@@ -19,8 +21,25 @@ export class HeadlessAccounts extends APIResource {
    *   await client.headlessAccounts.create();
    * ```
    */
-  create(options?: RequestOptions): APIPromise<HeadlessAccountCreateResponse> {
-    return this._client.post('/v1/headless_accounts', options);
+  create(
+    body: HeadlessAccountCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<HeadlessAccountCreateResponse> {
+    return this._client.post('/v1/headless_accounts', { body, ...options });
+  }
+
+  /**
+   * Returns a proof-of-work challenge to solve before creating a headless account.
+   * The difficulty can change, so get a new challenge for each account. This
+   * endpoint needs no authentication.
+   *
+   * @example
+   * ```ts
+   * const response = await client.headlessAccounts.challenge();
+   * ```
+   */
+  challenge(options?: RequestOptions): APIPromise<HeadlessAccountChallengeResponse> {
+    return this._client.post('/v1/headless_accounts/challenge', options);
   }
 
   /**
@@ -81,6 +100,34 @@ export interface HeadlessAccountCreateResponse {
    * The account is still being set up. Poll the status endpoint.
    */
   status: 'provisioning';
+}
+
+/**
+ * A proof-of-work challenge. Find a nonce for which the SHA-256 hash of
+ * `<challenge>:<nonce>` starts with `difficulty` zero bits, then send both when
+ * creating the account. A difficulty of 0 means no proof of work is needed right
+ * now.
+ */
+export interface HeadlessAccountChallengeResponse {
+  /**
+   * The hash function to use.
+   */
+  algorithm: 'sha256';
+
+  /**
+   * The challenge to hash. It can be used for one account.
+   */
+  challenge: string;
+
+  /**
+   * How many leading zero bits the hash must have.
+   */
+  difficulty: number;
+
+  /**
+   * When the challenge stops being accepted.
+   */
+  expires_at: string;
 }
 
 /**
@@ -147,6 +194,30 @@ export namespace HeadlessAccountRetrieveStatusResponse {
   }
 }
 
+export interface HeadlessAccountCreateParams {
+  /**
+   * A challenge from the challenge endpoint and the nonce that solves it.
+   */
+  proof_of_work?: HeadlessAccountCreateParams.ProofOfWork;
+}
+
+export namespace HeadlessAccountCreateParams {
+  /**
+   * A challenge from the challenge endpoint and the nonce that solves it.
+   */
+  export interface ProofOfWork {
+    /**
+     * The challenge, as issued.
+     */
+    challenge: string;
+
+    /**
+     * The nonce that solves the challenge, at most 64 bytes.
+     */
+    nonce: string;
+  }
+}
+
 export interface HeadlessAccountClaimParams {
   /**
    * The email of the person who will own the account. Only they can finish the
@@ -158,8 +229,10 @@ export interface HeadlessAccountClaimParams {
 export declare namespace HeadlessAccounts {
   export {
     type HeadlessAccountCreateResponse as HeadlessAccountCreateResponse,
+    type HeadlessAccountChallengeResponse as HeadlessAccountChallengeResponse,
     type HeadlessAccountClaimResponse as HeadlessAccountClaimResponse,
     type HeadlessAccountRetrieveStatusResponse as HeadlessAccountRetrieveStatusResponse,
+    type HeadlessAccountCreateParams as HeadlessAccountCreateParams,
     type HeadlessAccountClaimParams as HeadlessAccountClaimParams,
   };
 }

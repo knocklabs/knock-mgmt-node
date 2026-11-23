@@ -63,6 +63,7 @@ Types:
 - <code><a href="./src/resources/commits.ts">CommitCommitAllResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitPromoteAllResponse</a></code>
 - <code><a href="./src/resources/commits.ts">CommitPromoteOneResponse</a></code>
+- <code><a href="./src/resources/commits.ts">CommitRevertResponse</a></code>
 
 Methods:
 
@@ -71,6 +72,7 @@ Methods:
 - <code title="put /v1/commits">client.commits.<a href="./src/resources/commits.ts">commitAll</a>({ ...params }) -> CommitCommitAllResponse</code>
 - <code title="put /v1/commits/promote">client.commits.<a href="./src/resources/commits.ts">promoteAll</a>({ ...params }) -> CommitPromoteAllResponse</code>
 - <code title="put /v1/commits/{id}/promote">client.commits.<a href="./src/resources/commits.ts">promoteOne</a>(id) -> CommitPromoteOneResponse</code>
+- <code title="put /v1/commits/{id}/revert">client.commits.<a href="./src/resources/commits.ts">revert</a>(id, { ...params }) -> CommitRevertResponse</code>
 
 # Partials
 
@@ -341,6 +343,7 @@ Types:
 - <code><a href="./src/resources/guides.ts">GuideStep</a></code>
 - <code><a href="./src/resources/guides.ts">GuideActivateResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideArchiveResponse</a></code>
+- <code><a href="./src/resources/guides.ts">GuideDiscardResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideUnarchiveResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideUpsertResponse</a></code>
 - <code><a href="./src/resources/guides.ts">GuideValidateResponse</a></code>
@@ -350,7 +353,8 @@ Methods:
 - <code title="get /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">retrieve</a>(guideKey, { ...params }) -> Guide</code>
 - <code title="get /v1/guides">client.guides.<a href="./src/resources/guides.ts">list</a>({ ...params }) -> GuidesEntriesCursor</code>
 - <code title="put /v1/guides/{guide_key}/activate">client.guides.<a href="./src/resources/guides.ts">activate</a>(guideKey, { ...params }) -> GuideActivateResponse</code>
-- <code title="delete /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">archive</a>(guideKey) -> GuideArchiveResponse</code>
+- <code title="delete /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">archive</a>(guideKey, { ...params }) -> GuideArchiveResponse</code>
+- <code title="put /v1/guides/{guide_key}/discard">client.guides.<a href="./src/resources/guides.ts">discard</a>(guideKey, { ...params }) -> GuideDiscardResponse</code>
 - <code title="put /v1/guides/{guide_key}/unarchive">client.guides.<a href="./src/resources/guides.ts">unarchive</a>(guideKey, { ...params }) -> GuideUnarchiveResponse</code>
 - <code title="put /v1/guides/{guide_key}">client.guides.<a href="./src/resources/guides.ts">upsert</a>(guideKey, { ...params }) -> GuideUpsertResponse</code>
 - <code title="put /v1/guides/{guide_key}/validate">client.guides.<a href="./src/resources/guides.ts">validate</a>(guideKey, { ...params }) -> GuideValidateResponse</code>
@@ -375,9 +379,11 @@ Types:
 
 - <code><a href="./src/resources/broadcasts.ts">Broadcast</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastRequest</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastDeleteResponse</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastCancelResponse</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastRunResponse</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastSendResponse</a></code>
+- <code><a href="./src/resources/broadcasts.ts">BroadcastUnarchiveResponse</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastUpsertResponse</a></code>
 - <code><a href="./src/resources/broadcasts.ts">BroadcastValidateResponse</a></code>
 
@@ -385,9 +391,11 @@ Methods:
 
 - <code title="get /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">retrieve</a>(broadcastKey, { ...params }) -> Broadcast</code>
 - <code title="get /v1/broadcasts">client.broadcasts.<a href="./src/resources/broadcasts.ts">list</a>({ ...params }) -> BroadcastsEntriesCursor</code>
+- <code title="delete /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">delete</a>(broadcastKey, { ...params }) -> BroadcastDeleteResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/cancel">client.broadcasts.<a href="./src/resources/broadcasts.ts">cancel</a>(broadcastKey, { ...params }) -> BroadcastCancelResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/run">client.broadcasts.<a href="./src/resources/broadcasts.ts">run</a>(broadcastKey, { ...params }) -> BroadcastRunResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/send">client.broadcasts.<a href="./src/resources/broadcasts.ts">send</a>(broadcastKey, { ...params }) -> BroadcastSendResponse</code>
+- <code title="put /v1/broadcasts/{broadcast_key}/unarchive">client.broadcasts.<a href="./src/resources/broadcasts.ts">unarchive</a>(broadcastKey, { ...params }) -> BroadcastUnarchiveResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}">client.broadcasts.<a href="./src/resources/broadcasts.ts">upsert</a>(broadcastKey, { ...params }) -> BroadcastUpsertResponse</code>
 - <code title="put /v1/broadcasts/{broadcast_key}/validate">client.broadcasts.<a href="./src/resources/broadcasts.ts">validate</a>(broadcastKey, { ...params }) -> BroadcastValidateResponse</code>
 
@@ -401,6 +409,7 @@ Types:
 - <code><a href="./src/resources/audiences.ts">DynamicAudience</a></code>
 - <code><a href="./src/resources/audiences.ts">StaticAudience</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceArchiveResponse</a></code>
+- <code><a href="./src/resources/audiences.ts">AudienceDiscardResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceUpsertResponse</a></code>
 - <code><a href="./src/resources/audiences.ts">AudienceValidateResponse</a></code>
 
@@ -409,6 +418,7 @@ Methods:
 - <code title="get /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">retrieve</a>(audienceKey, { ...params }) -> Audience</code>
 - <code title="get /v1/audiences">client.audiences.<a href="./src/resources/audiences.ts">list</a>({ ...params }) -> AudiencesEntriesCursor</code>
 - <code title="delete /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">archive</a>(audienceKey, { ...params }) -> AudienceArchiveResponse</code>
+- <code title="put /v1/audiences/{audience_key}/discard">client.audiences.<a href="./src/resources/audiences.ts">discard</a>(audienceKey, { ...params }) -> AudienceDiscardResponse</code>
 - <code title="put /v1/audiences/{audience_key}">client.audiences.<a href="./src/resources/audiences.ts">upsert</a>(audienceKey, { ...params }) -> AudienceUpsertResponse</code>
 - <code title="put /v1/audiences/{audience_key}/validate">client.audiences.<a href="./src/resources/audiences.ts">validate</a>(audienceKey, { ...params }) -> AudienceValidateResponse</code>
 
@@ -541,7 +551,8 @@ Types:
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestRequest</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestSettings</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestArchiveResponse</a></code>
-- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUpdateUnarchiveResponse</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestDiscardResponse</a></code>
+- <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUnarchiveResponse</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestUpsertResponse</a></code>
 - <code><a href="./src/resources/reusable-requests.ts">ReusableRequestValidateResponse</a></code>
 
@@ -550,7 +561,8 @@ Methods:
 - <code title="get /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">retrieve</a>(reusableRequestKey, { ...params }) -> ReusableRequest</code>
 - <code title="get /v1/reusable_requests">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">list</a>({ ...params }) -> ReusableRequestsEntriesCursor</code>
 - <code title="delete /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">archive</a>(reusableRequestKey, { ...params }) -> ReusableRequestArchiveResponse</code>
-- <code title="put /v1/reusable_requests/{reusable_request_key}/unarchive">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">updateUnarchive</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpdateUnarchiveResponse</code>
+- <code title="put /v1/reusable_requests/{reusable_request_key}/discard">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">discard</a>(reusableRequestKey, { ...params }) -> ReusableRequestDiscardResponse</code>
+- <code title="put /v1/reusable_requests/{reusable_request_key}/unarchive">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">unarchive</a>(reusableRequestKey, { ...params }) -> ReusableRequestUnarchiveResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">upsert</a>(reusableRequestKey, { ...params }) -> ReusableRequestUpsertResponse</code>
 - <code title="put /v1/reusable_requests/{reusable_request_key}/validate">client.reusableRequests.<a href="./src/resources/reusable-requests.ts">validate</a>(reusableRequestKey, { ...params }) -> ReusableRequestValidateResponse</code>
 
@@ -613,12 +625,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountCreateResponse</a></code>
+- <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountChallengeResponse</a></code>
 - <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountClaimResponse</a></code>
 - <code><a href="./src/resources/headless-accounts.ts">HeadlessAccountRetrieveStatusResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/headless_accounts">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">create</a>() -> HeadlessAccountCreateResponse</code>
+- <code title="post /v1/headless_accounts">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">create</a>({ ...params }) -> HeadlessAccountCreateResponse</code>
+- <code title="post /v1/headless_accounts/challenge">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">challenge</a>() -> HeadlessAccountChallengeResponse</code>
 - <code title="post /v1/headless_accounts/claim">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">claim</a>({ ...params }) -> HeadlessAccountClaimResponse</code>
 - <code title="get /v1/headless_accounts/status">client.headlessAccounts.<a href="./src/resources/headless-accounts.ts">retrieveStatus</a>() -> HeadlessAccountRetrieveStatusResponse</code>
 

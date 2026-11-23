@@ -69,6 +69,30 @@ describe('resource broadcasts', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.broadcasts.delete('broadcast_key');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.delete(
+        'broadcast_key',
+        { branch: 'feature-branch', environment: 'development' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('cancel', async () => {
     const responsePromise = client.broadcasts.cancel('broadcast_key');
     const rawResponse = await responsePromise.asResponse();
@@ -139,6 +163,30 @@ describe('resource broadcasts', () => {
           environment: 'development',
           send_at: '2024-03-20T10:00:00Z',
         },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(KnockMgmt.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('unarchive', async () => {
+    const responsePromise = client.broadcasts.unarchive('broadcast_key');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('unarchive: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.broadcasts.unarchive(
+        'broadcast_key',
+        { branch: 'feature-branch', environment: 'development' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(KnockMgmt.NotFoundError);

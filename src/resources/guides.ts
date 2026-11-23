@@ -80,8 +80,37 @@ export class Guides extends APIResource {
    * const response = await client.guides.archive('guide_key');
    * ```
    */
-  archive(guideKey: string, options?: RequestOptions): APIPromise<GuideArchiveResponse> {
-    return this._client.delete(path`/v1/guides/${guideKey}`, options);
+  archive(
+    guideKey: string,
+    params: GuideArchiveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<GuideArchiveResponse> {
+    const { environment } = params ?? {};
+    return this._client.delete(path`/v1/guides/${guideKey}`, { query: { environment }, ...options });
+  }
+
+  /**
+   * Discards the uncommitted changes to a guide in a given environment, returning it
+   * to its last committed version. Other environments aren't changed.
+   *
+   * Returns the guide unchanged when it has no uncommitted changes. Returns a 422
+   * when the guide has never been committed, or can't be changed in the environment.
+   *
+   * @example
+   * ```ts
+   * const response = await client.guides.discard('guide_key');
+   * ```
+   */
+  discard(
+    guideKey: string,
+    params: GuideDiscardParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<GuideDiscardResponse> {
+    const { branch, environment } = params ?? {};
+    return this._client.put(path`/v1/guides/${guideKey}/discard`, {
+      query: { branch, environment },
+      ...options,
+    });
   }
 
   /**
@@ -435,9 +464,20 @@ export interface GuideActivateResponse {
  */
 export interface GuideArchiveResponse {
   /**
-   * The result of the promote operation.
+   * The result of the archive operation.
    */
   result: string;
+}
+
+/**
+ * Wraps the Guide response under the `guide` key.
+ */
+export interface GuideDiscardResponse {
+  /**
+   * A guide defines an in-app guide that can be displayed to users based on priority
+   * and other conditions.
+   */
+  guide: Guide;
 }
 
 /**
@@ -576,6 +616,27 @@ export declare namespace GuideActivateParams {
   }
 }
 
+export interface GuideArchiveParams {
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
+export interface GuideDiscardParams {
+  /**
+   * The slug of a branch to use. When `environment` is omitted, the branch is
+   * resolved from Development after the account default is injected. When
+   * `environment` is supplied, it must be `"development"`.
+   */
+  branch?: string;
+
+  /**
+   * The environment slug. When omitted, the account's default environment is used.
+   */
+  environment?: string;
+}
+
 export interface GuideUnarchiveParams {
   /**
    * The environment slug. When omitted, the account's default environment is used.
@@ -660,6 +721,7 @@ export declare namespace Guides {
     type GuideStep as GuideStep,
     type GuideActivateResponse as GuideActivateResponse,
     type GuideArchiveResponse as GuideArchiveResponse,
+    type GuideDiscardResponse as GuideDiscardResponse,
     type GuideUnarchiveResponse as GuideUnarchiveResponse,
     type GuideUpsertResponse as GuideUpsertResponse,
     type GuideValidateResponse as GuideValidateResponse,
@@ -667,6 +729,8 @@ export declare namespace Guides {
     type GuideRetrieveParams as GuideRetrieveParams,
     type GuideListParams as GuideListParams,
     type GuideActivateParams as GuideActivateParams,
+    type GuideArchiveParams as GuideArchiveParams,
+    type GuideDiscardParams as GuideDiscardParams,
     type GuideUnarchiveParams as GuideUnarchiveParams,
     type GuideUpsertParams as GuideUpsertParams,
     type GuideValidateParams as GuideValidateParams,

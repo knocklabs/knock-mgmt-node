@@ -288,8 +288,9 @@ export namespace ChannelGroupUpsertParams {
       rule_type: 'if' | 'unless' | 'always';
 
       /**
-       * For conditional rules, the value to compare against. For `is_in_random_cohort`,
-       * a 0–100 percentage with at most one decimal place.
+       * For conditional rules, the value to compare against. Required for `if` and
+       * `unless` rules unless the operator takes no value, such as `exists`. For
+       * `is_in_random_cohort`, a 0–100 percentage with at most one decimal place.
        */
       argument?: string | null;
 
@@ -299,8 +300,9 @@ export namespace ChannelGroupUpsertParams {
       index?: number;
 
       /**
-       * For conditional rules, the operator to apply. For `is_in_random_cohort`,
-       * `variable` must be `recipient.id` and `argument` is a 0–100 percentage.
+       * For conditional rules, the operator to apply. Required for `if` and `unless`
+       * rules. For `is_in_random_cohort`, `variable` must be `recipient.id` and
+       * `argument` is a 0–100 percentage.
        */
       operator?:
         | 'equal_to'
@@ -330,8 +332,9 @@ export namespace ChannelGroupUpsertParams {
         | null;
 
       /**
-       * For conditional rules, the variable to evaluate. For `is_in_random_cohort`, must
-       * be `recipient.id`.
+       * For conditional rules, the variable to evaluate. Required for `if` and `unless`
+       * rules, except with an audience operator. For `is_in_random_cohort`, must be
+       * `recipient.id`.
        */
       variable?: string | null;
     }
