@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.48.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.47.0...v0.48.0) (2026-11-23)
+
+
+### Features
+
+* add discard, revert, archive, and proof-of-work account creation (v0.1.1812) ([6b9918e](https://github.com/knocklabs/knock-mgmt-node/commit/6b9918e0e9f665076c7753903815cabf9252a66a))
+* Create, update, and delete environments and delete sources via the SDK (v0.1.1813) ([884428a](https://github.com/knocklabs/knock-mgmt-node/commit/884428acb894d1f5549ead4ff65435e736025503))
+
 ## [0.47.0](https://github.com/knocklabs/knock-mgmt-node/compare/v0.46.1...v0.47.0) (2026-11-17)
 
 
